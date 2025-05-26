@@ -1,0 +1,240 @@
+#https://qiita.com/e869120/items/eb50fdaece12be418faa
+
+#1　ITP1_7_B - How Many Ways?　基本問題です。
+# count_list = []
+# while True:
+#     n, x = map(int, input().split())
+#     count = 0
+#     if n == 0:
+#         for i in range(len(count_list)):
+#             print(count_list[i])
+#         exit()
+#     for i in range(1, n-1):
+#         for j in range(i+1, n):
+#             for k in range(j+1, n+1):
+#                 if i+j+k == x:
+#                     count += 1
+#     count_list.append(count) 
+
+#2　AtCoder Beginner Contest 106 B - 105
+# N = int(input())
+
+# total = 0
+# for i in range(1, N+1):
+#     count = 0
+#     if i%2 == 1:
+#         for j in range(1, N+1):
+#             if i%j == 0:
+#                 count += 1
+#         if count == 8:
+#             total += 1
+
+# print(total)
+
+
+#4 C - カラオケ
+# N, M = map(int, input().split())
+# A = [ list(map(int, input().split())) for _ in range(N)]
+
+# total_scores = 0
+# for s in range(M-1):
+#     for r in range(s, M):
+#         cnt = 0
+#         for k in range(N):
+#             cnt += max(A[k][s], A[k][r])
+#         total_scores = max(total_scores, cnt)
+
+# print(total_scores)
+
+#5　AtCoder Beginner Contest 095 C - Half and Half
+A, B, C, X, Y = map(int, input().split())
+
+min_hulf_pizza = 0
+
+price = 0
+if (A+B)/2 < C:
+    print(A*X+B*Y)
+else:
+    if X == Y:
+        print(X*C*2)
+    elif X > Y and A < 2*C:
+        diff = X-Y
+        print(Y*2*C + A*diff)
+    elif Y > X and B < 2*C:
+        diff = Y-X
+        print(X*2*C + B*diff)
+    else:
+        max_hurf_pizza = max(X, Y)
+        print(C*max_hurf_pizza*2)
+
+
+#8　Square869120Contest #6 B - AtCoder Markets　全探索すると無数に通り数があるように見えますが、ひとつ工夫すると現実的な通り数で全列挙できる問題です。
+
+
+
+#24　ALDS_11_B - 深さ優先探索　基本問題です。
+# import sys
+# sys.setrecursionlimit(10**6)
+# input = sys.stdin.readline
+
+# N = int(input())
+# G = [[] for _ in range(N+1)]
+
+# for _ in range(N):
+#     data = list(map(int, input().split()))
+#     u, k, *vs = data
+#     G[u] = vs
+
+# time = 0
+# d = [0] * (N+1)
+# f = [0] * (N+1)
+# visited = [False] * (N+1)
+
+# def dfs(v):
+#     global time
+#     if visited[v]:
+#         return
+    
+#     visited[v] = True
+#     time += 1
+#     d[v] = time
+
+#     for vv in G[v]:
+#         dfs(vv)
+
+#     time += 1
+#     f[v] = time
+
+
+# for v in range(1, N+1):
+#     if not visited[v]:
+#         dfs(v)
+    
+# for v in range(1, N+1):
+#     print(v, d[v], f[v])
+
+
+#25　AOJ 1160 - 島はいくつある？　グラフの連結成分数は、深さ優先探索で計算できます。
+# import sys
+# sys.setrecursionlimit(10**6)
+
+# island_count = []
+# while True:
+#     island_nums = 0
+#     W, H = map(int, input().split())
+#     if W==0 and H==0:
+#         break
+    
+#     C = [list(map(int, input().split())) for _ in range(H)]
+    
+#     seen = [[False]*W for _ in range(H)]
+    
+#     def dfs(h, w):
+#         seen[h][w] = True
+#         for i in (-1, 0, 1):
+#             for j in (-1, 0, 1):
+#                 if h+i >= H or w+j >= W or h+i<0 or w+j <0:
+#                     continue
+#                 if C[h+i][w+j] == 1 and seen[h+i][w+j] == False:
+#                     dfs(h+i, w+j)
+#         C[h][w] = 0
+
+
+#     for i in range(H):
+#         for j in range(W):
+#             if C[i][j] == 1:
+#                 dfs(i, j)
+#                 island_nums += 1
+#     island_count.append(island_nums)
+
+# for i in island_count:
+#     print(i)
+
+#34　ALDS_10_A - フィボナッチ数　超基本。「DP とは何か」を感じることができます。
+# num = int(input())
+
+# dp = [0]*(50)
+# dp[0] = 1
+# dp[1] = 1
+
+# if num == 0 or num == 1:
+#     print(1)
+#     exit()
+
+# for n in range(2, num+1):
+#     dp[n] = dp[n-1] + dp[n-2]
+
+# print(dp[num])
+
+
+#35　DPL_1_B - 0,1ナップザック問題　基本問題です。（基本的なナップザック）
+# N, W = map(int, input().split())
+# value = []
+# weight = []
+
+# for _ in range(N):
+#     v, w = map(int, input().split())
+#     value.append(v)
+#     weight.append(w)
+
+# dp = [[0]*(W+1) for _ in range(N+1)]
+
+# for i in range(1, N+1):
+#     for j in range(1, W+1):
+#         dp[i][j] = max(dp[i][j-1], dp[i-1][j])
+#         if j >= weight[i-1]:
+#             dp[i][j] = max(dp[i][j], dp[i-1][j-weight[i-1]]+value[i-1])
+
+# print(dp[N][W])
+
+#36　DPL_1_C - ナップザック問題　基本問題です。
+# N, W = map(int, input().split())
+# dp = [0] * (W+1)
+# for i in range(N):
+#     v, w = map(int, input().split())
+#     for j in range(w, W+1):
+#         dp[j] = max(dp[j-w] + v, dp[j])
+# print(dp[W])
+
+#37　DPL_1_A - コイン問題　基本問題です。
+# import sys 
+# input = sys.stdin.readline
+
+# N, M = map(int, input().split())
+# C = list(map(int, input().split()))
+# dp = [10000000] * (N+1)
+# dp[0] = 0
+# for i in range(1, M+1):
+#     if N >= C[i-1]:    
+#         for j in range(C[i-1], N+1):
+#             dp[j] = min(dp[j-C[i-1]] + 1, dp[j])
+
+# print(dp[N])
+
+#38　ALDS_10_C - 最長共通部分列　基本問題です。模範解答ではあったけどTLEしたので文字列の小さいほうを外ループにすると通った
+# import 
+# input = sys.stdin.readline
+
+# q = int(input())
+# ans_list = []
+
+# for _ in range(q):
+#     x = input().strip()
+#     y = input().strip()
+#     dp = [[0]*(len(x)+1) for _ in range(len(y)+1)]
+    
+#     for i in range(1, len(y)+1):
+#         for j in range(1, len(x)+1):
+#             dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+#             if y[i-1] == x[j-1]:
+#                 dp[i][j] = max(dp[i-1][j-1]+1, dp[i-1][j], dp[i][j-1])
+
+#     ans_list.append(dp[len(y)][len(x)])
+
+# for ans in ans_list:
+#     print(ans)
+
+
+
+
+
