@@ -47,29 +47,122 @@
 # print(total_scores)
 
 #5　AtCoder Beginner Contest 095 C - Half and Half
-A, B, C, X, Y = map(int, input().split())
+# A, B, C, X, Y = map(int, input().split())
 
-min_hulf_pizza = 0
+# min_hulf_pizza = 0
 
-price = 0
-if (A+B)/2 < C:
-    print(A*X+B*Y)
-else:
-    if X == Y:
-        print(X*C*2)
-    elif X > Y and A < 2*C:
-        diff = X-Y
-        print(Y*2*C + A*diff)
-    elif Y > X and B < 2*C:
-        diff = Y-X
-        print(X*2*C + B*diff)
-    else:
-        max_hurf_pizza = max(X, Y)
-        print(C*max_hurf_pizza*2)
+# price = 0
+# if (A+B)/2 < C:
+#     print(A*X+B*Y)
+# else:
+#     if X == Y:
+#         print(X*C*2)
+#     elif X > Y and A < 2*C:
+#         diff = X-Y
+#         print(Y*2*C + A*diff)
+#     elif Y > X and B < 2*C:
+#         diff = Y-X
+#         print(X*2*C + B*diff)
+#     else:
+#         max_hurf_pizza = max(X, Y)
+#         print(C*max_hurf_pizza*2)
 
 
 #8　Square869120Contest #6 B - AtCoder Markets　全探索すると無数に通り数があるように見えますが、ひとつ工夫すると現実的な通り数で全列挙できる問題です。
 
+#10　ALDS_5_A - 総当たり　基本問題です。
+# import sys
+# input = sys.stdin.readline
+
+# n = int(input())
+# A = list(map(int, input().split()))
+# q = int(input())
+# M = list(map(int, input().split()))
+#TLEしちゃう
+# for m in(M):
+#     found = False
+#     for mask in range(1<<n):
+#         if found == True:
+#             break
+#         cnt = 0
+#         for i in range(n):
+#             if mask & (1<<i):
+#                 cnt += A[i]
+#         if cnt == m:
+#             print("yes")
+#             found = True
+#             break
+#     if not found:
+#         print("no")
+#これだといけた
+# possible_sums = set()
+# for mask in range(1 << n):
+#     cnt = 0
+#     for i in range(n):
+#         if mask & (1 << i):
+#             cnt += A[i]
+#         possible_sums.add(cnt)
+
+# for m in M:
+#     if m in possible_sums:
+#         print("yes")
+#     else:
+#         print("no")
+
+#11　AtCoder Beginner Contest 128 C - Switches
+# N, M = map(int, input().split())
+# S = []
+# # K = []
+# for _ in range(M):
+#     k, *swhiches = map(int, input().split())
+#     # K.append(k)
+#     S.append([s-1 for s in swhiches])
+
+# P = list(map(int, input().split()))
+
+# ans = 0
+# for mask in range(1 << N):
+#     ok = True
+#     for i in range(M):
+#         cnt = 0
+#         for s in S[i]:
+#             if mask & (1 << s):
+#                 cnt += 1
+
+#         if cnt % 2 != P[i]:
+#             ok = False
+#             break
+
+#     if ok == True:
+#         ans += 1
+
+# print(ans)
+    
+
+#15　AtCoder Beginner Contest 145 C - Average Length
+# import itertools, math, sys
+# input = sys.stdin.readline
+
+# N = int(input())
+# x_y = [list(map(int, input().split())) for _ in range(N)]
+
+# dist = [[0.0]*N for _ in range(N)]
+# for i in range(N):
+#     xi, yi = x_y[i]
+#     for j in range(i+1, N):
+#         xj, yj = x_y[j]
+#         d = math.hypot(xi-xj, yi-yj)
+#         dist[i][j] = dist[j][i] = d
+
+# total = 0.0
+# for perm in itertools.permutations(range(N)):
+#     path = 0.0
+#     for a, b in zip(perm, perm[1:]):
+#         path += dist[a][b]
+#     total += path
+
+# avg = total/math.factorial(N)
+# print(avg)
 
 
 #24　ALDS_11_B - 深さ優先探索　基本問題です。

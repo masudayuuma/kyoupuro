@@ -131,25 +131,44 @@
 #     print("No")
 
 #B - P(X or Y)
-X, Y = map(int, input().split())
-bunnbo = 36
-x_count = 0
-y_count = 0
+# X, Y = map(int, input().split())
+# bunnbo = 36
+# x_count = 0
+# y_count = 0
 
-for i in range(1, 7):
-    for j in range(1, 7):
-        if i+j >= X and abs(i-j) >= Y:
-            x_count += 1
-        elif i+j >= X:
-            x_count += 1
-        elif abs(i-j) >= Y:
-            y_count += 1
+# for i in range(1, 7):
+#     for j in range(1, 7):
+#         if i+j >= X and abs(i-j) >= Y:
+#             x_count += 1
+#         elif i+j >= X:
+#             x_count += 1
+#         elif abs(i-j) >= Y:
+#             y_count += 1
         
-print((x_count+y_count)/bunnbo)
+# print((x_count+y_count)/bunnbo)
 
+#B - Ticket Gate Log
+# S = input()
+# S += "p"
+# new_S = ""
+# cnt = 0
+# if S[0] == "o":
+#     S = "i" + S
+#     cnt += 1
+# for i in range(len(S)-1):
+#     new_S += S[i]
+#     if S[i] == S[i+1] == "i":
+#         new_S += "o"
+#         cnt += 1
+#     if S[i] == "o" and S[i+1] == "o":
+#         new_S += "i"
+#         cnt += 1
+# # print(new_S)
 
-            
-
+# if len(new_S) % 2 == 0:
+#     print(cnt)
+# else:
+#     print(cnt + 1)
 
 
 

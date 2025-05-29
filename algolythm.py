@@ -212,3 +212,44 @@
 #             dp[i+1][w] = max(dp[i][w-weights[i]]+ values[i], dp[i+1][w])
 
 # print(dp[n][W])
+
+#bit全探索
+# A = [3, 5, 8, 10]
+# n = len(A)
+# best = 0
+
+# for mask in range(1<<n): #0~15
+#     total = 0
+#     for i in range(n):
+#         if mask & (1 << i): #2^i
+#             total += A[i]
+
+#C - Switches
+# import sys
+# input = sys.stdin.readline
+
+# N, M = map(int, input().split())
+# bulb = []
+# for _ in range(M):
+#     v = list(map(int, input().split()))
+#     k, *swiches = v
+#     bulb.append([s-1 for s in swiches])
+# p = list(map(int,( input().split)))
+
+# ans = 0
+# for mask in range(1<<N):
+#     ok = True
+#     for i in range(M):
+#         cnt =0
+#         for s in bulb[i]:
+#             if mask & (1 << s):
+#                 cnt += 1
+#         if cnt % 2 != p[i]:
+#             ok = False
+#             break
+#     if ok:
+#         ans += 1
+
+# print(ans)
+
+
