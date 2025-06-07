@@ -170,5 +170,51 @@
 # else:
 #     print(cnt + 1)
 
+#B - Four Hidden
+# T = input()
+# U = input()
+
+
+# for i in range(len(T) - len(U)+1):
+#     flg = True
+#     for j in range(len(U)):
+#         if not T[i+j] == '?' and not T[i+j] ==U[j]:
+#             flg = False
+#             break
+#     if flg == True:
+#         print('Yes')
+#         exit()
+
+# print('No') 
+
+#B - Card
+# from collections import deque
+
+# stack = deque()
+# for i in range(100):
+#     stack.append(0)
+
+# types = []
+# results = []
+# Q = int(input())
+# for i in range(Q):
+#     type, *x = map(int, input().split())
+#     if type == 1:
+#         stack.append(x[0])
+#     else:
+#         results.append(stack.pop())
+
+# for result in results:
+#     print(result)
+
+
+
+
+
+
+
+
+
+
 
 
