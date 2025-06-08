@@ -138,6 +138,12 @@
 
 # print(ans)
     
+#12　AtCoder Beginner Contest 002 D - 派閥
+
+
+
+
+
 
 #15　AtCoder Beginner Contest 145 C - Average Length
 # import itertools, math, sys

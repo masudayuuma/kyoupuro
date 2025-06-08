@@ -68,19 +68,46 @@
 
 
 #C - Security 2
-S = input()
+# S = input()
 
-A_count = len(S)
-n = len(S)
-B_count = int(S[-1])
+# A_count = len(S)
+# n = len(S)
+# B_count = int(S[-1])
 
 
-for i in range(1, n+1):
-    str_B = str(B_count)
-    if S[n - i] >= str_B[-1]:
-        B_count += int(S[n - i]) - int(str_B[-1])
-    else:
-        B_count += (int(S[n-i])+10) - int(str_B[-1])
+# for i in range(1, n+1):
+#     str_B = str(B_count)
+#     if S[n - i] >= str_B[-1]:
+#         B_count += int(S[n - i]) - int(str_B[-1])
+#     else:
+#         B_count += (int(S[n-i])+10) - int(str_B[-1])
     
 
-print(B_count+A_count)
+# print(B_count+A_count)
+
+#C - Equilateral Triangle
+from collections import defaultdict
+import sys
+input = sys.stdin.readline
+
+N, L = map(int, input().split())
+D = list(map(int, input().split()))
+
+if not L % 3 == 0:
+    print(0)
+    exit()
+cnt = defaultdict(int)
+cnt[0] = 1
+total_seihoukei = 0
+wari = L//3
+
+sum_d = 0
+for d in D:
+    sum_d += d
+    cnt[sum_d%L] += 1
+
+for i in range(wari):
+    if cnt[i] and cnt[i+wari] and cnt[i+wari*2]:
+        total_seihoukei += cnt[i] * cnt[i+wari] * cnt[i+wari*2]
+
+print(total_seihoukei)

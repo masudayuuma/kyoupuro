@@ -208,6 +208,24 @@
 #     print(result)
 
 
+#B - Citation
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# max_x = 0
+
+# for x in range(N + 1):
+#     count = 0
+#     for a in A:
+#         if a >= x:
+#             count += 1
+    
+#     if count >= x:
+#         max_x = x
+
+# print(max_x)
+
+
 
 
 
