@@ -225,6 +225,39 @@
 
 # print(max_x)
 
+#B - Restaurant Queue
+# from collections import deque
+
+# queue = deque()
+# result = []
+# Q = int(input())
+
+# for _ in range(Q):
+#     q, *n = map(int, input().split())
+#     if q == 1:
+#         queue.append(n[0])
+#     else:
+#         result.append(queue.popleft())
+
+# for res in result:
+#     print(res)
+
+from collections import deque
+
+q = int(input())
+que = deque()
+
+for _ in range(q):
+    t, *x = map(int,input().split())
+    if t == 1:
+        que.append(x[0])
+    else:
+        print(que[0])
+        que.popleft()
+
+
+
+
 
 
 
