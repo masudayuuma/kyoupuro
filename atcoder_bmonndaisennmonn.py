@@ -242,18 +242,36 @@
 # for res in result:
 #     print(res)
 
-from collections import deque
+# from collections import deque
 
-q = int(input())
-que = deque()
+# q = int(input())
+# que = deque()
 
-for _ in range(q):
-    t, *x = map(int,input().split())
-    if t == 1:
-        que.append(x[0])
-    else:
-        print(que[0])
-        que.popleft()
+# for _ in range(q):
+#     t, *x = map(int,input().split())
+#     if t == 1:
+#         que.append(x[0])
+#     else:
+#         print(que[0])
+#         que.popleft()
+
+#B - Make Target
+N = int(input())
+
+target = [["?"]*N for _ in range(N)]
+
+for i in range(N):
+    for j in range(N):
+        if min(i, j, N-i-1, N-j-1) % 2 == 0:
+            target[i][j] = "#"
+        else:
+            target[i][j] = "."
+
+for row in target:
+    print("".join(row))
+
+
+
 
 
 
