@@ -256,21 +256,41 @@
 #         que.popleft()
 
 #B - Make Target
-N = int(input())
+# N = int(input())
 
-target = [["?"]*N for _ in range(N)]
+# target = [["?"]*N for _ in range(N)]
 
-for i in range(N):
-    for j in range(N):
-        if min(i, j, N-i-1, N-j-1) % 2 == 0:
-            target[i][j] = "#"
-        else:
-            target[i][j] = "."
+# for i in range(N):
+#     for j in range(N):
+#         if min(i, j, N-i-1, N-j-1) % 2 == 0:
+#             target[i][j] = "#"
+#         else:
+#             target[i][j] = "."
 
-for row in target:
-    print("".join(row))
+# for row in target:
+#     print("".join(row))
 
+#B - cat
+# N = int(input())
+# result = ""
+# cnt = []
+# for i in range(N):
+#     s = input()
+#     cnt.append(s)
 
+# cnt.sort(key = len)
+# print("".join(cnt))
+
+#B - A..B..C
+# S = input()
+# cnt = 0
+# for i in range(len(S)-2):
+#     for j in range(i+1, len(S)-1):
+#         for k in range(i+2, len(S)):
+#             if S[i] == "A" and S[j] == "B" and S[k] == "C" and j-i == k-j:
+#                 cnt += 1
+
+# print(cnt)
 
 
 

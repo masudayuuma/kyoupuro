@@ -171,6 +171,95 @@
 # print(avg)
 
 
+#18 ALDS_4_B - 二分探索　基本問題です。map でも解けますが二分探索で解いてみてください。
+# import sys
+# input = sys.stdin.readline
+
+# def question(m, num):
+#     return S[m] >= num
+
+# def binarySarch(num):
+#     global cnt
+#     ng = -1
+#     ok = n
+#     while(ok - ng > 1):
+#         m = (ng+ok)//2
+#         if (question(m, num)): 
+#             ok = m
+#         else:
+#             ng = m
+#     if S[ok] == num:
+#         cnt += 1
+        
+# n = int(input())
+# S = list(map(int, input().split()))
+# q = int(input())
+# T = list(map(int, input().split()))
+# cnt = 0
+# for t in T:
+#     binarySarch(t)
+
+# print(cnt)
+
+
+#19　JOI 2009 本選 2 - ピザ　できた
+# import sys
+# input = sys.stdin.readline
+
+# L = int(input())
+# n = int(input())
+# q = int(input())
+# S = [0]
+# T = []
+# for _ in range(n-1):
+#     s = int(input())
+#     S.append(s)
+
+# for _ in range(q):
+#     t = int(input())
+#     T.append(t)
+
+# S.append(L)
+# S.sort()
+
+# cnt = 0
+# for i in T:
+#     ok = n
+#     ng = 0
+#     while ok - ng > 1:
+#         m = (ok+ng)//2
+#         if S[m] >= i:
+#             ok = m
+#         else:
+#             ng = m
+        
+#     cnt += min(S[ok]-i, i-S[ng])
+
+# print(cnt)
+
+#20　AtCoder Beginner Contest 077 C - Snuke Festival　面白いです。
+# import sys, bisect
+# input = sys.stdin.readline
+
+# N = int(input())
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
+# C = list(map(int, input().split()))
+
+# A.sort()
+# B.sort()
+# C.sort()
+# total = 0
+# for b in B:
+#     A_cnt = bisect.bisect_left(A, b)
+#     C_cnt = len(C) - bisect.bisect_right(C, b)
+#     total += A_cnt * C_cnt
+
+# print(total)
+
+
+
+
 #24　ALDS_11_B - 深さ優先探索　基本問題です。
 # import sys
 # sys.setrecursionlimit(10**6)
