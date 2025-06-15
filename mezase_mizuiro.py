@@ -257,7 +257,44 @@
 
 # print(total)
 
+#21　AtCoder Beginner Contest 023 D - 射撃王　教育的に良いです。
+# import sys
+# input = sys.stdin.readline 
+# N = int(input())
+# H = []
+# S = []
+# for _ in range(N):
+#     h, s = map(int, input().split())
+#     H.append(h)
+#     S.append(s)
 
+# ok = 10**18
+# ng = 0
+
+# while ok - ng > 1:
+#     mid = (ok + ng) // 2
+#     flag = True
+#     t = [0] * N
+#     for i in range(N):
+#         if (mid < H[i]):
+#             flag = False
+#         else:
+#             t[i] = (mid - H[i]) // S[i]
+
+#     t.sort()
+#     for i in range(N):
+#         if (t[i] < i):
+#             flag = False
+
+#     if flag:
+#         ok = mid
+#     else:
+#         ng = mid
+
+# print(ok)
+
+#22
+#23
 
 
 #24　ALDS_11_B - 深さ優先探索　基本問題です。
@@ -337,6 +374,8 @@
 
 # for i in island_count:
 #     print(i)
+
+
 
 #34　ALDS_10_A - フィボナッチ数　超基本。「DP とは何か」を感じることができます。
 # num = int(input())
