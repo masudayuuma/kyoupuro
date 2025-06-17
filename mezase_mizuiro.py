@@ -376,6 +376,54 @@
 #     print(i)
 
 
+#26　AtCoder Beginner Contest 138 D - Ki　木構造の問題の多くは、深さ優先探索を使います。 これだとTLEしちゃう
+import sys
+sys.setrecursionlimit(10**7)
+
+input =sys.stdin.readline
+
+N, Q = map(int, input().split())
+connection = [[] for _ in range(N+1)]
+
+for i in range(N-1):
+    a, b = map(int, input().split())
+    connection[b].append(a)
+    connection[a].append(b)
+
+
+n_point = [0 for _ in range(N+1)]
+visited = [False for _ in range(N+1)]
+n_cnt = [0] * (N+1)
+
+
+for _ in range(Q):
+    p, x = map(int, input().split())
+    n_point[p] += x 
+
+
+def dfs(p, x):
+    if visited[p]:
+        return
+
+    visited[p] = True
+    
+    if n_point[p]:
+        point = n_point[p] + x
+    else:
+        point = x
+
+    n_cnt[p] += point
+
+    for c in connection[p]:
+        if visited[c]:
+            continue
+
+        dfs(c, point)   
+
+dfs(1, 0)
+
+print(" ".join(map(str, n_cnt[1:])))
+
 
 #34　ALDS_10_A - フィボナッチ数　超基本。「DP とは何か」を感じることができます。
 # num = int(input())
