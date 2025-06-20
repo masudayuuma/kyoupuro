@@ -377,52 +377,178 @@
 
 
 #26　AtCoder Beginner Contest 138 D - Ki　木構造の問題の多くは、深さ優先探索を使います。 これだとTLEしちゃう
-import sys
-sys.setrecursionlimit(10**7)
+# import sys
+# sys.setrecursionlimit(10**7)
 
-input =sys.stdin.readline
+# input =sys.stdin.readline
 
-N, Q = map(int, input().split())
-connection = [[] for _ in range(N+1)]
+# N, Q = map(int, input().split())
+# connection = [[] for _ in range(N+1)]
 
-for i in range(N-1):
-    a, b = map(int, input().split())
-    connection[b].append(a)
-    connection[a].append(b)
-
-
-n_point = [0 for _ in range(N+1)]
-visited = [False for _ in range(N+1)]
-n_cnt = [0] * (N+1)
+# for i in range(N-1):
+#     a, b = map(int, input().split())
+#     connection[b].append(a)
+#     connection[a].append(b)
 
 
-for _ in range(Q):
-    p, x = map(int, input().split())
-    n_point[p] += x 
+# n_point = [0 for _ in range(N+1)]
+# visited = [False for _ in range(N+1)]
+# n_cnt = [0] * (N+1)
 
 
-def dfs(p, x):
-    if visited[p]:
-        return
+# for _ in range(Q):
+#     p, x = map(int, input().split())
+#     n_point[p] += x 
 
-    visited[p] = True
+
+# def dfs(p, x):
+#     if visited[p]:
+#         return
+
+#     visited[p] = True
     
-    if n_point[p]:
-        point = n_point[p] + x
-    else:
-        point = x
+#     if n_point[p]:
+#         point = n_point[p] + x
+#     else:
+#         point = x
 
-    n_cnt[p] += point
+#     n_cnt[p] += point
 
-    for c in connection[p]:
-        if visited[c]:
-            continue
+#     for c in connection[p]:
+#         if visited[c]:
+#             continue
 
-        dfs(c, point)   
+#         dfs(c, point)   
 
-dfs(1, 0)
+# dfs(1, 0)
 
-print(" ".join(map(str, n_cnt[1:])))
+# print(" ".join(map(str, n_cnt[1:])))
+
+#27　JOI 2009 予選 4 - 薄氷渡り　深さ優先探索は、木構造だけではありません、ということを教えてくれる問題です。再帰関数を使って解けます。
+# import sys
+# sys.setrecursionlimit(10**7)
+# input = sys.stdin.readline
+
+# m = int(input())
+# n = int(input())
+# ice_square = [list(map(int, input().split())) for _ in range(n)]
+
+# dist = ((0,1), (0,-1), (1,0), (-1,0))
+# max_depth = 0
+# now_depth = 0
+
+# def dfs(i, j, depth):
+#     global now_depth
+#     depth += 1
+#     ice_square[i][j] = 0
+#     for dy, dx in dist:
+#         ny = i + dy
+#         nx = j + dx
+#         if 0 <= nx < m and 0 <= ny < n and ice_square[ny][nx]:
+#             dfs(ny, nx, depth)
+#     ice_square[i][j] = 1
+#     now_depth = max(now_depth, depth)
+
+# for i in range(n):
+#     for j in range(m):
+#         if ice_square[i][j]:
+#             now_depth = 0
+#             dfs(i, j, 0)
+#             max_depth = max(max_depth, now_depth)
+
+# print(max_depth)
+
+
+#28　ALDS_11_C - 幅優先探索　基本問題です。
+# from collections import deque
+# import sys
+# input = sys.stdin.readline
+# inf = 10**10
+
+# n = int(input())
+# network = [[] for _ in range(n+1)]
+# length_list = [inf for _ in range(n+1)]
+# visited_list = [0 for _ in range(n+1)]
+
+# for _ in range(n):
+#     inputs = list(map(int, input().split()))
+#     u, k = inputs[:2]
+#     v = inputs[2:]
+#     network[u] += v
+
+# que = deque()
+
+# que.append(1)
+# length_list[1] = 0
+
+# while que:
+#     node = que.popleft()
+#     visited_list[node] = 1
+
+#     for i in network[node]:
+#         if visited_list[i]:
+#             continue
+
+#         que.append(i)
+#         visited_list[i] = 1
+
+#         if length_list[i] > length_list[node]+1:
+#             length_list[i] = length_list[node]+1
+
+# for i in range(1, n+1):
+#     if length_list[i] == inf:
+#         print(i, -1)
+#     else:
+#         print(i, length_list[i])
+
+#29　AtCoder Beginner Contest 007 C - 幅優先探索　重み無しグラフの最短経路問題は、幅優先探索で解けます。
+# from collections import deque
+# import sys
+# input = sys.stdin.readline
+# inf = 10**10
+
+# R, C = map(int, input().split())
+# Sy, Sx = map(int, input().split())
+# Gy, Gx = map(int, input().split())
+
+# C_list = list(input() for _ in range(R))
+
+# Sy -= 1
+# Sx -= 1
+# Gy -= 1
+# Gx -= 1
+
+# visited = [[False] * C  for _ in range(R)]
+# length = [[inf] * C for _ in range(R)]
+
+# que = deque()
+# now = [Sy, Sx]
+# que.append(now)
+# visited[Sy][Sx] = 1
+# length[Sy][Sx] = 0
+
+# while que:
+#     y,x = que.popleft()
+
+#     for dy, dx in ((-1,0), (1,0), (0,1), (0,-1)):
+#         ny = dy+y
+#         nx = dx+x
+
+#         if visited[ny][nx] or C_list[ny][nx] == '#':
+#             continue
+
+#         visited[ny][nx] = True
+#         que.append([ny, nx])
+
+#         if length[ny][nx] > length[y][x] +1:
+#             length[ny][nx] = length[y][x] +1
+
+# print(length[Gy][Gx])
+
+# 30　JOI 2011 予選 5 - チーズ
+# 31　JOI 2012 予選 5 - イルミネーション　少し実装が重いですが、頑張れば解けます。
+# 32　AOJ 1166 - 迷図と命ず　実装が少し重いです。
+# 33　AtCoder Beginner Contest 088 D - Grid Repainting　これが解ければ、幅優先探索に慣れたと思って良いです。
 
 
 #34　ALDS_10_A - フィボナッチ数　超基本。「DP とは何か」を感じることができます。
