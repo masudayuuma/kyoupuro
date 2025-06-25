@@ -636,6 +636,23 @@
 #     print(ans)
 
 
+#39　JOI 2011 予選 4 - 1 年生
+# N = int(input())
+# X = list(map(int, input().split()))
+
+# DP = [[0]*N for _ in range(21)]
+# DP[X[0]][0] = 1
+
+# for n in range(1, N-1):
+#     for sum in range(21):
+#         plus = sum + X[n]
+#         minus = sum - X[n]
+#         if 0 <= plus <= 20:
+#             DP[plus][n] += DP[sum][n-1]
+#         if 0 <= minus <= 20:
+#             DP[minus][n] += DP[sum][n-1]
+
+# print(DP[X[N-1]][N-2])
 
 
 
