@@ -655,45 +655,48 @@
 # print(DP[X[N-1]][N-2])
 
 
-#40　JOI 2012 予選 4 - パスタ　例の理解はできたから自分で書き直しましょう
-N, K = map(int, input().split())
+#40　JOI 2012 予選 4 - パスタ
+#dp[][][0]は前日とは違うものを食べた時、dp[][][1]は前日と同じものを食べるとき
+# N, K = map(int, input().split())
+# fixed_days = {}
 
-fixed_days = {}
-for _ in range(K):
-   day, pasta = map(int, input().split())
-   fixed_days[day] = pasta - 1
+# for _ in range(K):
+#     day, pasta = map(int, input().split())
+#     fixed_days[day] = pasta -1
 
-dp = [[[0] * 2 for _ in range(3)] for _ in range(N + 1)]
+# dp = [[[0] * 2 for _ in range(3)] for _ in range(N+1)]
 
-if 1 in fixed_days:
-   pasta = fixed_days[1]
-   dp[1][pasta][0] = 1
-else:
-   for pasta in range(3):
-       dp[1][pasta][0] = 1
+# if 1 in fixed_days:
+#     pasta = fixed_days[1]
+#     dp[1][pasta][0] = 1
+# else:
+#     for pasta in range(3):
+#         dp[1][pasta][0] = 1
 
-for day in range(2, N + 1):
-   for today_pasta in range(3):
-       for yesterday_pasta in range(3):
-           if today_pasta != yesterday_pasta:
-               dp[day][today_pasta][0] += dp[day - 1][yesterday_pasta][0]
-               dp[day][today_pasta][0] += dp[day - 1][yesterday_pasta][1]
-           else:
-               dp[day][today_pasta][1] += dp[day - 1][yesterday_pasta][0]
-       
-       dp[day][today_pasta][0] %= 10000
-       dp[day][today_pasta][1] %= 10000
-   
-   if day in fixed_days:
-       pasta = fixed_days[day]
-       for p in range(3):
-           if p != pasta:
-               dp[day][p][0] = 0
-               dp[day][p][1] = 0
+# for day in range(2, N+1):
+#     for today_pasta in range(3):
+#         for yestaday_pasta in range(3):
+#             if today_pasta != yestaday_pasta:
+#                 dp[day][today_pasta][0] += dp[day-1][yestaday_pasta][0]
+#                 dp[day][today_pasta][0] += dp[day-1][yestaday_pasta][1]
+#             else:
+#                 dp[day][today_pasta][1] += dp[day-1][yestaday_pasta][0]
 
-total = 0
-for pasta in range(3):
-   total += dp[N][pasta][0]
-   total += dp[N][pasta][1]
+#         else:
+#             dp[day][today_pasta][0] %= 10000
+#             dp[day][today_pasta][1] %= 10000
 
-print(total % 10000)
+#     if day in fixed_days:
+#         pasta = fixed_days[day]
+#         for p in range(3):
+#             if p != pasta:
+#                 dp[day][p][0] = 0
+#                 dp[day][p][1] = 0
+
+# total = 0
+# for pasta in range(3):
+#     total += dp[N][pasta][0]
+#     total += dp[N][pasta][1]
+
+# print(total % 10000)
+
