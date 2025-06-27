@@ -86,28 +86,43 @@
 # print(B_count+A_count)
 
 #C - Equilateral Triangle
-from collections import defaultdict
-import sys
-input = sys.stdin.readline
+# from collections import defaultdict
+# import sys
+# input = sys.stdin.readline
 
-N, L = map(int, input().split())
-D = list(map(int, input().split()))
+# N, L = map(int, input().split())
+# D = list(map(int, input().split()))
 
-if not L % 3 == 0:
-    print(0)
-    exit()
-cnt = defaultdict(int)
-cnt[0] = 1
-total_seihoukei = 0
-wari = L//3
+# if not L % 3 == 0:
+#     print(0)
+#     exit()
+# cnt = defaultdict(int)
+# cnt[0] = 1
+# total_seihoukei = 0
+# wari = L//3
 
-sum_d = 0
-for d in D:
-    sum_d += d
-    cnt[sum_d%L] += 1
+# sum_d = 0
+# for d in D:
+#     sum_d += d
+#     cnt[sum_d%L] += 1
 
-for i in range(wari):
-    if cnt[i] and cnt[i+wari] and cnt[i+wari*2]:
-        total_seihoukei += cnt[i] * cnt[i+wari] * cnt[i+wari*2]
+# for i in range(wari):
+#     if cnt[i] and cnt[i+wari] and cnt[i+wari*2]:
+#         total_seihoukei += cnt[i] * cnt[i+wari] * cnt[i+wari*2]
 
-print(total_seihoukei)
+# print(total_seihoukei)
+
+#C - Not All Covered
+# N, M = map(int, input().split())
+# kabe = [0]*(N+1)
+# for i in range(M):
+#     l,m = map(int, input().split())
+#     l = l-1
+#     m = m-1
+#     kabe[l] += 1
+#     kabe[m+1] -= 1
+
+# for i in range(1, N+1):
+#     kabe[i] += kabe[i-1]
+
+# print(min(kabe[:N]))
