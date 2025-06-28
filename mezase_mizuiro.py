@@ -700,3 +700,28 @@
 
 # print(total % 10000)
 
+#41　JOI 2013 予選 4 - 暑い日々
+# INF = 10**9
+# d, n = map(int, input().split())
+# t = [int(input()) for i in range(d)]
+# a = [0] *n
+# b = [0]*n
+# c = [0]*n
+# for i in range(n):
+#     a[i], b[i], c[i] = map(int, input().split())
+# dp = [[0] *n for i in range(d)]
+
+# #初期設定
+# for i in range(n):
+#     if not (a[i] <= t[0] <= b[i]):
+#         dp[0][i] = -INF
+
+# #DP
+# for i in range(1, d):
+#     for j in range(n):
+#         if not (a[j] <= t[i] <= b[j]):
+#             dp[i][j] = -INF
+#         else:
+#             for k in range(n):
+#                 dp[i][j] = max(dp[i][j], dp[i-1][k] + abs(c[k] - c[j]))
+# print(max(dp[d-1]))
