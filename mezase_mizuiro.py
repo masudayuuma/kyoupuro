@@ -725,3 +725,27 @@
 #             for k in range(n):
 #                 dp[i][j] = max(dp[i][j], dp[i-1][k] + abs(c[k] - c[j]))
 # print(max(dp[d-1]))
+
+#42　JOI 2015 予選 4 - シルクロード
+# n, m = map(int, input().split())
+# INF = 10**9
+
+# kyori = [0]*(n)
+# for i in range(n):
+#     k = int(input())
+#     kyori[i] = k
+
+# tenki = [0]*(m)
+# for i in range(m):
+#     t = int(input())
+#     tenki[i] = t
+
+# dp = [[INF]*(n+1) for _ in range(m+1)]
+# dp[0][0] = 0
+
+# for kigenn in range(1, m+1):
+#     dp[kigenn][0] = 0
+#     for tosi in range(1, n+1):
+#         dp[kigenn][tosi] = min(dp[kigenn-1][tosi], dp[kigenn-1][tosi-1]+ tenki[kigenn-1]*kyori[tosi-1])
+
+# print(dp[-1][-1])
