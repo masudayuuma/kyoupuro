@@ -184,14 +184,33 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-class Solution:
-    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        node = None
-        while head:
-            temp = head.next
-            head.next = node
-            node = head
-            head = temp
+# class Solution:
+#     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+#         node = None
+#         while head:
+#             temp = head.next
+#             head.next = node
+#             node = head
+#             head = temp
 
-        return node
+#         return node
+
+#Kth Largest Element in a Stream
+# import heapq
+# class KthLargest(object):
+#     def __init__(self, k, nums):
+#         self.k = k
+#         self.heap = []
+#         for num in nums:
+#             self.add(num)
+
+#     def add(self, val):
+#         if len(self.heap) < self.k:
+#             heapq.heappush(self.heap, val)
+#         elif val > self.heap[0]:
+#             heapq.heapreplace(self.heap, val)
+#         return self.heap[0]
+    
+        
+
     
