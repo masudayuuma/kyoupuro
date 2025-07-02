@@ -253,3 +253,75 @@
 # print(ans)
 
 
+# heapq 優先度付きキュー（priority queue）とは、優先度にしたがって、優先度の高いものから順番に取り出すことができるものだ。
+#最小値、最大値を素早く取り出すことができる 値の挿入順は気にしなくても良い。Olog(N)でできる
+# import heapq
+# numbers = [3, 5, 1, 6, 2, 4]
+# heapq.heapify(numbers)
+# print(numbers)
+
+# print(heapq.heappop(numbers))
+# print(heapq.heappop(numbers))
+
+# print(numbers)
+
+#例題1: ABC137 D - Summer Vacation いわゆる貪欲法
+# import heapq
+# n, m = map(int, input().split())
+# jobs = [[] for _ in range(m+1)]
+
+# for _ in range(n):
+#     a, b = map(int, input().split())
+
+#     if a <= m:
+#         jobs[a].append(b)
+
+# heap = []
+# heapq.heapify(heap)
+# total = 0
+
+# for day in range(1, m+1):
+#     for i in jobs[day]:
+#         heapq.heappush(heap, -i)
+
+#     if len(heap) > 0:
+#         total += abs(heapq.heappop(heap))
+
+# print(total)
+
+#ABC141 D - Powerful Discount Tickets
+# import heapq
+
+# n, m = map(int, input().split())
+# alist = list(map(lambda x: int(x)*(-1), input().split()))
+
+# heapq.heapify(alist)
+
+# for _ in range(m):
+#     temp = heapq.heappop(alist)*(-1)//2
+#     heapq.heappush(alist, temp*(-1))
+
+# print(sum(map(lambda x: -x, alist)))
+
+
+#ABC212 D - Querying Multiset
+# import heapq
+# q = int(input())
+# sack = []
+# heapq.heapify(sack)
+# total = 0
+
+# for i in range(q):
+#     query = list(map(int, input().split()))
+#     if query[0] == 1:
+#         heapq.heappush(sack, query[1]-total)
+#     elif query[0] == 2:
+#         total += query[1]
+#     else:
+#         ans = heapq.heappop(sack)
+#         print(ans + total)
+
+
+        
+
+

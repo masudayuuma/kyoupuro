@@ -210,7 +210,5 @@
 #         elif val > self.heap[0]:
 #             heapq.heapreplace(self.heap, val)
 #         return self.heap[0]
-    
-        
 
-    
+
