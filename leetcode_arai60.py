@@ -231,31 +231,60 @@
 #         return res
 
 #Find K Pairs with Smallest Sums
-import heapq
+# import heapq
 
-class Solution(object):
-    def kSmallestPairs(self, nums1, nums2, k):
-        if not nums1 or not nums2:
-            return []
+# class Solution(object):
+#     def kSmallestPairs(self, nums1, nums2, k):
+#         if not nums1 or not nums2:
+#             return []
         
-        h = []
-        visited = set()
-        result = []
+#         h = []
+#         visited = set()
+#         result = []
 
-        heapq.heappush(h, (nums1[0]+nums2[0], 0, 0))
-        visited.add((0,0))
+#         heapq.heappush(h, (nums1[0]+nums2[0], 0, 0))
+#         visited.add((0,0))
 
-        while h and len(result) < k:
-            s, i, j = heapq.heappop(h)
-            result.append([nums1[i], nums2[j]])
+#         while h and len(result) < k:
+#             s, i, j = heapq.heappop(h)
+#             result.append([nums1[i], nums2[j]])
 
-            if j + 1 < len(nums2) and (i, j+1) not in visited:
-                visited.add((i, j+1))
-                heapq.heappush(h, (nums1[i] + nums2[j+1], i, j+1))
+#             if j + 1 < len(nums2) and (i, j+1) not in visited:
+#                 visited.add((i, j+1))
+#                 heapq.heappush(h, (nums1[i] + nums2[j+1], i, j+1))
 
-            if i+1 < len(nums1) and (i + 1, j) not in visited:
-                visited.add((i+1, j))
-                heapq.heappush(h, (nums1[i+1]+nums2[j], i+1, j))
+#             if i+1 < len(nums1) and (i + 1, j) not in visited:
+#                 visited.add((i+1, j))
+#                 heapq.heappush(h, (nums1[i+1]+nums2[j], i+1, j))
 
-        return result
-    
+#         return result
+
+
+# class Sotuliton:
+#     def kSmallestPairs(self, nums1, nums2, k):
+#         from heapq import heappush, heappop
+#         m = len(nums1)
+#         n = len(nums2)
+
+#         ans = []
+#         visited = set()
+
+#         miniHeap = [(nums1[0]+ nums2[0], (0, 0))]
+#         visited.add((0, 0))
+#         count = 0
+
+#         while k > 0 and miniHeap:
+#             val, (i, j) = heappop(miniHeap)
+#             ans.append([nums1[i], nums2[j]])
+
+#             if i+1 < m and (i+1, j) not in visited:
+#                 heappush(miniHeap, (nums1[i+1]+nums2[j], (i+1, j)))
+#                 visited((i+1, j))
+            
+#             if j +1 < n and (i, j+1) not in visited:
+#                 heappush(miniHeap, (nums1[i]+nums2[j+1], (i, j+1)))
+#                 visited.add((i, j+1))
+#             k = k-1
+
+#         return ans
+
