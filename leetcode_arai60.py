@@ -311,3 +311,45 @@
 #         return list(groups.values())
 
 
+#Intersection of Two Arrays
+# class Solution(object):
+#     def intersection(self, num1, num2):
+#         num1.sort()
+#         num2.sort()
+
+#         N = len(num1)
+#         M = len(num2)
+#         p1 = 0
+#         p2 = 0
+
+#         intersection = set()
+
+#         while p1 < N and p2 < M:
+#             if num1[p1] == num2[p2]:
+#                 intersection.add(num1[p1])
+#                 p1 += 1
+#                 p2 += 1
+#             elif num1[p1] < num2[p2]:
+#                 p1 += 1
+#             else:
+#                 p2 += 1
+
+#         result = []
+#         for x in intersection:
+#             result.append(x)
+
+#         return result
+
+
+# class Solution(object):
+#     def intersection(self, num1, num2):
+#         num1 = set(num1)
+#         num2 = set(num2)
+#         ans = list()
+
+#         for n1 in num1:
+#             if n1 in num2:
+#                 ans.append(n1)
+
+#         return list(ans)
+        
