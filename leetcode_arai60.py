@@ -353,3 +353,78 @@
 
 #         return list(ans)
         
+#Unique Email Addresses
+#自作　きもい
+# class Solution:
+#     def numUniqueEmails(self, emails: List[str]) -> int:
+#         unq = set()
+#         for email in emails:
+#             length = len(email)
+#             i = 0
+#             localflag = True
+#             address = ""
+#             while i < length:
+#                 if email[i] == '@':
+#                     localflag =False
+#                     address += email[i]
+#                     i += 1
+#                 elif localflag:
+#                     if email[i] == "+":
+#                         while not email[i+1] == '@':
+#                             i += 1
+#                         i += 1
+#                     elif email[i] == ".":
+#                         i += 1
+#                     else:
+#                         address += email[i]
+#                         i += 1
+#                 elif not localflag:
+#                     address += email[i]
+#                     i += 1
+#             unq.add(address)
+#         return len(unq)
+
+# class Solution:
+#     def numUniqueEmails(self, emails: List[str]) -> int:
+#         unique_emails = set()
+
+#         def canonicalize(before):
+#             after = []
+#             is_domain_part =False
+#             ignore_rest_local_part = False
+#             for c in before:
+#                 if is_domain_part:
+#                     after.append(c)
+#                     continue
+#                 if c== "@":
+#                     after.append(c)
+#                     is_domain_part =True
+#                     ignore_rest_local_part = False
+#                     continue
+#                 if c == "." or ignore_rest_local_part:
+#                     continue
+#                 if c == "+":
+#                     ignore_rest_local_part = True
+#                     continue
+#                 after.append(c)
+#             return "".join(after)
+        
+#         for email in emails:
+#             unique_emails.add(canonicalize(email))
+#         return len(unique_emails)
+
+#First Unique Character in a String
+# from collections import defaultdict
+
+# class Solution:
+#     def firstUniqChar(self, s: str) -> int:
+#         s_dict = defaultdict(int)
+#         for c in s:
+#             s_dict[c] += 1
+
+#         for i, c in enumerate(s):
+#             if s_dict[c] == 1:
+#                 return i
+        
+#         return -1
+

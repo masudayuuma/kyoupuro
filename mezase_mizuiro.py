@@ -749,3 +749,46 @@
 #         dp[kigenn][tosi] = min(dp[kigenn-1][tosi], dp[kigenn-1][tosi-1]+ tenki[kigenn-1]*kyori[tosi-1])
 
 # print(dp[-1][-1])
+
+#43　パ研杯2019 D - パ研軍旗
+# N = int(input())
+# S = list(input() for _ in range(5))
+
+# dp = [[10000]*N for _ in range(3)]
+
+# R_1 = 0
+# B_1 = 0
+# W_1 = 0
+
+# for i in range(5):
+#     if S[i][0] == "R":
+#         R_1 += 1
+#     if S[i][0] == "B":
+#         B_1 += 1
+#     if S[i][0] == "W":
+#         W_1 += 1
+
+# dp[0][0] = 5 -R_1
+# dp[1][0] = 5-B_1
+# dp[2][0] = 5-W_1
+
+# for i in range(1, N):
+#     for j in range(3):
+#         R_n = 0
+#         B_n = 0
+#         W_n = 0
+#         for k in range(5):
+#             if S[k][i] == "R":
+#                 R_n += 1
+#             if S[k][i] == "B":
+#                 B_n += 1
+#             if S[k][i] == "W":
+#                 W_n += 1
+#         if j == 0:
+#             dp[j][i] = 5-R_n + min(dp[j-1][i-1], dp[j-2][i-1])
+#         if j == 1:
+#             dp[j][i] = 5-B_n + min(dp[j-1][i-1], dp[j-2][i-1])
+#         if j == 2:
+#             dp[j][i] = 5-W_n + min(dp[j-1][i-1], dp[j-2][i-1])
+
+# print(min(dp[0][-1], dp[1][-1], dp[2][-1])) 
