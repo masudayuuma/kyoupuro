@@ -792,3 +792,45 @@
 #             dp[j][i] = 5-W_n + min(dp[j-1][i-1], dp[j-2][i-1])
 
 # print(min(dp[0][-1], dp[1][-1], dp[2][-1])) 
+
+# AOJ 1167 - ポロック予想
+# def cal(i):
+#     return i*(i+1)*(i+2) //2
+
+# def main(n):
+#     proku = [0]
+#     proku_odd = [0]
+#     for i in range(1, 6):
+#         num  = cal(i)
+#         proku.append(num)
+#         if num % 2 != 0:
+#             proku_odd.append(num)
+
+#     dp = [0]*(n+1)
+#     dp_odd = [0]*(n+1)
+
+#     for j in range(n+1):
+#         dp[j] = j
+#         dp_odd[j] = j
+
+#     for i in range(1, len(proku)):
+#         for j in range(1, n+1):
+#             if j-proku[i] < 0:
+#                 continue
+#             if dp[j] > dp[j-proku[i]]+1:
+#                 dp[j] = dp[j-proku[i]]+1
+
+#     for i in range(1, len(proku_odd)):
+#         for j in range(1, n+1):
+#             if j-proku_odd[1] < 0:
+#                 continue
+#             if dp[j] > dp[j-proku_odd[i]]+1:
+#                 dp[j] = dp[j-proku_odd[i]]+1
+#     print(dp[-1], dp_odd[-1])
+
+# if __name__ == "__main__":
+#     while True:
+#         n = int(input())
+#         if n == 0:
+#             break
+#         main(n)
