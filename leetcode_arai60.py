@@ -428,3 +428,74 @@
         
 #         return -1
 
+#Subarray Sum Equals K
+# class Solution:
+#     def subarraySum(self, nums: List[int], k: int) -> int:
+#         sub_num = {0:1}
+#         total = count = 0
+
+#         for n in nums:
+#             total += n
+
+#             if total - k in sub_num:
+#                 count += sub_num[total-k]
+
+#             sub_num[total] = 1 + sub_num.get(total, 0)
+
+#         return count
+
+#Number of Islands 
+#DFS
+# class Solution:
+#     def numIslands(self, grid: List[List[str]]) -> int:
+#         def mark_as_visited(row: int, col: int) -> None:
+#             if not (0 <= row < m and 0 <= col < n):
+#                 return
+#             if grid[row][col] == '0':
+#                 return
+#             grid[row][col] = "0"
+#             dirs = [(1,0), (-1, 0), (0, 1), (0,-1)]
+#             for dr, dc in dirs:
+#                 mark_as_visited(row+dr, col+dc)
+
+#         m, n = len(grid), len(grid[0])
+#         num_of_islands = 0
+#         for row in range(m):
+#             for col in range(n):
+#                 if grid[row][col] == "1":
+#                     num_of_islands += 1
+#                     mark_as_visited(row, col)
+#         return num_of_islands
+
+#BFS
+# from collections import deque
+# class Solution:
+#     def numIslands(self, grid: List[List[str]]) -> int:
+#         islands = 0
+#         visited = set()
+#         rows, cols = len(grid), len(grid[0])
+
+#         def bfs(r, c):
+#             q = deque()
+#             visited.add((r, c))
+#             q.append((r, c))
+            
+#             while q:
+#                 row, col = q.popleft()
+#                 directions = [[1, 0], [-1, 0], [0,1], [0,-1]]
+
+#                 for dr, dc in directions:
+#                     r,c = row+dr, col+dc
+#                     if 0 <= r < rows and 0 <= c < cols and grid[r][c] == "1" and [r, c] not in visited:
+#                         q.append((r, c))
+#                         visited.app((r, c))
+
+
+
+#         for r in range(rows):
+#             for c in range(cols):
+#                 if grid[r][c] == "1" and (r, c) not in visited:
+#                     islands += 1
+#                     bfs(r, c)
+
+#         return islands
