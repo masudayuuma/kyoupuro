@@ -499,3 +499,65 @@
 #                     bfs(r, c)
 
 #         return islands
+
+#Max Area of Island
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        def mark_as_visited(row, col):
+            nonlocal menseki
+            if not (0 <= row < m and 0 <= col < n):
+                return
+            if grid[row][col] == 0:
+                return
+            menseki += 1
+            grid[row][col] = 0
+            dirs = [(1,0), (-1, 0), (0, 1), (0,-1)]
+            for dr, dc in dirs:
+                mark_as_visited(row+dr, col+dc)
+            return menseki
+ 
+        m, n = len(grid), len(grid[0])
+        max_of_islands = 0
+        menseki = 0
+        for row in range(m):
+            for col in range(n):
+                
+                if grid[row][col] == 1:
+                    menseki = 0
+                    max_of_islands = max(max_of_islands, mark_as_visited(row, col))
+        return max_of_islands
+    
+# class Solution:
+#     def maxAreaOfIsland(self, grid):
+#         seen = set()
+#         def area(r,c):
+#             if not (0 <= r < len(grid) and 0 <= c < len(grid[0])) and (r, c) not in seen and grid[r][c]:
+#                 return 0
+#             seen.add((r,c))
+#             return (1+area(r+1, c)+ area(r-1, c)+ area(r, c-1))
+        
+#         return max(area(r, c)
+#                    for r in range(len(grid))
+#                    for c in )
+
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        def mark_as_visited(row, col):
+            if not (0 <= row < m and 0 <= col < n):
+                return 0
+            if grid[row][col] == 0:
+                return 0
+            grid[row][col] = 0
+            #dirs = [(1,0), (-1,0), (0,1), (0,-1)]
+            return (1 + mark_as_visited(row+1, col) + mark_as_visited(row-1, col) +
+                    mark_as_visited(row, col-1) + mark_as_visited(row, col+1))
+        
+        m, n = len(grid), len(grid[0])
+        max_of_islands = 0
+        for row in range(m):
+            for col in range(n):
+                if grid[row][col] == 1:
+                    max_of_islands = max(max_of_islands, mark_as_visited(row, col))
+
+        return max_of_islands
+

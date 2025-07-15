@@ -793,7 +793,7 @@
 
 # print(min(dp[0][-1], dp[1][-1], dp[2][-1])) 
 
-# AOJ 1167 - ポロック予想
+#44 AOJ 1167 - ポロック予想
 # def cal(i):
 #     return i*(i+1)*(i+2) //2
 
@@ -834,3 +834,58 @@
 #         if n == 0:
 #             break
 #         main(n)
+
+
+
+
+#95　AtCoder Beginner Contest 149 B - Greedy Takahashi　200-300 点問題で出る数学的問題は大体そんな感じです。（貪欲法アルゴリズムに繋がってきます。）　余裕
+# A, B, K = map(int, input().split())
+
+# A_temp = A - K
+# if A_temp <= 0:
+#     A = 0
+# else:
+#     A = A_temp
+#     print(f"{A} {B}")
+#     exit()
+
+# B_temp = B + A_temp
+# if B_temp <= 0:
+#     B = 0
+#     print(f"{A} {B}")
+#     exit()
+# else:
+#     B = B_temp
+#     print(f"{A} {B}")
+#     exit()
+
+#96　AtCoder Beginner Contest 139 D - ModSum　考察一個です。 余裕
+# N = int(input())
+# ans = 0
+# N = N -1
+
+# for n in range(1, N+1):
+#     ans += n
+
+# print(ans)
+
+#97　AtCoder Beginner Contest 150 D - Semi Common Multiple
+# N, M = map(int, input().split())
+# A = list(map(int, input().split()))
+# half_A = [a // 2 for a in A]
+# cnt = 0
+
+# for X in range(1, M+1):
+#     flag = True
+#     for half_a in half_A:
+#         if X % half_a != 0:
+#             flag = False
+#             break
+#         if (X // half_a) % 2 == 0:
+#             flag = False
+#             break
+
+#     if flag: 
+#         cnt += 1
+
+# print(cnt)
