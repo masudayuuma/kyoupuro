@@ -540,24 +540,63 @@ class Solution:
 #                    for r in range(len(grid))
 #                    for c in )
 
-class Solution:
-    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
-        def mark_as_visited(row, col):
-            if not (0 <= row < m and 0 <= col < n):
-                return 0
-            if grid[row][col] == 0:
-                return 0
-            grid[row][col] = 0
-            #dirs = [(1,0), (-1,0), (0,1), (0,-1)]
-            return (1 + mark_as_visited(row+1, col) + mark_as_visited(row-1, col) +
-                    mark_as_visited(row, col-1) + mark_as_visited(row, col+1))
+# class Solution:
+#     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+#         def mark_as_visited(row, col):
+#             if not (0 <= row < m and 0 <= col < n):
+#                 return 0
+#             if grid[row][col] == 0:
+#                 return 0
+#             grid[row][col] = 0
+#             #dirs = [(1,0), (-1,0), (0,1), (0,-1)]
+#             return (1 + mark_as_visited(row+1, col) + mark_as_visited(row-1, col) +
+#                     mark_as_visited(row, col-1) + mark_as_visited(row, col+1))
         
-        m, n = len(grid), len(grid[0])
-        max_of_islands = 0
-        for row in range(m):
-            for col in range(n):
-                if grid[row][col] == 1:
-                    max_of_islands = max(max_of_islands, mark_as_visited(row, col))
+#         m, n = len(grid), len(grid[0])
+#         max_of_islands = 0
+#         for row in range(m):
+#             for col in range(n):
+#                 if grid[row][col] == 1:
+#                     max_of_islands = max(max_of_islands, mark_as_visited(row, col))
 
-        return max_of_islands
+#         return max_of_islands
+
+#Number of Connected Components in an Undirected Graph
+#有料
+
+#Word Ladder
+from collections import defaultdict
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        pattern_to_words = defaultdict(list)
+
+        def make_patterns(word):
+            patterns = []
+            for i in range(len(word)):
+                patterns.append(f"{word[:i]}*{word[i+1:]}")
+            return patterns
+        
+        for word in wordList:
+            patterns = make_patterns(word)
+            for pattern in patterns:
+                pattern_to_words[pattern].append(word)
+
+        words = [beginWord]
+        seen = set(word)
+        num_of_words = 1
+        while words:
+            num_of_words += 1
+            next_words = []
+            for word in words:
+                patterns = make_patterns(word)
+                for pattern in patterns:
+                    for next_word in pattern_to_words[pattern]:
+                        if next_word == endWord:
+                            return num_of_words
+                        if next_word in seen:
+                            continue
+                        seen.add(next_word)
+                        next_words.append(next_word)
+            words = next_words
+        return 0
 
