@@ -836,6 +836,27 @@
 #         main(n)
 
 
+#68　NTL_1_A - 素因数分解　基本問題です。
+# N = int(input())
+# NN = N
+# so = []
+# for n in range(2, int(N**0.5+1)):
+#     flag = True
+#     while flag:
+#         if N%n == 0:
+#             N = N//n
+#             so.append(n) 
+#         else:
+#             flag = False
+
+# if N > 1:
+#     so.append(N)
+
+# print(f"{NN}:", " ".join(map(str, so)))
+    
+#69　AtCoder Beginner Contest 084 D - 2017-like Number
+
+
 
 
 #95　AtCoder Beginner Contest 149 B - Greedy Takahashi　200-300 点問題で出る数学的問題は大体そんな感じです。（貪欲法アルゴリズムに繋がってきます。）　余裕
@@ -889,3 +910,41 @@
 #         cnt += 1
 
 # print(cnt)
+
+#98　三井住友信託銀行プログラミングコンテスト2019 予選 E - Colorful Hats 2
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# MOD = 10**9 +7
+# red = 0
+# blue = 0
+# green = 0
+# cnt = 1
+
+# for i in range(N):
+#     if A[i] == red == blue == green:
+#         cnt *= 3
+        
+#         red += 1
+#     elif A[i] == red == blue:
+#         cnt *= 2
+#         red += 1
+#     elif A[i] == green == blue:
+#         cnt *= 2
+#         blue += 1
+#     elif A[i] == red == green:
+#         cnt *= 2
+#         red += 1
+#     elif A[i] == red:
+#         red += 1
+#     elif A[i] == blue:
+#         blue += 1
+#     elif A[i] == green:
+#         green += 1
+#     #下の制約書いてないんだけど書いたらいけた、3色以外の防止の人がいる可能性があるのかい
+#     else:
+#         print(0)
+#         exit()
+
+# print(cnt % MOD)
+

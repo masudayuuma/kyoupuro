@@ -565,38 +565,128 @@ class Solution:
 #有料
 
 #Word Ladder
-from collections import defaultdict
-class Solution:
-    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        pattern_to_words = defaultdict(list)
+# from collections import defaultdict
+# class Solution:
+#     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+#         pattern_to_words = defaultdict(list)
 
-        def make_patterns(word):
-            patterns = []
-            for i in range(len(word)):
-                patterns.append(f"{word[:i]}*{word[i+1:]}")
-            return patterns
+#         def make_patterns(word):
+#             patterns = []
+#             for i in range(len(word)):
+#                 patterns.append(f"{word[:i]}*{word[i+1:]}")
+#             return patterns
         
-        for word in wordList:
-            patterns = make_patterns(word)
-            for pattern in patterns:
-                pattern_to_words[pattern].append(word)
+#         for word in wordList:
+#             patterns = make_patterns(word)
+#             for pattern in patterns:
+#                 pattern_to_words[pattern].append(word)
 
-        words = [beginWord]
-        seen = set(word)
-        num_of_words = 1
-        while words:
-            num_of_words += 1
-            next_words = []
-            for word in words:
-                patterns = make_patterns(word)
-                for pattern in patterns:
-                    for next_word in pattern_to_words[pattern]:
-                        if next_word == endWord:
-                            return num_of_words
-                        if next_word in seen:
-                            continue
-                        seen.add(next_word)
-                        next_words.append(next_word)
-            words = next_words
-        return 0
+#         words = [beginWord]
+#         seen = set(word)
+#         num_of_words = 1
+#         while words:
+#             num_of_words += 1
+#             next_words = []
+#             for word in words:
+#                 patterns = make_patterns(word)
+#                 for pattern in patterns:
+#                     for next_word in pattern_to_words[pattern]:
+#                         if next_word == endWord:
+#                             return num_of_words
+#                         if next_word in seen:
+#                             continue
+#                         seen.add(next_word)
+#                         next_words.append(next_word)
+#             words = next_words
+#         return 0
 
+#Maximum Depth of Binary Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+# from collections import deque
+# class Solution:
+#     def maxDepth(self, root: Optional[TreeNode]) -> int:
+#         if not root:
+#             return 0
+#         leftDepth = self.maxDepth(root.left)
+#         rightDepth = self.maxDepth(root.right)
+#         return max(leftDepth, rightDepth)+1
+
+# class Solution:
+#     def maxDepth(self, root):
+#         if not root:
+#             return 0
+#         nodes = [root]
+#         depth = 0
+#         while nodes:
+#             newNodes = []
+#             depth += 1
+#             for node in nodes:
+#                 if node.left:
+#                     newNodes.append(node.left)
+#                 if node.right:
+#                     newNodes.append(node.right)
+#             nodes = newNodes
+#         return depth
+    
+
+
+# class Solution:
+#     def maxDepth(self, root):
+#         if not root:
+#             return 0
+        
+#         depth = 0
+#         q = deque()
+#         q.append(root)
+#         while q:
+#             depth += 1
+#             for _ in range(len(q)):
+#                 node = q.popleft()
+#                 if node.right:
+#                     q.append(node.right)
+#                 if node.left:
+#                     q.append(node.left)
+#         return depth
+
+    
+#Minimum Depth of Binary Tree
+# class Solution:
+#     def minDepth(self, root: Optional[TreeNode]) -> int:
+#         if not root:
+#             return 0
+#         leftDepth = self.minDepth(root.left)
+#         rightDepth = self.minDepth(root.right)
+#         if leftDepth and rightDepth:
+#             return min(leftDepth, rightDepth)+1
+#         elif leftDepth and not rightDepth:
+#             return leftDepth +1
+#         elif rightDepth and not leftDepth:
+#             return rightDepth+1
+#         else:
+#             return 1
+
+# class Solution:
+#     def minDepth(self, root):
+#         if not root:
+#             return 0
+        
+#         nodes = []
+#         nodes.append(root)
+#         depth = 0
+#         while nodes:
+#             depth += 1
+#             next_nodes = []
+#             for node in nodes:
+#                 if node.left in None and node.right is None:
+#                     return depth
+#                 if node.left:
+#                     next_nodes.append(node.left)
+#                 if node.right:
+#                     next_nodes.append(node.right)
+#             nodes = next_nodes
+        
