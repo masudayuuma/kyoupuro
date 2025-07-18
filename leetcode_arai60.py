@@ -690,3 +690,40 @@ class Solution:
 #                     next_nodes.append(node.right)
 #             nodes = next_nodes
         
+#Merge Two Binary Trees
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+# class Solution:
+#     def mergeTrees(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> Optional[TreeNode]:
+#         if root1 is None: return root2
+#         if root2 is None: return root1
+
+#         root = TreeNode(root1.val + root2.val)
+#         root.left = self.mergeTrees(root1.left, root2.left)
+#         root.right = self.mergeTrees(root1.right, root2.right)
+
+#         return root
+
+#Convert Sorted Array to Binary Search Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+        
+            if not nums:
+                return None
+            
+            mid = len(nums) // 2
+            root = TreeNode(nums[mid])
+            root.left = self.sortedArrayToBST(nums[:mid])
+            root.right = self.sortedArrayToBST(nums[mid+1:])
+
+            return root
