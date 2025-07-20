@@ -745,3 +745,124 @@ class Solution:
 
 #         targetSum -= root.val
 #         return self.hasPathSum(root.left, targetSum) or self.hasPathSum(root.right, targetSum)          
+
+
+#Binary Tree Level Order Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+# from collections import deque
+# class Solution:
+#     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+#         if not root:
+#             return []
+#         q = deque([root])
+#         ans = []
+#         while True:
+#             new_q = deque()
+#             tmp_ans = []
+#             while q:
+#                 node = q.popleft()
+#                 tmp_ans.append(node.val)
+#                 if node.left: new_q.append(node.left)
+#                 if node.right: new_q.append(node.right)
+            
+#             ans.append(tmp_ans)
+#             if not new_q:
+#                 return ans
+#             q = new_q
+
+
+# class Solution:
+#     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+#         if not root:
+#             return []
+        
+#         ans = []
+#         queue = deque([root])
+#         while queue:
+#             currentLevelNodes = []
+#             for _ in range(len(queue)):
+#                 node = queue.popleft()
+#                 currentLevelNodes.append(node.val)
+#                 if node.left:
+#                     queue.append(node.left)
+#                 if node.right:
+#                     queue.append(node.right)
+#             ans.append(currentLevelNodes)
+#         return ans
+
+#Binary Tree Zigzag Level Order Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+# from collections import deque
+# class Solution:
+#     def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+#         if not root:
+#             return []
+        
+#         result = []
+#         queue =deque([root])
+#         is_left_to_right = True
+
+#         while queue:
+#             level_size = len(queue)
+#             current_level = [0]*level_size
+
+#             for i in range(level_size):
+#                 node = queue.popleft()
+#                 index = i if is_left_to_right else level_size -1 -i
+#                 current_level[index] = node.val
+
+#                 if node.left:
+#                     queue.append(node.left)
+#                 if node.right:
+#                     queue.append(node.right)
+
+#             result.append(current_level)
+#             is_left_to_right = not is_left_to_right
+
+#         return result
+
+#Binary Tree Zigzag Level Order Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+# from collections import deque
+# class Solution:
+#     def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+#         if not root:
+#             return []
+        
+#         ans = []
+#         q = deque([root])
+#         flag = True
+#         while q:
+#             current_level_n = len(q)
+#             current_level_q = [0]*current_level_n
+#             for i in range(current_level_n):
+#                 i = i if flag else current_level_n -i -1 
+#                 current_q = q.popleft()
+#                 current_level_q[i] = current_q.val
+#                 if current_q.left:
+#                     q.append(current_q.left)
+#                 if current_q.right:
+#                     q.append(current_q.right)
+
+#             flag = not flag
+#             ans.append(current_level_q)
+        
+#         return ans
+
+
+#Validate Binary Search Tree
