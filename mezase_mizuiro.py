@@ -855,6 +855,77 @@
 # print(f"{NN}:", " ".join(map(str, so)))
     
 #69　AtCoder Beginner Contest 084 D - 2017-like Number
+#素数判定（エラトステネスの篩）累積和
+# import sys 
+# input = sys.stdin.readline
+
+# MAX = 101010
+# is_prime = [True] * MAX
+# is_prime[0] = is_prime[1] = False
+
+# for i in range(2, MAX):
+#     if not is_prime[i]:
+#         continue
+#     for j in range(i*2, MAX, i):
+#         is_prime[j] = False
+
+# is_2017_like = [False]*MAX
+# for i in range(1, MAX, 2):
+#     if is_prime[i] and is_prime[(i+1) // 2]:
+#         is_2017_like[i] = True
+
+# cumsum = [0]*(MAX + 1)
+# for i in range(MAX):
+#     cumsum[i+1] = cumsum[i] + (1 if is_2017_like[i] else 0)
+
+# Q = int(input())
+# for _ in range(Q):
+#     l, r = map(int, input().split())
+#     print(cumsum[r+1] - cumsum[l])
+               
+#70　NTL_1_B - べき乗
+# m, n = map(int, input().split())
+# MOD = 10**9+7
+# result = pow(m, n, MOD)
+# print(result)
+
+
+#71　Square869120Contest #1 E - 散歩
+# MOD = 10**9+7
+
+# N, Q = map(int, input().split())
+# A = list(map(int, input().split()))
+# C_input = list(map(int, input().split()))
+# C = [0] + [c-1 for c in C_input] + [0]
+
+# edge = [pow(A[i], A[i+1], MOD) for i in range(N-1)]
+
+# prefix = [0]*N
+# for i in range(1, N):
+#     prefix[i] = (prefix[i-1] + edge[i-1]) % MOD
+
+# total = 0
+# for i in range(len(C)-1):
+#     u, v = C[i], C[i+1]
+#     if u < v:
+#         segment = (prefix[v] - prefix[u]) % MOD
+#     else:
+#         segment = (prefix[u] - prefix[v]) % MOD
+#     total = (total + segment) % MOD
+
+# print(total)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -948,3 +1019,20 @@
 
 # print(cnt % MOD)
 
+#99　DDCC2020 予選 D - Digit Sum Replace　これも考察一個です。
+# M = int(input())
+# d = [0] * M
+# c = [0] * M
+
+# for i in range(M):
+#     d[i], c[i] = map(int, input().split())
+# D = 0
+# S = 0
+
+# for i in range(M):
+#     D += c[i]
+#     S += d[i]*c[i]
+
+# print((D-1)+(S-1)// 9)
+
+#100　Tenka1 Programmer Beginner Contest D - Crossing　やや難しいですが、頑張って解いてください。
