@@ -889,6 +889,51 @@ class Solution:
 #           return validate(root, float('-inf'), float('inf'))
 
 
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+# class Solution:
+#     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+#         preorder = deque(preorder)
+
+#         def build(preorder, inorder):
+#             if inorder:
+#                 idx = inorder.index(preorder.popleft())
+#                 root = TreeNode(inorder[idx])
+
+#                 root.left = build(preorder, inorder[:idx])
+#                 root.right = build(preorder, inorder[idx+1:])
+
+#                 return root
+            
+#         return build(preorder, inorder)
 
 
-        
+# Paint Fence プレミアムだった
+# class Solution:
+#     @cache
+#     def numWays(self, n: int, k: int) -> int:
+#         if n == 1:
+#             return k
+#         if n == 2:
+#             return k * k
+#         return (k - 1) * (self.numWays(n - 1, k) + self.numWays(n - 2, k))
+
+
+#Longest Increasing Subsequence
+# class Solution:
+#     def lengthOfLIS(self, nums: List[int]) -> int:
+#         N = len(nums)
+#         dp = [1]*N
+
+#         for i in range(1, N):
+#             for j in range(i):
+#                 if nums[i] > nums[j]:
+#                     dp[i] = max(dp[i], dp[j]+1)
+
+#         return max(dp)
+
+    
