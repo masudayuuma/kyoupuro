@@ -936,4 +936,102 @@ class Solution:
 
 #         return max(dp)
 
+
+#Maximum Subarray
+# class Solution:
+#     def maxSubArray(self, nums: List[int]) -> int:
+#         curMax = nums[0]
+#         ans = nums[0]
+#         for i in range(1, len(nums)):
+#             curMax = max(nums[i], nums[i]+curMax)
+#             ans = max(curMax, ans)
+
+#         return ans
+
+#Unique Paths
+# class Solution:
+#     def uniquePaths(self, m: int, n: int) -> int:
+#         dp = [[1]*n for _ in range(m)]
+
+#         for i in range(1, m):
+#             for j in range(1, n):
+#                 dp[i][j] = dp[i][j-1] + dp[i-1][j]
+
+#         return dp[-1][-1]
+
+
+#Unique Paths II
+# class Solution:
+#     def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+#         m, n = len(obstacleGrid), len(obstacleGrid[0])
+#         dp = [[0]*n for _ in range(m)]
+
+#         dp[0][0] = 1 if obstacleGrid[0][0] == 0 else 0
+
+#         for i in range(m):
+#             for j in range(n):
+#                 if obstacleGrid[i][j] == 1:
+#                     dp[i][j] = 0
+#                 else:
+#                     if i > 0:
+#                         dp[i][j] += dp[i-1][j]
+#                     if j > 0:
+#                         dp[i][j] += dp[i][j-1]
+
+#         return dp[-1][-1]
+
+#House Robber
+# class Solution:
+#     def rob(self, nums: List[int]) -> int:
+#         n = len(nums)
+#         if n < 2:
+#             return nums[0]
+        
+#         dp = [0]*n
+#         dp[0] = nums[0]
+#         dp[1] = max(nums[1], dp[0])
+
+#         for i in range(2, n):
+#             dp[i] = max(dp[i-1], dp[i-2]+nums[i])
+
+#         return dp[-1]
+
+#House Robber II
+# class Solution:
+#     def rob(self, nums: List[int]) -> int:
+#         def get_max(nums):
+#             prev_rob = max_rob = 0
+
+#             for cur_rob in nums:
+#                 temp = max(prev_rob+cur_rob, max_rob)
+#                 prev_rob = max_rob
+#                 max_rob = temp
+
+#             return max_rob
+
+#         return max(get_max(nums[:-1]), get_max(nums[1:]), nums[0])
+
+#Best Time to Buy and Sell Stock
+# class Solution:
+#     def maxProfit(self, prices: List[int]) -> int:
+#         buy_price = prices[0]
+#         profit = 0
+
+#         for p in prices[1:]:
+#             if buy_price > p:
+#                 buy_price = p
+
+#             profit = max(profit, p-buy_price)
+
+#         return profit
     
+#Best Time to Buy and Sell Stock II
+# class Solution:
+#     def maxProfit(self, prices: List[int]) -> int:
+#         profit = 0
+
+#         for i in range(1, len(prices)):
+#             if prices[i] > prices[i-1]:
+#                 profit += prices[i] -prices[i-1]
+
+#         return profit

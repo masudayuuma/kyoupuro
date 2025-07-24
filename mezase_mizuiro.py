@@ -1035,4 +1035,5 @@
 
 # print((D-1)+(S-1)// 9)
 
-#100　Tenka1 Programmer Beginner Contest D - Crossing　やや難しいですが、頑張って解いてください。
+#100　Tenka1 Programmer Beginner Contest D - Crossing　やや難しいですが、頑張って解いてください.
+#やらない

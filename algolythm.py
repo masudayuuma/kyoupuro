@@ -322,6 +322,11 @@
 #         print(ans + total)
 
 
-        
-
+#ランレングス圧縮
+#ランレングス圧縮とは連続したデータを(値,連続する個数)として圧縮する可逆的データ圧縮アルゴリズム
+#https://qiita.com/DaikiSuyama/items/07e237b7372e7c7b3432
+from itertools import groupby
+iterable = [1, 1, 2, 2, 2, 4, 4, 4, 5]
+[[key,len(list(group))] for key,group in groupby(iterable)]
+#[[1, 2], [2, 3], [4, 3], [5, 1]]
 
