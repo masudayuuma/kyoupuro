@@ -1035,3 +1035,83 @@ class Solution:
 #                 profit += prices[i] -prices[i-1]
 
 #         return profit
+
+#Word Break
+# class Solution:
+#     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+#         dp = [True]+[False]*len(s)
+#         for i in range(1, len(s)+1):
+#             for w in wordDict:
+#                 start = i -len(w)
+#                 if start >= 0 and dp[start] and s[start:i] == w:
+#                     dp[i] = True
+#                     break
+
+#         return dp[-1]
+    
+#Coin Change
+# class Solution:
+#     def coinChange(self, coins: List[int], amount: int) -> int:
+#         n = len(coins)
+#         dp = [[float('inf')]*(amount+1) for _ in range(n+1)]
+        
+#         # 0円は0枚で作れる
+#         for i in range(n+1):
+#             dp[i][0] = 0
+    
+#         for i in range(1, n+1):
+#             for j in range(1, amount+1):
+#                 dp[i][j] = dp[i-1][j]
+#                 if coins[i-1] <= j:
+#                     # float('inf')同士の比較も正常に動作
+#                     dp[i][j] = min(dp[i][j], dp[i][j-coins[i-1]]+1)
+
+#         return dp[n][amount] if dp[n][amount] != float('inf') else -1
+
+#Search Insert Position
+# class Solution:
+#     def searchInsert(self, nums: List[int], target: int) -> int:
+#         n = len(nums)
+#         ok = n
+#         ng = -1
+
+#         while ok - ng > 1:
+#             mid = (ng+ok) // 2
+#             if nums[mid] < target:
+#                 ng = mid
+#             else:
+#                 ok = mid
+#         return ok
+    
+#Search Insert Position
+# class Solution:
+#     def searchInsert(self, nums: List[int], target: int) -> int:
+#         left = 0
+#         right = len(nums) -1
+
+#         while right - left >= 1:
+#             mid = (left+right)//2
+
+#             if nums[mid] == target:
+#                 return mid
+#             elif nums[mid] > target:
+#                 right = mid -1
+#             else:
+#                 left = mid +1
+#         return left
+    
+#Find Minimum in Rotated Sorted Array
+# class Solution:
+#     def findMin(self, nums: List[int]) -> int:
+#         ng = -1
+#         ok = len(nums)-1
+
+#         while ok-ng > 1:
+#             mid = (ok+ng)//2
+#             if nums[mid] < nums[-1]:
+#                 ok = mid
+#             else:
+#                 ng = mid
+
+#         return nums[ok]
+
