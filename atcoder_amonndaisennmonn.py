@@ -152,3 +152,15 @@
 #         exit()
 
 # print("No")
+
+#A - Unsupported Type
+# N = int(input())
+# A = list(map(int, input().split()))
+# X = int(input())
+
+# for i in A:
+#     if X == i:
+#         print("Yes")
+#         exit()
+
+# print("No")
