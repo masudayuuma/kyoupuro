@@ -501,31 +501,31 @@
 #         return islands
 
 #Max Area of Island
-class Solution:
-    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
-        def mark_as_visited(row, col):
-            nonlocal menseki
-            if not (0 <= row < m and 0 <= col < n):
-                return
-            if grid[row][col] == 0:
-                return
-            menseki += 1
-            grid[row][col] = 0
-            dirs = [(1,0), (-1, 0), (0, 1), (0,-1)]
-            for dr, dc in dirs:
-                mark_as_visited(row+dr, col+dc)
-            return menseki
+# class Solution:
+#     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+#         def mark_as_visited(row, col):
+#             nonlocal menseki
+#             if not (0 <= row < m and 0 <= col < n):
+#                 return
+#             if grid[row][col] == 0:
+#                 return
+#             menseki += 1
+#             grid[row][col] = 0
+#             dirs = [(1,0), (-1, 0), (0, 1), (0,-1)]
+#             for dr, dc in dirs:
+#                 mark_as_visited(row+dr, col+dc)
+#             return menseki
  
-        m, n = len(grid), len(grid[0])
-        max_of_islands = 0
-        menseki = 0
-        for row in range(m):
-            for col in range(n):
+#         m, n = len(grid), len(grid[0])
+#         max_of_islands = 0
+#         menseki = 0
+#         for row in range(m):
+#             for col in range(n):
                 
-                if grid[row][col] == 1:
-                    menseki = 0
-                    max_of_islands = max(max_of_islands, mark_as_visited(row, col))
-        return max_of_islands
+#                 if grid[row][col] == 1:
+#                     menseki = 0
+#                     max_of_islands = max(max_of_islands, mark_as_visited(row, col))
+#         return max_of_islands
     
 # class Solution:
 #     def maxAreaOfIsland(self, grid):
