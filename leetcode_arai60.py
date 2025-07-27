@@ -1115,3 +1115,109 @@
 
 #         return nums[ok]
 
+#Search in Rotated Sorted Array
+# class Solution:
+#     def search(self, nums: List[int], target: int) -> int:
+#         left = 0
+#         right = len(nums) - 1
+        
+#         while left <= right:
+#             mid = (left + right) // 2
+            
+#             if nums[mid] == target:
+#                 return mid
+            
+#             # 左半分がソート済みの場合
+#             if nums[left] <= nums[mid]:
+#                 # targetが左半分の範囲内にある場合
+#                 if nums[left] <= target < nums[mid]:
+#                     right = mid - 1
+#                 else:
+#                     left = mid + 1
+#             # 右半分がソート済みの場合
+#             else:
+#                 # targetが右半分の範囲内にある場合
+#                 if nums[mid] < target <= nums[right]:
+#                     left = mid + 1
+#                 else:
+#                     right = mid - 1
+        
+#         return -1
+    
+
+# class Solution:
+#     def search(self, nums: List[int], target: int) -> int:
+#         left = 0
+#         right = len(nums) -1
+
+#         while right>= left:
+#             mid = (right+left)//2
+
+#             if nums[mid] == target:
+#                 return mid
+#             elif nums[mid] >= nums[left]:
+#                 if nums[left] <= target <= nums[mid]:
+#                     right = mid-1
+#                 else:
+#                     left = mid+1
+#             else:
+#                 if nums[mid] <= target <= nums[right]:
+#                     left = mid+1
+#                 else:
+#                     right = mid+1
+
+#         return -1
+    
+
+#Capacity To Ship Packages Within D Days
+# class Solution:
+#     def shipWithinDays(self, weights: List[int], D: int) -> int:
+#         def feasible(capacity) -> bool:
+#             days = 1
+#             total = 0
+#             for weight in weights:
+#                 total += weight
+#                 if total > capacity:
+#                     total = weight
+#                     days += 1
+#                     if days > D:
+#                         return False
+#             return True
+        
+#         left, right = max(weights), sum(weights)
+#         while left < right:
+#             mid = left + (right-left)//2
+#             if feasible(mid):
+#                 right = mid
+#             else:
+#                 left = mid+1
+#         return left
+
+# Pow(x, n)
+# class Solution:
+#     def myPow(self, x: float, n: int) -> float:
+#         ans = pow(x, n)
+#         return ans
+
+# class Solution:
+#     def myPow(self, x: float, n: int) -> float:
+#         def clac_power(x, n):
+#             if x==0:
+#                 return 0
+#             if n == 0:
+#                 return 1
+            
+#             res = clac_power(x, n//2)
+#             res = res*res
+
+#             if n%2 == 1:
+#                 return res*x
+            
+#             return res
+        
+#         ans = clac_power(x, abs(n))
+
+#         if n>= 0:
+#             return ans
+#         else:
+#             return 1/ans
