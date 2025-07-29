@@ -1,3 +1,43 @@
+#https://qiita.com/yamadagenki/items/4ef889964b18dfe90329
+#プログラミング初心者に確実に押さえておいて欲しい文法一覧（技術面接対策用）
+str1 = "Hello, "
+str2 = "World!"
+resutl = str1 + str2
+
+S = "example"
+print(S[0])
+print(S[1])
+
+number = 15
+if number >= 10:
+    print("10以上です")
+else:
+    print("10未満です")
+
+age = 20
+country = "Japan"
+if age >= 18 and country == "Japan":
+    print("条件を満たしています")
+else:
+    print("条件を満たしていません")
+
+if age >= 18 or country == "Japan":
+    print("条件を満たしています")
+else:
+    print("条件を満たしていません")
+
+for i in range(5):
+    print(i)
+
+def double(number):
+    result = number * 2
+    return result
+
+print(double(5))
+
+
+
+############################################################################################################################
 # a = int(input())
 # b = int(input())
 # print(a + b)
@@ -48,3 +88,5 @@
 # nums = list(map(int, input().split()))
 # even_nums = [x for x in nums if x % 2 == 0]
 # print(even_nums)
+
+

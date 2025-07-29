@@ -1236,3 +1236,55 @@
 
 #         return 0 if are_values_same else 1
 
+#Longest Substring Without Repeating Characters
+# class Solution:
+#     def lengthOfLongestSubstring(self, s: str) -> int:
+#         maxLen = 0
+#         seen = set()
+#         l, r = 0, 0
+#         while r < len(s):
+#             while s[r] in seen:
+#                 seen.remove(s[l])
+#                 l += 1
+#             seen.add(s[r])
+#             maxLen = max(maxLen, len(seen))
+#             r += 1
+#         return maxLen
+
+#Minimum Size Subarray Sum
+# class Solution:
+#     def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+#         minLen = float('inf')
+#         left = 0
+#         cur_sum = 0
+
+#         for right in range(len(nums)):
+#             cur_sum += nums[right]
+#             while cur_sum >= target:
+#                 if right - left +1 < minLen:
+#                     minLen = right - left +1
+#                 cur_sum -= nums[left]
+#                 left += 1
+
+#         return minLen if minLen != float('inf') else 0
+
+
+#Permutations
+# class Solution:
+#     def permute(self, nums: List[int]) -> List[List[int]]:
+#         if len(nums) == 1:
+#             return [nums[:]]
+
+#         res = []
+#         for _ in range(len(nums)):
+#             n = nums.pop(0)
+#             perms = self.permute(nums)
+
+#             for p in perms:
+#                 p.append(n)
+
+#             res.extend(perms)
+#             nums.append(n)
+
+#         return res
+
