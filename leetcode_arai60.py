@@ -1289,4 +1289,55 @@
 #         return res
 
 
+#Subsets
+# class Solution:
+#     def subsets(self, nums: List[int]) -> List[List[int]]:
+#         n = len(nums)
+#         results = []
 
+#         for mask in range(1 << n):
+#             subset = []
+#             for i in range(n):
+#                 if mask & (1 << i):
+#                     subset.append(nums[i])
+#             results.append(subset)
+#         return results
+
+#Combination Sum
+# class Solution:
+#     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+#         result = []
+
+#         def backtrack(start, path, remaining):
+#             if remaining == 0:
+#                 result.append(path[:])
+#                 return
+
+#             if remaining < 0:
+#                 return
+            
+#             for i in range(start, len(candidates)):
+#                 num = candidates[i]
+#                 path.append(num)
+#                 backtrack(i, path, remaining-num)
+#                 path.pop()
+#         backtrack(0, [], target)
+#         return result
+    
+#Generate Parentheses
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        result = []
+        def backtrack(path, open_count, close_count):
+            if len(path) == 2*n:
+                result.append(path)
+                return
+            if open_count < n:
+                backtrack(path+"(", open_count+1, close_count)
+
+            if close_count < open_count:
+                backtrack(path+")", open_count, close_count+1)
+
+        backtrack("", 0, 0)
+        return result
+    
