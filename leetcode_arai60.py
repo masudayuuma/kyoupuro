@@ -1325,19 +1325,135 @@
 #         return result
     
 #Generate Parentheses
-class Solution:
-    def generateParenthesis(self, n: int) -> List[str]:
-        result = []
-        def backtrack(path, open_count, close_count):
-            if len(path) == 2*n:
-                result.append(path)
-                return
-            if open_count < n:
-                backtrack(path+"(", open_count+1, close_count)
+# class Solution:
+#     def generateParenthesis(self, n: int) -> List[str]:
+#         result = []
+#         def backtrack(path, open_count, close_count):
+#             if len(path) == 2*n:
+#                 result.append(path)
+#                 return
+#             if open_count < n:
+#                 backtrack(path+"(", open_count+1, close_count)
 
-            if close_count < open_count:
-                backtrack(path+")", open_count, close_count+1)
+#             if close_count < open_count:
+#                 backtrack(path+")", open_count, close_count+1)
 
-        backtrack("", 0, 0)
-        return result
-    
+#         backtrack("", 0, 0)
+#         return result
+
+
+#Move Zeroes
+# class Solution:
+#     def moveZeroes(self, nums: List[int]) -> None:
+#         """
+#         Do not return anything, modify nums in-place instead.
+#         """
+#         left = 0
+#         for right in range(len(nums)):
+#             if nums[right] != 0:
+#                 nums[right], nums[left] = nums[left], nums[right]
+#                 left += 1
+
+#         return nums
+
+#Is Subsequence
+# class Solution:
+#     def isSubsequence(self, s: str, t: str) -> bool:
+        
+#         j = 0
+#         for i in range(len(t)):
+            
+#             if s[j] == t[i]:
+#                 j += 1
+#                 if j == len(s):
+#                     return True
+                
+#         return False
+
+# class Solution:
+#     def isSubsequence(self, s:str, t:str) -> bool:
+#         sp = tp = 0
+
+#         while sp < len(s) and tp < len(t):
+#             if s[sp] == t[tp]:
+#                 sp += 2
+#             tp += 1
+
+#         return sp == len(s)
+
+
+#Next Permutation
+# class Solution:
+#     def nextPermutation(self, nums: List[int]) -> None:
+#         i = len(nums) -1
+#         while i > 0 and nums[i-1] >= nums[i]:
+#             i -= 1
+
+#         if i == 0:
+#             nums.reverse()
+#             return
+
+#         j = len(nums) -1
+#         while j >= i and nums[j] <= nums[i-1]:
+#             j -= 1
+
+#         nums[i-1], nums[j] = nums[j], nums[i-1]
+#         nums[i:] = reversed(nums[i:]) 
+
+#String to Integer (atoi)
+# class Solution:
+#     def myAtoi(self, s: str) -> int:
+#         if not s:
+#             return 0
+        
+#         INT_MAX = 2**31 -1
+#         INT_MIN = -2**31
+
+#         i = 0
+#         n = len(s)
+
+#         while i < n and s[i] == ' ':
+#             i += 1
+
+#         if i == n:
+#             return 0
+        
+#         sign = 1
+#         if s[i] == '+':
+#             i += 1
+#         elif s[i] == '-':
+#             sign = -1
+#             i+= 1
+
+#         res = 0
+#         while i < n and s[i].isdigit():
+#             digit = int(s[i])
+#             res = res*10+ digit
+
+#             if sign * res <= INT_MIN:
+#                 return INT_MIN
+#             if sign * res >= INT_MAX:
+#                 return INT_MAX
+#             i+= 1
+
+#         return res+sign
+
+#Zigzag Conversion
+# class Solution:
+#     def convert(self, s: str, numRows: int) -> str:
+#         if numRows == 1 or numRows >= len(s):
+#             return s
+#         idx, d = 0, 1
+#         rows = [[] for _ in range(numRows)]
+#         for char in s:
+#             rows[idx].append(char)
+#             if idx == 0:
+#                 d = 1
+#             elif idx == numRows -1:
+#                 d = -1
+#             idx += d
+
+#         for i in range(numRows):
+#             rows[i] = ''.join(rows[i])
+
+#         return ''.join(rows)
