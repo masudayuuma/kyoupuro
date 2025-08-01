@@ -126,3 +126,21 @@
 #     kabe[i] += kabe[i-1]
 
 # print(min(kabe[:N]))
+
+
+#C - Rotatable Array  / 
+N, Q = map(int, input().split())
+A = [i for i in range(1, N+1)]
+offset = 0
+
+for i in range(Q):
+    q = list(map(int, input().split()))
+
+    if q[0] == 1:
+        real_idx = (q[1]-1 - offset )%N
+        A[real_idx] = q[2]
+    if q[0] == 2:
+        real_idx = (q[1]-1 - offset)%N
+        print(A[real_idx])
+    if q[0] == 3:
+        offset = (offset - q[1]) % N
