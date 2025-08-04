@@ -305,3 +305,91 @@ class Solution:
 
         return result
     
+#Two Sum
+# class Solution:
+#     def twoSum(self, nums: List[int], target: int) -> List[int]:
+#         l = len(nums)
+#         for i in range(l-1):
+#             for j in range(i, l):
+#                 if nums[i]+nums[j] == target:
+#                     return list[i, j]
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        pair_idx = {}
+        for i, num in  enumerate(nums):
+            if target - num in pair_idx:
+                return [i, pair_idx[target-num]]
+            pair_idx[num] = i
+
+
+#Group Anagrams
+from collections import defaultdict
+
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        ans = defaultdict(list)
+
+        for s in strs:
+            key = "".join(sorted(s))
+            ans[key].append(s)
+            
+        return list(ans.values())
+    
+
+#Intersection of Two Arrays
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        if not nums1 or not nums2:
+            return []
+        
+        n_1 = defaultdict(False)
+        for n in nums1:
+            n_1[n] = True
+        ans = set()
+        for n in nums2:
+            if n in n_1:
+                ans.add(n)
+
+        return list(ans)
+    
+
+#Unique Email Addresses
+class Solution:
+    def numUniqueEmails(self, emails: List[str]) -> int:
+        seen = set()
+
+        for email in emails:
+            name, domain = email.split('@')
+            local = name.split('+')[0].replace('.', '')
+            email = local+'@'+domain
+            seen.add(email)
+        return len(seen)
+    
+#First Unique Character in a String
+class Solution:
+    def firstUniqChar(self, s: str) -> int:
+        seen = defaultdict(int)
+
+        for i in s:
+            seen[i] += 1
+
+        for i, i_s in enumerate(s):
+            if seen[i_s] == 1:
+                return i
+            
+        return -1
+    
+class Solution:
+    def firstUniqChar(self, s:str) -> int:
+        freq = {}
+
+        for c in s:
+            freq[c] = 1+freq.get(c, 0)
+
+        for i, c in enumerate(s):
+            if freq[c] == 1:
+                return i
+            
+        return -1
+    

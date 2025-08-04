@@ -32,37 +32,45 @@
 
 # print(result)
 
-MAX_PRECOMPUTE = 100000
-N = int(input())
-presents = []
 
-for _ in range(N):
-    P, A, B = map(int, input().split())
-    presents.append((P, A, B))
+import sys
+from bisect import bisect_right
+input = sys.stdin.readline
 
-Q = int(input())
-precomputed = [0] * (MAX_PRECOMPUTE + 1)
+n = int(input())
 
-for initial in range(MAX_PRECOMPUTE + 1):
-    tension = initial
-    for P, A, B in presents:
-        if P >= tension:
-            tension += A
-        else:
-            tension = max(0, tension - B)
-    precomputed[initial] = tension
+p, a, b = [], [], []
+for _ in range(n):                       # ← ここは “読み込み専用”
+    pi, ai, bi = map(int, input().split())
+    p.append(pi)
+    a.append(ai)
+    b.append(bi)
 
-for _ in range(Q):
-    X = int(input())
-    
-    if X <= MAX_PRECOMPUTE:
-        print(precomputed[X])
+M = 1001                                 # ← ここから読み込みループの外
+dp = [[0] * M for _ in range(n + 1)]
+
+for j in range(M):
+    dp[n][j] = j                         # ベースケース
+
+for i in range(n - 1, -1, -1):           # 後ろ向き DP
+    for j in range(M):
+        nxt = j + a[i] if j <= p[i] else max(0, j - b[i])
+        dp[i][j] = dp[i + 1][nxt]
+
+bs = [0] * (n + 1)                       # b の累積和
+for i in range(n):
+    bs[i + 1] = bs[i] + b[i]
+
+q = int(input())
+out = []
+for _ in range(q):                       # ← クエリループ
+    x = int(input())
+    if x >= M:
+        i = bisect_right(bs, x - M, 0, n)
+        x -= bs[i]
+        ans = dp[i][x] if i < n else x
     else:
-        tension = X
-        for P, A, B in presents:
-            if P >= tension:
-                tension += A
-            elif tension < 5000000:
-                tension = max(0, tension - B)
-            
-        print(tension)
+        ans = dp[0][x]
+    out.append(str(ans))                 # ← ここはクエリごとに append
+
+sys.stdout.write("\n".join(out))
