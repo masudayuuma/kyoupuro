@@ -129,18 +129,53 @@
 
 
 #C - Rotatable Array  / 
-N, Q = map(int, input().split())
-A = [i for i in range(1, N+1)]
-offset = 0
+# N, Q = map(int, input().split())
+# A = [i for i in range(1, N+1)]
+# offset = 0
 
-for i in range(Q):
-    q = list(map(int, input().split()))
+# for i in range(Q):
+#     q = list(map(int, input().split()))
 
-    if q[0] == 1:
-        real_idx = (q[1]-1 - offset )%N
-        A[real_idx] = q[2]
-    if q[0] == 2:
-        real_idx = (q[1]-1 - offset)%N
-        print(A[real_idx])
-    if q[0] == 3:
-        offset = (offset - q[1]) % N
+#     if q[0] == 1:
+#         real_idx = (q[1]-1 - offset )%N
+#         A[real_idx] = q[2]
+#     if q[0] == 2:
+#         real_idx = (q[1]-1 - offset)%N
+#         print(A[real_idx])
+#     if q[0] == 3:
+#         offset = (offset - q[1]) % N
+
+#C - Mixture
+# import sys
+# from collections import deque
+
+# input = sys.stdin.buffer.readline
+# q = int(input())
+
+# que = deque()
+# out = []
+
+# for _ in range(q):
+#     nums = list(map(int, input().split()))
+#     t = nums[0]
+
+#     if t == 1:
+#         _, c, x = nums
+#         que.append([c, x])
+
+#     else:
+#         _, k = nums
+#         ans = 0
+
+#         while que and k >= que[0][0]:
+#             c, x = que.popleft()
+#             ans += c*x
+#             k -= c
+#         if k:
+#             que[0][0] -= k
+#             ans += k*que[0][1]
+
+#         out.append(ans)
+
+# for a in out:
+#     print(a)
