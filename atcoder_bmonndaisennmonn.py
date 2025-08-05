@@ -294,11 +294,32 @@
 
 
 
+# B - Pick Two
+# S = input()
 
+# for i in range(len(S)-1):
+#     for j in range(i+1, len(S)):
+#         if S[i] == "#" and S[j] == "#":
+#             print(f"{i+1},{j+1}")
+#             S = S.replace("#", ".", 1)
+#             S = S.replace("#", ".", 1)
 
+# String Too Long
+# N = int(input())
+# ans = ""
+# for i in range(N):
+#     c, l = input().split()
+#     l = int(l)
+#     if l > 100:
+#         print("Too Long")
+#         exit()
+#     else:
+#         ans += c*l
+#         if len(ans) > 100:
+#             print("Too Long")
+#             exit()
 
-
-
+# print(ans)
 
 
 
