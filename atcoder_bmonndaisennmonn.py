@@ -321,8 +321,20 @@
 
 # print(ans)
 
+# B - cat 2
+N = int(input())
+ans = set()
+S = list()
+for i in range(N):
+    s = input()
+    S.append(s)
 
+for i in range(N-1):
+    for j in range(i+1, N):
+        ans.add(S[i]+S[j])
+        ans.add(S[j]+S[i])
 
+print(len(ans))
 
 
 
