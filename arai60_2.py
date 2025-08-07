@@ -605,3 +605,203 @@ class Solution:
         root.right = self.mergeTree(root1.right, root2.right)
 
         return root
+
+# Convert Sorted Array to Binary Search Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+        if not nums:
+            return None
+        
+
+        
+        root_n = len(nums)//2
+        ans = TreeNode(nums[root_n])
+        ans.left = self.sortedArrayToBST(nums[:root_n])
+        ans.right = self.sortedArrayToBST(nums[root_n+1:])
+
+        return ans
+    
+# Path Sum
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:
+            return False
+        
+        targetSum -= root.val
+        if root.left is None and root.right is None and targetSum == 0:
+            return True
+        
+        ans_left , ans_right = False, False
+        if root.left:
+            ans_left =  self.hasPathSum(root.left, targetSum)
+        if root.right:
+            ans_right = self.hasPathSum(root.right, targetSum)
+
+        return ans_left or ans_right
+    
+# Binary Tree Level Order Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root:
+            return []
+        ans = []
+        def level_tree(root, level):
+            if level >= len(ans):
+                ans.append([])
+
+            ans[level].append(root.val)
+            if root.left:
+                level_tree(root.left, level+1)
+            if root.right:
+                level_tree(root.right, level+1)
+
+
+        level_tree(root, 0)
+        return ans
+        
+
+from collections import deque
+class Solution:
+    def levelOrder(self, root):
+        if not root:
+            return []
+        q = deque([root])
+        ans = []
+        while True:
+            new_q = deque()
+            tmp_ans = []
+            while q:
+                node = q.popleft()
+                tmp_ans.append(node.val)
+                if node.left: new_q.append(node.left)
+                if node.right: new_q.append(node.right)
+
+            ans.append(tmp_ans)
+            if not new_q:
+                return ans
+            q = new_q
+
+# Binary Tree Zigzag Level Order Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root:
+            return []
+        
+        ans = []
+        tree_q = deque([root])
+        revesed_flag = False
+        while True:
+            tmp_ans = []
+            new_q = deque()
+            while tree_q:
+                node =tree_q.popleft()
+                tmp_ans.append(node.val)
+                if node.left: new_q.append(node.left)
+                if node.right: new_q.append(node.right)
+
+            if revesed_flag:
+                ans.append(tmp_ans[::-1])
+            else:
+                ans.append(tmp_ans)
+            revesed_flag = not revesed_flag
+            if not new_q:
+                return ans
+            tree_q = new_q
+
+# Validate Binary Search Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        if not root:
+            return False
+        
+        def tree_validation(root, min_val, max_val):
+            ans_left, ans_right = True, True
+            if root.left:
+                if root.left.val >= root.val or min_val > root.left.val or root.left.val > max_val:
+                    return False
+                else:
+                    ans_left = tree_validation(root.left, min_val, root)
+            if root.right:
+                if root.right.val <= root.val or min_val > root.right.val or root.right.val > max_val:
+                    return False
+                else:
+                    ans_right = tree_validation(root.right, root, max_val)
+
+            return ans_left and ans_right
+
+        return tree_validation(root, -float('inf'), float('inf'))
+    
+
+# Construct Binary Tree from Preorder and Inorder Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        preorder = deque(preorder)
+
+        def build(preorder, inorder):
+            if inorder:
+                idx = inorder.index(preorder.popleft())
+                root = TreeNode(inorder[idx])
+
+                root.left = build(preorder, inorder[:idx])
+                root.right = build(preorder, inorder[idx+1:])
+
+                return root
+            
+        return build(preorder, inorder)
+    
+class Solution:
+    def buildTree(self, preorder, inorder):
+        preorder = deque(preorder)
+
+        def build(preorder, inorder):
+            if inorder:
+                idx = inorder.index(preorder.popleft())
+                root = TreeNode(inorder[idx])
+
+                root.left = build(preorder, inorder[:idx])
+                root.right = build(preorder, inorder[:idx+1])
+
+                return root
+        return build(preorder, inorder)
+
+
+            
+
+
+        

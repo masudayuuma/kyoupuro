@@ -322,19 +322,36 @@
 # print(ans)
 
 # B - cat 2
-N = int(input())
-ans = set()
-S = list()
-for i in range(N):
-    s = input()
-    S.append(s)
+# N = int(input())
+# ans = set()
+# S = list()
+# for i in range(N):
+#     s = input()
+#     S.append(s)
 
-for i in range(N-1):
-    for j in range(i+1, N):
-        ans.add(S[i]+S[j])
-        ans.add(S[j]+S[i])
+# for i in range(N-1):
+#     for j in range(i+1, N):
+#         ans.add(S[i]+S[j])
+#         ans.add(S[j]+S[i])
 
-print(len(ans))
+# print(len(ans))
+
+# B - Precondition 
+# S = input()
+# T = input()
+# T = set(T)
+
+# for s in range(1, len(S)):
+#     if S[s].isupper():
+#         if S[s-1] in T:
+#             continue
+#         else:
+#             print('No')
+#             exit()
+
+# print('Yes')
+
+
 
 
 
