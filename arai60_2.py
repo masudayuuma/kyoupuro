@@ -800,8 +800,71 @@ class Solution:
                 return root
         return build(preorder, inorder)
 
+# Longest Increasing Subsequence
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        N = len(nums)
+        dp = [1]*N
 
+        for i in range(1, N):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j]+1)
+
+        return max(dp)
+    
+                    
+#  Maximum Subarray
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        n = len(nums)
+        dp = nums
+
+        for i in range(1, n):
+
+            dp[i] = max(dp[i], dp[i-1]+dp[i])
+
+        return max(dp)
+    
+
+# Unique Paths
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[0]*n for _ in range(m)]
+        for i in range(n):
+            dp[0][i] = 1
+        for j in range(m):
+            dp[j][0] = 1
+
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] = dp[i-1][j] + dp[i][j-1]
+
+        return dp[-1][-1]
             
+# Unique Paths II
+class Solution:
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        m, n = len(obstacleGrid), len(obstacleGrid[0])
 
+        dp = [[0]*n for _ in range(m)]
 
+        for i in range(n):
+            if obstacleGrid[0][i] == 1:
+                break
+            dp[0][i] = 1
+        for i in range(m):
+            if obstacleGrid[i][0] == 1:
+                break
+            dp[i][0] = 1
         
+        for i in range(1, m):
+            for j in range(1, n):
+                if obstacleGrid[i][j] == 1:
+                    dp[i][j] = 0
+                    continue
+                dp[i][j] = dp[i-1][j] + dp[i][j-1]
+
+        return dp[-1][-1]
+
+

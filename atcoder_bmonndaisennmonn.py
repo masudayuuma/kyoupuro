@@ -351,6 +351,22 @@
 
 # print('Yes')
 
+# B - Distance Table
+N = int(input())
+D = list(map(int, input().split()))
+
+ans = []
+
+for i in range(len(D)):
+    tmp_num = 0
+    tmp_ans = []
+    for j in range(i,len(D)):
+        tmp_num += D[j]
+        tmp_ans.append(tmp_num)
+    ans.append(tmp_ans)
+
+for a in ans:
+    print(' '.join(map(str, a)))
 
 
 
