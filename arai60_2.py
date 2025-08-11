@@ -867,4 +867,75 @@ class Solution:
 
         return dp[-1][-1]
 
+# House Robber
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        dp = [0]*n
+        dp[0] = nums[0]
+        dp[1] = max(nums[0], nums[1])
+        for i in range(2, n):
+            dp[i] = max(dp[i-1], dp[i-2]+nums[i])
+        return dp[-1]
 
+# House Robber II
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return nums[0]
+        n = len(nums)
+        dp_1 = [0]*(n-1)
+        dp_2 = [0]*(n-1)
+
+        dp_1[0], dp_1[1] = nums[0], max(nums[0], nums[1])
+        dp_2[0], dp_2[1] = nums[1], max(nums[1], nums[2])
+        for i in range(2, n-1):
+            dp_1[i] = max(dp_1[i-1], dp_1[i-2]+nums[i])
+        for i in range(2, n-1):
+            dp_2[i] = max(dp_2[i-1], dp_2[i-2]+nums[i+1])
+        return max(dp_1[-1], dp_2[-1])
+    
+
+# Best Time to Buy and Sell Stock
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        
+        profit = 0
+        buy_price = prices[0]
+
+        for p in prices[1:]:
+            if buy_price > p:
+                buy_price = p
+            
+            profit = max(profit, p-buy_price)
+
+        return profit
+    
+# Best Time to Buy and Sell Stock II
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        profit = 0
+
+        for i in range(1, len(prices)):
+            if prices[i] > prices[i-1]:
+                profit += prices[i] - prices[i-1]
+        
+        return profit
+    
+# Word Break
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        dp = [True]+[False]*len(s)
+        for i in range(1, len(s)+1):
+            for w in wordDict:
+                start = i-len(w)
+                if start >= 0 and dp[start] and s[start:i] == w:
+                    dp[i] = True
+                    break
+
+        return dp[-1]
+    
+
+                    
+
+                
