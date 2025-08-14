@@ -915,18 +915,179 @@
 
 # print(total)
 
+# 72　AtCoder Beginner Contest 034 C - 経路　nCr を求めるだけの基本問題です。
+# import math
+# W, H = map(int, input().split())
+# ans = math.comb(W+H-2, W-1) % (10**9+7)
+# print(ans)
+
+# 73　AtCoder Beginner Contest 145 D - Knight
+# import sys
+# import math
+
+# MOD = 1_000_000_007
+
+# def nCk_mod(n, k, fact, invfact):
+#     if k < 0 or k > n:
+#         return 0
+#     return fact[n]*invfact[k] % MOD * invfact[n-k] % MOD
+
+# X, Y = map(int, input().split())
+# if (X+Y) % 3 != 0:
+#     print(0)
+#     exit()
+
+# a = (2*Y - X)
+# b = (2*X - Y)
+
+# if a < 0 or b < 0:
+#     print(0)
+#     exit()   
+
+# a //= 3
+# b //= 3
+
+# n = a + b
+# fact = [1] * (n + 1)
+# for i in range(1, n + 1):
+#     fact[i] = fact[i - 1] * i % MOD
+
+# invfact = [1] * (n + 1)
+# invfact[n] = pow(fact[n], MOD - 2, MOD)    # フェルマーの小定理
+# for i in range(n, 0, -1):
+#     invfact[i - 1] = invfact[i] * i % MOD
+
+# print(nCk_mod(n, a, fact, invfact))
+
+
+# 74　AtCoder Beginner Contest 021 D - 多重ループ
+# import sys
+# input = sys.stdin.readline
+# MOD = 1_000_000_007
+# n = int(input())
+# k = int(input())
+
+# N = n+ k -1
+# fact = [1] * (N+1)
+# for i in range(1, N+1):
+#     fact[i] = fact[i-1] * i % MOD
+
+# invfact = [1] * (N+1)
+# invfact[N] = pow(fact[N], MOD -2, MOD)
+# for i in range(N, 0, -1):
+#     invfact[i-1] = invfact[i] * i % MOD
+# ans = fact[N] * invfact[k] % MOD * invfact[N-k] % MOD
+# print(ans)
+
+# 75　AtCoder Beginner Contest 149 F - Surrounded Nodes　チャレンジ問題です。解けなくても、「そういう特殊な出力形式の問題ってあるんだな」と感じてほしいです。
 
 
 
+# 85　DSL_1_A - 互いに素な集合　基本問題です。
+# ACL (AtCoder Library) の DSU 実装
+# class DSU:
+#     def __init__(self, n=0):
+#         self.parent_or_size = [-1] * n
+
+#     def merge(self, a, b):
+#         x = self.leader(a)
+#         y = self.leader(b)
+#         if x == y:
+#             return x
+#         if -self.parent_or_size[x] < -self.parent_or_size[y]:
+#             x, y = y, x
+#         self.parent_or_size[x] += self.parent_or_size[y]
+#         self.parent_or_size[y] = x
+#         return x
+
+#     def same(self, a, b):
+#         return self.leader(a) == self.leader(b)
+
+#     def leader(self, a):
+#         path = []
+#         while self.parent_or_size[a] >= 0:
+#             path.append(a)
+#             a = self.parent_or_size[a]
+#         for node in path:
+#             self.parent_or_size[node] = a
+#         return a
+
+#     def size(self, a):
+#         return -self.parent_or_size[self.leader(a)]
 
 
+# import sys
 
+# def main():
+#     input = sys.stdin.readline
+#     n, q = map(int, input().split())
+#     uf = DSU(n)
+#     out = []
+#     for _ in range(q):
+#         com, x, y = map(int, input().split())
+#         if com == 0:  # unite
+#             uf.merge(x, y)
+#         else:         # same
+#             out.append('1' if uf.same(x, y) else '0')
+#     print('\n'.join(out))
 
+# if __name__ == "__main__":
+#     main()
 
+# AtCoder Library使用例
+# from atcoder.dsu import DSU
 
+# N, Q = map(int, input().split())
+# uf = DSU(N)
+# for _ in range(Q):
+#     t, u, v = map(int, input().split())
+#     if t == 0:
+#         uf.merge(u, v)
+#     else:
+#         if uf.same(u, v):
+#             print(1)
+#         else:
+#             print(0)
 
+# 86　AtCoder Beginner Contest 075 C - Bridge　深さ優先探索による連結成分の個数の数え上げでも解けますが、Union-Find でも解いてみましょう。
+# from atcoder.dsu import DSU
+# N, M = map(int, input().split())
+# edges = [tuple(map(lambda x: int(x)-1, input().split())) for _ in range(M)]
 
+# ans = 0
+# for skip in range(M):
+#     uf = DSU(N)
+#     for i, (a, b) in enumerate(edges):
+#         if i == skip:
+#             continue
+#         uf.merge(a, b)
 
+#     if len(uf.groups()) > 1:
+#         ans += 1
+# print(ans)
+
+# 87　AtCoder Beginner Contest 120 D - Decayed Bridge　一個の考察ステップがあり、少し難しいですが、解くことで得られる力は大きいと思います。
+# D - Decayed Bridges
+# pip install atcoder している想定
+# import sys
+# from atcoder.dsu import DSU
+
+# input = sys.stdin.readline
+# N, M = map(int, input().split())
+# edges = [tuple(map(int, input().split())) for _ in range(M)]
+# edges = [(a-1, b-1) for a, b in edges]
+# uf =DSU(N)
+# cur = N*(N-1)//2
+# ans = [0]*(M+1)
+# for i in range(M, 0, -1):
+#     ans[i] = cur
+#     a, b =edges[i-1]
+#     if not uf.same(a, b):
+#         sa = uf.size(a)
+#         sb = uf.size(b)
+#         uf.merge(a, b)
+#         cur -= sa*sb
+# print("\n".join(map(str, ans[1:])))
 
 
 

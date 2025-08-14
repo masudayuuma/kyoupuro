@@ -936,6 +936,290 @@ class Solution:
         return dp[-1]
     
 
-                    
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        dp = [True]+[False]*len(s)
+        for i in range(1, len(s)+1):
+            for w in wordDict:
+                start = i - len(w)
+                if start >= 0 and dp[start] and s[start:i] == w:
+                    dp[i] = True
+                    break
+        return dp[-1]
+    
+# Coin Change
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        n = len(coins)
+        INF = 10**8
+        dp = [[INF]*(amount+1) for _ in range(n+1)]
 
+        for i in range(n+1):
+            dp[i][0] = 0
+        
+        for i in range(n+1):
+            for j in range(amount+1):
+                dp[i][j] = dp[i-1][j]
+                if j >= coins[i-1]:
+                    dp[i][j] = min(dp[i][j], dp[i][j-coins[i-1]]+1)
+
+        return -1 if dp[-1][-1] == INF else dp[-1][-1]
+
+# Search Insert Position
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        ng = -1
+        ok = len(nums)
+        while ok - ng > 1:
+            mid = (ok+ng)//2
+            if nums[mid] >= target:
+                ok = mid
+            else:
+                ng = mid
+        return ng+1
+    
+# Find Minimum in Rotated Sorted Array
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        left = 0
+        right = len(nums)-1
+
+        while right - left >= 1:
+            mid = (right+left)//2
+            if nums[mid] > nums[right]:
+                left = mid+1
+            else:
+                right = mid
+        return nums[right]
+
+# Search in Rotated Sorted Array
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        if len(nums) == 1:
+            return 0 if nums[0] == target else -1
+        
+        left = 0
+        right = len(nums) -1
+
+        while left <= right:
+            mid = (right+left) // 2
+            if nums[mid] == target:
+                return mid
+            
+            if nums[left] <= nums[mid]:
+                if nums[left] <= target < nums[mid]:
+                    right = mid-1
+                else:
+                    left = mid +1
+            else:
+                if nums[mid] < target  <= nums[right]:
+                    left = mid+1
+                else:
+                    right = mid-1
                 
+        return -1
+
+#Capacity To Ship Packages Within D Days
+class Solution:
+    def shipWithinDays(self, weights: List[int], D: int) -> int:
+        def feasible(capacity) -> bool:
+            days = 1
+            total = 0
+            for weight in weights:
+                total += weight
+                if total > capacity:
+                    total = weight
+                    days += 1
+                    if days > D:
+                        return False
+            return True
+
+
+        left, right = max(weights), sum(weights)
+        while left < right:
+            mid = (left+right)//2
+            if feasible(mid):
+                right = mid
+            else:
+                left = mid+1
+        return left
+    
+# Pow(x, n)
+class Solution:
+    def myPow(self, x: float, n: int) -> float:
+        def clac_power(x, n):
+            if x == 0:
+                return 0
+            if n == 0:
+                return 1
+
+            res = clac_power(x, n//2)
+            res = res*res
+            if n%2 == 1:
+                return res*x
+
+            return res
+         
+
+        ans = clac_power(x, abs(n))
+        if n >= 0:
+            return ans
+        else:
+            return 1/ans
+    
+
+# #K-th Symbol in Grammar
+class Solution:
+    def kthGrammar(self, n: int, k: int) -> int:
+        are_values_same = True
+        while n!= 1:
+            n //= 2
+            if k > n:
+                k -= n
+                are_values_same = not are_values_same
+
+        return 0 if are_values_same else 1
+    
+# Longest Substring Without Repeating Characters
+from collections import defaultdict
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        n = len(s)
+        if n == 0:
+            return 0
+        
+        serch = defaultdict(int)
+        ans = 0
+        count = 0
+        for i in range(n):
+            if s[i] in serch:
+                ans = self.lengthOfLongestSubstring(s[serch[s[i]]+1:])
+                break
+            serch[s[i]] = i
+            count += 1
+
+        return max(ans, count)
+    
+class Solution:
+    def lengthOfLongestSubstring(self, s):
+        maxLen = 0
+        seen = set()
+        l, r = 0, 0
+        while r < len(s):
+            while s[r] in seen:
+                seen.remove(s[l])
+                l += 1
+            seen.add(s[r])
+            maxLen = max(maxLen, len(seen))
+            r += 1
+        return maxLen
+    
+# Minimum Size Subarray Sum
+class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        INF = float('inf')
+        n = len(nums)
+        ans = INF
+        total = 0
+        l = 0
+
+        for r in range(n):
+            total += nums[r]
+            while total >= target:
+                ans = min(ans, r-l+1)
+                total -= nums[l]
+                l += 1
+        
+
+        return 0 if ans == INF else ans
+
+class Solution:
+    def minSubArrayLen(self, target, nums):
+        INF = 10**8
+        n = len(nums)
+        total = 0
+        ans = INF
+        l = 0
+
+        for r in range(n):
+            total += nums[r]
+            while total >= target:
+                ans = min(ans, r-l+1)
+                total -= nums[l]
+                l += 1
+
+        return 0 if ans == INF else ans
+    
+# Permutations
+from itertools import permutations
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        result = [permutations(nums)]
+        return result    
+    
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        if len(nums) == 1:
+            return [nums[:]]
+        
+        res = []
+        for _ in range(len(nums)):
+            n = nums.pop(0)
+            perms = self.permute(nums)
+
+            for p in perms:
+                p.append(n)
+
+            res.extend(perms)
+            nums.append(n)
+
+        return res
+
+# Subsets
+class Solution:
+    def subsets(self, nums):
+        n = len(nums)
+        results = []
+
+        for mask in range(1 << n):
+            subset = []
+            for i in range(n):
+                if mask & i << n:
+                    subset.append(nums[i])
+            results.append(subset)
+        return results
+            
+# Combination Sum
+class Solution:
+    def combinationSum(self, candidates, target):
+        results = []
+
+        def backtrack(start, path, remaining):
+            if remaining == 0:
+                results.append(path[:])
+            if remaining < 0:
+                return
+            
+            for i in range(start, len(candidates)):
+                num = candidates[i]
+                path.append(num)
+                backtrack(i, path,remaining-num)
+                path.pop()
+        backtrack(0, [], target)
+        return results
+
+# Generate Parentheses
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        result = []
+        def backtrack(path, open_count, close_count):
+            if len(path) == 2*n:
+                result.append(path)
+            if open_count < n:
+                backtrack(path+"(", open_count+1, close_count)
+            if open_count > close_count:
+                backtrack(path+")", open_count, close_count+1)
+
+        backtrack("", 0, 0)
+        return result
+

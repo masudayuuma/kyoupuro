@@ -368,4 +368,31 @@
 # for a in ans:
 #     print(' '.join(map(str, a)))
 
+# B - Reverse Proxy
+# N, Q = map(int, input().split())
+# X = list(map(int, input().split()))
 
+# X_box = [0]*N
+# ans = []
+# for i in X:
+#     if i == 0:
+#         min_num = min(X_box)
+#         min_i = X_box.index(min_num)
+#         X_box[min_i] += 1
+#         ans.append(min_i+1)
+#     else:
+#         X_box[i-1] += 1
+#         ans.append(i)
+
+# # print(" ".join(map(str, ans)))
+# print(*ans)
+
+# B - Compression
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# A = list(set(A))
+# A.sort()
+
+# print(len(A))
+# print(' '.join(map(str, A)))

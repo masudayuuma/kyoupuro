@@ -179,3 +179,61 @@
 
 # for a in out:
 #     print(a)
+
+
+# C - Cycle Graph?
+# from collections import defaultdict
+# from collections import deque
+
+# N, M = map(int, input().split())
+# if N != M:
+#     print('No')
+#     exit()
+
+# graph = defaultdict(list)
+# for i in range(M):
+#     a, b = map(int, input().split())
+#     graph[a].append(b)
+#     graph[b].append(a)
+
+# for v in range(1, N+1):
+#     if len(graph[v]) != 2:
+#         print('No')
+#         exit()
+
+# q =deque([1])
+# seen = [False]*(N+1)
+# seen[1] = True
+# cnt = 0
+# while q:
+#     node = q.popleft()
+#     cnt += 1
+#     for n in graph[node]:
+#         if seen[n] == False:
+#             seen[n] = True
+#             q.append(n)
+            
+    
+# if cnt != N:
+#     print('No')
+#     exit()
+
+# print('Yes')
+
+# C - 403 Forbidden
+N, M, Q = map(int, input().split())
+kannri_list = [set() for _ in range(N)]
+viwe_all = [False]*N
+for _ in range(Q):
+    t, *q = map(int, input().split())
+    x = q[0] -1
+    if t == 1:
+        y = q[1] -1
+        kannri_list[x].add(y)
+    elif t == 2:
+        viwe_all[x] = True
+    else:
+        y = q[1] -1
+        print('Yes' if viwe_all[x] or y in kannri_list[x] else 'No')
+
+
