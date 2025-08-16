@@ -415,19 +415,44 @@
 # S = [list(input()) for _ in range(N)]
 # T = [list(input()) for _ in range(M)]
 
-# for s_i in range(len(S)-len(T)):
-#     for s_j in range(len(S[0])-len(T[0])):
+# for s_i in range(len(S)-len(T)+1):
+#     for s_j in range(len(S[0])-len(T[0])+1):
 #         flag = False
-#         ans = (s_i, s_j)
+#         ans = (s_i+1, s_j+1)
 #         for t_i in range(len(T)):
 #             for t_j in range(len(T[0])):
-#                 if S[s_i][s_j] != T[t_i][t_j]:
+#                 if S[s_i+t_i][s_j+t_j] != T[t_i][t_j]:
 #                     flag =True
+#                     break
 #             if flag == True:
-#                 ans = ()
 #                 break
+#         if flag == False:
+#             print(*ans)
+#             exit()
+
+# ans = (-1, -1)
 # print(*ans)
 
+# B - Geometric Sequence
+# N = int(input())
+# A = list(map(int, input().split()))
+# if N == 1:
+#     print('Yes')
+#     exit()
 
+# for i in range(2, N):
+#     if A[i] * A[0] != A[i-1]*A[1]:
+#         print('No')
+#         exit()
 
+# print('Yes')
             
+# 	B - tcaF
+# X = int(input())
+# index = 1
+# while X > 1:
+#     X /= index
+#     index += 1
+
+# print(index-1)
+
