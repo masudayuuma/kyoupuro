@@ -396,3 +396,38 @@
 
 # print(len(A))
 # print(' '.join(map(str, A)))
+
+# B - Who is Missing?
+# N, M = map(int, input().split())
+# A = list(map(int, input().split()))
+
+# ans = []
+# for i in range(1, N+1):
+#     if i in A:
+#         continue
+#     else:
+#         ans.append(i)
+# print(len(ans))
+# print(*ans)
+
+# B - Seek Grid 
+# N, M = map(int, input().split())
+# S = [list(input()) for _ in range(N)]
+# T = [list(input()) for _ in range(M)]
+
+# for s_i in range(len(S)-len(T)):
+#     for s_j in range(len(S[0])-len(T[0])):
+#         flag = False
+#         ans = (s_i, s_j)
+#         for t_i in range(len(T)):
+#             for t_j in range(len(T[0])):
+#                 if S[s_i][s_j] != T[t_i][t_j]:
+#                     flag =True
+#             if flag == True:
+#                 ans = ()
+#                 break
+# print(*ans)
+
+
+
+            

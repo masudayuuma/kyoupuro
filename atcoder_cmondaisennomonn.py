@@ -221,19 +221,52 @@
 # print('Yes')
 
 # C - 403 Forbidden
-N, M, Q = map(int, input().split())
-kannri_list = [set() for _ in range(N)]
-viwe_all = [False]*N
-for _ in range(Q):
-    t, *q = map(int, input().split())
-    x = q[0] -1
-    if t == 1:
-        y = q[1] -1
-        kannri_list[x].add(y)
-    elif t == 2:
-        viwe_all[x] = True
-    else:
-        y = q[1] -1
-        print('Yes' if viwe_all[x] or y in kannri_list[x] else 'No')
+# N, M, Q = map(int, input().split())
+# kannri_list = [set() for _ in range(N)]
+# viwe_all = [False]*N
+# for _ in range(Q):
+#     t, *q = map(int, input().split())
+#     x = q[0] -1
+#     if t == 1:
+#         y = q[1] -1
+#         kannri_list[x].add(y)
+#     elif t == 2:
+#         viwe_all[x] = True
+#     else:
+#         y = q[1] -1
+#         print('Yes' if viwe_all[x] or y in kannri_list[x] else 'No')
+
+
+# C - Dislike Foods
+# import sys
+# input = sys.stdin.readline
+
+# n, m = map(int, input().split())
+
+# # ing_to_menus[x] = 食材 x(0-index) を含む料理IDのリスト
+# ing_to_menus = [[] for _ in range(n)]
+# need = [0] * m  # 各料理に残っている「苦手食材」の数
+
+# for i in range(m):
+#     data = list(map(int, input().split()))
+#     k, a = data[0], data[1:]
+#     need[i] = k
+#     for x in a:
+#         ing_to_menus[x - 1].append(i)  # 0-index 化
+
+# B = list(map(int, input().split()))    # N 個が1行で来る
+
+# eat = 0
+# out = []
+# for b in B:
+#     b -= 1
+#     for menu_id in ing_to_menus[b]:
+#         if need[menu_id] > 0:
+#             need[menu_id] -= 1
+#             if need[menu_id] == 0:
+#                 eat += 1
+#     out.append(eat)
+
+# print("\n".join(map(str, out)))
 
 
