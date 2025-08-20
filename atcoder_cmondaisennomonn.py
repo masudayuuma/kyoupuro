@@ -270,3 +270,107 @@
 # print("\n".join(map(str, out)))
 
 
+# C - Uniqueness
+# from collections import defaultdict
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# n = len(A)
+# if n == 1:
+#     print(1)
+#     exit()
+# dict = defaultdict(list)
+# max_i = -1
+# max_n = 0
+# for i in range(n):
+#     dict[A[i]].append(i+1)
+
+# for val, i in dict.items():
+#     if len(i) == 1:
+#         if val > max_n:
+#             max_n = val
+#             max_i = i[0]
+
+# print(max_i)
+    
+
+# from collections import defaultdict
+
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# d = defaultdict(list)
+# for i, a in enumerate(A):
+#     d[a].append(i)
+
+# for key in sorted(d, reverse=True):
+#     if len(d[key])==1:
+#         print(d[key][0]+1)
+#         exit()
+
+# print(-1)
+
+
+# C - Make it Forest
+# from atcoder.dsu import DSU
+# n, m = map(int, input().split())
+# uf = DSU(n)
+# ans = 0
+
+# for _ in range(m):
+#     a, b = map(int, input().split())
+#     a -= 1; b-= 1
+#     if uf.same(a, b):
+#         ans += 1
+#     else:
+#         uf.merge(a, b)
+
+# print(ans)
+
+# C - Shortest Duplicate Subarray
+# from collections import defaultdict
+# N = input()
+# A = list(map(int, input().split()))
+# INF = 10**8
+# dict = defaultdict(int)
+# ans = INF
+# for a in range(len(A)):
+#     if A[a] in dict:
+#         ans = min(a-dict[A[a]]+1, ans)
+#     else:
+#         dict[A[a]] = a
+
+# print(ans if INF != ans else -1)
+
+# C - Debug 
+# S = input()
+# S = list(S)
+# i = 0
+
+# for i in range(len(S)-1, 0, -1):
+#     if S[i] == 'A' and S[i-1] == 'W':
+#         S[i] = 'C'
+#         S[i-1] = 'A'
+
+# print(''.join(S))
+        
+# C - Buy Balls
+N, M = map(int, input().split())
+B = list(map(int, input().split()))
+W = list(map(int, input().split()))
+
+B.sort(reverse=True)
+W.sort(reverse=True)
+ans = 0
+for i in range(N):
+    if i < M and W[i] > 0:
+        if B[i] < 0 and abs(B[i]) > W[i]:
+            break     
+        ans += B[i]+W[i]
+    elif B[i] > 0:
+        ans += B[i]
+    else:
+        break
+
+    
+print(ans)
