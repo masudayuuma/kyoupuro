@@ -355,22 +355,53 @@
 # print(''.join(S))
         
 # C - Buy Balls
-N, M = map(int, input().split())
-B = list(map(int, input().split()))
-W = list(map(int, input().split()))
+# N, M = map(int, input().split())
+# B = list(map(int, input().split()))
+# W = list(map(int, input().split()))
 
-B.sort(reverse=True)
-W.sort(reverse=True)
-ans = 0
-for i in range(N):
-    if i < M and W[i] > 0:
-        if B[i] < 0 and abs(B[i]) > W[i]:
-            break     
-        ans += B[i]+W[i]
-    elif B[i] > 0:
-        ans += B[i]
-    else:
-        break
+# B.sort(reverse=True)
+# W.sort(reverse=True)
+# ans = 0
+# for i in range(N):
+#     if i < M and W[i] > 0:
+#         if B[i] < 0 and abs(B[i]) > W[i]:
+#             break     
+#         ans += B[i]+W[i]
+#     elif B[i] > 0:
+#         ans += B[i]
+#     else:
+#         break
 
-    
-print(ans)
+# print(ans)
+
+# C - Variety Split Easy 
+# from collections import Counter
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# right_counter = Counter(A[1:])
+# left_counter = Counter(A[:1])
+
+# ans = len(right_counter)+len(left_counter)
+# for i in range(1, N-1):
+#     right_counter[A[i]] -= 1
+#     if right_counter[A[i]] == 0:
+#         del right_counter[A[i]]
+#     left_counter[A[i]] += 1
+
+#     ans = max(len(right_counter)+len(left_counter), ans)
+
+# print(ans)
+
+# C - Bib
+# N = int(input())
+# P = list(map(int, input().split()))
+# Q = list(map(int, input().split()))
+
+# ans = [0 for _ in range(N)] 
+
+# for i in range(N):
+#     ans[Q[i]-1] = Q[P[i]-1]
+
+# # print(*ans)
+# print(' '.join(map(str, ans)))

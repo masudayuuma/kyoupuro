@@ -456,3 +456,25 @@
 
 # print(index-1)
 
+
+# B - Heavy Snake
+# N, D = map(int, input().split())
+# ans = 0
+# T = []
+# L = []
+# for i in range(N):
+#     t, l = map(int, input().split())
+#     T.append(t)
+#     L.append(l)
+
+# for i in range(1,D+1):
+#     ans = 0
+#     for j in range(N):
+#         t, l = T[j], L[j]
+#         if ans < t*(l+i):
+#             ans = t*(l+i)
+#     print(ans)
+
+
+
+    
