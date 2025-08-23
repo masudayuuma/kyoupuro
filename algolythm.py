@@ -330,3 +330,154 @@ iterable = [1, 1, 2, 2, 2, 4, 4, 4, 5]
 [[key,len(list(group))] for key,group in groupby(iterable)]
 #[[1, 2], [2, 3], [4, 3], [5, 1]]
 
+
+#座標圧縮
+# https://qiita.com/mm-saito-1204/items/7ee43bc83c9bc766535b
+# 目的：MLE(メモリ上限超過)を防ぐこと
+# 配列がでかい時に有効
+
+def zahyouassyuku(before_list):
+    set_sort = sorted(list(set(before_list)))
+    rank = {x:i+1 for i,x in enumerate(set_sort)}
+    after_list = []
+    for tmp in before_list:
+        after_list.append(rank[tmp])
+    return after_list
+
+# C - Reorder Cards (座標圧縮の問題)
+# H, W, N = map(int, input().split())
+# A_list = []
+# B_list = []
+
+# for i in range(N):
+#     a, b = map(int, input().split())
+#     A_list.append(a)
+#     B_list.append(b)
+
+# A_set_sort = sorted(list(set(A_list)))
+# B_set_sort = sorted(list(set(B_list)))
+# A_rank = {x:i+1 for i,x in enumerate(A_set_sort)}
+# B_rank = {x:i+1 for i,x in enumerate(B_set_sort)}
+
+# A_after_list = []
+# B_after_list = []
+# for A_tmp, B_tmp in zip(A_list, B_list):
+#     A_after_list.append(A_rank[A_tmp])
+#     B_after_list.append(B_rank[B_tmp])
+#     print(f'{A_rank[A_tmp]} {B_rank[B_tmp]}')
+
+
+# C - 座圧
+# N = int(input())
+# A = list()
+# for i in range(N):
+#     a = int(input())
+#     A.append(a)
+
+
+# sort_set_A = sorted(list(set(A)))
+# A_rank = {x:i for i,x in enumerate(sort_set_A)}
+# after_A = []
+
+# for a in A:
+#     print(A_rank[a])
+
+# C - ID 書き方勉強なるで
+# from collections import defaultdict
+# N, M = map(int, input().split())
+
+# P_dict = defaultdict(list)
+# before_ans = []
+
+# for i in range(M):
+#     p, y = map(int, input().split())
+#     P_dict[p].append(y)
+#     before_ans.append((p, y))
+
+# rank_dict = {}
+# for p in P_dict:
+#     sorted_years = sorted(P_dict[p])
+#     rank_dict[p] = {year: idx+1 for idx, year in enumerate(sorted_years)}
+
+# for p,y in before_ans:
+#     compressed_id = str(rank_dict[p][y]).zfill(6)
+#     print(f"{p:06d}{compressed_id}")
+
+
+
+# bit全探索
+# https://qiita.com/mm-saito-1204/items/3feabbed2ba7bc9d06bd
+# bit全探索の注意点
+# bit全探索は先ほどの通り、2^N通りの全探索です。
+# Nが30を超えるあたりで、AtCoderでTLEになってしまう20億を超えてしまいます。
+# (実際は、他の処理でもループが発生するので、Nが20を超えたあたりからは事前に計算量を考えましょう。)
+
+# TLEしそうな時は以下を検討します。
+# 他のアルゴリズムを利用する
+# (動的計画法(DP)や累積和など)
+# ソートや重複排除など、データを工夫して減らしてからbit全探索する
+# (数字の種類だけでいいなら0~9で10種類、2^10通りでいける等)
+#example みかん
+# N = int(input())
+# X = list(map(int, input().split()))
+
+# ans = 0
+# for bit_num in range(1 << 20):
+#     eat_grain = 0
+#     eat_orange = 0
+
+#     for i in range(20):
+#         if bit_num & (1 << i):
+#             eat_grain += X[i]
+#             eat_orange += 1
+
+#     if eat_orange != N:
+#         continue
+
+#     if eat_grain % 10 == 0:
+#         ans += 1
+
+# print(ans)
+
+# B - 価格の合計
+# n, X = map(int, input().split())
+
+# A = list(map(int, input().split()))
+# ans = 0
+# for i in range(n):
+#     if X & (1 << i):
+#         ans += A[i]
+
+# print(ans)
+
+# C - Switches
+# N, M = map(int, input().split())
+
+# bulbs = []
+# for i in range(M):
+#     line = list(map(int, input().split()))
+#     k = line[0]
+#     switches = line[1:]
+#     bulbs.append([s-1 for s in switches])
+
+# p = list(map(int, input().split()))
+
+# ans = 0
+
+# for mask in range(1 << N):
+#     ok = True
+#     for i in range(M):
+#         count = 0
+#         for switch_idx in bulbs[i]:
+#             if mask & (1 << switch_idx):
+#                 count += 1
+
+#         if count % 2 != p[i]:
+#             ok = False
+#             break
+
+#     if ok:
+#         ans += 1
+
+# print(ans)
+

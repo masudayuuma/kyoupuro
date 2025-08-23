@@ -982,7 +982,7 @@
 # 75　AtCoder Beginner Contest 149 F - Surrounded Nodes　チャレンジ問題です。解けなくても、「そういう特殊な出力形式の問題ってあるんだな」と感じてほしいです。
 
 
-
+#Union-Find
 # 85　DSL_1_A - 互いに素な集合　基本問題です。
 # ACL (AtCoder Library) の DSU 実装
 # class DSU:

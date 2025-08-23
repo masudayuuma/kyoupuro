@@ -405,3 +405,45 @@
 
 # # print(*ans)
 # print(' '.join(map(str, ans)))
+
+# C - Make it Simple
+# from collections import defaultdict
+# N, M = map(int, input().split())
+# ans = 0
+# has_sides = set()
+# for i in range(M):
+#     u, v = map(int, input().split())
+#     if u == v:
+#         ans += 1
+#         continue
+#     else:
+#         if (u, v) in has_sides or (v, u) in has_sides:
+#             ans += 1
+#             continue
+#         else:
+#             has_sides.add((u, v))
+
+# print(ans)
+
+# C - Pigeonhole Query
+# from collections import defaultdict
+# N, Q = map(int, input().split())
+
+# now_dict = {}
+# num_dict = defaultdict(lambda: 1)
+# ans = 0
+# for i in range(Q):
+#     query = list(map(int, input().split()))
+#     if query[0] == 1:
+#         now_hole = now_dict.get(query[1], query[1])
+#         num_dict[now_hole] -= 1
+#         num_dict[query[2]] += 1
+#         if num_dict[now_hole] == 1:
+#             ans  -= 1
+#         if num_dict[query[2]] == 2:
+#             ans += 1
+#         now_dict[query[1]] = query[2]
+#     else:
+#         print(ans)
+
+
