@@ -1,3 +1,17 @@
+# https://www.sejuku.net/blog/49951
+# python基本文法まとめて解説
+
+'''
+print("コメントテスト1")
+print("コメントテスト2")
+print("コメントテスト3”)
+'''
+
+#辞書
+fruits = {"apple":2, "orange":3, "melon":5}
+print(fruits["apple"])
+
+
 #https://qiita.com/yamadagenki/items/4ef889964b18dfe90329
 #プログラミング初心者に確実に押さえておいて欲しい文法一覧（技術面接対策用）
 str1 = "Hello, "

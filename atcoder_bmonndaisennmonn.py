@@ -487,3 +487,19 @@
 # print(ans)
 
 
+S = input()
+cnt = 0
+i = 0
+while i < len(S):
+    if S[i] == '0' and S[i+1] == '0':
+        cnt += 1
+        i += 2
+    else:
+        cnt += 1
+        i += 1
+    # print(cnt)
+    if i == len(S)-1:
+        cnt += 1
+        break
+
+print(cnt)
