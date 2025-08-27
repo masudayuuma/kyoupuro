@@ -481,3 +481,65 @@ def zahyouassyuku(before_list):
 
 # print(ans)
 
+# C - HonestOrUnkind2
+# N = int(input())
+# say = []
+# for n in range(N):
+#     a = int(input())
+#     for _ in range(a):
+#         x, y = map(int, input().split())
+#         say.append((x-1, y, n))
+# ans = 0
+
+# for mask in range(1 << N):
+#     flag = True
+#     for x, y, a in say:
+#         if not mask & (1 << a):
+#             continue
+#         # 2ritomo honest
+#         if y == 1 and mask & (1 << x) and mask & (1 << a):
+#             continue
+#         # syougennsyaga honest
+#         elif y == 0 and not mask & (1 << x) and mask & (1 << a):
+#             continue
+#         else:
+#             flag = False
+#     if flag == True:
+#         num_honest = bin(mask).count('1')
+#         ans = max(num_honest, ans)
+
+# print(ans)
+
+
+# 順列全探索
+# import itertools
+# arr = [0, 1, 2]
+# print(list(itertools.permutations(arr)))
+
+# C - Average Length
+import itertools, math
+
+N = int(input())
+
+points = []
+for _ in range(N):
+    xy = list(map(int, input().split()))
+    points.append(xy)
+
+num = list(range(N))
+
+ptn = list(itertools.permutations(num))
+
+sum_dist = 0
+
+for p in ptn:
+    for i in range(len(p)-1):
+        a = p[i]
+        b = p[i+1]
+        x1 = points[a][0]
+        y1 = points[a][1]
+        x2 = points[b][0]
+        y2 = points[b][1]
+        sum_dist += math.sqrt((x1-x2)**2 + (y1-y2)**2)
+
+print(sum_dist/len(ptn))

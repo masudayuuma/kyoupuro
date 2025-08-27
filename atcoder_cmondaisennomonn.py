@@ -447,3 +447,50 @@
 #         print(ans)
 
 
+# C - たくさんの数式
+# S = input()
+# n = len(S)
+# # hugou = 0*(n-1)
+# total = 0
+# for mask in range(1 << n-1):
+#     formula = S[0]
+#     for i in range(n-1):
+#         if mask & (1 << i):
+#             formula += '+' + S[i+1]
+#         else:
+#             formula += S[i+1]
+#     # print(formula)  
+#     total += eval(formula)
+
+# print(total)
+
+# C - Skill Up
+# INF = 10**8
+# N, M, X = map(int, input().split())
+# A = []
+# ans_level = [0]*M
+# ans = INF
+# # cost = 0
+# C = []
+# for i in range(N):
+#     c, *a = map(int, input().split())
+#     C.append(c)
+#     A.append(a)
+
+# for mask in range(1 << N):
+#     cost = 0
+#     ans_level = [0]*M
+#     for i in range(N):
+#         if mask & (1 << i):
+#             cost += C[i]
+#             for j in range(M):
+#                 ans_level[j] += A[i][j]
+                
+#     flag = True
+#     for level in ans_level:
+#         if not level >= X:
+#             flag = False
+#     if flag == True:
+#         ans = min(cost, ans)
+
+# print(-1 if ans == INF else ans)

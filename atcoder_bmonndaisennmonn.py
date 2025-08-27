@@ -487,19 +487,50 @@
 # print(ans)
 
 
-S = input()
-cnt = 0
-i = 0
-while i < len(S):
-    if S[i] == '0' and S[i+1] == '0':
-        cnt += 1
-        i += 2
-    else:
-        cnt += 1
-        i += 1
-    # print(cnt)
-    if i == len(S)-1:
-        cnt += 1
-        break
+# S = input()
+# cnt = 0
+# i = 0
+# while i < len(S):
+#     if S[i] == '0' and S[i+1] == '0':
+#         cnt += 1
+#         i += 2
+#     else:
+#         cnt += 1
+#         i += 1
+#     # print(cnt)
+#     if i == len(S)-1:
+#         cnt += 1
+#         break
 
-print(cnt)
+# print(cnt)
+
+# B - Santa Claus 1
+# h, w, x, y = map(int, input().split())
+
+# path_grid = [input() for _ in range(h)]
+
+# path = input()
+# times = len(path)
+# cnt = set()
+# x, y = x-1, y-1
+# for i in range(times):
+#     if path[i] == 'U' and (path_grid[x-1][y] == '@' or path_grid[x-1][y] == '.'):
+#         if path_grid[x-1][y] == '@':
+#             cnt.add((x-1, y))
+#         x, y = x-1, y
+#     elif path[i] == 'D' and (path_grid[x+1][y] == '@' or path_grid[x+1][y] == '.'):
+#         if path_grid[x+1][y] == '@':
+#             cnt.add((x+1, y))
+#         x, y = x+1, y
+#     elif path[i] == 'L' and (path_grid[x][y-1] == '@' or path_grid[x][y-1] == '.'):
+#         if path_grid[x][y-1] == '@':
+#             cnt.add((x, y-1))
+#         x, y = x, y-1
+#     elif path[i] == 'R' and (path_grid[x][y+1] == '@' or path_grid[x][y+1] == '.'):
+#         if path_grid[x][y+1] == '@':
+#             cnt.add((x, y+1))
+#         x, y = x, y+1
+#     else:
+#         continue
+
+# print(x+1, y+1, len(cnt))
