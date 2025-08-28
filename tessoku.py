@@ -144,3 +144,53 @@
 
 # print(*after_A)
 
+# A16 - Dungeon 1（※初版第 1 刷の B22 も同じ問題です）
+# N = int(input())
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
+
+# minitu_dp = [0]*N
+# minitu_dp[0] = 0
+# minitu_dp[1] = A[0]
+
+
+# for i in range(2, N):
+#     min_minitu = min(minitu_dp[i-2]+B[i-2], minitu_dp[i-1]+A[i-1])
+#     minitu_dp[i] = min_minitu
+#     # print(min_minitu)
+
+# print(minitu_dp[-1])
+
+# A17 - Dungeon 2
+INF = 10**8
+N = int(input())
+A = list(map(int, input().split()))
+B = list(map(int, input().split()))
+
+minitu_dp = [[INF, -1] for _ in range(N)]
+minitu_dp[0] = [0, -1]
+minitu_dp[1] = [A[0], 0]
+
+for i in range(2, N):
+    min_cost_i = -1
+    min_cost = min(minitu_dp[i-2][0]+B[i-2], minitu_dp[i-1][0]+A[i-1])
+    if min_cost == minitu_dp[i-2][0]+B[i-2]:
+        min_cost_i = i-2
+    else:
+        min_cost_i = i-1
+
+    minitu_dp[i] = [min_cost, min_cost_i]
+    # print(minitu_dp[i])
+
+path = []
+j = N-1
+while j != -1:
+    path.append(j+1)
+    j = minitu_dp[j][1]
+
+path.reverse()
+print(len(path))
+print(*path)
+
+
+

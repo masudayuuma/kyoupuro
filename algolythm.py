@@ -517,29 +517,82 @@ def zahyouassyuku(before_list):
 # print(list(itertools.permutations(arr)))
 
 # C - Average Length
-import itertools, math
+# import itertools, math
 
-N = int(input())
+# N = int(input())
 
-points = []
-for _ in range(N):
-    xy = list(map(int, input().split()))
-    points.append(xy)
+# points = []
+# for _ in range(N):
+#     xy = list(map(int, input().split()))
+#     points.append(xy)
 
-num = list(range(N))
+# num = list(range(N))
 
-ptn = list(itertools.permutations(num))
+# ptn = list(itertools.permutations(num))
 
-sum_dist = 0
+# sum_dist = 0
 
-for p in ptn:
-    for i in range(len(p)-1):
-        a = p[i]
-        b = p[i+1]
-        x1 = points[a][0]
-        y1 = points[a][1]
-        x2 = points[b][0]
-        y2 = points[b][1]
-        sum_dist += math.sqrt((x1-x2)**2 + (y1-y2)**2)
+# for p in ptn:
+#     for i in range(len(p)-1):
+#         a = p[i]
+#         b = p[i+1]
+#         x1 = points[a][0]
+#         y1 = points[a][1]
+#         x2 = points[b][0]
+#         y2 = points[b][1]
+#         sum_dist += math.sqrt((x1-x2)**2 + (y1-y2)**2)
 
-print(sum_dist/len(ptn))
+# print(sum_dist/len(ptn))
+
+
+# AtCoder Beginner Contest 150 C - Count Order
+# from itertools import permutations
+
+# N = int(input())
+# P = list(map(int, input().split()))
+# Q = list(map(int, input().split()))
+
+# S = 0
+# G = 0
+# num = list(range(1, N+1))
+# ptn = list(permutations(num))
+# # print(num)
+# # print(ptn)
+
+# for index, perm in enumerate(ptn):
+#     if P == list(perm):
+#         S = index
+#     if Q == list(perm):
+#         G = index
+
+# print(abs(S-G))
+
+
+# C - One-stroke Path
+# from itertools import permutations
+# N, M = map(int, input().split())
+
+# path_set = set()
+
+# for i in range(M):
+#     a, b = map(int, input().split())
+#     path_set.add((a-1, b-1))
+
+# num = list(range(N))
+# ptn = list(permutations(num))
+# cnt = 0
+# for perm in ptn:
+#     if perm[0] != 0:
+#         continue
+#     flag = True
+#     for i in range(len(perm)-1):
+#         if (perm[i], perm[i+1]) in path_set or (perm[i+1],perm[i]) in path_set:
+#             continue
+#         else:
+#             flag = False
+#             break
+
+#     if flag == True:
+#         cnt += 1
+
+# print(cnt)
