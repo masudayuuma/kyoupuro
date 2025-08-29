@@ -162,35 +162,180 @@
 # print(minitu_dp[-1])
 
 # A17 - Dungeon 2
-INF = 10**8
-N = int(input())
-A = list(map(int, input().split()))
-B = list(map(int, input().split()))
+# INF = 10**8
+# N = int(input())
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
 
-minitu_dp = [[INF, -1] for _ in range(N)]
-minitu_dp[0] = [0, -1]
-minitu_dp[1] = [A[0], 0]
+# minitu_dp = [[INF, -1] for _ in range(N)]
+# minitu_dp[0] = [0, -1]
+# minitu_dp[1] = [A[0], 0]
 
-for i in range(2, N):
-    min_cost_i = -1
-    min_cost = min(minitu_dp[i-2][0]+B[i-2], minitu_dp[i-1][0]+A[i-1])
-    if min_cost == minitu_dp[i-2][0]+B[i-2]:
-        min_cost_i = i-2
-    else:
-        min_cost_i = i-1
+# for i in range(2, N):
+#     min_cost_i = -1
+#     min_cost = min(minitu_dp[i-2][0]+B[i-2], minitu_dp[i-1][0]+A[i-1])
+#     if min_cost == minitu_dp[i-2][0]+B[i-2]:
+#         min_cost_i = i-2
+#     else:
+#         min_cost_i = i-1
 
-    minitu_dp[i] = [min_cost, min_cost_i]
-    # print(minitu_dp[i])
+#     minitu_dp[i] = [min_cost, min_cost_i]
+#     # print(minitu_dp[i])
 
-path = []
-j = N-1
-while j != -1:
-    path.append(j+1)
-    j = minitu_dp[j][1]
+# path = []
+# j = N-1
+# while j != -1:
+#     path.append(j+1)
+#     j = minitu_dp[j][1]
 
-path.reverse()
-print(len(path))
-print(*path)
+# path.reverse()
+# print(len(path))
+# print(*path)
 
 
+# A18 - Subset Sum
+# N, S = map(int, input().split())
+# A = list(map(int, input().split()))
+# # A.sort()
+# cnt_S_dp = [False for _ in range(S+1)]
+# cnt_S_dp[0] =True
 
+# for i in range(N):
+#     # print(cnt_S_dp)
+#     for j in range(S, A[i]-1, -1):
+#         if cnt_S_dp[j-A[i]] == True:
+#             cnt_S_dp[j] = True
+
+# # print(cnt_S_dp)
+# if cnt_S_dp[-1] == True:
+#     print('Yes')
+# else:
+#     print('No')
+
+# A19 - Knapsack 1
+# N, W = map(int, input().split())
+# napzac = []
+# for i in range(N):
+#     w, v = map(int, input().split())
+#     napzac.append((w, v))
+
+# dp = [[0]*(W+1) for _ in range(N+1)]
+
+# for i in range(1, N+1):
+#     w, v = napzac[i-1]
+#     for j in range(W+1):
+#         dp[i][j] = dp[i-1][j]
+#         if 0 <= j-w <= W:
+#             # print(dp[i][j])
+#             dp[i][j] = max(dp[i][j], dp[i-1][j-w]+v)
+#         # print(dp[i][j])
+
+# print(dp[-1][-1])
+
+# A20 - LCS
+# N = input()
+# T = input()
+# n, t = len(N), len(T)
+# dp = [[0]*(t+1) for _ in range(n+1)]
+
+# for i in range(1, n+1):
+#     for j in range(1, t+1):
+#         max_cnt = max(dp[i-1][j], dp[i][j-1])
+#         if N[i-1] == T[j-1]:
+#             max_cnt = max(max_cnt, dp[i-1][j-1]+1)
+#         dp[i][j] = max_cnt
+#             # print(max_cnt)
+        
+        
+# print(dp[-1][-1])
+
+
+# A21 - Block Game
+# N = int(input())
+# P = [None]*(N+1)
+# A = [None]*(N+1)
+
+# for i in range(1, N+1):
+#     P[i], A[i] = map(int, input().split())
+
+# dp = [[None]*(N+1) for i in range(N+1)]
+# dp[1][N] = 0
+# for LEN in reversed(range(0, N-1)):
+#     for l in range(1, N-LEN+1):
+#         r = l+LEN
+
+#         score1 = 0
+#         if l>= 2 and l <= P[l-1] and P[l-1] <= r:
+#             score1 = A[l-1]
+
+#         score2 = 0
+#         if r <=N-1 and l <= P[r+1] and P[r+1]<= r:
+#             score2 = A[r+1]
+
+#         if l == 1:
+#             dp[l][r] = dp[l][r+1] + score2
+#         elif r==N:
+#             dp[l][r] = dp[l-1][r] + score1
+#         else:
+#             dp[l][r] = max(dp[l-1][r] + score1, dp[l][r+1]+score2)
+
+# ans = 0
+# for i in range(1, N+1):
+#     ans = max(ans, dp[i][i])
+# print(ans)
+
+
+# A22 - Sugoroku
+#到達していないマスを考慮
+# N = int(input())
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
+# INF = -10**8
+# max_score_dp = [INF]*(N+1)
+# max_score_dp[1] = 0
+
+# for i in range(N-1):
+#     if max_score_dp[i+1] == INF:
+#         continue
+#     max_score_dp[A[i]] = max(100+max_score_dp[i+1], max_score_dp[A[i]])
+#     max_score_dp[B[i]] = max(150+max_score_dp[i+1], max_score_dp[B[i]])
+
+# print(max_score_dp[N])
+
+# # A23 - All Free
+# N, M = map(int, input().split())
+
+# coupons = []
+# for i in range(M):
+#     A = list(map(int, input().split()))
+#     mask = 0
+#     for j in range(N):
+#         if A[j] == 1:
+#             mask |= (1 << j)
+#     coupons.append(mask)
+
+# INF = float('inf')
+# dp = [[INF] * (1 << N) for _ in range(M+1)]
+
+# dp[0][0] = 0
+# for i in range(1, M+1):
+#     coupons_mask = coupons[i-1]
+
+#     for mask in range(1 << N):
+#         dp[i][mask] = dp[i-1][mask]
+
+#         for prev_mask in range(1 << N):
+#             if (prev_mask | coupons_mask) == mask:
+#                 if dp[i-1][prev_mask] != mask:
+#                     if dp[i-1][prev_mask] != INF:
+#                         dp[i][mask] = min(dp[i][mask], dp[i-1][prev_mask]+1)
+
+# all_items = (1 << N)-1
+# ans = dp[M][all_items]
+
+# if ans == INF:
+#     print(-1)
+# else:
+#     print(ans)
+
+# 
