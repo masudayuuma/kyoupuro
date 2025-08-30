@@ -338,4 +338,55 @@
 # else:
 #     print(ans)
 
-# 
+# A24 - LIS
+#without dp
+# from bisect import bisect_right, bisect_left
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# L = [float('inf')]*N
+
+# for i in range(N):
+#     index = bisect_left(L, A[i])
+#     L[index] = A[i]
+    
+# ans = bisect_left(L, float('inf'))
+# print(ans)
+
+#use dp
+#復元とかも考えるならこっちらしい
+# import bisect
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# LEN = 0
+# L = []
+# dp = [None]*N
+
+# for i in range(N):
+#     pos = bisect.bisect_left(L, A[i])
+#     dp[i] = pos
+
+#     if dp[i] >= LEN:
+#         L.append(A[i])
+#         LEN += 1
+#     else:
+#         L[dp[i]] = A[i]
+
+# print(LEN)
+
+
+# A25 - Number of Routes
+# H, W = map(int, input().split())
+# C = [input() for _ in range(H)]
+
+# dp = [[0]*(W+1) for _ in range(H+1)]
+# dp[1][1] = 1
+# for i in range(1, H+1):
+#     for j in range(1, W+1):
+#         if C[i-1][j-1] == '#':
+#             continue
+#         dp[i][j] += dp[i-1][j] + dp[i][j-1]
+#         # print(dp[i][j])
+
+# print(dp[-1][-1])
