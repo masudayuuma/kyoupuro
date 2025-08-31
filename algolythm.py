@@ -596,3 +596,4 @@ def zahyouassyuku(before_list):
 #         cnt += 1
 
 # print(cnt)
+
