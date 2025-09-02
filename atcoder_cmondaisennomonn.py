@@ -494,3 +494,29 @@
 #         ans = min(cost, ans)
 
 # print(-1 if ans == INF else ans)
+
+# C - Paint to make a rectangle
+# H, W = map(int, input().split())
+# S = [input() for _ in range(H)]
+# b_h_min = float('inf')
+# b_w_min = float('inf')
+# b_h_max = float('-inf')
+# b_w_max = float('-inf')
+
+# for i in range(H):
+#     for j in range(W):
+#         if S[i][j] == '#':
+#             b_h_min = min(b_h_min, i)
+#             b_w_min = min(b_w_min, j)
+#             b_h_max = max(b_h_max, i)
+#             b_w_max = max(b_w_max, j)
+
+# for i in range(b_h_min, b_h_max+1):
+#     for j in range(b_w_min, b_w_max+1):
+#         if S[i][j] == '.':
+#             print('No')
+#             exit()
+
+        
+# print('Yes')
+

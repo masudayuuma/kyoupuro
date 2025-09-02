@@ -853,7 +853,171 @@
 #     so.append(N)
 
 # print(f"{NN}:", " ".join(map(str, so)))
-    
+
+
+# 46　ALDS_10_B - 連鎖行列積　基本問題です。
+# INF = 10**8
+# n = int(input())
+# rc = [tuple(map(int, input().split())) for _ in range(n)]
+
+# p = [rc[0][0]] + [rc[i][1] for i in range(n)]
+# dp = [[0]*n for _ in range(n)]
+
+# for lenght in range(2, n+1):
+#     for i in range(0, n-lenght+1):
+#         j = i+lenght-1
+#         best = INF
+
+#         for k in range(i, j):
+#             cost = dp[i][k]+dp[k+1][j]+p[i]*p[k+1]*p[j+1]
+#             if cost < best:
+#                 best = cost
+#         dp[i][j] = best
+
+# print(dp[0][n-1] if n >= 1 else 0)
+
+#解説付き
+# dp = [[0]*n for _ in range(n)]
+# for length in range(2, n+1):     # ① 区間の長さ（行列の個数）
+#     for i in range(0, n - length + 1):  # ② 区間の左端
+#         j = i + length - 1              #    右端
+#         best = INF
+#         for k in range(i, j):           # ③ 分割点
+#             cost = dp[i][k] + dp[k+1][j] + p[i]*p[k+1]*p[j+1]
+#             best = min(best, cost)
+#         dp[i][j] = best
+
+# 47　JOI 2015 本選 2 - ケーキの切り分け 2　 の区間 DP です。(以下両方とも参考になる)
+# https://at274.hatenablog.com/entry/2020/04/09/224749
+# https://toonanote.com/competitive-programing-001/
+# JOI 2015 本選 2 - ケーキの切り分け 2
+# import sys
+
+# # input -------------
+# N = int(input())
+# A = []
+
+# for n in range(N):
+#     A.append(int(sys.stdin.readline().strip()))
+
+# # dp 初期化 -------------
+# # dp は [l, r) の区間が残っているときに JOI がとりえる最大のケーキの面積とする
+# dp = [[0] * N for _ in range(N)]
+
+# if N % 2 == 1:
+#     for n in range(N):
+#         dp[n][(n + 1) % N] = A[n]
+
+# # dp 更新 -----------------
+# for remain in range(2, N + 1):  # 残っているケーキの量で探索をかける
+#     for l in range(N):
+#         r = l + remain  # [l, r)
+
+#         if remain % 2 == N % 2:  # JOI のターン
+#             dp[l][r % N] = max(dp[l][(r - 1) % N] + A[(r - 1) % N],
+#                                dp[(l + 1) % N][r % N] + A[l])
+#         else:  # IOI のターン
+#             if A[(r - 1) % N] > A[l]:
+#                 dp[l][r % N] = dp[l][(r - 1) % N]
+#             else:
+#                 dp[l][r % N] = dp[(l + 1) % N][r % N]
+
+# ans = 0
+# for i in range(N):
+#     if ans < dp[i][i]:
+#         ans = dp[i][i]
+
+# print(ans)
+
+# 48　AOJ 1611 ダルマ落とし　の区間 DP です。
+# import sys
+
+# def solve_dataset(w):
+#     n = len(w)
+#     if n == 0:
+#         return 0
+#     dp = [[0]*n for _ in range(n)]
+#     for L in range(2, n+1):
+#         for i in range(0, n-L+1):
+#             j = i+L-1
+#             # 端同時消し（全消し判定）
+#             if L == 2:
+#                 if abs(w[i]-w[j]) <= 1:
+#                     dp[i][j] = 2
+#             else:
+#                 if dp[i+1][j-1] == L-2 and abs(w[i]-w[j]) <= 1:
+#                     dp[i][j] = L
+
+#             # 分割
+#             best = dp[i][j]
+#             row_i = dp[i]
+#             for k in range(i, j):
+#                 val = row_i[k] + dp[k+1][j]
+#                 if val > best:
+#                     best = val
+#             dp[i][j] = best
+#     return dp[0][n-1]
+
+# def main():
+#     it = iter(sys.stdin.read().split())
+#     out = []
+#     for token in it:
+#         n = int(token)
+#         if n == 0:  # 複数ケースの終端
+#             break
+#         w = [int(next(it)) for _ in range(n)]  # 行をまたいでもOK
+#         out.append(str(solve_dataset(w)))
+#     print("\n".join(out))
+
+# if __name__ == "__main__":
+#     main()
+
+#bit DP
+# 49　DPL_2_A - 巡回セールスマン問題　基本問題です。
+# V, E = map(int, input().split())
+# INF = float('inf')
+
+# adj = [[] for _ in range(V)]
+# for _ in range(E):
+#     a, b, c = map(int, input().split())
+#     adj[a].append((b, c))
+
+# dp = [[INF]*V for _ in range(1 << V)]
+# dp[1 << 0][0] = 0
+
+# for mask in range(1 << V):
+#     row = dp[mask]
+#     for v in range(V):
+#         cur = row[v]
+#         if cur == INF:
+#             continue
+#         for u, w in adj[v]:
+#             if (mask >> u) & 1:
+#                 continue
+#             nm = mask | (1 << u)
+#             nv = cur +w
+#             if nv < dp[nm][u]:
+#                 dp[nm][u] = nv
+# ALL =(1 << V)-1
+# ans = INF
+# for v in range(V):
+#     if dp[ALL][v] == INF:
+#         continue
+#     back = INF
+#     for u, w in adj[v]:
+#         if u == 0:
+#             if w < back:
+#                 back = w
+#     if back == INF:
+#         continue
+#     cand = dp[ALL][v] + back
+#     if cand < ans:
+#         ans = cand
+# print(-1 if ans == INF else ans)
+
+
+
+
 #69　AtCoder Beginner Contest 084 D - 2017-like Number
 #素数判定（エラトステネスの篩）累積和
 # import sys 

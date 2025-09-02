@@ -597,3 +597,31 @@ def zahyouassyuku(before_list):
 
 # print(cnt)
 
+#区間DP
+# 区間DPは「型ゲー」
+# 分割型
+# 区間をどこかで分割して「左 + 右 + コスト」で最小化／最大化。
+
+# for length in range(2, n+1):
+#     for l in range(0, n-length+1):
+#         r = l+length-1
+#         dp[l][r] = min(dp[l][k] + dp[k+1][r] + cost(l,r,k) for k in range(l,r))
+
+
+# 例：連鎖行列積、石の合体、凸包DPなど。
+
+# ペアリング型
+# 左端を誰かと組ませて区間を縮めるタイプ。
+
+# for length in range(2, n+1):
+#     for l in range(0, n-length+1):
+#         r = l+length-1
+#         dp[l][r] = max(
+#             dp[l+1][r],
+#             max(dp[l+1][k-1] + score(l,k) + dp[k+1][r] for k in range(l+1,r+1))
+#         )
+
+
+# 例：最長括弧列、ゲーム系（区間取り合い）、部分列スコア最適化。
+
+# → 区間DPは基本的にこのどっちかに収まる。
