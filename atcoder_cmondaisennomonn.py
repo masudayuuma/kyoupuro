@@ -574,3 +574,27 @@
 #     print(ans)
 
 # C - Snake Queue
+Q = int(input())
+
+save_i = []
+total = 0
+next_head = 0
+hiku_l = 0
+head = 0
+for i in range(Q):
+    query = list(map(int, input().split()))
+    if query[0] == 1:
+        save_i.append((total, query[1]))
+        next_head += query[1]
+        total += query[1]
+    if query[0] == 2:
+        hiku_l -= save_i[head][1]
+        # print(save_i[head])
+        head += 1
+    if query[0] == 3:
+        target = head+query[1]-1
+        # print(target, hiku_l)
+        print(save_i[target][0]+hiku_l)
+
+
+    
