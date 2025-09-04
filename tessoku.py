@@ -251,6 +251,7 @@
 
 
 # A21 - Block Game
+#区間DP
 # N = int(input())
 # P = [None]*(N+1)
 # A = [None]*(N+1)

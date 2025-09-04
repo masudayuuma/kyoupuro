@@ -520,3 +520,57 @@
         
 # print('Yes')
 
+
+# C - Black Intervals
+# N, Q = map(int, input().split())
+# A = list(map(int, input().split()))
+
+# flag = [False]*N
+# ans = 0
+# for i, a in enumerate(A):
+#     pos = a-1
+#     if flag[pos]:
+#         flag[pos] = False
+#         left_black = pos > 0 and flag[pos-1]
+#         right_black = pos < N-1 and flag[pos+1]
+#         if left_black and right_black:
+#             ans += 1
+#         elif left_black or right_black:
+#             ans += 0
+#         else:
+#             ans -= 1
+#     else:
+#         flag[pos] = True
+#         left_black = pos > 0 and flag[pos-1]
+#         right_black = pos < N-1 and flag[pos+1]
+
+#         if left_black and right_black:
+#             ans -= 1
+#         elif left_black or right_black:
+#             ans += 0
+#         else:
+#             ans +=1
+        
+#     print(ans)
+
+# n, q = map(int, input().split())
+# c = [0]*(n+2)
+# ans = 0
+
+# def add(i, x):
+#     if c[i] == 1 and c[i+1] == 1:
+#         ans += x
+
+# for _ in range(q):
+#     a = int(input())
+
+#     add(a-1, -1)
+#     add(a, -1)
+
+#     c[a] ^= 1
+#     add(a-1, 1)
+#     add(a, 1)
+
+#     print(ans)
+
+# C - Snake Queue
