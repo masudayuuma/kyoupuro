@@ -574,27 +574,97 @@
 #     print(ans)
 
 # C - Snake Queue
-Q = int(input())
+# Q = int(input())
 
-save_i = []
-total = 0
-next_head = 0
-hiku_l = 0
-head = 0
-for i in range(Q):
-    query = list(map(int, input().split()))
-    if query[0] == 1:
-        save_i.append((total, query[1]))
-        next_head += query[1]
-        total += query[1]
-    if query[0] == 2:
-        hiku_l -= save_i[head][1]
-        # print(save_i[head])
-        head += 1
-    if query[0] == 3:
-        target = head+query[1]-1
-        # print(target, hiku_l)
-        print(save_i[target][0]+hiku_l)
+# save_i = []
+# total = 0
+# next_head = 0
+# hiku_l = 0
+# head = 0
+# for i in range(Q):
+#     query = list(map(int, input().split()))
+#     if query[0] == 1:
+#         save_i.append((total, query[1]))
+#         next_head += query[1]
+#         total += query[1]
+#     if query[0] == 2:
+#         hiku_l -= save_i[head][1]
+#         # print(save_i[head])
+#         head += 1
+#     if query[0] == 3:
+#         target = head+query[1]-1
+#         # print(target, hiku_l)
+#         print(save_i[target][0]+hiku_l)
+
+# C - Giant Domino
+# import bisect 
+# T = int(input())
+
+# for i in range(T):
+#     n = int(input())
+#     S = list(map(int, input().split()))
+#     s_s, s_e, new_s = S[0], S[-1], sorted(S[1:n-1])
+#     total_min = 2
+#     while new_s:
+#         if s_s*2 <= s_e:
+#             print(total_min)
+#             break
+#         ans_i = bisect.bisect_right(new_s, s_s*2)
+#         if s_e/2 <= new_s[ans_i] <= s_s*2:
+#             s_s = new_s[ans_i]
+#             new_s = new_s[s_s:]
+#             continue
+#         elif new_s[ans_i] >= new_s[0]:
+#             s_s = new_s[ans_i]
+#             new_s = new_s[s_s:]
+#         else:
+#             print(-1)
+#             break
+
+import bisect 
+import sys
+
+input = sys.stdin.readline
+
+T = int(input())
+
+for _ in range(T):
+    n = int(input())
+    S = list(map(int, input().split()))
+    s_s, s_e = S[0], S[-1]
+    new_s = sorted(S[1:n-1])  # 中間のコマを昇順
+    total_min = 2              # [1, N] の2個から開始（途中を挟めば都度+1）
+
+    # まずは S1 だけで SN に届くか
+    if s_e <= 2 * s_s:
+        print(total_min)
+        continue
+
+    # 進捗を“インデックス”で管理（削除はしない）
+    last_idx = -1
+
+    while True:
+        # 先に SN に届くかを毎回チェック（届いた瞬間が最短）
+        if s_e <= 2 * s_s:
+            print(total_min)
+            break
+
+        # <= 2*s_s の範囲で取れる最大値の位置（右端）
+        idx = bisect.bisect_right(new_s, 2 * s_s) - 1
+
+        # 1つも届かない
+        if idx < 0:
+            print(-1)
+            break
+
+        # 前回より右に進めない = 新しいコマを選べない → 詰み
+        if idx <= last_idx:
+            print(-1)
+            break
+
+        # 取れる中で最大のコマにジャンプ
+        s_s = new_s[idx]
+        last_idx = idx
+        total_min += 1
 
 
-    
