@@ -596,7 +596,7 @@
 #         # print(target, hiku_l)
 #         print(save_i[target][0]+hiku_l)
 
-# C - Giant Domino
+# C - Giant Domino 解ききれなかった、解放はあってる
 # import bisect 
 # T = int(input())
 
@@ -621,50 +621,61 @@
 #             print(-1)
 #             break
 
-import bisect 
-import sys
+# import bisect 
+# import sys
 
-input = sys.stdin.readline
+# input = sys.stdin.readline
 
-T = int(input())
+# T = int(input())
 
-for _ in range(T):
-    n = int(input())
-    S = list(map(int, input().split()))
-    s_s, s_e = S[0], S[-1]
-    new_s = sorted(S[1:n-1])  # 中間のコマを昇順
-    total_min = 2              # [1, N] の2個から開始（途中を挟めば都度+1）
+# for _ in range(T):
+#     n = int(input())
+#     S = list(map(int, input().split()))
+#     s_s, s_e = S[0], S[-1]
+#     new_s = sorted(S[1:n-1])  # 中間のコマを昇順
+#     total_min = 2              # [1, N] の2個から開始（途中を挟めば都度+1）
 
-    # まずは S1 だけで SN に届くか
-    if s_e <= 2 * s_s:
-        print(total_min)
-        continue
+#     # まずは S1 だけで SN に届くか
+#     if s_e <= 2 * s_s:
+#         print(total_min)
+#         continue
 
-    # 進捗を“インデックス”で管理（削除はしない）
-    last_idx = -1
+#     # 進捗を“インデックス”で管理（削除はしない）
+#     last_idx = -1
 
-    while True:
-        # 先に SN に届くかを毎回チェック（届いた瞬間が最短）
-        if s_e <= 2 * s_s:
-            print(total_min)
-            break
+#     while True:
+#         # 先に SN に届くかを毎回チェック（届いた瞬間が最短）
+#         if s_e <= 2 * s_s:
+#             print(total_min)
+#             break
 
-        # <= 2*s_s の範囲で取れる最大値の位置（右端）
-        idx = bisect.bisect_right(new_s, 2 * s_s) - 1
+#         # <= 2*s_s の範囲で取れる最大値の位置（右端）
+#         idx = bisect.bisect_right(new_s, 2 * s_s) - 1
 
-        # 1つも届かない
-        if idx < 0:
-            print(-1)
-            break
+#         # 1つも届かない
+#         if idx < 0:
+#             print(-1)
+#             break
 
-        # 前回より右に進めない = 新しいコマを選べない → 詰み
-        if idx <= last_idx:
-            print(-1)
-            break
+#         # 前回より右に進めない = 新しいコマを選べない → 詰み
+#         if idx <= last_idx:
+#             print(-1)
+#             break
 
-        # 取れる中で最大のコマにジャンプ
-        s_s = new_s[idx]
-        last_idx = idx
-        total_min += 1
+#         # 取れる中で最大のコマにジャンプ
+#         s_s = new_s[idx]
+#         last_idx = idx
+#         total_min += 1
 
+# C - Various Kagamimochi
+from bisect import bisect_left
+N = int(input())
+A = list(map(int, input().split()))
+total = 0
+for i in range(N-1):
+    target = A[i]*2
+    cnt = bisect_left(A, target)
+    ans = N-cnt
+    total += ans
 
+print(total)
