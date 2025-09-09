@@ -668,14 +668,20 @@
 #         total_min += 1
 
 # C - Various Kagamimochi
-from bisect import bisect_left
-N = int(input())
-A = list(map(int, input().split()))
-total = 0
-for i in range(N-1):
-    target = A[i]*2
-    cnt = bisect_left(A, target)
-    ans = N-cnt
-    total += ans
+# from bisect import bisect_left
+# N = int(input())
+# A = list(map(int, input().split()))
+# total = 0
+# for i in range(N-1):
+#     target = A[i]*2
+#     cnt = bisect_left(A, target)
+#     ans = N-cnt
+#     total += ans
 
-print(total)
+# print(total)
+
+# C - Operate 1 
+K = int(input())
+S = input()
+T = input()
+
