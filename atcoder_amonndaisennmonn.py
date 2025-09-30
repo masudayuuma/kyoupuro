@@ -175,3 +175,18 @@
 #     # print(ans)
 
 # print(ans)
+
+# A - Isosceles
+# a, b, c = map(int, input().split())
+
+# if a == b or b == c or a == c:
+#     print('Yes')
+# else:
+#     print('No')
+
+# A - Scary Fee
+X, C = map(int, input().split())
+
+ans = X//(1000+C)
+
+print(ans*1000)
