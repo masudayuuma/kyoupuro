@@ -185,8 +185,8 @@
 #     print('No')
 
 # A - Scary Fee
-X, C = map(int, input().split())
+# X, C = map(int, input().split())
 
-ans = X//(1000+C)
+# ans = X//(1000+C)
 
-print(ans*1000)
+# print(ans*1000)

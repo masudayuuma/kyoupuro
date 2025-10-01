@@ -534,3 +534,73 @@
 #         continue
 
 # print(x+1, y+1, len(cnt))
+
+
+# B - Find Permutation 2 
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# ans = set()
+# cnt = 0
+# for i in range(N):
+#     if A[i] == -1:
+#         cnt += 1
+#     elif not A[i] in ans:
+#         ans.add(A[i])
+#     else:
+#         print('No')
+#         exit()
+
+# if len(ans)+cnt == N:
+#     print('Yes')
+# else:
+#     print('No')
+
+# kari = []
+# for i in range(N):
+#     if not i+1 in ans:
+#         kari.append(i+1)
+
+# for i in range(N):
+#     if A[i] == -1:
+#         A[i] = kari.pop()
+
+# print(' '.join(map(str, A)))
+    
+# B - Perfect
+# from collections import defaultdict
+# N, M, K = map(int, input().split())
+# ans = []
+# dict = defaultdict(int)
+# for i in range(K):
+#     a, b = map(int, input().split())
+#     dict[a] += 1
+#     if dict[a] == M:
+#         ans.append(a)
+
+# print(*ans)
+
+# B - Locked Rooms
+N = int(input())
+L = list(map(int, input().split()))
+cnt_left = 1
+cnt_right = 1
+for i in range(N):
+    if L[i] == 0:
+        cnt_left += 1
+        # print('left')
+    else:
+        break
+
+for i in range(N-1, -1, -1):
+    if L[i] == 0:
+        cnt_right += 1
+        # print('right')
+    else:
+        break
+
+if cnt_left+cnt_right >= N+1:
+    print(0)
+else:
+    print(N+1-(cnt_left+cnt_right))
+
