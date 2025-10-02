@@ -681,41 +681,91 @@
 # print(total)
 
 # C - Operate 1 
-K = int(input())
-S = input()
-T = input()
+# K = int(input())
+# S = input()
+# T = input()
 
-def can_transform(s, t):
-    if abs(len(s) - len(t)) > 1:
-        return False
+# def can_transform(s, t):
+#     if abs(len(s) - len(t)) > 1:
+#         return False
     
-    if len(s) == len(t):
-        # 長さが同じ → 1文字置換で済むか
-        diff = sum(1 for i in range(len(s)) if s[i] != t[i])
-        return diff <= 1
+#     if len(s) == len(t):
+#         # 長さが同じ → 1文字置換で済むか
+#         diff = sum(1 for i in range(len(s)) if s[i] != t[i])
+#         return diff <= 1
     
-    elif len(s) == len(t) + 1:
-        # sの方が1文字長い → sから1文字削除でtになるか
-        j = 0
-        for i in range(len(s)):
-            if j < len(t) and s[i] == t[j]:
-                j += 1
-            elif j == i:  # 最初の不一致 → この文字を削除
-                j += 0  # jはそのまま
-            else:  # 2回目の不一致 → 不可能
-                return False
-        return j == len(t)
+#     elif len(s) == len(t) + 1:
+#         # sの方が1文字長い → sから1文字削除でtになるか
+#         j = 0
+#         for i in range(len(s)):
+#             if j < len(t) and s[i] == t[j]:
+#                 j += 1
+#             elif j == i:  # 最初の不一致 → この文字を削除
+#                 j += 0  # jはそのまま
+#             else:  # 2回目の不一致 → 不可能
+#                 return False
+#         return j == len(t)
     
-    else:  # len(s) == len(t) - 1
-        # tの方が1文字長い → sに1文字挿入でtになるか
-        i = 0
-        for j in range(len(t)):
-            if i < len(s) and s[i] == t[j]:
-                i += 1
-            elif i == j:  # 最初の不一致 → この位置に文字を挿入
-                i += 0  # iはそのまま
-            else:  # 2回目の不一致 → 不可能
-                return False
-        return i == len(s)
+#     else:  # len(s) == len(t) - 1
+#         # tの方が1文字長い → sに1文字挿入でtになるか
+#         i = 0
+#         for j in range(len(t)):
+#             if i < len(s) and s[i] == t[j]:
+#                 i += 1
+#             elif i == j:  # 最初の不一致 → この位置に文字を挿入
+#                 i += 0  # iはそのまま
+#             else:  # 2回目の不一致 → 不可能
+#                 return False
+#         return i == len(s)
 
-print('Yes' if can_transform(S, T) else 'No')
+# print('Yes' if can_transform(S, T) else 'No')
+
+# C - Rotate and Sum Query
+# N, Q = map(int, input().split())
+# A_list = list(map(int, input().split()))
+# calc_list = A_list+A_list
+# index = 0
+
+# ruisekiwa = [0]
+# ruiseki_total = 0
+# for i in range(N*2):
+#     ruiseki_total += calc_list[i]
+#     ruisekiwa.append(ruiseki_total)
+
+
+# for i in range(Q):
+#     q = list(map(int, input().split()))
+#     if q[0] == 1:
+#         index += q[1]
+#     elif q[0] == 2:
+#         left_i = q[1]-1+index
+#         right_i = q[2]-1+index
+#         if left_i >= N:
+#             left_i %= N
+#         if right_i >= N:
+#             right_i %= N
+#         if left_i > right_i:
+#             right_i += N
+#         ans = ruisekiwa[right_i+1]-ruisekiwa[left_i]
+#         print(ans)
+
+# import sys
+# input = sys.stdin.readline
+
+# n, q = map(int, input().split())
+# a = list(map(int, input().split()))
+
+# b = a+a
+# for i in range(2*n-1, 0, -1):
+#     b[i-1]+= b[i]
+# rui_c = 0
+# for _ in range(q):
+#     query = list(map(int, input().split()))
+#     if query[0] == 1:
+#         c = query[1]
+#         rui_c += c
+#         rui_c %= n
+#     else:
+#         l, r = query[1]-1, query[2]
+#         print(b[l+rui_c]-b[r+rui_c])
+

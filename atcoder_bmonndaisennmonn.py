@@ -581,26 +581,26 @@
 # print(*ans)
 
 # B - Locked Rooms
-N = int(input())
-L = list(map(int, input().split()))
-cnt_left = 1
-cnt_right = 1
-for i in range(N):
-    if L[i] == 0:
-        cnt_left += 1
-        # print('left')
-    else:
-        break
+# N = int(input())
+# L = list(map(int, input().split()))
+# cnt_left = 1
+# cnt_right = 1
+# for i in range(N):
+#     if L[i] == 0:
+#         cnt_left += 1
+#         # print('left')
+#     else:
+#         break
 
-for i in range(N-1, -1, -1):
-    if L[i] == 0:
-        cnt_right += 1
-        # print('right')
-    else:
-        break
+# for i in range(N-1, -1, -1):
+#     if L[i] == 0:
+#         cnt_right += 1
+#         # print('right')
+#     else:
+#         break
 
-if cnt_left+cnt_right >= N+1:
-    print(0)
-else:
-    print(N+1-(cnt_left+cnt_right))
+# if cnt_left+cnt_right >= N+1:
+#     print(0)
+# else:
+#     print(N+1-(cnt_left+cnt_right))
 
