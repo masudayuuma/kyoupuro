@@ -769,3 +769,37 @@
 #         l, r = query[1]-1, query[2]
 #         print(b[l+rui_c]-b[r+rui_c])
 
+
+# C - New Skill Acquired
+from collections import defaultdict
+from collections import deque
+N = int(input())
+
+have_skill = deque()
+dict = defaultdict(list)
+skill_flag = [False]*N
+ans = 0
+for i in range(N):
+    a, b = map(int, input().split())
+    if a == 0 and b == 0:
+        skill_flag[i] = True
+        have_skill.append(i+1)
+        ans += 1
+    else:
+        dict[a].append(i+1)
+        dict[b].append(i+1)
+
+while have_skill:
+    skill = have_skill.popleft()
+
+    for s in dict[skill]:
+        if skill_flag[s-1] == False:
+            skill_flag[s-1] = True
+            have_skill.append(s)
+            ans += 1
+
+
+print(ans)
+
+
+
