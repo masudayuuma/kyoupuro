@@ -771,35 +771,77 @@
 
 
 # C - New Skill Acquired
-from collections import defaultdict
-from collections import deque
-N = int(input())
+# from collections import defaultdict
+# from collections import deque
+# N = int(input())
 
-have_skill = deque()
-dict = defaultdict(list)
-skill_flag = [False]*N
-ans = 0
-for i in range(N):
-    a, b = map(int, input().split())
-    if a == 0 and b == 0:
-        skill_flag[i] = True
-        have_skill.append(i+1)
-        ans += 1
-    else:
-        dict[a].append(i+1)
-        dict[b].append(i+1)
+# have_skill = deque()
+# dict = defaultdict(list)
+# skill_flag = [False]*N
+# ans = 0
+# for i in range(N):
+#     a, b = map(int, input().split())
+#     if a == 0 and b == 0:
+#         skill_flag[i] = True
+#         have_skill.append(i+1)
+#         ans += 1
+#     else:
+#         dict[a].append(i+1)
+#         dict[b].append(i+1)
 
-while have_skill:
-    skill = have_skill.popleft()
+# while have_skill:
+#     skill = have_skill.popleft()
 
-    for s in dict[skill]:
-        if skill_flag[s-1] == False:
-            skill_flag[s-1] = True
-            have_skill.append(s)
-            ans += 1
+#     for s in dict[skill]:
+#         if skill_flag[s-1] == False:
+#             skill_flag[s-1] = True
+#             have_skill.append(s)
+#             ans += 1
 
-
-print(ans)
-
+# print(ans)
 
 
+# C - Lock All Doors
+# N, S = map(int, input().split())
+# A = list(map(int, input().split()))
+
+# idx0 = [i for i, a in enumerate(A) if a == 0]
+# if len(idx0) == 0:
+#     print(0)
+#     exit()
+
+# L = min(S, idx0[0])
+# R = max(S, idx0[-1]+1)
+
+# print(sum(A[L:R])+(R-L))
+        
+
+# C - Mixture　ビットDP問題
+# T = int(input())
+
+# for t in range(T):
+#     n = int(input())
+#     s = (input())
+    
+#     def is_safe(state):
+#         if state == 0:
+#             return True
+#         return s[state-1] == '0'
+
+#     dp = [False]*(1 << n)
+#     dp[0] = True 
+
+#     for state in range(1 << n):
+#         if not dp[state]:
+#             continue
+
+#         for i in range(n):
+#             if state & (1 << i):
+#                 continue
+#             next_state = state | (1 << i)
+
+#             if is_safe(next_state):
+#                 dp[next_state] = True
+
+#     target = (1 << n)-1
+#     print('Yes' if dp[target] else 'No')
