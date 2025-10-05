@@ -845,3 +845,39 @@
 
 #     target = (1 << n)-1
 #     print('Yes' if dp[target] else 'No')
+
+# C - Palindromic in Both Bases
+# def is_pal_base(x, base):
+#     if x == 0:
+#         return True
+#     digits = []
+#     while x > 0:
+#         digits.append(x % base)
+#         x //= base
+#     i, j = 0, len(digits)-1
+#     while i < j:
+#         if digits[i] != digits[j]:
+#             return False
+#         i += 1
+#         j -= 1
+#     return True
+
+# a = int(input())
+# n = int(input())
+
+# ans = 0
+
+# def check(s):
+#     global ans
+#     y = int(s)
+#     if y <= n and is_pal_base(y, a):
+#         ans += y
+
+# for x in range(1, 10**6):
+#     sx = str(x)
+#     even_pal = sx + sx[::-1]
+#     check(even_pal)
+#     odd_pal = sx + sx[:-1][::-1]
+#     check(odd_pal)
+
+# print(ans)
