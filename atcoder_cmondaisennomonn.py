@@ -883,15 +883,62 @@
 # print(ans)
 
 # C - Upgrade Required
-n, q = map(int, input().split())
-pc = [0] + [1] * n  # pc[0]=0, pc[1]~pc[n]=1
-o = 1
+# n, q = map(int, input().split())
+# pc = [0] + [1] * n  # pc[0]=0, pc[1]~pc[n]=1
+# o = 1
 
-for _ in range(q):
-    x, y = map(int, input().split())
-    res = 0
-    while o <= x:
-        res += pc[o]
-        pc[y] += pc[o]
-        o += 1
-    print(res)
+# for _ in range(q):
+#     x, y = map(int, input().split())
+#     res = 0
+#     while o <= x:
+#         res += pc[o]
+#         pc[y] += pc[o]
+#         o += 1
+#     print(res)
+
+# from collections import defaultdict
+# n, q = map(int, input().split())
+
+# dict = defaultdict(int)
+# for i in range(n):
+#     dict[i+1] = 1
+
+# min_n = 1
+# for i in range(q):
+#     x, y = map(int, input().split())
+#     cnt = 0
+#     if min_n <= x:
+#         for j in range(min_n, x+1):
+#             cnt += dict[j]
+#         dict[y] += cnt
+#         min_n = x+1
+#         print(cnt)
+#         continue
+    
+#     print(cnt)
+
+
+# C - Perfect Standings
+a, b, c, d, e = map(int, input().split())
+chars = ['A', 'B', 'C', 'D', 'E']
+point_dict = {'A':a, 'B':b, 'C':c, 'D':d, 'E':e}
+
+result_dict = {}
+for mask in range(1 << 5):
+    combo_chars = []
+    total_value = 0
+
+    for i in range(5):
+        if mask & (1 << i):
+            combo_chars.append(chars[i])
+            total_value += point_dict[chars[i]]
+    key = ''.join(combo_chars)
+    result_dict[key] = total_value
+
+sorted_values = sorted(result_dict.items(), key=lambda x: (-x[1], x[0]))
+
+result_array = [combo for combo, score in sorted_values]
+
+for combo in result_array:
+    print(combo)
+
