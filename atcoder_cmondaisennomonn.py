@@ -919,26 +919,78 @@
 
 
 # C - Perfect Standings
-a, b, c, d, e = map(int, input().split())
-chars = ['A', 'B', 'C', 'D', 'E']
-point_dict = {'A':a, 'B':b, 'C':c, 'D':d, 'E':e}
+# a, b, c, d, e = map(int, input().split())
+# chars = ['A', 'B', 'C', 'D', 'E']
+# point_dict = {'A':a, 'B':b, 'C':c, 'D':d, 'E':e}
 
-result_dict = {}
-for mask in range(1 << 5):
-    combo_chars = []
-    total_value = 0
+# result_dict = {}
+# for mask in range(1 << 5):
+#     combo_chars = []
+#     total_value = 0
 
-    for i in range(5):
-        if mask & (1 << i):
-            combo_chars.append(chars[i])
-            total_value += point_dict[chars[i]]
-    key = ''.join(combo_chars)
-    result_dict[key] = total_value
+#     for i in range(5):
+#         if mask & (1 << i):
+#             combo_chars.append(chars[i])
+#             total_value += point_dict[chars[i]]
+#     key = ''.join(combo_chars)
+#     result_dict[key] = total_value
 
-sorted_values = sorted(result_dict.items(), key=lambda x: (-x[1], x[0]))
+# sorted_values = sorted(result_dict.items(), key=lambda x: (-x[1], x[0]))
 
-result_array = [combo for combo, score in sorted_values]
+# result_array = [combo for combo, score in sorted_values]
 
-for combo in result_array:
-    print(combo)
+# for combo in result_array:
+#     print(combo)
 
+# point = list(map(int, input().split()))
+
+# point = [-p for p in point]
+
+# standings = []
+# for bit in range(1 << 5):
+#     soleved_point = 0
+#     name = ''
+#     for digit in range(5):
+#         if bit & 1 << digit:
+#             soleved_point += point[digit]
+#             name += "ABCDE"[digit]
+#     standings.append((soleved_point, name))
+
+# for _, name in sorted(standings):
+#     print(name)
+
+
+# C - Illuminate Buildings
+# N = int(input())
+# H = list(map(int, input().split()))
+
+# ans = 1
+
+# for j in range(N):
+#     for i in range(j+1, N):
+#         if i < N and H[j] == H[i]:
+#             cnt = 1
+#             a = i-j
+#             #ここの計算がオーダN/aなので全体としてNで済む
+#             while i < N and H[i] == H[j]:
+#                 cnt += 1
+#                 i += a
+                
+#             ans = max(ans, cnt)
+
+# print(ans)
+
+#dpバージョン
+# N = int(input())
+# H = list(map(int, input().split()))
+
+# dp = [[1] * N for _ in range(N)]
+# ans = 1
+
+# for i in range(N):
+#     for j in range(1, N):
+#         if i + j < N and H[i+j] == H[i]:
+#             dp[i+j][j] = dp[i][j] + 1
+#             ans = max(ans, dp[i+j][j])
+
+# print(ans)
