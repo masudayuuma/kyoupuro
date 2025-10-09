@@ -971,7 +971,6 @@
 #         if i < N and H[j] == H[i]:
 #             cnt = 1
 #             a = i-j
-#             #ここの計算がオーダN/aなので全体としてNで済む
 #             while i < N and H[i] == H[j]:
 #                 cnt += 1
 #                 i += a
@@ -994,3 +993,23 @@
 #             ans = max(ans, dp[i+j][j])
 
 # print(ans)
+
+
+# # C - 11/22 Substring　Nで計算可能
+# N = int(input())
+# S = input()
+
+# max_len = 1
+
+# for i in range(len(S)):
+#     if S[i] == '/':
+#         target_diff = 1
+#         while 0 <= i-target_diff and target_diff+i < N:
+#             if S[i-target_diff] == '1' and S[target_diff+i] == '2':
+                
+#                 max_len = max(max_len, target_diff*2+1)
+#                 target_diff += 1
+#             else:
+#                 break
+
+# print(max_len)
