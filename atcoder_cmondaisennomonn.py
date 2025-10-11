@@ -1013,3 +1013,30 @@
 #                 break
 
 # print(max_len)
+
+# C - Kaiten Sushi 
+from collections import defaultdict
+from bisect import bisect_right
+N, M = map(int, input().split())
+A = list(map(int, input().split()))
+B = list(map(int, input().split()))
+
+min_a = float('inf')
+a_dict = defaultdict(int)
+new_a_list = []
+for i in range(len(A)):
+    if min_a > A[i]:
+        a_dict[A[i]] = i+1
+        new_a_list.append(A[i])
+        min_a = A[i]
+
+sort_distinct_a = sorted(new_a_list)
+length = len(sort_distinct_a)
+
+for i in range(len(B)):
+    ans_i = bisect_right(sort_distinct_a, B[i])-1
+    if ans_i < 0:
+        print(-1)
+        continue
+    ans = a_dict[sort_distinct_a[ans_i]]
+    print(ans)
