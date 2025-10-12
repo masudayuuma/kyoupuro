@@ -1015,28 +1015,59 @@
 # print(max_len)
 
 # C - Kaiten Sushi 
-from collections import defaultdict
-from bisect import bisect_right
-N, M = map(int, input().split())
-A = list(map(int, input().split()))
-B = list(map(int, input().split()))
+# from collections import defaultdict
+# from bisect import bisect_right
+# N, M = map(int, input().split())
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
 
-min_a = float('inf')
-a_dict = defaultdict(int)
-new_a_list = []
-for i in range(len(A)):
-    if min_a > A[i]:
-        a_dict[A[i]] = i+1
-        new_a_list.append(A[i])
-        min_a = A[i]
+# min_a = float('inf')
+# a_dict = defaultdict(int)
+# new_a_list = []
+# for i in range(len(A)):
+#     if min_a > A[i]:
+#         a_dict[A[i]] = i+1
+#         new_a_list.append(A[i])
+#         min_a = A[i]
 
-sort_distinct_a = sorted(new_a_list)
-length = len(sort_distinct_a)
+# sort_distinct_a = sorted(new_a_list)
+# length = len(sort_distinct_a)
 
-for i in range(len(B)):
-    ans_i = bisect_right(sort_distinct_a, B[i])-1
-    if ans_i < 0:
-        print(-1)
+# for i in range(len(B)):
+#     ans_i = bisect_right(sort_distinct_a, B[i])-1
+#     if ans_i < 0:
+#         print(-1)
+#         continue
+#     ans = a_dict[sort_distinct_a[ans_i]]
+#     print(ans)
+
+# C - Move Segment
+N, K = map(int, input().split())
+
+S = (input())
+
+ranlenght = []
+base_i = [S[0], 0]
+for i in range(1, len(S)):
+    if base_i[0] == S[i]:
         continue
-    ans = a_dict[sort_distinct_a[ans_i]]
-    print(ans)
+    else:
+        ranlenght.append((base_i[0], i-base_i[1]))
+        base_i = [S[i], i]
+ranlenght.append((base_i[0], len(S)-base_i[1]))
+
+cnt_1 = 0
+for i in range(len(ranlenght)):
+    if ranlenght[i][0] == '1':
+        cnt_1 += 1
+    
+    if cnt_1 == K:
+        if i > 0 and ranlenght[i-1][0] == '0':
+            ranlenght[i], ranlenght[i-1] = ranlenght[i-1], ranlenght[i]
+        break
+
+ans = ''
+for n, lenght in ranlenght:
+    ans += n*lenght
+
+print(ans)
