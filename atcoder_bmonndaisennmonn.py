@@ -604,3 +604,18 @@
 # else:
 #     print(N+1-(cnt_left+cnt_right))
 
+# B - The Odd One Out
+from collections import defaultdict
+S = input()
+dict = defaultdict(int)
+
+for s in S:
+    if s in dict:
+        dict[s] += 1
+    else:
+        dict[s] = 1
+
+for key, cnt in dict.items():
+    if cnt == 1:
+        print(key)
+    

@@ -190,3 +190,13 @@
 # ans = X//(1000+C)
 
 # print(ans*1000)
+
+# A - OS Versions
+# X, Y = input().split(' ')
+
+# dict = {'Ocelot': 1, 'Serval': 2, 'Lynx': 3}
+
+# if dict[X] >= dict[Y]:
+#     print('Yes')
+# else:
+#     print('No')

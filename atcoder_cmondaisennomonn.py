@@ -1042,32 +1042,75 @@
 #     print(ans)
 
 # C - Move Segment
-N, K = map(int, input().split())
+# N, K = map(int, input().split())
 
-S = (input())
+# S = (input())
 
-ranlenght = []
-base_i = [S[0], 0]
-for i in range(1, len(S)):
-    if base_i[0] == S[i]:
-        continue
-    else:
-        ranlenght.append((base_i[0], i-base_i[1]))
-        base_i = [S[i], i]
-ranlenght.append((base_i[0], len(S)-base_i[1]))
+# ranlenght = []
+# base_i = [S[0], 0]
+# for i in range(1, len(S)):
+#     if base_i[0] == S[i]:
+#         continue
+#     else:
+#         ranlenght.append((base_i[0], i-base_i[1]))
+#         base_i = [S[i], i]
+# ranlenght.append((base_i[0], len(S)-base_i[1]))
 
-cnt_1 = 0
-for i in range(len(ranlenght)):
-    if ranlenght[i][0] == '1':
-        cnt_1 += 1
+# cnt_1 = 0
+# for i in range(len(ranlenght)):
+#     if ranlenght[i][0] == '1':
+#         cnt_1 += 1
     
-    if cnt_1 == K:
-        if i > 0 and ranlenght[i-1][0] == '0':
-            ranlenght[i], ranlenght[i-1] = ranlenght[i-1], ranlenght[i]
-        break
+#     if cnt_1 == K:
+#         if i > 0 and ranlenght[i-1][0] == '0':
+#             ranlenght[i], ranlenght[i-1] = ranlenght[i-1], ranlenght[i]
+#         break
 
-ans = ''
-for n, lenght in ranlenght:
-    ans += n*lenght
+# ans_paths = []
+# for n, lenght in ranlenght:
+#     ans_paths.append(n*lenght)
 
-print(ans)
+# print(''.join(ans_paths))
+
+# C - Repeating 
+# from collections import defaultdict
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# dict_n_to_i = defaultdict(list)
+# ans_arr = []
+# for i in range(len(A)):
+#     if A[i] in dict_n_to_i:
+#         ans_arr.append(dict_n_to_i[A[i]][-1])
+#     else:
+#         ans_arr.append(-1)
+    
+#     dict_n_to_i[A[i]].append(i+1)
+
+# print(*ans_arr)
+
+# C - Sowing Stones
+# ...existing code...
+
+# C - Sowing Stones
+N, M = map(int, input().split())
+X = list(map(int, input().split()))
+A = list(map(int, input().split()))
+
+# 総数が N でなければ不可能
+if sum(A) != N:
+    print(-1)
+    exit()
+
+pairs = sorted(zip(X, A))  # 位置でソート（必須）
+
+cnt = 0
+moved_i = 0
+for x, a in reversed(pairs):  # 右から処理
+    if N - x + 1 < a + moved_i:
+        print(-1)
+        exit()
+    cnt += a * (N - x) - (a * moved_i + a * (a - 1) // 2)
+    moved_i += a
+
+print(cnt)
