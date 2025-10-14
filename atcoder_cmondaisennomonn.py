@@ -1093,24 +1093,62 @@
 # ...existing code...
 
 # C - Sowing Stones
+# N, M = map(int, input().split())
+# X = list(map(int, input().split()))
+# A = list(map(int, input().split()))
+
+# # 総数が N でなければ不可能
+# if sum(A) != N:
+#     print(-1)
+#     exit()
+
+# pairs = sorted(zip(X, A))  # 位置でソート（必須）
+
+# cnt = 0
+# moved_i = 0
+# for x, a in reversed(pairs):  # 右から処理
+#     if N - x + 1 < a + moved_i:
+#         print(-1)
+#         exit()
+#     cnt += a * (N - x) - (a * moved_i + a * (a - 1) // 2)
+#     moved_i += a
+
+# print(cnt)
+
+# C - Bipartize 
+# N, M = map(int, input().split())
+
+# edges = [tuple(map(int, input().split())) for _ in range(M)]
+
+# ans = M
+# # 2^N 通りの塗り方を全部探索する
+# for bit in range(2 ** N):
+#     delete_count = 0
+#     for u, v in edges: # それぞれの辺を見て
+#         if (1 & (bit >> u)) == (1 & (bit >> v)): # 結んでいる頂点が同じ色で塗られていたら
+#                 delete_count += 1 # カウントを増やす
+#     ans = min(ans, delete_count)
+
+# print(ans)
+
+# C - Bipartize
 N, M = map(int, input().split())
-X = list(map(int, input().split()))
-A = list(map(int, input().split()))
+# 0-index に直す
+edges = [tuple(int(x) - 1 for x in input().split()) for _ in range(M)]
 
-# 総数が N でなければ不可能
-if sum(A) != N:
-    print(-1)
-    exit()
+ans = M
 
-pairs = sorted(zip(X, A))  # 位置でソート（必須）
+for bit in range(1 << N):
+    delete_cnt = 0
+    for u, v in edges:
+        # 同色の辺は削除対象
+        if ((bit >> u) & 1) == ((bit >> v) & 1):
+            delete_cnt += 1
+            # 早期打ち切り（任意だけど速くなる）
+            if delete_cnt >= ans:
+                break
+    # 1 coloring 分を数え切ってから更新
+    if delete_cnt < ans:
+        ans = delete_cnt
 
-cnt = 0
-moved_i = 0
-for x, a in reversed(pairs):  # 右から処理
-    if N - x + 1 < a + moved_i:
-        print(-1)
-        exit()
-    cnt += a * (N - x) - (a * moved_i + a * (a - 1) // 2)
-    moved_i += a
-
-print(cnt)
+print(ans)
