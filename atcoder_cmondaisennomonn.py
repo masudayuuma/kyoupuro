@@ -1132,23 +1132,49 @@
 # print(ans)
 
 # C - Bipartize
-N, M = map(int, input().split())
-# 0-index に直す
-edges = [tuple(int(x) - 1 for x in input().split()) for _ in range(M)]
+# n, m = map(int, input().split())
+# edges = [tuple(int(x)-1 for x in input().split()) for _ in range(M)]
+# ans = m
+# for bit in range(1 << N):
+#     delete_cnt = 0
+#     for u, v in edges:
+#         if (bit >> u) & 1 and (bit >> v) & 1:
+#             delete_cnt += 1
+#             if delete_cnt >= ans:
+#                 break
+        
+#     if delete_cnt < ans:
+#         ans = delete_cnt
+# print(ans)
 
-ans = M
+# C - ~ 
+N = int(input())
+P = list(map(int, input().split()))
 
-for bit in range(1 << N):
-    delete_cnt = 0
-    for u, v in edges:
-        # 同色の辺は削除対象
-        if ((bit >> u) & 1) == ((bit >> v) & 1):
-            delete_cnt += 1
-            # 早期打ち切り（任意だけど速くなる）
-            if delete_cnt >= ans:
-                break
-    # 1 coloring 分を数え切ってから更新
-    if delete_cnt < ans:
-        ans = delete_cnt
+up_or_down = []
+for i in range(1, len(P)):
+    up_or_down.append(1 if P[i-1] < P[i] else -1)
+
+zikkou = []
+cur = up_or_down[0]
+lenght = 1
+for i in range(1, len(up_or_down)):
+    if up_or_down[i] == cur:
+        lenght += 1
+    else:
+        zikkou.append((cur, lenght))
+        cur = up_or_down[i]
+        lenght = 1
+zikkou.append((cur, lenght))
+
+ans = 0
+for i in range(len(zikkou)-2):
+    (sg1, a), (sg2, b), (sg3, c) = zikkou[i], zikkou[i+1], zikkou[i+2]
+    if sg1 == 1 and sg2 == -1 and sg3 == 1:
+        add = a* c
+        # if b == 1:  # 最短区間補正
+        #     add -= 1
+        ans += add
 
 print(ans)
+
