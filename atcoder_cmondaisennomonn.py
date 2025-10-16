@@ -1148,33 +1148,57 @@
 # print(ans)
 
 # C - ~ 
+# N = int(input())
+# P = list(map(int, input().split()))
+
+# up_or_down = []
+# for i in range(1, len(P)):
+#     up_or_down.append(1 if P[i-1] < P[i] else -1)
+
+# zikkou = []
+# cur = up_or_down[0]
+# lenght = 1
+# for i in range(1, len(up_or_down)):
+#     if up_or_down[i] == cur:
+#         lenght += 1
+#     else:
+#         zikkou.append((cur, lenght))
+#         cur = up_or_down[i]
+#         lenght = 1
+# zikkou.append((cur, lenght))
+
+# ans = 0
+# for i in range(len(zikkou)-2):
+#     (sg1, a), (sg2, b), (sg3, c) = zikkou[i], zikkou[i+1], zikkou[i+2]
+#     if sg1 == 1 and sg2 == -1 and sg3 == 1:
+#         add = a* c
+#         # if b == 1:  # 最短区間補正
+#         #     add -= 1
+#         ans += add
+
+# print(ans)
+
+# C - Prepare Another Box 
 N = int(input())
-P = list(map(int, input().split()))
+A = list(map(int, input().split()))
+B = list(map(int, input().split()))
 
-up_or_down = []
-for i in range(1, len(P)):
-    up_or_down.append(1 if P[i-1] < P[i] else -1)
+sort_A = sorted(A, reverse=True)
+sort_B = sorted(B, reverse=True)
 
-zikkou = []
-cur = up_or_down[0]
-lenght = 1
-for i in range(1, len(up_or_down)):
-    if up_or_down[i] == cur:
-        lenght += 1
+skip_A_i = []
+B_i = 0
+for i in range(N):
+    if B_i == N-1:
+        skip_A_i.append(i)
+        break
+    if sort_B[B_i] >= sort_A[i]:
+        B_i += 1
     else:
-        zikkou.append((cur, lenght))
-        cur = up_or_down[i]
-        lenght = 1
-zikkou.append((cur, lenght))
+        skip_A_i.append(i)
 
-ans = 0
-for i in range(len(zikkou)-2):
-    (sg1, a), (sg2, b), (sg3, c) = zikkou[i], zikkou[i+1], zikkou[i+2]
-    if sg1 == 1 and sg2 == -1 and sg3 == 1:
-        add = a* c
-        # if b == 1:  # 最短区間補正
-        #     add -= 1
-        ans += add
+    if len(skip_A_i) >= 2:
+        print(-1)
+        exit()
 
-print(ans)
-
+print(sort_A[skip_A_i[0]])
