@@ -200,3 +200,8 @@
 #     print('Yes')
 # else:
 #     print('No')
+
+# A - ABC -> AC
+s = input()
+hurf_l = len(s)//2
+print(s[:hurf_l]+s[len(s)-hurf_l:])

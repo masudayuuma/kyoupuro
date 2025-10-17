@@ -1179,26 +1179,26 @@
 # print(ans)
 
 # C - Prepare Another Box 
-N = int(input())
-A = list(map(int, input().split()))
-B = list(map(int, input().split()))
+# N = int(input())
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
 
-sort_A = sorted(A, reverse=True)
-sort_B = sorted(B, reverse=True)
+# sort_A = sorted(A, reverse=True)
+# sort_B = sorted(B, reverse=True)
 
-skip_A_i = []
-B_i = 0
-for i in range(N):
-    if B_i == N-1:
-        skip_A_i.append(i)
-        break
-    if sort_B[B_i] >= sort_A[i]:
-        B_i += 1
-    else:
-        skip_A_i.append(i)
+# skip_A_i = []
+# B_i = 0
+# for i in range(N):
+#     if B_i == N-1:
+#         skip_A_i.append(i)
+#         break
+#     if sort_B[B_i] >= sort_A[i]:
+#         B_i += 1
+#     else:
+#         skip_A_i.append(i)
 
-    if len(skip_A_i) >= 2:
-        print(-1)
-        exit()
+#     if len(skip_A_i) >= 2:
+#         print(-1)
+#         exit()
 
-print(sort_A[skip_A_i[0]])
+# print(sort_A[skip_A_i[0]])

@@ -605,17 +605,34 @@
 #     print(N+1-(cnt_left+cnt_right))
 
 # B - The Odd One Out
-from collections import defaultdict
-S = input()
-dict = defaultdict(int)
+# from collections import defaultdict
+# S = input()
+# dict = defaultdict(int)
 
-for s in S:
-    if s in dict:
-        dict[s] += 1
-    else:
-        dict[s] = 1
+# for s in S:
+#     if s in dict:
+#         dict[s] += 1
+#     else:
+#         dict[s] = 1
 
-for key, cnt in dict.items():
-    if cnt == 1:
-        print(key)
+# for key, cnt in dict.items():
+#     if cnt == 1:
+#         print(key)
     
+# # B - Sum of Digits Sequence
+# n = int(input())
+
+# # a0 = 1
+# a_list = [0]*(n+1)
+# a_list[0] = 1
+# total = 0
+# for i in range(1, n+1):
+#     total = 0
+#     for j in range(0, i):
+#         for k in str(a_list[j]):
+#             total += int(k)
+#     a_list[i] = total
+#     # print(total, a_list[i])
+
+
+# print(total)
