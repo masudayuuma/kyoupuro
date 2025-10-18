@@ -1202,3 +1202,21 @@
 #         exit()
 
 # print(sort_A[skip_A_i[0]])
+
+# C - 2^a b^2
+import math
+
+N = int(input())
+
+ans = 0
+a = 1
+
+while True:
+    M = N >> a
+    if M == 0:
+        break
+    r = math.isqrt(M)
+    ans += (r+1)//2
+    a += 1
+
+print(ans)
