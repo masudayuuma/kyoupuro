@@ -1204,19 +1204,57 @@
 # print(sort_A[skip_A_i[0]])
 
 # C - 2^a b^2
-import math
+# import math
 
-N = int(input())
+# N = int(input())
 
-ans = 0
-a = 1
+# ans = 0
+# a = 1
 
-while True:
-    M = N >> a
-    if M == 0:
-        break
-    r = math.isqrt(M)
-    ans += (r+1)//2
-    a += 1
+# while True:
+#     M = N >> a
+#     if M == 0:
+#         break
+#     r = math.isqrt(M)
+#     ans += (r+1)//2
+#     a += 1
 
-print(ans)
+# print(ans)
+
+# C - Humidifier 3
+from collections import deque
+H, W, D = map(int, input().split())
+S = [list(input()) for _ in range(H)]
+
+INF = 10**10
+dist = [[INF] * W for _ in range(H)]
+queue = deque()
+ans_cnt = 0
+diff = ((1,0), (-1, 0), (0, 1), (0, -1))
+for j in range(H):
+    for i in range(W):
+        if S[j][i] == 'H':
+            dist[j][i] = 0
+            queue.append((j, i))
+
+
+while queue:
+    j, i = queue.popleft()
+    d = dist[j][i]
+    for dy, dx in diff:
+        if not 0 <= dy+j < H or not 0 <= dx+i < W:
+            continue
+        if S[dy+j][dx+i] == '#':
+            continue
+        if dist[dy+j][dx+i] != INF:
+            continue
+
+        dist[dy+j][dx+i] = d+1
+        queue.append((dy+j, dx+i))
+
+for i in range(H):
+    for j in range(W):
+        if dist[i][j] <= D:
+            ans_cnt += 1
+
+print(ans_cnt)
