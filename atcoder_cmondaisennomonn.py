@@ -1222,39 +1222,73 @@
 # print(ans)
 
 # C - Humidifier 3
-from collections import deque
-H, W, D = map(int, input().split())
-S = [list(input()) for _ in range(H)]
+# from collections import deque
+# H, W, D = map(int, input().split())
+# S = [list(input()) for _ in range(H)]
 
-INF = 10**10
-dist = [[INF] * W for _ in range(H)]
-queue = deque()
-ans_cnt = 0
-diff = ((1,0), (-1, 0), (0, 1), (0, -1))
-for j in range(H):
-    for i in range(W):
-        if S[j][i] == 'H':
-            dist[j][i] = 0
-            queue.append((j, i))
+# INF = 10**10
+# dist = [[INF] * W for _ in range(H)]
+# queue = deque()
+# ans_cnt = 0
+# diff = ((1,0), (-1, 0), (0, 1), (0, -1))
+# for j in range(H):
+#     for i in range(W):
+#         if S[j][i] == 'H':
+#             dist[j][i] = 0
+#             queue.append((j, i))
 
 
-while queue:
-    j, i = queue.popleft()
-    d = dist[j][i]
-    for dy, dx in diff:
-        if not 0 <= dy+j < H or not 0 <= dx+i < W:
-            continue
-        if S[dy+j][dx+i] == '#':
-            continue
-        if dist[dy+j][dx+i] != INF:
-            continue
+# while queue:
+#     j, i = queue.popleft()
+#     d = dist[j][i]
+#     for dy, dx in diff:
+#         if not 0 <= dy+j < H or not 0 <= dx+i < W:
+#             continue
+#         if S[dy+j][dx+i] == '#':
+#             continue
+#         if dist[dy+j][dx+i] != INF:
+#             continue
 
-        dist[dy+j][dx+i] = d+1
-        queue.append((dy+j, dx+i))
+#         dist[dy+j][dx+i] = d+1
+#         queue.append((dy+j, dx+i))
 
-for i in range(H):
-    for j in range(W):
-        if dist[i][j] <= D:
-            ans_cnt += 1
+# for i in range(H):
+#     for j in range(W):
+#         if dist[i][j] <= D:
+#             ans_cnt += 1
 
-print(ans_cnt)
+# print(ans_cnt)
+
+# C - Brackets Stack Query
+# from collections import deque
+# Q = int(input())
+# queue = deque()
+# open = 0
+# close = 0
+# add_n = 0
+# for i in range(Q):
+#     n, *c = input().split(' ')
+#     if n == '1':
+#         queue.append(c[0])
+#         if c[0] == '(':
+#             open += 1
+#         else:
+#             close += 1
+#         if close > open and add_n == 0:
+#             add_n += 1
+#         elif add_n > 0:
+#             add_n += 1
+#     else:
+#         target =  queue.pop()
+#         if target == '(':
+#             open -= 1
+#         else:
+#             close -= 1
+#         if add_n > 0:
+#             add_n -= 1
+
+#     if open != close or add_n > 0:
+#         print('No')
+#     else:
+#         print('Yes')
+
