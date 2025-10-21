@@ -1292,3 +1292,54 @@
 #     else:
 #         print('Yes')
 
+# C - Avoid K Palindrome 2
+# 解法合ってると思うけどTLEおそらくpythonのため
+# from itertools import permutations
+# N, K = map(int, input().split())
+
+# S = input()
+# chars_list = set(permutations(S, N))
+# ans = len(chars_list)
+# for chars in chars_list:
+#     for i in range(N-K+1):
+#         left = 0+i
+#         right = K-1+i
+#         kaibun_flag = True
+#         while left <= right:
+#             if chars[left] != chars[right]:
+#                 kaibun_flag = False
+#                 break
+#             else:
+#                 left += 1
+#                 right -= 1
+
+#         if kaibun_flag == True:
+#             ans -= 1
+#             break
+
+# print(ans)
+
+# これやったら行けた
+# filepath: [atcoder_cmondaisennomonn.py](http://_vscodecontentref_/0)
+# C - Avoid K Palindrome 2
+# from more_itertools import distinct_permutations
+# N, K = map(int, input().split())
+# S = input()
+# ans = 0
+
+# for perm in distinct_permutations(S):
+#     has_palindrome = False
+#     for i in range(N-K+1):
+#         is_palindrome = True
+#         for j in range(K):
+#             if perm[i+j] != perm[i+K-j-1]:
+#                 is_palindrome = False
+#                 break
+#         if is_palindrome:
+#             has_palindrome = True
+#             break
+    
+#     if not has_palindrome:
+#         ans += 1
+
+# print(ans)
