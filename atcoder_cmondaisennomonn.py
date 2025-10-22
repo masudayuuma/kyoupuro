@@ -1343,3 +1343,44 @@
 #         ans += 1
 
 # print(ans)
+
+# T = int(input())
+
+# for i in range(T):
+#     n = int(input())
+#     s = input()
+#     ans = s
+#     for j in range(1, n):
+#         if s[j-1] < s[j]:
+#             continue
+#         else:
+#             for k in range(j, n):
+#                 if s[j] < s[k]:
+#                     ans = s[:j]+s[j+1:k]+s[j]+s[k:]
+#                     break
+#             break
+#     print(ans)
+
+# import sys
+# input = sys.stdin.readline
+
+# T = int(input())
+# for _ in range(T):
+#     n = int(input())
+#     s = input().strip()
+
+#     ans = s
+#     # 最初の降順位置を探す（s[l] > s[l+1]）
+#     for j in range(1, n):
+#         if s[j-1] <= s[j]:
+#             continue
+#         l = j - 1  # 移動する文字の位置
+#         # k = 最初に s[k] > s[l] となる位置（なければ n）
+#         k = j
+#         while k < n and s[k] <= s[l]:
+#             k += 1
+#         # 区間 [l, k-1] を左に1回巡回シフト
+#         ans = s[:l] + s[l+1:k] + s[l] + s[k:]
+#         break
+
+#     print(ans)
