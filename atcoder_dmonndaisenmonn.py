@@ -99,4 +99,110 @@
 
 # solve()
 
+# D - String Rotation
+# これなんか上手くいかんかった、ロジックが違う、眠いのでchatgptに直してもらったのが下にある
+# T = int(input())
 
+# for i in range(T):
+#     n = int(input())
+#     s = input()
+#     ans = s
+#     for j in range(1, n):
+#         if s[j-1] < s[j]:
+#             continue
+#         else:
+#             for k in range(j, n):
+#                 if s[j] < s[k]:
+#                     ans = s[:j]+s[j+1:k]+s[j]+s[k:]
+#                     break
+#             break
+#     print(ans)
+
+# import sys
+# input = sys.stdin.readline
+
+# これは通った
+# T = int(input())
+# for _ in range(T):
+#     n = int(input())
+#     s = input().strip()
+
+#     ans = s
+#     # 最初の降順位置を探す（s[l] > s[l+1]）
+#     for j in range(1, n):
+#         if s[j-1] <= s[j]:
+#             continue
+#         l = j - 1  # 移動する文字の位置
+#         # k = 最初に s[k] > s[l] となる位置（なければ n）
+#         k = j
+#         while k < n and s[k] <= s[l]:
+#             k += 1
+#         # 区間 [l, k-1] を左に1回巡回シフト
+#         ans = s[:l] + s[l+1:k] + s[l] + s[k:]
+#         break
+
+#     print(ans)
+
+# D - Garbage Removal
+# １つでみたら最大N出るが、均し計算量がNなので
+# H, W, N = map(int, input().split())
+# nums_x = [set() for _ in range(H)]
+# nums_y = [set() for _ in range(W)]
+# for i in range(N):
+#     x, y = map(int, input().split())
+#     x -= 1
+#     y -= 1
+#     nums_x[x].add(y)
+#     nums_y[y].add(x)
+
+# Q = int(input())
+# for i in range(Q):
+#     q, number = input().split(' ')
+#     cnt = 0
+#     number = int(number)
+#     if q == '1':
+#         for num in nums_x[number-1]:
+#             nums_y[num].discard(number-1)
+#             cnt += 1
+#         nums_x[number-1].clear()
+#     else:
+#         for num in nums_y[number-1]:
+#             nums_x[num].discard(number-1)
+#             cnt += 1
+#         nums_y[number-1].clear()
+#     print(cnt)
+
+# D - Escape Route
+# from collections import deque
+# H, W = map(int, input().split())
+# S = [ input() for i in range(H)]
+# T = [list(row) for row in S]
+
+# queue = deque()
+# visited = [[False]*W for _ in range(H)]
+# for i in range(H):
+#     for j in range(W):
+#         if S[i][j] == 'E':
+#             queue.append((i, j))
+
+
+# diff = ((1, 0), (-1, 0), (0, -1), (0, 1))
+# while queue:
+#     i, j = queue.popleft()
+#     for dx, dy in diff:
+#         if not 0 <= i+dx < H or not 0 <= j+dy < W or not T[i+dx][j+dy] == '.':
+#             continue
+#         if dx == 1:
+#             T[i+dx][j+dy] = '^'
+#         elif dx == -1:
+#             T[i+dx][j+dy] = 'v'
+#         elif dy == 1:
+#             T[i+dx][j+dy] = '<'
+#         elif dy == -1:
+#             T[i+dx][j+dy] = '>'
+
+#         queue.append((i+dx, j+dy))
+
+
+# for row in T:
+#     print(''.join(row))
