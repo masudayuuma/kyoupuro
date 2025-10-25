@@ -207,3 +207,28 @@
 # for row in T:
 #     print(''.join(row))
 
+# D - Swap to Gather
+# from collections import defaultdict
+# N = int(input())
+# S = input()
+# dict_r_l_n = defaultdict(list)
+# cnt_l_1 = 0
+# cnt_r_1 = 0
+# for i in range(len(S)):
+#     if S[i] == '0':
+#         dict_r_l_n[i].append(cnt_l_1)
+#     else:
+#         cnt_l_1 += 1
+
+# for i in range(len(S)-1, -1, -1):
+#     if S[i] == '0':
+#         dict_r_l_n[i].append(cnt_r_1)
+#     else:
+#         cnt_r_1 += 1
+
+# ans = 0
+# for key_i, d in dict_r_l_n.items():
+#     target = min(d[0], d[1])
+#     ans += target
+
+# print(ans)

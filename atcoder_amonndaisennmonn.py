@@ -207,10 +207,10 @@
 # print(s[:hurf_l]+s[len(s)-hurf_l:])
 
 # A - Grandma's Footsteps
-S, A, B, X = map(int, input().split())
+# S, A, B, X = map(int, input().split())
 
-warikiri = X//(A+B)
-amari = X%(A+B)
+# warikiri = X//(A+B)
+# amari = X%(A+B)
 
-ans = warikiri*S*A+S*min(amari, A)
-print(ans)
+# ans = warikiri*S*A+S*min(amari, A)
+# print(ans)
