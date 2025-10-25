@@ -202,6 +202,15 @@
 #     print('No')
 
 # A - ABC -> AC
-s = input()
-hurf_l = len(s)//2
-print(s[:hurf_l]+s[len(s)-hurf_l:])
+# s = input()
+# hurf_l = len(s)//2
+# print(s[:hurf_l]+s[len(s)-hurf_l:])
+
+# A - Grandma's Footsteps
+S, A, B, X = map(int, input().split())
+
+warikiri = X//(A+B)
+amari = X%(A+B)
+
+ans = warikiri*S*A+S*min(amari, A)
+print(ans)
