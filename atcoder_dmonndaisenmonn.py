@@ -232,3 +232,60 @@
 #     ans += target
 
 # print(ans)
+
+# D - Bonfire  / 
+# N, R, C = map(int, input().split())
+
+# S = input()
+
+# work_dict = {'N': (1, 0), 'S': (-1, 0), 'E': (0, -1), 'W': (0, 1)}
+# cnt = 0
+# person_pos = [R, C]
+# fire_pos = [0, 0]
+# smoke_pos = {(0, 0)}
+# ans = []
+# for i in range(len(S)):
+#     dx, dy = work_dict[S[i]]
+#     person_pos[0] += dx
+#     person_pos[1] += dy
+#     fire_pos[0] += dx
+#     fire_pos[1] += dy
+#     smoke_pos.add(tuple(fire_pos))
+#     if tuple(person_pos) in smoke_pos:
+#         ans.append(1)
+#     else:
+#         ans.append(0)
+# print(''.join(map(str, ans)))
+
+# D - Minimum XOR Path
+# from collections import defaultdict, deque
+# N, M = map(int, input().split())
+
+# path_dict = defaultdict(list)
+# ans = float('inf')
+# for m in range(M):
+#     u, v, w = map(int, input().split())
+#     path_dict[u].append((v, w))
+#     path_dict[v].append((u, w))
+
+# # total_xor = 0
+# # set_n = {1}
+# def dft(i:int, total_xor:int, s_n:set):
+#     # local_total_xor = total_xor
+#     global ans
+#     for n, w in path_dict[i]:
+#         if n in s_n:
+#             continue
+#         new_xor = total_xor ^ w
+#         s_n.add(n)
+#         if n == N:
+#             ans = min(ans, new_xor)
+#         else:
+#             dft(n, new_xor, s_n)
+#         new_xor ^= w
+#         s_n.remove(n)
+
+# dft(1, 0, {1})
+
+# print(ans)
+
