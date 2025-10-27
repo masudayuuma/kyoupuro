@@ -1344,3 +1344,21 @@
 
 # print(ans)
 
+# C - Odd One Subsequence
+# from collections import Counter
+# from math import comb
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# A_cnt = Counter(A)
+# total = 0
+# for num, i in A_cnt.items():
+#     comb_n = 0
+#     if i >= 2:
+#         comb_n = comb(i, 2)
+
+#     else_n = N-i
+#     ans = else_n*comb_n
+#     total += ans
+
+# print(total)

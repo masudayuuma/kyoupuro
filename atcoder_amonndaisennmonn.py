@@ -214,3 +214,13 @@
 
 # ans = warikiri*S*A+S*min(amari, A)
 # print(ans)
+
+# A - Too Many Requests
+# N, M = map(int, input().split())
+
+# for i in range(N):
+#     if i <= M-1:
+#         print('OK')
+#     else:
+#         print('Too Many Requests')
+

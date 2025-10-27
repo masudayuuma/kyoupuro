@@ -636,3 +636,41 @@
 
 
 # print(total)
+
+# B - Most Frequent Substrings
+# from collections import defaultdict
+# N, K = map(int, input().split())
+
+# S = input()
+# chars_dict = defaultdict(int)
+# l = 0
+# max_ans = 0
+# for r in range(K-1, N):
+#     chars_dict[S[l:r+1]] += 1
+#     max_ans = max(max_ans, chars_dict[S[l:r+1]])
+#     l += 1
+
+# print(max_ans)
+
+# ans_list = []
+# for chars, num in chars_dict.items():
+#     if num == max_ans:
+#         ans_list.append(chars)
+
+# print(*sorted(ans_list))
+
+# B - N - 1
+# N, M = map(int, input().split())
+
+# A = list(map(int, input().split()))
+# total = sum(A)
+
+# for i in range(N):
+#     local_total = total
+#     local_total -= A[i]
+
+#     if local_total == M:
+#         print('Yes')
+#         exit()
+
+# print('No')
