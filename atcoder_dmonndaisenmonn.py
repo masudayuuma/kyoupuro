@@ -288,3 +288,44 @@
 # dft(1, 0, {1})
 
 # print(ans)
+
+# D - Pop and Insert
+T = int(input())
+
+for i in range(T):
+    n = int(input())
+    s = input()
+    ran_length = [[s[0], 1]]
+
+    for i in range(1, len(s)):
+        if s[i-1] == s[i]:
+            ran_length[-1][1] += 1
+        else:
+            ran_length.append([s[i], 1])
+
+    max_cnt_0 = (0, '0', 0)
+    max_cnt_1 = (0, '1', 0)
+    for i, lenght_list in enumerate(ran_length):
+        if lenght_list[0] == '0' and max_cnt_0[2] < lenght_list[1]:
+            max_cnt_0 = (i, lenght_list[0], lenght_list[1])
+        if lenght_list[0] == '1' and max_cnt_1[2] < lenght_list[1]:
+            max_cnt_1 = (i, lenght_list[0], lenght_list[1])
+
+    ans_list_0 = [x for i, x in enumerate(ran_length) if i != max_cnt_0[0]]
+    ans_list_1 = [x for i, x in enumerate(ran_length) if i != max_cnt_1[0]]
+    ans_0_cnt = 0
+    ans_1_cnt = 0
+    for num, cnt in ans_list_0:
+        if num == '1':
+            ans_0_cnt += 1*cnt
+        else:
+            ans_0_cnt += 2*cnt
+
+    for num, cnt in ans_list_1:
+        if num == '1':
+            ans_1_cnt += 2*cnt
+        else:
+            ans_1_cnt += 1*cnt
+
+    print(min(ans_1_cnt, ans_0_cnt))
+
