@@ -420,6 +420,7 @@
 # print(ans)
 
 # D - Get Many Stickers
+# ちゃうかったやつ
 # from collections import defaultdict
 # from bisect import bisect_right
 # N, M = map(int, input().split())
@@ -449,25 +450,27 @@
 
 # print(cnt)
 
-# D - Get Many Stickers
-N, M = map(int, input().split())
-a_b = [list(map(int, input().split())) for _ in range(M)]
+# # D - Get Many Stickers
+# N, M = map(int, input().split())
+# a_b = [list(map(int, input().split())) for _ in range(M)]
 
-# (d, a, b) のリストを作成してdでソート
-exchanges = []
-for a, b in a_b:
-    d = a - b
-    exchanges.append((d, a, b))
+# # (d, a, b) のリストを作成してdでソート
+# exchanges = []
+# for a, b in a_b:
+#     d = a - b
+#     exchanges.append((d, a, b))
 
-exchanges.sort()  # dの昇順でソート
+# exchanges.sort()  # dの昇順でソート
 
-ans = 0
-for d, a, b in exchanges:
-    if a > N:
-        continue
-    # この交換を何回連続で実行できるか
-    x = (N - a) // d + 1
-    ans += x
-    N -= x * d
+# ans = 0
+# for d, a, b in exchanges:
+#     if a > N:
+#         continue
+#     # この交換を何回連続で実行できるか
+#     x = (N - a) // d + 1
+#     ans += x
+#     N -= x * d
 
-print(ans)
+# print(ans)
+
+# 
