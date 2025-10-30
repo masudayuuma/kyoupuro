@@ -290,42 +290,184 @@
 # print(ans)
 
 # D - Pop and Insert
-T = int(input())
+# T = int(input())
 
-for i in range(T):
-    n = int(input())
-    s = input()
-    ran_length = [[s[0], 1]]
+# for i in range(T):
+#     n = int(input())
+#     s = input()
+#     ran_length = [[s[0], 1]]
 
-    for i in range(1, len(s)):
-        if s[i-1] == s[i]:
-            ran_length[-1][1] += 1
-        else:
-            ran_length.append([s[i], 1])
+#     for i in range(1, len(s)):
+#         if s[i-1] == s[i]:
+#             ran_length[-1][1] += 1
+#         else:
+#             ran_length.append([s[i], 1])
 
-    max_cnt_0 = (0, '0', 0)
-    max_cnt_1 = (0, '1', 0)
-    for i, lenght_list in enumerate(ran_length):
-        if lenght_list[0] == '0' and max_cnt_0[2] < lenght_list[1]:
-            max_cnt_0 = (i, lenght_list[0], lenght_list[1])
-        if lenght_list[0] == '1' and max_cnt_1[2] < lenght_list[1]:
-            max_cnt_1 = (i, lenght_list[0], lenght_list[1])
+#     max_cnt_0 = (0, '0', 0)
+#     max_cnt_1 = (0, '1', 0)
+#     for i, lenght_list in enumerate(ran_length):
+#         if lenght_list[0] == '0' and max_cnt_0[2] < lenght_list[1]:
+#             max_cnt_0 = (i, lenght_list[0], lenght_list[1])
+#         if lenght_list[0] == '1' and max_cnt_1[2] < lenght_list[1]:
+#             max_cnt_1 = (i, lenght_list[0], lenght_list[1])
 
-    ans_list_0 = [x for i, x in enumerate(ran_length) if i != max_cnt_0[0]]
-    ans_list_1 = [x for i, x in enumerate(ran_length) if i != max_cnt_1[0]]
-    ans_0_cnt = 0
-    ans_1_cnt = 0
-    for num, cnt in ans_list_0:
-        if num == '1':
-            ans_0_cnt += 1*cnt
-        else:
-            ans_0_cnt += 2*cnt
+#     ans_list_0 = [x for i, x in enumerate(ran_length) if i != max_cnt_0[0]]
+#     ans_list_1 = [x for i, x in enumerate(ran_length) if i != max_cnt_1[0]]
+#     ans_0_cnt = 0
+#     ans_1_cnt = 0
+#     for num, cnt in ans_list_0:
+#         if num == '1':
+#             ans_0_cnt += 1*cnt
+#         else:
+#             ans_0_cnt += 2*cnt
 
-    for num, cnt in ans_list_1:
-        if num == '1':
-            ans_1_cnt += 2*cnt
-        else:
-            ans_1_cnt += 1*cnt
+#     for num, cnt in ans_list_1:
+#         if num == '1':
+#             ans_1_cnt += 2*cnt
+#         else:
+#             ans_1_cnt += 1*cnt
 
-    print(min(ans_1_cnt, ans_0_cnt))
+#     print(min(ans_1_cnt, ans_0_cnt))
 
+# D - Ulam-Warburton Automaton
+# from collections import deque
+# H, W = map(int, input().split())
+
+# S = [list(input()) for _ in range(H)]
+
+# queue = deque()
+# ans = 0
+# for i in range(H):
+#     for j in range(W):
+#         if S[i][j] == "#":
+#             ans += 1
+#             queue.append((i, j))
+
+# diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+
+# while queue:
+#     new_queue = deque()
+#     nurikae = set()
+#     for h, w in queue:
+#         for dh, dw in diff:
+#             nh, nw = h+dh, w+dw
+#             if not 0 <= nh <H or not 0 <= nw <W or S[nh][nw] == '#':
+#                 continue
+#             # target_pos = S[h][w]
+#             cnt = 0
+#             for t_dh, t_dw in diff:
+#                 t_h = t_dh+nh
+#                 t_w = t_dw+nw
+#                 if not 0 <= t_h <H or not 0 <= t_w <W:
+#                     continue
+#                 if S[t_h][t_w] == '#':
+#                     cnt += 1
+#             if cnt == 1:
+#                 nurikae.add((nh, nw))
+#                 ans += 1
+#                 new_queue.append((nh, nw))
+#     for h, w in nurikae:
+#         S[h][w] = '#'
+#     queue.clear()
+#     queue = new_queue
+
+# print(ans)
+
+# from collections import deque
+# H, W = map(int, input().split())
+# S = [list(input()) for _ in range(H)]
+
+# queue = deque()
+# ans = 0
+# for i in range(H):
+#     for j in range(W):
+#         if S[i][j] == "#":
+#             ans += 1
+#             queue.append((i, j))
+
+# diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+
+# while queue:
+#     to_add = set()
+#     seen = set()
+#     # いま黒いマスの隣だけを調べて、その手で黒くなる候補を集める
+#     for h, w in queue:
+#         for dh, dw in diff:
+#             nh, nw = h + dh, w + dw
+#             if not (0 <= nh < H and 0 <= nw < W):
+#                 continue
+#             if S[nh][nw] == '#':
+#                 continue
+#             if (nh, nw) in seen:
+#                 continue
+#             seen.add((nh, nw))
+#             # この手では「もともとの盤面」で黒近傍1かどうかだけを見る
+#             cnt = 0
+#             for t_dh, t_dw in diff:
+#                 th, tw = nh + t_dh, nw + t_dw
+#                 if 0 <= th < H and 0 <= tw < W and S[th][tw] == '#':
+#                     cnt += 1
+#             if cnt == 1:
+#                 to_add.add((nh, nw))
+#     # 同時更新：この手で黒くなるマスをまとめて反映
+#     if not to_add:
+#         break
+#     for h, w in to_add:
+#         S[h][w] = '#'
+#     ans += len(to_add)
+#     queue = deque(to_add)
+
+# print(ans)
+
+# D - Get Many Stickers
+# from collections import defaultdict
+# from bisect import bisect_right
+# N, M = map(int, input().split())
+
+# a_b = [list(map(int, input().split())) for _ in range(M)]
+# seted_b_dict = defaultdict(int)
+
+
+# for i in range(M):
+#     a, b = a_b[i]
+#     seted_b_dict[a] = max(seted_b_dict[a], b)
+
+# max_value = 0
+# saitekika_b_dict = defaultdict(int)
+# saiteki_a_list = []
+# for key, value in sorted(seted_b_dict.items()):
+#     max_value = max(max_value, value)
+#     saitekika_b_dict[key] = max_value
+#     saiteki_a_list.append(key)
+
+# # N_i = 1
+# cnt = 0
+# while bisect_right(saiteki_a_list, N) > 0:
+#     idx = bisect_right(saiteki_a_list, N)
+#     N = N-saiteki_a_list[idx-1]+saitekika_b_dict[saiteki_a_list[idx-1]]
+#     cnt += 1
+
+# print(cnt)
+
+# D - Get Many Stickers
+N, M = map(int, input().split())
+a_b = [list(map(int, input().split())) for _ in range(M)]
+
+# (d, a, b) のリストを作成してdでソート
+exchanges = []
+for a, b in a_b:
+    d = a - b
+    exchanges.append((d, a, b))
+
+exchanges.sort()  # dの昇順でソート
+
+ans = 0
+for d, a, b in exchanges:
+    if a > N:
+        continue
+    # この交換を何回連続で実行できるか
+    x = (N - a) // d + 1
+    ans += x
+    N -= x * d
+
+print(ans)
