@@ -473,4 +473,23 @@
 
 # print(ans)
 
-# 
+# D - Colorful Bracket Sequence
+from collections import deque
+S = input()
+
+que = deque()
+
+backet_dict = {')': '(', ']': '[', '>': '<'}
+for i in range(len(S)):
+    if S[i] in ('(', '[', '<'):
+        que.append(S[i])
+    else:
+        if not que:
+            que.append(S[i])
+
+        if backet_dict[S[i]] == que[-1]:
+            que.pop()
+        else:
+            que.append(S[i])
+
+print('Yes' if len(que) == 0 else 'No')
