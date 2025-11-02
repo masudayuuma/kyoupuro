@@ -474,22 +474,140 @@
 # print(ans)
 
 # D - Colorful Bracket Sequence
-from collections import deque
-S = input()
+# from collections import deque
+# S = input()
 
-que = deque()
+# que = deque()
 
-backet_dict = {')': '(', ']': '[', '>': '<'}
-for i in range(len(S)):
-    if S[i] in ('(', '[', '<'):
-        que.append(S[i])
-    else:
-        if not que:
-            que.append(S[i])
+# backet_dict = {')': '(', ']': '[', '>': '<'}
+# for i in range(len(S)):
+#     if S[i] in ('(', '[', '<'):
+#         que.append(S[i])
+#     else:
+#         if not que:
+#             que.append(S[i])
 
-        if backet_dict[S[i]] == que[-1]:
-            que.pop()
-        else:
-            que.append(S[i])
+#         if backet_dict[S[i]] == que[-1]:
+#             que.pop()
+#         else:
+#             que.append(S[i])
 
-print('Yes' if len(que) == 0 else 'No')
+# print('Yes' if len(que) == 0 else 'No')
+
+# D - Neighbor Distance
+#通らず、複雑すぎるロジック
+# from sortedcontainers import SortedList
+# N = int(input())
+# X = list(map(int, input().split()))
+
+# st = SortedList([[0, X[0]], [X[0], X[0]]])
+# ans = X[0]*2
+# print(ans)
+
+# for val in X[1:]:
+#     index = st.bisect_left([val, 0])
+#     if index == len(st):
+#         st.add((val, val-st[index-1][0]))
+#         target_l = st[index-1]
+#         if target_l[1] > val-target_l[0]:
+#             ans += val-target_l[0]*2-target_l[1]
+#             target_l[1] = val-target_l[0]
+#         else:
+#             ans +- val-target_l[0]
+#     else:
+#         st.add((val, min(val-st[index-1][0], st[index][0]-val)))
+#         ans += min(val-st[index-1][0], st[index][0]-val)
+#         target_l = st[index-1]
+#         target_r = st[index+1]
+#         if target_l[1] > val-target_l[0]:
+#             ans += val-target_l[0]-target_l[1] 
+#             target_l[1] = val-target_l[0]
+#         if target_r[1] > target_r[1]-val:
+#             ans += target_r[0]-val-target_r[1]
+#             target_r[1] = val-target_r[0]
+#     print(ans)
+
+#ai回答だけど通った
+# from sortedcontainers import SortedList
+
+# def nearest(x, st):
+#     """座標xの最近傍距離を計算 O(log N)"""
+#     idx = st.index(x)
+#     res = 2 * 10**9
+#     if idx > 0:
+#         res = min(res, x - st[idx - 1])
+#     if idx < len(st) - 1:
+#         res = min(res, st[idx + 1] - x)
+#     return res
+
+# N = int(input())
+# X = list(map(int, input().split()))
+
+# st = SortedList([0, X[0]])
+# ans = X[0] * 2
+# print(ans)
+
+# for val in X[1:]:
+#     # valを挿入する位置を探す
+#     idx = st.bisect_left(val)
+    
+#     # 影響を受ける点（左隣、右隣）を特定
+#     hit = []
+#     if idx > 0:
+#         hit.append(st[idx - 1])
+#     if idx < len(st):
+#         hit.append(st[idx])
+    
+#     # 古い距離を引く
+#     for pos in hit:
+#         ans -= nearest(pos, st)
+    
+#     # 新しい点を挿入
+#     st.add(val)
+#     hit.append(val)
+    
+#     # 新しい距離を足す
+#     for pos in hit:
+#         ans += nearest(pos, st)
+    
+#     print(ans)
+
+# ↑を模写
+# from sortedcontainers import SortedList
+
+# def nearest(x, st):
+#     idx = st.index(x)
+#     res =2* 10**9
+#     if idx > 0:
+#         res = min(res, x-st[idx-1])
+#     if idx < len(st)-1:
+#         res < len(st)-1
+#         res = min(res, st[idx+1]-x)
+#     return res
+
+# N = int(input())
+# X = list(map(int, input().split()))
+
+# st = SortedList([0, X[0]])
+# ans = X[0]*2
+# print(ans)
+
+# for val in X[1:]:
+#     idx = st.bisect_left(val)
+#     hit = []
+#     if idx > 0:
+#         hit.append(st[idx-1])
+#     if idx < len(st):
+#         hit.append(st[idx])
+
+#     for pos in hit:
+#         ans -= nearest(pos, st)
+
+#     st.add(val)
+#     hit.append(val)
+
+#     for pos in hit:
+#         ans += nearest(pos, st)
+
+#     print(ans)
+
