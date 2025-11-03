@@ -611,3 +611,54 @@
 
 #     print(ans)
 
+# D - 183184
+# from math import isqrt
+
+# T = int(input())
+# for _ in range(T):
+#     C, D = map(int, input().split())
+#     ans = 0
+    
+#     xmin, xmax = 1, 9
+#     cshift = 10
+    
+#     while xmin <= C + D:
+#         l = max(xmin, C + 1)
+#         r = min(xmax, C + D)
+        
+#         if l <= r:
+#             vl = C * cshift + l
+#             vr = C * cshift + r
+#             # 区間 [vl, vr] に含まれる平方数の個数
+#             ans += isqrt(vr) - isqrt(vl - 1)
+        
+#         xmin *= 10
+#         xmax = (xmax + 1) * 10 - 1
+#         cshift *= 10
+    
+#     print(ans)
+
+# 模写
+# from math import sqrt
+
+# T = int(input())
+# for _ in range(T):
+#     C, D = map(int, input().split())
+#     ans = 0
+
+#     xmin, xmax = 1, 9
+#     cshift = 10
+
+#     while xmin <= C+D:
+#         l = max(xmin, C+1)
+#         r = min(xmax, C+D)
+
+#         if l <= r:
+#             vl = C*cshift+l
+#             vr = C*cshift+r
+#             ans += isqrt(vr)-isqrt(vr-1)
+
+#         xmin *= 10
+#         xmax = (xmax+1)*10-1
+#         cshift *= 10
+#     print(ans)
