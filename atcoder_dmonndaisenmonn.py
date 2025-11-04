@@ -662,3 +662,62 @@
 #         xmax = (xmax+1)*10-1
 #         cshift *= 10
 #     print(ans)
+
+# D - On AtCoder Conference
+# from collections import defaultdict
+# from bisect import bisect_left
+# N, M, C = map(int, input().split())
+# A = list(map(int, input().split()))
+
+# a_dict = defaultdict(int)
+# for a in A:
+#     a_dict[a] += 1
+
+# positions = sorted(a_dict.keys())
+
+
+# prefix_list = [0]
+# # prefix_list_pos = []
+# for i in range(2):
+#     for pos in positions:
+#         prefix_list.append(prefix_list[-1]+a_dict[pos])
+#         # if i == 1:
+#         #     prefix_list_pos.append(pos+M)
+#         # else:
+#         #     prefix_list_pos.append(pos)
+
+
+
+
+# ans = 0
+# K = len(positions)
+# for i, start_pos in enumerate(positions):
+#     idx = i+1
+#     target_idx = bisect_left(prefix_list, prefix_list[idx]+C, idx)
+#     people_met = prefix_list[target_idx]-prefix_list[idx]
+#     if i+1 < K:
+#         gap = positions[i+1]-start_pos
+#     else:
+#         gap = M - start_pos+ positions[0]
+#     ans += people_met*gap
+
+# print(ans)
+
+# D - Transmission Mission
+from sortedcontainers import SortedDict
+N, M = map(int, input().split())
+X = sorted(set((list(map(int, input().split())))))
+
+negihbor_range = SortedDict()
+for i in range(1, len(X)):
+    negihbor_range.append(X[i]-X[i-1])
+
+
+#初期状態は全ての家に0距離の基地局があると考える。そこからdo_num分基地局を減らしていく
+do_num = N-M
+total = 0
+for i in range(do_num):
+    
+
+
+
