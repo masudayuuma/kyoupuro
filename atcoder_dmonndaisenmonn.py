@@ -708,16 +708,21 @@ from sortedcontainers import SortedDict
 N, M = map(int, input().split())
 X = sorted(set((list(map(int, input().split())))))
 
-negihbor_range = SortedDict()
+house_have_range = []
+negihbor_range = list()
 for i in range(1, len(X)):
     negihbor_range.append(X[i]-X[i-1])
 
+if M >= len(X):
+    print(0)
+    exit()
 
-#初期状態は全ての家に0距離の基地局があると考える。そこからdo_num分基地局を減らしていく
-do_num = N-M
-total = 0
-for i in range(do_num):
-    
+negihbor_range.sort()
+
+do_num = len(X)-M
+total = sum(negihbor_range[:do_num])
+
+print(total)
 
 
 
