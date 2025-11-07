@@ -704,25 +704,67 @@
 # print(ans)
 
 # D - Transmission Mission
-from sortedcontainers import SortedDict
-N, M = map(int, input().split())
-X = sorted(set((list(map(int, input().split())))))
+# from sortedcontainers import SortedDict
+# N, M = map(int, input().split())
+# X = sorted(set((list(map(int, input().split())))))
 
-house_have_range = []
-negihbor_range = list()
-for i in range(1, len(X)):
-    negihbor_range.append(X[i]-X[i-1])
+# house_have_range = []
+# negihbor_range = list()
+# for i in range(1, len(X)):
+#     negihbor_range.append(X[i]-X[i-1])
 
-if M >= len(X):
-    print(0)
-    exit()
+# if M >= len(X):
+#     print(0)
+#     exit()
 
-negihbor_range.sort()
+# negihbor_range.sort()
 
-do_num = len(X)-M
-total = sum(negihbor_range[:do_num])
+# do_num = len(X)-M
+# total = sum(negihbor_range[:do_num])
 
-print(total)
+# print(total)
 
+# D - Make Geometric Sequence
+#場合分けに対応できずWA
+# T = int(input())
 
+# for t in range(T):
+#     N = int(input())
+#     A = list(map(int, input().split()))
+
+#     A_abs_sorted = sorted(A, key=lambda x: abs(x))
+#     set_A = set(A)
+
+#     for i in range(2, len(A_abs_sorted)):
+#         if A_abs_sorted[i-1]*A_abs_sorted[1] != A_abs_sorted[i]*A_abs_sorted[0]:
+#             print('No')
+#             break
+#     else:
+#         print('Yes')
+
+# T = int(input())
+
+# for i in range(T):
+#     n = int(input())
+#     a = list(map(int, input().split()))
+
+#     a.sort(key=lambda x: abs(x))
+
+#     ok = True
+#     for i in range(n-2):
+#         if a[i]*a[i+2] != a[i+1]*a[i+1]:
+#             ok = False
+#             break
+#     if ok:
+#         print('Yes')
+#         continue
+    
+#     if abs((a[0])) == abs(a[-1]):
+#         pos = sum(1 for x in a if x > 0)
+#         neg = n-pos
+#         if abs(neg-pos) <= 1:
+#             print('Yes')
+#             continue
+
+#     print('No')
 
