@@ -769,33 +769,72 @@
 #     print('No')
 
 # D - Goin' to the Zoo
-# まず動物が見れる動物園Kというデータから動物園iからどの動物が見れるかというデータ構造に変更する
-# 1回見れるの作れれば２回はかければいいだけでは
-# 10回動物園分回してその中で動物園分回してその中で最適な答え出せそう。で動物園は値段順にソートしておくか
-
+# 下記の回答は間違っている
 # bitで1024回回して、その結果をset()に動物入れていけば良さそう。
-from collections import defaultdict
-N, M = map(int, input().split())
-C = list(map(int, input().split()))
+# from collections import defaultdict
+# N, M = map(int, input().split())
+# C = list(map(int, input().split()))
 
-love_animals = set(i+1 for i in range(M))
-zoo_to_animal = defaultdict(set)
+# love_animals = set(i+1 for i in range(M))
+# zoo_to_animal = defaultdict(set)
 
-for m in range(M):
-    k, *a = map(int, input().split())
-    for i in a:
-        zoo_to_animal[i-1].add(m+1)
+# for m in range(M):
+#     k, *a = map(int, input().split())
+#     for i in a:
+#         zoo_to_animal[i-1].add(m+1)
 
-ans = float('inf')
-for mask in range(1 << N):
-    ans_set = set()
-    total_cost = 0
+# ans = float('inf')
+# for mask in range(1 << N):
+#     ans_set = set()
+#     total_cost = 0
+#     for i in range(N):
+#         if (1 << i) & mask:
+#             ans_set = ans_set.union(zoo_to_animal[i])
+#             total_cost += C[i]
+#     if love_animals == ans_set:
+#         ans = min(total_cost, ans)
+
+# print(ans*2)
+
+# こっちはあってる
+N, M =map(int, input().split())
+
+C =list(map(int, input().split()))
+
+a = []
+for _ in range(M):
+    tmp = list(map(int, input().split()))
+    k, arr = tmp[0], tmp[1:]
+    arr = [z-1 for z in arr]
+    a.append(arr)
+
+p3 = [1]*(N+1)
+for i in range(N):
+    p3[i+1] = p3[i]*3
+
+INF = float('inf')
+ans = INF
+
+for s in range(p3[N]):
+    t_i = [0]*N
+    cost = 0
+
     for i in range(N):
-        if (1 << i) & mask:
-            ans_set = ans_set.union(zoo_to_animal[i])
-            total_cost += C[i]
-    if love_animals == ans_set:
-        ans = min(total_cost, ans)
+        t = (s // p3[i]) %3
+        t_i[i] = t
+        cost += C[i]*t
+    if cost >= ans:
+        continue
 
-print(ans*2)
+    ok = True
+    for j in range(M):
+        cnt = 0
+        for z in a[j]:
+            cnt += t_i[z]
+        if cnt < 2:
+            ok = False
+            break
 
+    if ok:
+        ans = cost
+print(ans)
