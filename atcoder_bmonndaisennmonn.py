@@ -674,3 +674,21 @@
 #         exit()
 
 # print('No')
+
+# B - Robot Weight
+# X = int(input())
+# N = int(input())
+# W = list(map(int, input().split()))
+
+# Q = int(input())
+# ans_set = set()
+# ans = X
+# for i in range(Q):
+#     p = int(input())-1
+#     if not p in ans_set:
+#         ans_set.add(p)
+#         ans += W[p]
+#     else:
+#         ans -= W[p]
+#         ans_set.remove(p)
+#     print(ans)

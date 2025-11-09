@@ -797,44 +797,162 @@
 # print(ans*2)
 
 # こっちはあってる
-N, M =map(int, input().split())
+# N, M =map(int, input().split())
 
-C =list(map(int, input().split()))
+# C =list(map(int, input().split()))
 
-a = []
-for _ in range(M):
-    tmp = list(map(int, input().split()))
-    k, arr = tmp[0], tmp[1:]
-    arr = [z-1 for z in arr]
-    a.append(arr)
+# a = []
+# for _ in range(M):
+#     tmp = list(map(int, input().split()))
+#     k, arr = tmp[0], tmp[1:]
+#     arr = [z-1 for z in arr]
+#     a.append(arr)
 
-p3 = [1]*(N+1)
-for i in range(N):
-    p3[i+1] = p3[i]*3
+# # 3進数表現実装
+# p3 = [1]*(N+1)
+# for i in range(N):
+#     p3[i+1] = p3[i]*3
 
-INF = float('inf')
-ans = INF
+# INF = float('inf')
+# ans = INF
 
-for s in range(p3[N]):
-    t_i = [0]*N
-    cost = 0
+# for s in range(p3[N]):
+#     t_i = [0]*N
+#     cost = 0
 
-    for i in range(N):
-        t = (s // p3[i]) %3
-        t_i[i] = t
-        cost += C[i]*t
-    if cost >= ans:
-        continue
+#     for i in range(N):
+#         # 3進数表現実装
+#         t = (s // p3[i]) %3
+#         t_i[i] = t
+#         cost += C[i]*t
+#     if cost >= ans:
+#         continue
 
-    ok = True
-    for j in range(M):
-        cnt = 0
-        for z in a[j]:
-            cnt += t_i[z]
-        if cnt < 2:
-            ok = False
-            break
+#     ok = True
+#     for j in range(M):
+#         cnt = 0
+#         for z in a[j]:
+#             cnt += t_i[z]
+#         if cnt < 2:
+#             ok = False
+#             break
 
-    if ok:
-        ans = cost
-print(ans)
+#     if ok:
+#         ans = cost
+# print(ans)
+
+# ３進数表現を[00, 01, 10]でやってる
+# n, m = map(int, input().split())
+# cost = tuple(map(int, input().split()))
+# zoo = [[] for _ in range(m)]
+# for animal in range(m):
+#     _, *a = map(lambda s_: int(s_) -1, input().split())
+#     for j in a:
+#         zoo[j].append(animal)
+
+# ones = [sum(1 << 2*j for j in z) for z in zoo]
+# two_all = sum(2 << 2*j for j in range(m))
+
+# def add_one(watched, one):
+#     return watched+(one & ~watched >> 1)
+
+# def dfs(i, watched, ans):
+#     if i == n:
+#         return ans if watched == two_all else 10**18
+#     ans0 = dfs(i+1, watched, ans)
+#     watched = add_one(watched, ones[i])
+#     ans1 = dfs(i+1, watched, ans+cost[i])
+#     watched = add_one(watched, ones[i])
+#     ans2 = dfs(i+1, watched, ans+cost[i]*2)
+#     return min(ans0, ans1, ans2)
+
+# print(dfs(0, 0, 0))
+
+# O((4^N)NM)
+# N, M = map(int, input().split())
+# C = list(map(int, input().split()))
+# G = [[] for i in range(N)]
+# for i in range(M):
+#     v = list(map(int, input().split()))[1:]
+#     for e in v:
+#         G[e-1].append(i)
+
+# ans = float('inf')
+# for S in range(1 << (2*N)):
+#     cnt = [0]*M
+#     cost = 0
+#     for i in range(2*N):
+#         if S >> i & 1:
+#             for e in G[i//2]:
+#                 cnt[e] += 1
+#             cost += C[i//2]
+#     if min(cost) >= 2:
+#         ans = min(ans, cost)
+# print(ans)
+
+# D - Robot Customize
+# 幸福値順でソート？
+# 500^2 = 
+# めちゃくちゃDP問題
+# これはMLEした1次元の配列に圧縮する必要ある
+# N = int(input())
+# W = [0 for _ in range(N)]
+# H = [0 for _ in range(N)]
+# B = [0 for _ in range(N)]
+
+# total = 0
+# base_happines = 0
+# for i in range(N):
+#     W[i], H[i], B[i] = map(int, input().split())
+#     total += W[i]
+#     base_happines += B[i]
+
+
+# INF = float('inf')
+# head_weigt_max = total//2
+# dp = [[-INF for _ in range(head_weigt_max+1)] for _ in range(N+1)]
+
+# dp[0][0] = 0
+
+
+# for i in range(1, N+1):
+#     for j in range(head_weigt_max+1):
+#         if dp[i-1][j] == -INF:
+#             continue
+#         dp[i][j] = max(dp[i-1][j], dp[i][j])
+#         hap = dp[i-1][j]
+#         if H[i-1]>B[i-1] and j+W[i-1] <= head_weigt_max:
+#             dp[i][j+W[i-1]] = max(hap + H[i-1]-B[i-1], dp[i][j])
+
+# print(max(dp[-1])+base_happines)
+
+# 1次元配列で実装_AC
+# N = int(input())
+# W = [0 for _ in range(N)]
+# H = [0 for _ in range(N)]
+# B = [0 for _ in range(N)]
+
+# total = 0
+# base_happines = 0
+# for i in range(N):
+#     W[i], H[i], B[i] = map(int, input().split())
+#     total += W[i]
+#     base_happines += B[i]
+
+# INF = float('inf')
+# head_weigt_max = total//2
+# # 1次元配列に変更
+# dp = [-INF for _ in range(head_weigt_max+1)]
+
+# dp[0] = 0
+
+# for i in range(N):
+#     # 後ろから更新することで、同じ配列を使い回せる
+#     for j in range(head_weigt_max, -1, -1):
+#         if dp[j] == -INF:
+#             continue
+#         # 頭に付ける
+#         if j + W[i] <= head_weigt_max:
+#             dp[j + W[i]] = max(dp[j + W[i]], dp[j] + H[i] - B[i])
+
+# print(max(dp) + base_happines)

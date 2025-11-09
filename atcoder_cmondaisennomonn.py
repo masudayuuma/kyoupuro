@@ -1364,30 +1364,45 @@
 # print(total)
 
 # C - Truck Driver
-from bisect import bisect_right, bisect_left
-N, A, B = map(int, input().split())
-S = input()
-a_prefix = [0]
-b_prefix = [0]
-a_cnt = 0
-b_cnt = 0
-for s in S:
-    if s == 'a':
-        a_cnt += 1
-        a_prefix.append(a_cnt)
-        b_prefix.append(b_cnt)
-    else:
-        b_cnt += 1
-        b_prefix.append(b_cnt)
-        a_prefix.append(a_cnt)
-ans = 0
-for l in range(N):
-    a_r = bisect_left(a_prefix, A+a_prefix[l], l+1)
-    if a_r > N:
-        continue
-    b_r = bisect_left(b_prefix, B+b_prefix[l], l+1)
-    if a_r <= b_r:
-        ans += b_r-a_r
+# from bisect import bisect_right, bisect_left
+# N, A, B = map(int, input().split())
+# S = input()
+# a_prefix = [0]
+# b_prefix = [0]
+# a_cnt = 0
+# b_cnt = 0
+# for s in S:
+#     if s == 'a':
+#         a_cnt += 1
+#         a_prefix.append(a_cnt)
+#         b_prefix.append(b_cnt)
+#     else:
+#         b_cnt += 1
+#         b_prefix.append(b_cnt)
+#         a_prefix.append(a_cnt)
+# ans = 0
+# for l in range(N):
+#     a_r = bisect_left(a_prefix, A+a_prefix[l], l+1)
+#     if a_r > N:
+#         continue
+#     b_r = bisect_left(b_prefix, B+b_prefix[l], l+1)
+#     if a_r <= b_r:
+#         ans += b_r-a_r
 
-print(ans)
+# print(ans)
 
+# C - Robot Factory
+# from sortedcontainers import SortedList
+# N, M, K = map(int, input().split())
+
+# H = SortedList(list(map(int, input().split())))
+# B = SortedList(list(map(int, input().split())))
+
+# for i in range(K):
+#     target_i = B.bisect_left(H[i])
+#     if target_i >= len(B):
+#         print('No')
+#         exit()
+#     B.pop(target_i)
+
+# print('Yes')

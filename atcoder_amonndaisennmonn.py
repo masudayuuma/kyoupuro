@@ -224,3 +224,10 @@
 #     else:
 #         print('Too Many Requests')
 
+# A - Robot Balance  / 
+H, B = map(int, input().split())
+
+if H > B:
+    print(H-B)
+else:
+    print(0)
