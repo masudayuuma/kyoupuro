@@ -956,3 +956,28 @@
 #             dp[j + W[i]] = max(dp[j + W[i]], dp[j] + H[i] - B[i])
 
 # print(max(dp) + base_happines)
+
+# D - Doubles
+# from collections import Counter
+# N = int(input())
+# A_counter_list = []
+# A_cnt = []
+# for i in range(N):
+#     k, *a = map(int, input().split())
+
+#     A = Counter(a)
+#     A_counter_list.append(A)
+#     A_cnt.append(k)
+# ans = 0.0
+# for i in range(N-1):
+#     for j in range(i+1, N):
+#         tmp_ans = 0.0
+#         mother = A_cnt[i]*A_cnt[j]
+#         for num in A_counter_list[i]:
+#             if num in A_counter_list[j]:
+#                 child = A_counter_list[i][num]*A_counter_list[j][num]
+#                 tmp_ans += child/mother
+#         ans = max(tmp_ans, ans)
+
+# print(ans)
+
