@@ -1406,3 +1406,33 @@
 #     B.pop(target_i)
 
 # print('Yes')
+
+# C - Max Ai+Bj
+# N = int(input())
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
+
+# max_A = max(A)
+# max_B = max(B)
+
+# print(max_A+max_B)
+
+# C - Separated Lunch
+# N = int(input())
+# K = list(map(int, input().split()))
+# ans = 10**9
+# for mask in range(1 << N):
+#     a_group = 0
+#     b_group = 0
+#     for i in range(N):
+#         if mask >> i & 1:
+#             a_group += K[i]
+#         else:
+#             b_group += K[i]
+#     # print(a_group, b_group)
+#     target = max(a_group, b_group)
+#     # print(target)
+#     ans = min(ans, target)
+
+# print(ans)
+
