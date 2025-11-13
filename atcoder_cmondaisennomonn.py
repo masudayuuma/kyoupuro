@@ -1436,3 +1436,58 @@
 
 # print(ans)
 
+# C - Spiral Rotation
+# N = int(input())
+
+# A = [list(input()) for _ in range(N)]
+
+# step = N//2
+
+# step_cnt_grid = [[0 for _ in range(N)] for _ in range(N)]
+
+# for i in range(N):
+#     for j in range(N):
+#         step_cnt_grid[i][j] = min(i, j, N-1-i, N-1-j) + 1
+
+
+# ans_grid = [[0 for _ in range(N)] for _ in range(N)]
+# for i in range(N):
+#     for j in range(N):
+#         cnt = step_cnt_grid[i][j]
+#         target_cell = A[i][j]
+#         t_i, t_j = i, j
+#         for c in range(cnt):
+#             t_i, t_j = t_j, N-1-t_i
+#         ans_grid[t_i][t_j] = target_cell
+
+# for i in range(N):
+#     print(''.join(ans_grid[i]))
+
+N = int(input())
+A = [list(input()) for _ in range(N)]
+
+ans_grid = [[''] * N for _ in range(N)]
+
+for i in range(N):
+    for j in range(N):
+        # 外側から何層目か（1-indexed）
+        layer = min(i, j, N-1-i, N-1-j) + 1
+        
+        # layer回の90度回転は、4で割った余りだけ回転すればよい
+        cnt = layer % 4
+        
+        t_i, t_j = i, j
+        
+        # 回転を式で直接計算（ループなし）
+        if cnt == 1:
+            t_i, t_j = j, N-1-i
+        elif cnt == 2:
+            t_i, t_j = N-1-i, N-1-j
+        elif cnt == 3:
+            t_i, t_j = N-1-j, i
+        # cnt == 0 なら変化なし
+        
+        ans_grid[t_i][t_j] = A[i][j]
+
+for row in ans_grid:
+    print(''.join(row))
