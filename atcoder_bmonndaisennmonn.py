@@ -692,3 +692,18 @@
 #         ans -= W[p]
 #         ans_set.remove(p)
 #     print(ans)
+
+# D - Line Crossing
+from collections import defaultdict
+n, m = map(int, input().split())
+
+cnt = defaultdict(int)
+ans = m*(m-1)//2
+
+for _ in range(m):
+    a, b = map(int, input().split())
+    x = (a+b)% n
+    ans -= cnt[x]
+    cnt[x] += 1
+
+print(ans)
