@@ -694,16 +694,143 @@
 #     print(ans)
 
 # D - Line Crossing
-from collections import defaultdict
-n, m = map(int, input().split())
+# from collections import defaultdict
+# n, m = map(int, input().split())
 
-cnt = defaultdict(int)
-ans = m*(m-1)//2
+# cnt = defaultdict(int)
+# ans = m*(m-1)//2
 
-for _ in range(m):
-    a, b = map(int, input().split())
-    x = (a+b)% n
-    ans -= cnt[x]
-    cnt[x] += 1
+# for _ in range(m):
+#     a, b = map(int, input().split())
+#     x = (a+b)% n
+#     ans -= cnt[x]
+#     cnt[x] += 1
 
-print(ans)
+# print(ans)
+
+# # D - Pigeon Swap
+# from collections import defaultdict
+# N, Q = map(int, input().split())
+
+# hato_to_nest = defaultdict(int)
+# base_nest_to_new_nest = defaultdict(int)
+# nest_has_nest_label = defaultdict(int)
+
+
+# for i in range(N):
+#     hato_to_nest[i+1] = i+1
+#     base_nest_to_new_nest[i+1] = i+1
+#     nest_has_nest_label[i+1] = i+1
+
+# for i in range(Q):
+#     n, *q = map(int, input().split())
+
+#     if n == 1:
+#         hato_to_nest[q[0]] = base_nest_to_new_nest[q[1]]
+#     elif n == 2:
+#         t_a, t_b = base_nest_to_new_nest[q[0]], base_nest_to_new_nest[q[1]]
+#         nest_has_nest_label[t_a], nest_has_nest_label[t_b] = q[1], q[0]
+#         base_nest_to_new_nest[q[0]], base_nest_to_new_nest[q[1]] = base_nest_to_new_nest[q[1]], base_nest_to_new_nest[q[0]]
+#     else:
+#         target_hato = hato_to_nest[q[0]]
+#         print(nest_has_nest_label[target_hato])
+
+# D - Snaky Walk
+# 縦横でそれぞれflagを持ってきてたらそこで終了やな、
+# from collections import deque
+# H, W = map(int, input().split())
+
+# S = [ input() for _ in range(H)]
+# v_flag = [ [False for _ in range(W)] for _ in range(H)]
+# h_flag = [ [False for _ in range(W)] for _ in range(H)]
+# que = deque()
+
+# goal = ()
+# start = ()
+# for i in range(H):
+#     for j in range(W):
+#         if S[i][j] == 'S':
+#             start = (i, j)
+#         if S[i][j] == 'G':
+#             goal = (i, j)
+
+# que.append((start[0], start[1], 0, 2))
+
+# diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+
+
+# def v_move(i, j, cnt):
+#     if S[i][j] == 'G':
+#         print(cnt)
+#         exit()
+#     v_flag[i][j] = True
+#     que.append((i, j, cnt, 1))
+    
+
+# def h_move(i, j, cnt):
+#     if S[i][j] == 'G':
+#         print(cnt)
+#         exit()
+#     h_flag[i][j] = True
+#     que.append((i, j, cnt, 0))
+
+# s_i, s_j = start
+# # move_fは0が過去横移動、1が過去縦移動にする
+# while que:
+#     t_i, t_j, cnt, move_f = que.popleft()
+#     for dx,dy in diff:
+#         tmp_i = t_i+dx
+#         tmp_j = t_j+dy
+#         if 0 <= tmp_i <H and 0 <= tmp_j <W and not S[tmp_i][tmp_j] == '#':
+#             if not dy != 0 and not move_f == 0 and not h_flag[tmp_i][tmp_j] == True:
+#                 h_move(tmp_i, tmp_j, cnt+1)
+#             if not dx != 0 and not move_f == 1 and not v_flag[tmp_i][tmp_j] == True:
+#                 v_move(tmp_i, tmp_j, cnt+1)
+
+# print(-1)
+
+# 解説回答
+# from collections import deque
+# H, W = map(int, input().split())
+# S = [input().strip() for _ in range(H)]
+# INF = 10**18
+# ans = INF
+
+# for par in range(2):
+#     dist = [[INF]*W for _ in range(H)]
+#     q = deque()
+
+#     def push(i, j, d):
+#         if not (0 <= i < H and 0 <= j < W):
+#             return
+#         if S[i][j] != INF:
+#             return
+#         if dist[i][j] == '#':
+#             return
+#         dist[i][j] = d
+#         q.append((i, j))
+
+#     for i in range(H):
+#         for j in range(W):
+#             if S[i][j] == 'S':
+#                 push(i, j, 0)
+
+#     while q:
+#         i, j = q.popleft()
+#         d = dist[i][j]
+
+#         if S[i][j] == 'G':
+#             if d < ans:
+#                 ans = d
+
+#         if (i+j)%2 == par:
+#             push(i-1, j, d+1)
+#             push(i+1, j, d+1)
+#         else:
+#             push(i, j-1, d+1)
+#             push(i, j+1, d+1)
+
+# if ans == INF:
+#     ans = -1
+
+# print(ans)
