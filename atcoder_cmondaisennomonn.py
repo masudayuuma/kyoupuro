@@ -1462,3 +1462,24 @@
 
 # for i in range(N):
 #     print(''.join(ans_grid[i]))
+
+# C - Candy Tribulation
+# N, X, Y = map(int, input().split())
+
+# A = list(map(int, input().split()))
+
+# min_weight = min(A)*Y
+# diff = Y-X
+# ans = 0
+# for i in range(N):
+#     if (A[i]*Y-min_weight)%diff != 0:
+#         print(-1)
+#         exit()
+#     cnt = (A[i]*Y-min_weight)//diff
+#     if cnt <= A[i]:
+#         ans += A[i]-cnt
+#     else:
+#         print(-1)
+#         exit()
+
+# print(ans)
