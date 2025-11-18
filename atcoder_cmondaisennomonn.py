@@ -1483,3 +1483,32 @@
 #         exit()
 
 # print(ans)
+
+# C - Count ABC Again
+# setでA,B,Cのindexを持つ
+# 初期の個数もつ
+N, Q = map(int, input().split())
+S = input()
+A_i = set()
+B_i = set()
+C_i = set()
+cnt = 0
+for i in range(N):
+    if S[i] == 'A':
+        A_i.add(i)
+        if i < N-2 and S[i+1] == 'B' and S[i+2] == 'C':
+            cnt += 1
+    elif S[i] == 'B':
+        B_i.add(i)
+    elif S[i] == 'C':
+        C_i.add(i)
+
+
+for i in range(Q):
+    x, c = map(int, input().split())
+    if x-1 in A_i and c != 'A':
+        A_i.remove(x-1)
+        if x-i < N-2 and S[i+1] == 'B' and S[i+2] == 'C':
+            cnt -= 1
+    if not x-i in A_i:
+        pass
