@@ -1487,28 +1487,46 @@
 # C - Count ABC Again
 # setでA,B,Cのindexを持つ
 # 初期の個数もつ
-N, Q = map(int, input().split())
-S = input()
-A_i = set()
-B_i = set()
-C_i = set()
-cnt = 0
-for i in range(N):
-    if S[i] == 'A':
-        A_i.add(i)
-        if i < N-2 and S[i+1] == 'B' and S[i+2] == 'C':
-            cnt += 1
-    elif S[i] == 'B':
-        B_i.add(i)
-    elif S[i] == 'C':
-        C_i.add(i)
+# N, Q = map(int, input().split())
+# S = list(input())
 
+# cnt = 0
+# for i in range(N-2):
+#     if S[i] == 'A' and S[i+1] == 'B' and S[i+2] == 'C':
+#         cnt += 1
+ 
+# for i in range(Q):
+#     x, c = map(str, input().split())
+#     x = int(x)
+#     diff = 0
+#     for i in range(3):
+#         if i+x-2-1 >= 0 and i+x-1 < N:
+#             if S[i+x-2-1] == 'A' and S[i+x-2] == 'B' and S[i+x-1] == 'C':
+#                 diff -= 1
 
-for i in range(Q):
-    x, c = map(int, input().split())
-    if x-1 in A_i and c != 'A':
-        A_i.remove(x-1)
-        if x-i < N-2 and S[i+1] == 'B' and S[i+2] == 'C':
-            cnt -= 1
-    if not x-i in A_i:
-        pass
+#     S[x-1] = c
+
+#     for i in range(3):
+#         if i+x-2-1 >= 0 and i+x-1 < N:
+#             if S[i+x-2-1] == 'A' and S[i+x-2] == 'B' and S[i+x-1] == 'C':
+#                 diff += 1    
+#     cnt += diff
+#     print(cnt)
+
+# C - Balls and Bag Query
+# from collections import defaultdict
+# Q = int(input())
+# boll_box = defaultdict(int)
+# type_cnt = 0
+# for q in range(Q):
+#     query = list(map(int, input().split()))
+#     if query[0] == 1:
+#         if boll_box[query[1]] == 0:
+#             type_cnt += 1
+#         boll_box[query[1]] += 1
+#     elif query[0] == 2:
+#         boll_box[query[1]] -= 1
+#         if boll_box[query[1]] == 0:
+#             type_cnt -= 1
+#     elif query[0] == 3:
+#         print(type_cnt)
