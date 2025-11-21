@@ -981,4 +981,43 @@
 
 # print(ans)
 
-# D - Suddenly, A Tempest
+# # D - The Simple Game
+# # dp問題
+# # まず、最終から考えてやっていく。
+# from collections import defaultdict
+# T = int(input())
+
+# for i in range(T):
+#     n, m, k = map(int, input().split())
+#     s = input()
+#     gragh_dict = defaultdict(set)
+#     for j in range(m):
+#         u, v = map(int, input().split())
+#         gragh_dict[u-1].add(v-1)
+
+#     dp = [None]*n
+#     for j in range(n-1, -1, -1):
+#         if s[j] == 'A':
+#             dp[j] = True
+#         else:
+#             dp[j] = False
+
+#     for x in range(2*k-1, -1, -1):
+#         nex = dp[:]
+#         flag = (x%2 == 0)
+#         # 0index
+#         for u in range(n):
+#             for v in gragh_dict[u]:
+#                 if not nex[v] and not flag:
+#                     dp[u] = False
+#                     # flag = not flag
+#                     break
+#                 if nex[v] and flag:
+#                     dp[u] = True
+#                     # flag = not flag
+#                     break
+#                 else:
+#                     dp[u] = nex[v]
+#                     continue
+#     print('Alice' if dp[0] else 'Bob')
+        
