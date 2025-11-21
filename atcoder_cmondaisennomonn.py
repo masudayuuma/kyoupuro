@@ -1530,3 +1530,126 @@
 #             type_cnt -= 1
 #     elif query[0] == 3:
 #         print(type_cnt)
+
+# C - Make Isomorphic 
+# from collections import defaultdict
+# from itertools import permutations
+
+# N = int(input())
+# Mg = int(input())
+# u_dict = defaultdict(set)
+# for _ in range(Mg):
+#     u, v = map(int, input().split())
+#     u_dict[u].add(v)
+#     u_dict[v].add(u)
+
+# Mh = int(input())
+# a_dict = defaultdict(set)
+# for _ in range(Mh):
+#     a, b = map(int, input().split())
+#     a_dict[a].add(b)
+#     a_dict[b].add(a)
+
+# cost = [[0]*(N+1) for _ in range(N+1)]
+# for i in range(1, N):
+#     row = list(map(int, input().split()))
+#     for j in range(i+1, N+1):
+#         c = row[j-(i+1)]
+#         cost[i][j] = c
+#         cost[j][i] = c
+
+# ans = 10**18
+
+# G = list(range(1, N+1))
+
+# for perm in permutations(range(1, N+1)):
+#     H = list(perm)
+
+#     cur = 0
+#     for i in range(N):
+#         gi = G[i]
+#         hi = H[i]
+#         for j in range(i+1, N):
+#             gj = G[j]
+#             hj = H[j]
+
+#             edge_in_G = (gi in u_dict[gi])
+#             edge_in_H = (hi in a_dict[hi])
+
+#             if edge_in_G != edge_in_H:
+#                 cur += cost[hi][hj]
+#                 if cur >= ans:
+#                     break
+#         else:
+#             continue
+#         break
+#     ans = min(ans, cur)
+
+# print(ans)
+
+# from collections import defaultdict
+# from itertools import permutations
+
+# N = int(input())
+
+# # --- G の読み込み ---
+# Mg = int(input())
+# u_dict = defaultdict(set)
+# for _ in range(Mg):
+#     u, v = map(int, input().split())
+#     u_dict[u].add(v)
+#     u_dict[v].add(u)
+
+# # --- H の読み込み ---
+# Mh = int(input())
+# a_dict = defaultdict(set)
+# for _ in range(Mh):
+#     a, b = map(int, input().split())
+#     a_dict[a].add(b)
+#     a_dict[b].add(a)
+
+# # --- コスト行列を 1-index の対称行列として構築 ---
+# cost = [[0] * (N + 1) for _ in range(N + 1)]
+# for i in range(1, N):
+#     row = list(map(int, input().split()))
+#     for j in range(i + 1, N + 1):
+#         c = row[j - (i + 1)]  # 行 i の (i+1)番目から順に入っている
+#         cost[i][j] = c
+#         cost[j][i] = c
+
+# ans = 10**18
+
+# # G の頂点番号（1..N）
+# G = list(range(1, N + 1))
+
+# for perm in permutations(range(1, N + 1)):
+#     H = list(perm)  # G[i] に対応する H の頂点が H[i]
+
+#     cur = 0
+#     # 無向グラフなので i < j の組だけ見る
+#     for i in range(N):
+#         gi = G[i]
+#         hi = H[i]
+#         for j in range(i + 1, N):
+#             gj = G[j]
+#             hj = H[j]
+
+#             # G と H（対応後）で辺があるかどうか
+#             edge_in_G = (gj in u_dict[gi])
+#             edge_in_H = (hj in a_dict[hi])
+
+#             if edge_in_G != edge_in_H:
+#                 # H 側の (hi, hj) の辺をトグルする必要があるので、
+#                 # そのペアのコストを足す
+#                 cur += cost[hi][hj]
+#                 # 既に ans 以上なら打ち切り
+#                 if cur >= ans:
+#                     break
+#         else:
+#             continue
+#         break
+
+#     ans = min(ans, cur)
+
+# print(ans)
+
