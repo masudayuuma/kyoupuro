@@ -49,6 +49,16 @@
 
 # print(total)
 
+# ランレングス圧縮使用バージョン
+# from itertools import groupby
+# s = input()
+# a = [(v, len(list(x))) for v, x in groupby(s)]
+
+# ans = 0
+# for i in range(len(a)-1):
+#     if int(a[i][0]) +1 == int(a[i + 1][0]):
+#         ans += min(a[i][1], a[i+1][1])
+# print(ans)
 
 # D - 183183
 # from collections import defaultdict
@@ -76,125 +86,153 @@
 
 # print(ans)
 
+# 解説動画の実装
+# from collections import defaultdict
+# n, m = map(int, input().split())
+# a = list(map(int, input().split()))
+
+# groups = [[] for _ in range(11)]
+# for v in a:
+#     lenght = len(str(v))
+#     groups[lenght].append(v)
+
+# ans = 0
+# ten = 1
+
+# for b in range(11):
+#     cnt = defaultdict(int)
+#     for v in groups[b]:
+#         cnt[v % m] += 1
+
+#     for ai in a:
+#         r = (-ten * ai )% m
+#         ans += cnt[r]
+
+#     ten = (ten*10)% m
+
+# print(ans)
+
 # E - Max Matrix 2
-from collections import defaultdict
+# from collections import defaultdict
 
-T = int(input())
+# T = int(input())
 
-for _ in range(T):
-    N, M = map(int, input().split())
-    X = list(map(int, input().split()))
-    Y = list(map(int, input().split()))
-    total = N * M
+# for _ in range(T):
+#     N, M = map(int, input().split())
+#     X = list(map(int, input().split()))
+#     Y = list(map(int, input().split()))
+#     total = N * M
 
-    row_of = [-1] * (total + 1)
-    col_of = [-1] * (total + 1)
+#     row_of = [-1] * (total + 1)
+#     col_of = [-1] * (total + 1)
 
-    ok = True
+#     ok = True
 
-    for i, v in enumerate(X):
-        if not (1 <= v <= total):
-            ok = False
-            break
-        if row_of[v] != -1:
-            ok = False
-            break
-        row_of[v] = i
+#     for i, v in enumerate(X):
+#         if not (1 <= v <= total):
+#             ok = False
+#             break
+#         if row_of[v] != -1:
+#             ok = False
+#             break
+#         row_of[v] = i
 
-    if not ok:
-        print("No")
-        continue
+#     if not ok:
+#         print("No")
+#         continue
 
-    for j, v in enumerate(Y):
-        if not (1 <= v <= total):
-            ok = False
-            break
-        if col_of[v] != -1:
-            ok = False
-            break
-        col_of[v] = j
+#     for j, v in enumerate(Y):
+#         if not (1 <= v <= total):
+#             ok = False
+#             break
+#         if col_of[v] != -1:
+#             ok = False
+#             break
+#         col_of[v] = j
 
-    if not ok:
-        print("No")
-        continue
+#     if not ok:
+#         print("No")
+#         continue
 
-    buckets = [[] for _ in range(total+1)]
-    for i in range(N):
-        xi = X[i]
-        for j in range(M):
-            cap = xi if xi < Y[j] else Y[j]
-            buckets[cap].append(i * M + j)
+#     buckets = [[] for _ in range(total+1)]
+#     for i in range(N):
+#         xi = X[i]
+#         for j in range(M):
+#             cap = xi if xi < Y[j] else Y[j]
+#             buckets[cap].append(i * M + j)
 
-    A = [[0] * M for _ in range(N)]
+#     A = [[0] * M for _ in range(N)]
 
-    global_cells = set()
-    row_cells = [set() for _ in range(N)]
-    col_cells = [set() for _ in range(M)]
+#     global_cells = set()
+#     row_cells = [set() for _ in range(N)]
+#     col_cells = [set() for _ in range(M)]
 
-    for v in range(total, 0, -1):
-        for cid in buckets[v]:
-            i = cid // M
-            j = cid % M
-            global_cells.add(cid)
-            row_cells[i].add(cid)
-            col_cells[j].add(cid)
+#     for v in range(total, 0, -1):
+#         for cid in buckets[v]:
+#             i = cid // M
+#             j = cid % M
+#             global_cells.add(cid)
+#             row_cells[i].add(cid)
+#             col_cells[j].add(cid)
 
-        r = row_of[v]
-        c = col_of[v]
+#         r = row_of[v]
+#         c = col_of[v]
 
-        if r != -1 and c != -1:
-            cid = r * M + c
-            if A[r][c] != 0:
-                ok = False
-                break
-            A[r][c] = v
-            if cid in global_cells:
-                global_cells.remove(cid)
-            row_cells[r].discard(cid)
-            col_cells[c].discard(cid)
+#         if r != -1 and c != -1:
+#             cid = r * M + c
+#             if A[r][c] != 0:
+#                 ok = False
+#                 break
+#             A[r][c] = v
+#             if cid in global_cells:
+#                 global_cells.remove(cid)
+#             row_cells[r].discard(cid)
+#             col_cells[c].discard(cid)
 
-        elif r != -1:
-            if not row_cells[r]:
-                ok = False
-                break
-            cid = next(iter(row_cells[r]))
-            row_cells[r].remove(cid)
-            global_cells.discard(cid)
-            ci = cid % M
-            col_cells[ci].discard(cid)
-            i = cid // M
-            j = cid % M
-            A[i][j] = v
+#         elif r != -1:
+#             if not row_cells[r]:
+#                 ok = False
+#                 break
+#             cid = next(iter(row_cells[r]))
+#             row_cells[r].remove(cid)
+#             global_cells.discard(cid)
+#             ci = cid % M
+#             col_cells[ci].discard(cid)
+#             i = cid // M
+#             j = cid % M
+#             A[i][j] = v
 
-        elif c != -1:
-            if not col_cells[c]:
-                ok = False
-                break
-            cid = next(iter(col_cells[c]))
-            col_cells[c].remove(cid)
-            global_cells.discard(cid)
-            ri = cid // M
-            row_cells[ri].discard(cid)
-            i = cid // M
-            j = cid % M
-            A[i][j] = v
+#         elif c != -1:
+#             if not col_cells[c]:
+#                 ok = False
+#                 break
+#             cid = next(iter(col_cells[c]))
+#             col_cells[c].remove(cid)
+#             global_cells.discard(cid)
+#             ri = cid // M
+#             row_cells[ri].discard(cid)
+#             i = cid // M
+#             j = cid % M
+#             A[i][j] = v
 
-        else:
-            if not global_cells:
-                ok = False
-                break
-            cid = next(iter(global_cells))
-            global_cells.remove(cid)
-            ri = cid // M
-            ci = cid % M
-            row_cells[ri].discard(cid)
-            col_cells[ci].discard(cid)
-            A[ri][ci] = v
+#         else:
+#             if not global_cells:
+#                 ok = False
+#                 break
+#             cid = next(iter(global_cells))
+#             global_cells.remove(cid)
+#             ri = cid // M
+#             ci = cid % M
+#             row_cells[ri].discard(cid)
+#             col_cells[ci].discard(cid)
+#             A[ri][ci] = v
 
-    if not ok:
-        print("No")
-        continue
+#     if not ok:
+#         print("No")
+#         continue
 
-    print("Yes")
-    for i in range(N):
-        print(*A[i])
+#     print("Yes")
+#     for i in range(N):
+#         print(*A[i])
+
+# 解説動画
