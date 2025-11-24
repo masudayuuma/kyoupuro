@@ -1653,3 +1653,41 @@
 
 # print(ans)
 
+# C - Sum = 0
+# N = int(input())
+
+# diff_list = []
+# total = 0
+# min_total = 0
+# ans_list = []
+# for i in range(N):
+#     l, r = map(int, input().split())
+#     diff = r-l
+#     diff_list.append((diff, l, r))
+#     ans_list.append(r)
+#     total += r
+#     min_total += l
+
+# if not min_total <= 0 <= total:
+#     print('No')
+#     exit()
+
+# for i in range(N):
+#     if total == 0:
+#         break
+
+#     diff, l, r = diff_list[i]
+#     if total-diff > 0:
+#         total -= diff
+#         ans_list[i] = l
+#     else:
+#         cost = total
+#         total = 0
+#         ans_list[i] -= cost
+#         break
+
+# if total == 0:
+#     print('Yes')
+#     print(*ans_list)
+# else:
+#     print('No')
