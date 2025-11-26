@@ -1021,3 +1021,66 @@
 #                     continue
 #     print('Alice' if dp[0] else 'Bob')
         
+# D - XOR Shortest Walk
+# DFSかな
+# 下のやつだとDFSが指数関数的に計算量が増えてしまうのでTLE。
+# from collections import defaultdict
+# N, M = map(int, input().split())
+
+# move_cost = defaultdict(set)
+# min_weight = float('inf')
+# for i in range(M):
+#     a, b, w = map(int, input().split())
+
+#     move_cost[a].add((b, w))
+
+
+# def walk_xor(base, total_w, visited):
+#     global min_weight
+#     if base == N:
+#         min_weight = min(min_weight, total_w)
+
+#     for nex, w in move_cost[base]:
+#         if (nex, w) in visited:
+#             continue
+#         visited.add((nex, w))
+#         now_w = total_w^w
+#         walk_xor(nex, now_w, visited)
+#         visited.remove((nex, w))
+
+# visited = set()
+# walk_xor(1, 0, visited)
+# print(min_weight if not min_weight == float('inf') else -1)
+
+# from collections import defaultdict, deque
+
+# N, M = map(int, input().split())
+
+# move_cost = defaultdict(list)
+# for _ in range(M):
+#     a, b, w = map(int, input().split())
+#     move_cost[a].append((b, w))
+
+# MAX_W = 1 << 10
+# dp = [[False] * MAX_W for _ in range(N+1)]
+
+# q = deque()
+# dp[1][0] = True
+
+# q.append((1, 0))
+
+# while q:
+#     v, x = q.popleft()
+#     for nex, w in move_cost[v]:
+#         nx = x^w
+#         if not dp[nex][nx]:
+#             dp[nex][nx] = True
+#             q.append((nex,nx))
+
+# ans = -1
+# for x in range(MAX_W):
+#     if dp[N][x]:
+#         ans =x
+#         break
+
+# print(ans)

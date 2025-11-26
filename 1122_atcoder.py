@@ -236,3 +236,84 @@
 #         print(*A[i])
 
 # 解説動画
+import sys
+
+def solve() -> None:
+    it = iter(map(int, sys.stdin.read().split()))
+    T = next(it)
+    out_lines = []
+
+    for _ in range(T):
+        N = next(it)
+        M = next(it)
+        X = [next(it) for _ in range(N)]
+        Y = [next(it) for _ in range(M)]
+
+        # 同じ配列内で値が被っていたら不可能
+        if len(set(X)) < N or len(set(Y)) < M:
+            out_lines.append("No")
+            continue
+
+        # 元の行・列インデックスを記録
+        rid = {v: i for i, v in enumerate(X)}
+        cid = {v: j for j, v in enumerate(Y)}
+
+        # 最大値順に並べ替えた配列
+        x = sorted(X, reverse=True)
+        y = sorted(Y, reverse=True)
+
+        # 並べ替え後の座標系で作る行列
+        a = [[0] * M for _ in range(N)]
+
+        xi = 0  # 有効な行の数
+        yi = 0  # 有効な列の数
+        cand = []  # まだ空いている候補マス (i, j)
+        ok = True
+
+        max_val = N * M
+        # 大きい数から順に置いていく
+        for v in range(max_val, 0, -1):
+            # この値 v を最大値に持つ行があれば、その行を有効化
+            if xi < N and x[xi] == v:
+                # すでに有効な列との交点をすべて候補に追加
+                for j in range(yi):
+                    cand.append((xi, j))
+                xi += 1
+
+            # この値 v を最大値に持つ列があれば、その列を有効化
+            if yi < M and y[yi] == v:
+                # すでに有効な行との交点をすべて候補に追加
+                for i in range(xi):
+                    cand.append((i, yi))
+                yi += 1
+
+            # 置けるマスがなければ不可能
+            if not cand:
+                ok = False
+                break
+
+            # 候補から 1 マス選んで v を置く
+            i, j = cand.pop()
+            a[i][j] = v
+
+        if not ok:
+            out_lines.append("No")
+            continue
+
+        # 並べ替え前の元の行・列順に戻す
+        ans = [[0] * M for _ in range(N)]
+        for i in range(N):
+            for j in range(M):
+                orig_i = rid[x[i]]
+                orig_j = cid[y[j]]
+                ans[orig_i][orig_j] = a[i][j]
+
+        out_lines.append("Yes")
+        for row in ans:
+            out_lines.append(" ".join(map(str, row)))
+
+    sys.stdout.write("\n".join(out_lines))
+
+
+if __name__ == "__main__":
+    solve()
