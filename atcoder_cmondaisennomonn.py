@@ -1691,3 +1691,38 @@
 #     print(*ans_list)
 # else:
 #     print('No')
+
+# C - Word Ladder
+# C - Word Ladder
+S = list(input())
+T = list(input())
+cnt = 0
+Z = []
+for i in range(len(S)):
+    s = S[i]
+    t = T[i]
+    if s == t:
+        continue
+
+    if s > t:
+        S[i] = t
+        cnt += 1
+        z = ''.join(S)
+        Z.append(z)
+    else:
+        continue
+
+for i in range(len(S)-1, -1, -1):
+    s = S[i]
+    t = T[i]
+    if s == t:
+        continue
+    else:
+        S[i] = t
+        cnt += 1
+        z = ''.join(S)
+        Z.append(z)
+
+print(cnt)
+for string in Z:
+    print(string)

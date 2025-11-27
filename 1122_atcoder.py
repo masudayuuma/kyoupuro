@@ -236,84 +236,128 @@
 #         print(*A[i])
 
 # 解説動画
+# T = int(input())
+
+# for _ in range(T):
+#     N, M = map(int, input().split())
+#     X = list(map(int, input().split()))
+#     Y = list(map(int, input().split()))
+
+#     if len(set(X)) < N or len(set(Y)) < M:
+#         print('No')
+#         continue
+
+#     rid = {v: i for i, v in enumerate(X)}
+#     cid = {v: i for i, v in enumerate(Y)}
+
+#     x = sorted(X, reverse=True)
+#     y = sorted(Y, reverse=True)
+
+#     a = [[0]*M for _ in range(N)]
+
+#     xi = 0
+#     yi = 0
+#     cand = []
+#     ok = True
+
+#     max_val = N*M
+
+#     for v in range(max_val, 0, -1):
+#         if xi < N and x[xi] == v:
+#             for j in range(yi):
+#                 cand.append((xi, j))
+#             xi += 1
+
+#         if yi < M and y[yi] == v:
+#             for i in range(xi):
+#                 cand.append((i, yi))
+#             yi += 1
+
+#         if not cand:
+#             ok = False
+#             break
+
+#         i, j = cand.pop()
+#         a[i][j] = v
+
+#     if not ok:
+#         print('No')
+#         continue
+
+
+#     ans = [[0]*M for _ in range(N)]
+#     for i in range(N):
+#         for j in range(M):
+#             orig_i = rid[x[i]]
+#             orig_j = cid[y[j]]
+#             ans[orig_i][orig_j] = a[i][j]
+
+#     print('Yes')
+#     for row in ans:
+#         print(*row)
+
 import sys
+from collections import deque
 
-def solve() -> None:
-    it = iter(map(int, sys.stdin.read().split()))
-    T = next(it)
-    out_lines = []
+input = sys.stdin.readline
 
-    for _ in range(T):
-        N = next(it)
-        M = next(it)
-        X = [next(it) for _ in range(N)]
-        Y = [next(it) for _ in range(M)]
+def solve():
+    n, m = map(int, input().split())
+    nm = n * m
+    x = [v - 1 for v in map(int, input().split())]
+    y = [v - 1 for v in map(int, input().split())]
 
-        # 同じ配列内で値が被っていたら不可能
-        if len(set(X)) < N or len(set(Y)) < M:
-            out_lines.append("No")
+    gx = [-1] * nm
+    gy = [-1] * nm
+    for i in range(n):
+        if gx[x[i]] != -1:
+            print("No")
+            return
+        gx[x[i]] = i
+    for j in range(m):
+        if gy[y[j]] != -1:
+            print("No")
+            return
+        gy[y[j]] = j
+
+    ok = [[] for _ in range(nm)]
+    for i in range(n):
+        for j in range(m):
+            ok[min(x[i], y[j])].append((i, j))
+
+    ans = [[-1] * m for _ in range(n)]
+    q = deque()
+
+    for v in range(nm - 1, -1, -1):
+        if gx[v] == -1 and gy[v] == -1:
+            if not q:
+                print("No")
+                return
+            i, j = q.popleft()
+            ans[i][j] = v + 1
+            for ii, jj in ok[v]:
+                q.append((ii, jj))
             continue
 
-        # 元の行・列インデックスを記録
-        rid = {v: i for i, v in enumerate(X)}
-        cid = {v: j for j, v in enumerate(Y)}
-
-        # 最大値順に並べ替えた配列
-        x = sorted(X, reverse=True)
-        y = sorted(Y, reverse=True)
-
-        # 並べ替え後の座標系で作る行列
-        a = [[0] * M for _ in range(N)]
-
-        xi = 0  # 有効な行の数
-        yi = 0  # 有効な列の数
-        cand = []  # まだ空いている候補マス (i, j)
-        ok = True
-
-        max_val = N * M
-        # 大きい数から順に置いていく
-        for v in range(max_val, 0, -1):
-            # この値 v を最大値に持つ行があれば、その行を有効化
-            if xi < N and x[xi] == v:
-                # すでに有効な列との交点をすべて候補に追加
-                for j in range(yi):
-                    cand.append((xi, j))
-                xi += 1
-
-            # この値 v を最大値に持つ列があれば、その列を有効化
-            if yi < M and y[yi] == v:
-                # すでに有効な行との交点をすべて候補に追加
-                for i in range(xi):
-                    cand.append((i, yi))
-                yi += 1
-
-            # 置けるマスがなければ不可能
-            if not cand:
-                ok = False
-                break
-
-            # 候補から 1 マス選んで v を置く
-            i, j = cand.pop()
-            a[i][j] = v
-
-        if not ok:
-            out_lines.append("No")
+        if gx[v] == -1 or gy[v] == -1:
+            if not ok[v]:
+                print("No")
+                return
+            i, j = ok[v].pop()
+            ans[i][j] = v + 1
+            for ii, jj in ok[v]:
+                q.append((ii, jj))
             continue
 
-        # 並べ替え前の元の行・列順に戻す
-        ans = [[0] * M for _ in range(N)]
-        for i in range(N):
-            for j in range(M):
-                orig_i = rid[x[i]]
-                orig_j = cid[y[j]]
-                ans[orig_i][orig_j] = a[i][j]
+        i, j = gx[v], gy[v]
+        ans[i][j] = v + 1
+        for ii, jj in ok[v]:
+            if i != ii or j != jj:
+                q.append((ii, jj))
 
-        out_lines.append("Yes")
-        for row in ans:
-            out_lines.append(" ".join(map(str, row)))
+    print("Yes")
+    for r in ans:
+        print(*r)
 
-    sys.stdout.write("\n".join(out_lines))
-
-
-if __name__ == "__main__":
+for _ in range(int(input())):
     solve()
