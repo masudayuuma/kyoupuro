@@ -1694,35 +1694,86 @@
 
 # C - Word Ladder
 # C - Word Ladder
-S = list(input())
-T = list(input())
-cnt = 0
-Z = []
-for i in range(len(S)):
-    s = S[i]
-    t = T[i]
-    if s == t:
+# S = list(input())
+# T = list(input())
+# cnt = 0
+# Z = []
+# for i in range(len(S)):
+#     s = S[i]
+#     t = T[i]
+#     if s == t:
+#         continue
+
+#     if s > t:
+#         S[i] = t
+#         cnt += 1
+#         z = ''.join(S)
+#         Z.append(z)
+#     else:
+#         continue
+
+# for i in range(len(S)-1, -1, -1):
+#     s = S[i]
+#     t = T[i]
+#     if s == t:
+#         continue
+#     else:
+#         S[i] = t
+#         cnt += 1
+#         z = ''.join(S)
+#         Z.append(z)
+
+# print(cnt)
+# for string in Z:
+#     print(string)
+
+# C - Count Arithmetic Subarrays
+# N = int(input())
+# A = list(map(int, input().split()))
+# ans = N
+
+# if N >= 2:
+#     l = 0
+#     while l < N-1:
+#         r = l+1
+#         d = A[r] - A[l]
+
+#         while r+1 < N and A[r+1]-A[r] == d:
+#             r +=1
+
+#         length = r-l+1
+#         ans += length*(length-1)//2
+#         l = r
+
+# print(ans)
+
+# C - Triple Attack
+N = int(input())
+H = list(map(int, input().split()))
+
+T = 0
+for i in range(N):
+    hp = H[i]
+
+    while T % 3 != 0 and hp > 0:
+        T += 1
+        if T % 3 == 0:
+            hp -= 3
+        else:
+            hp -= 1
+    if hp <= 0:
         continue
 
-    if s > t:
-        S[i] = t
-        cnt += 1
-        z = ''.join(S)
-        Z.append(z)
-    else:
-        continue
+    sets = hp // 5
+    T += sets * 3
+    hp -= sets * 5
 
-for i in range(len(S)-1, -1, -1):
-    s = S[i]
-    t = T[i]
-    if s == t:
-        continue
-    else:
-        S[i] = t
-        cnt += 1
-        z = ''.join(S)
-        Z.append(z)
+    while hp > 0:
+        T += 1
+        if T % 3 == 0:
+            hp -= 3
+        else:
+            hp -= 1
 
-print(cnt)
-for string in Z:
-    print(string)
+
+print(T)
