@@ -1748,32 +1748,49 @@
 # print(ans)
 
 # C - Triple Attack
-N = int(input())
-H = list(map(int, input().split()))
+# N = int(input())
+# H = list(map(int, input().split()))
 
-T = 0
-for i in range(N):
-    hp = H[i]
+# T = 0
+# for i in range(N):
+#     hp = H[i]
 
-    while T % 3 != 0 and hp > 0:
-        T += 1
-        if T % 3 == 0:
-            hp -= 3
-        else:
-            hp -= 1
-    if hp <= 0:
-        continue
+#     while T % 3 != 0 and hp > 0:
+#         T += 1
+#         if T % 3 == 0:
+#             hp -= 3
+#         else:
+#             hp -= 1
+#     if hp <= 0:
+#         continue
 
-    sets = hp // 5
-    T += sets * 3
-    hp -= sets * 5
+#     sets = hp // 5
+#     T += sets * 3
+#     hp -= sets * 5
 
-    while hp > 0:
-        T += 1
-        if T % 3 == 0:
-            hp -= 3
-        else:
-            hp -= 1
+#     while hp > 0:
+#         T += 1
+#         if T % 3 == 0:
+#             hp -= 3
+#         else:
+#             hp -= 1
 
 
-print(T)
+# print(T)
+
+# C - Enumerate Sequences
+from itertools import product
+N, K = map(int, input().split())
+R = list(map(int, input().split()))
+ans_list = []
+ranges = [range(1, r+1) for r in R]
+for perm in product(*ranges):
+    if sum(perm) % K == 0:
+        ans_list.append(perm)
+
+    
+
+ans = sorted(ans_list)
+
+for a in ans:
+    print(*a)
