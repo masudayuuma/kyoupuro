@@ -1779,18 +1779,44 @@
 # print(T)
 
 # C - Enumerate Sequences
-from itertools import product
-N, K = map(int, input().split())
-R = list(map(int, input().split()))
-ans_list = []
-ranges = [range(1, r+1) for r in R]
-for perm in product(*ranges):
-    if sum(perm) % K == 0:
-        ans_list.append(perm)
+# from itertools import product
+# N, K = map(int, input().split())
+# R = list(map(int, input().split()))
+# ans_list = []
+# ranges = [range(1, r+1) for r in R]
+# for perm in product(*ranges):
+#     if sum(perm) % K == 0:
+#         ans_list.append(perm)
 
     
 
-ans = sorted(ans_list)
+# ans = sorted(ans_list)
 
-for a in ans:
-    print(*a)
+# for a in ans:
+#     print(*a)
+
+# C - Transportation Expenses
+# from bisect import bisect_left
+
+# N, M = map(int, input().split())
+# A = sorted(list(map(int, input().split())))
+
+# prefix = [0]*(N+1)
+# for i in range(N):
+#     prefix[i+1] = prefix[i]+A[i]
+
+# if prefix[N] <= M:
+#     print('infinite')
+#     exit()
+
+# ok, ng = 0, 10**9
+# while ok+1 < ng:
+#     mid = (ok+ng)//2
+#     i = bisect_left(A, mid)
+#     total = prefix[i]+mid*(N-i)
+#     if total <= M:
+#         ok = mid
+#     else:
+#         ng = mid
+
+# print(ok)
