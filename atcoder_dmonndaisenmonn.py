@@ -1085,3 +1085,63 @@
 
 # print(ans)
 
+# D - Flip to Gather
+# T = int(input())
+
+# for i in range(T):
+#     n = int(input())
+#     s = input()
+
+#     r1 = [0]*(n+1)
+#     for i in range(n-1, -1, -1):
+#         r1[i] = r1[i+1]
+#         if s[i] == '1':
+#             r1[i] += 1
+
+#     INF = 10**18
+#     ans = INF
+
+#     l0 = 0
+#     l01 = 0
+#     best = 0
+
+#     for r in range(1, n+1):
+#         if s[r-1] == '0':
+#             l0 += 1
+#             l01 -= 1
+#         else:
+#             l01 += 1
+
+#         best = min(best, l01)
+
+#         # best = left_1-left_0
+#         now = r1[r] + l0 + best
+#         ans = min(ans, now)
+
+#     print(ans)
+
+# DPバージョン
+# T = int(input())
+
+# for t in range(T):
+#     n = int(input())
+#     s = input()
+#     INF = 10**18
+#     dp = [[INF]*(n+1) for _ in range(3)]
+#     dp[0][0] = 0
+
+#     for j in range(n):
+#         for i in range(3):
+#             if dp[i][j] == INF:
+#                 continue
+
+#             want = 1 if i == 1 else 0
+
+#             cost = 1 if s[j] != str(want) else 0
+
+#             dp[i][j+1] = min(dp[i][j+1], dp[i][j]+cost)
+#             if i < 2:
+#                 next_cost = 0 if cost == 1 else 1
+#                 dp[i+1][j+1] = min(dp[i+1][j+1], dp[i][j]+next_cost)
+#     print(min(dp[0][n], dp[1][n], dp[2][n]))
+
