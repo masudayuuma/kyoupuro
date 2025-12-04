@@ -1145,3 +1145,36 @@
 #                 dp[i+1][j+1] = min(dp[i+1][j+1], dp[i][j]+next_cost)
 #     print(min(dp[0][n], dp[1][n], dp[2][n]))
 
+# D - Switch Seats
+# from collections import defaultdict
+
+# T = int(input())
+
+# for t in range(T):
+#     N = int(input())
+#     A = list(map(int, input().split()))
+#     ans = 0
+#     non_see_val = set()
+
+#     val_dict = defaultdict(set)
+#     for i in range(N*2):
+#         if (i < N*2-1 and A[i] == A[i+1]) or (i > 0 and A[i] == A[i-1]):
+#             non_see_val.add(A[i])
+#             continue
+#         val_dict[A[i]].add(i)
+
+#     collab_set = set()
+#     for i in range(N*2-1):
+#         if A[i] in non_see_val or A[i+1] in non_see_val:
+#             continue
+#         target = tuple(sorted([A[i], A[i+1]]))
+#         if not target in collab_set:
+#             collab_set.add(target)
+#         else:
+#             continue
+
+#         pos = sorted(val_dict[A[i]] | val_dict[A[i+1]])
+#         if pos[0] + 1 == pos[1] and pos[2] + 1 == pos[3]:
+#             ans += 1
+
+#     print(ans)
