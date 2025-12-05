@@ -1178,3 +1178,13 @@
 #             ans += 1
 
 #     print(ans)
+
+# D - Squares in Circle
+# R = int(input())
+# ans = 0
+# for x in range(1, R):
+#     y = int((R**2-(x+0.5)**2)**(0.5)-0.5)
+#     ans += y+1
+
+# print(ans*4+1)
+
