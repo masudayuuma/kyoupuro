@@ -1820,3 +1820,18 @@
 #         ng = mid
 
 # print(ok)
+
+# C - Tile Distance 2
+sx, sy = map(int, input().split())
+tx, ty = map(int, input().split())
+
+if ((sx+sy)% 2 == 1):
+    sx -= 1
+if ((tx+ty)% 2 == 1):
+    tx -= 1
+x = abs(sx-tx)
+y = abs(sy-ty)
+if (y > x):
+    print(y)
+else:
+    print((x+y)//2)
