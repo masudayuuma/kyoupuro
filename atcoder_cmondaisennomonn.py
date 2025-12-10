@@ -1822,16 +1822,37 @@
 # print(ok)
 
 # C - Tile Distance 2
-sx, sy = map(int, input().split())
-tx, ty = map(int, input().split())
+# sx, sy = map(int, input().split())
+# tx, ty = map(int, input().split())
 
-if ((sx+sy)% 2 == 1):
-    sx -= 1
-if ((tx+ty)% 2 == 1):
-    tx -= 1
-x = abs(sx-tx)
-y = abs(sy-ty)
-if (y > x):
-    print(y)
-else:
-    print((x+y)//2)
+# if ((sx+sy)% 2 == 1):
+#     sx -= 1
+# if ((tx+ty)% 2 == 1):
+#     tx -= 1
+# x = abs(sx-tx)
+# y = abs(sy-ty)
+# if (y > x):
+#     print(y)
+# else:
+#     print((x+y)//2)
+
+# C - Move It
+# from collections import defaultdict
+# N = int(input())
+# A = list(map(int, input().split()))
+# W = list(map(int, input().split()))
+
+# ans = 0
+# best_dict = defaultdict(int)
+# for i in range(N):
+#     if best_dict[A[i]] == 0:
+#         best_dict[A[i]] = W[i]
+#         continue
+
+#     if best_dict[A[i]] < W[i]:
+#         ans += best_dict[A[i]]
+#         best_dict[A[i]] = W[i]
+#     else:
+#         ans += W[i]
+
+# print(ans)
