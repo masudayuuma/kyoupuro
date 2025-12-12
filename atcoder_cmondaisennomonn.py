@@ -1856,3 +1856,42 @@
 #         ans += W[i]
 
 # print(ans)
+
+# C - Minimum Glutton
+# N, X, Y = map(int, input().split())
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
+
+# sorted_A = sorted(A, reverse= True)
+# sorted_B = sorted(B, reverse=True)
+
+# v_a = 0
+# v_b = 0
+# c_a = 0
+# c_b = 0
+
+# for a in (sorted_A):
+#     v_a += a
+#     c_a += 1
+#     if v_a > X:
+#         break
+
+# for b in (sorted_B):
+#     v_b += b
+#     c_b += 1
+#     if v_b > Y:
+#         break
+
+# print(min(c_a, c_b))
+
+# C - Make Them Narrow
+# N, K = map(int, input().split())
+
+# A = sorted(list(map(int, input().split())))
+
+# ans = A[N-K-1] - A[0]
+# for i in range(1, N-(N-K)+1):
+#     ans = min(ans, A[i+N-K-1]-A[i])
+
+# print(ans)
+
