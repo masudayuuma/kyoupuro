@@ -1895,3 +1895,25 @@
 
 # print(ans)
 
+# C - Popcorn
+from collections import defaultdict
+N, M = map(int, input().split())
+S_dict = [set() for _ in range(N)]
+ans = float('inf')
+for i in range(N):
+    S = list(input())
+    for j in range(M):
+        if S[j] == 'o':
+            S_dict[i].add(j+1)
+
+for i in range(1 << N):
+    tmp_ans = set()
+    tmp_cnt = 0
+    for j in range(N):
+        if i & 1 << j:
+            tmp_ans |= S_dict[j]
+            tmp_cnt += 1
+    if len(tmp_ans) == M and tmp_cnt < ans:
+        ans = tmp_cnt
+
+print(ans)
