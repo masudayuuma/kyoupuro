@@ -1188,3 +1188,21 @@
 
 # print(ans*4+1)
 
+# D - Coming of Age Celebration
+N = int(input())
+A = list(map(int, input().split()))
+
+s = 0
+r = [0]*N
+
+for i in range(N):
+    A[i] += s
+
+    num = min(A[i], N-i-1)
+    A[i] -= num
+
+    s += 1
+    r[i+num] += 1
+
+    s -= r[i]
+print(*A)
