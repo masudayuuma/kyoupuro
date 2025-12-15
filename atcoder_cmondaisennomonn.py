@@ -1896,24 +1896,64 @@
 # print(ans)
 
 # C - Popcorn
+# from collections import defaultdict
+# N, M = map(int, input().split())
+# S_dict = [set() for _ in range(N)]
+# ans = float('inf')
+# for i in range(N):
+#     S = list(input())
+#     for j in range(M):
+#         if S[j] == 'o':
+#             S_dict[i].add(j+1)
+
+# for i in range(1 << N):
+#     tmp_ans = set()
+#     tmp_cnt = 0
+#     for j in range(N):
+#         if i & 1 << j:
+#             tmp_ans |= S_dict[j]
+#             tmp_cnt += 1
+#     if len(tmp_ans) == M and tmp_cnt < ans:
+#         ans = tmp_cnt
+
+# print(ans)
+
+# C - Keys
 from collections import defaultdict
-N, M = map(int, input().split())
-S_dict = [set() for _ in range(N)]
-ans = float('inf')
-for i in range(N):
-    S = list(input())
-    for j in range(M):
-        if S[j] == 'o':
-            S_dict[i].add(j+1)
+
+N, M, K = map(int, input().split())
+
+test_result = defaultdict(bool)
+test_way = defaultdict(list)
+
+for i in range(M):
+    q = input().split()          # ここが最大の修正点（文字列を分割）
+    c = int(q[0])
+    keys = list(map(int, q[1:1+c]))
+    r = q[1+c]
+
+    test_way[i] = keys
+    test_result[i] = (r == 'o')
+
+ans = 0
 
 for i in range(1 << N):
-    tmp_ans = set()
-    tmp_cnt = 0
-    for j in range(N):
-        if i & 1 << j:
-            tmp_ans |= S_dict[j]
-            tmp_cnt += 1
-    if len(tmp_ans) == M and tmp_cnt < ans:
-        ans = tmp_cnt
+    flag = True
+    for m in range(M):
+        m_c = 0
+        for mask in range(N):
+            if (i & (1 << mask)) and ((mask + 1) in test_way[m]):
+                m_c += 1
+
+        if m_c >= K and test_result[m] == True:
+            continue
+        elif m_c < K and test_result[m] == False:
+            continue
+        else:
+            flag = False
+            break
+
+    if flag:
+        ans += 1
 
 print(ans)
