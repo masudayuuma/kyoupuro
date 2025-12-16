@@ -1189,20 +1189,45 @@
 # print(ans*4+1)
 
 # D - Coming of Age Celebration
-N = int(input())
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# s = 0
+# r = [0]*N
+
+# for i in range(N):
+#     A[i] += s
+
+#     num = min(A[i], N-i-1)
+#     A[i] -= num
+
+#     s += 1
+#     r[i+num] += 1
+
+#     s -= r[i]
+# print(*A)
+
+# D - Repeated Sequence
+N, S = map(int, input().split())
 A = list(map(int, input().split()))
 
-s = 0
-r = [0]*N
+sum_A = sum(A)
+nxt_s = S
+if nxt_s >= sum_A:
+    nxt_s = S%sum_A
 
-for i in range(N):
-    A[i] += s
+l, r = 0, 0
+B = A+A
+total = 0
+while l < N:
+    while total < nxt_s and r < N*2:
+        total += B[r]
+        r += 1
+        # print(total, nxt_s)
+    if total == nxt_s:
+        print('Yes')
+        exit()
+    total -= B[l]
+    l += 1
 
-    num = min(A[i], N-i-1)
-    A[i] -= num
-
-    s += 1
-    r[i+num] += 1
-
-    s -= r[i]
-print(*A)
+print('No')
