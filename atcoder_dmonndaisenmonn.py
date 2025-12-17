@@ -1208,26 +1208,28 @@
 # print(*A)
 
 # D - Repeated Sequence
-N, S = map(int, input().split())
-A = list(map(int, input().split()))
+# N, S = map(int, input().split())
+# A = list(map(int, input().split()))
 
-sum_A = sum(A)
-nxt_s = S
-if nxt_s >= sum_A:
-    nxt_s = S%sum_A
+# sum_A = sum(A)
+# nxt_s = S
+# if nxt_s >= sum_A:
+#     nxt_s = S%sum_A
 
-l, r = 0, 0
-B = A+A
-total = 0
-while l < N:
-    while total < nxt_s and r < N*2:
-        total += B[r]
-        r += 1
-        # print(total, nxt_s)
-    if total == nxt_s:
-        print('Yes')
-        exit()
-    total -= B[l]
-    l += 1
+# l, r = 0, 0
+# B = A+A
+# total = 0
+# while l < N:
+#     while total < nxt_s and r < N*2:
+#         total += B[r]
+#         r += 1
+#         # print(total, nxt_s)
+#     if total == nxt_s:
+#         print('Yes')
+#         exit()
+#     total -= B[l]
+#     l += 1
 
-print('No')
+# print('No')
+
+# 

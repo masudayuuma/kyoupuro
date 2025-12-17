@@ -1919,41 +1919,66 @@
 # print(ans)
 
 # C - Keys
-from collections import defaultdict
+# from collections import defaultdict
 
-N, M, K = map(int, input().split())
+# N, M, K = map(int, input().split())
 
-test_result = defaultdict(bool)
-test_way = defaultdict(list)
+# test_result = defaultdict(bool)
+# test_way = defaultdict(list)
 
-for i in range(M):
-    q = input().split()          # ここが最大の修正点（文字列を分割）
-    c = int(q[0])
-    keys = list(map(int, q[1:1+c]))
-    r = q[1+c]
+# for i in range(M):
+#     q = input().split()          # ここが最大の修正点（文字列を分割）
+#     c = int(q[0])
+#     keys = list(map(int, q[1:1+c]))
+#     r = q[1+c]
 
-    test_way[i] = keys
-    test_result[i] = (r == 'o')
+#     test_way[i] = keys
+#     test_result[i] = (r == 'o')
 
-ans = 0
+# ans = 0
 
-for i in range(1 << N):
-    flag = True
-    for m in range(M):
-        m_c = 0
-        for mask in range(N):
-            if (i & (1 << mask)) and ((mask + 1) in test_way[m]):
-                m_c += 1
+# for i in range(1 << N):
+#     flag = True
+#     for m in range(M):
+#         m_c = 0
+#         for mask in range(N):
+#             if (i & (1 << mask)) and ((mask + 1) in test_way[m]):
+#                 m_c += 1
 
-        if m_c >= K and test_result[m] == True:
-            continue
-        elif m_c < K and test_result[m] == False:
-            continue
-        else:
-            flag = False
-            break
+#         if m_c >= K and test_result[m] == True:
+#             continue
+#         elif m_c < K and test_result[m] == False:
+#             continue
+#         else:
+#             flag = False
+#             break
 
-    if flag:
-        ans += 1
+#     if flag:
+#         ans += 1
 
-print(ans)
+# print(ans)
+
+
+# C - AtCoder Magics
+# N = int(input())
+
+# cards = []
+
+# for i in range(N):
+#     a, c = map(int, input().split())
+#     cards.append((a, c, i+1))
+
+# cards.sort(reverse=True)
+
+# ans = []
+# INF = 10**18
+# minC = INF
+
+# for a, c, idx in cards:
+#     if c < minC:
+#         ans.append(idx)
+#         minC = c
+
+# ans.sort()
+# print(len(ans))
+# print(*ans)
