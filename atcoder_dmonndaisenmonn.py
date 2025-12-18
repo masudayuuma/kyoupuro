@@ -1232,4 +1232,26 @@
 
 # print('No')
 
-# 
+# D - Keep Distance
+# N, M = map(int, input().split())
+
+# ans = []
+
+# def dfs(a :list):
+#     if len(a) == N:
+#         ans.append(a[:])
+#         return
+    
+#     l = 1
+#     if len(a) > 0:
+#         l = a[-1] + 10
+
+#     a.append(l)
+
+#     while a[-1]+10 * (N-len(a)) <= M:
+#         dfs(a)
+#         a[-1] += 1
+
+#     a.pop()
+
+# dfs([])
