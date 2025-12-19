@@ -1255,3 +1255,39 @@
 #     a.pop()
 
 # dfs([])
+
+# print(len(ans))
+# for a in ans:
+#     print(*a)
+
+# D - Count Simple Paths
+H, W, K = map(int, input().split())
+
+grid = [list(input()) for _ in range(H)]
+ans = 0
+
+diff = ((-1, 0), (1, 0), (0, -1), (0, 1))
+def dfs(i, j, rest):
+    global ans
+    if rest == 0:
+        ans += 1
+        return
+    
+    original = grid[i][j]
+    grid[i][j] = '#' 
+
+    for dx, dy in diff:
+        tx, ty = i+dx, j+dy
+        if not 0 <= tx < H or not 0 <= ty < W or grid[tx][ty] == '#':
+            continue
+        dfs(tx, ty, rest-1)
+    
+    grid[i][j] = original
+
+
+for i in range(H):
+    for j in range(W):
+        if grid[i][j] == '.':
+            dfs(i, j, K)
+
+print(ans)
