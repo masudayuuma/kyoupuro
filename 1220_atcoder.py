@@ -21,6 +21,7 @@
 
 # print(max(cnt_dict.values()))
 
+
 # C - Reindeer and Sleigh 2
 # T = int(input())
 
@@ -48,6 +49,30 @@
 #         print(N-puller)
 #     else:
 #         print(0)
+
+# T = int(input())
+
+# for _ in range(T):
+#     N = int(input())
+#     rest_animal = []
+#     total_weigh = 0
+#     total_power = 0
+#     for i in range(N):
+#         w, p = map(int, input().split())
+#         rest_animal.append((w, p))
+#         total_weigh += w
+
+#     rest_animal.sort(key=lambda x: x[0]+x[1], reverse=True)
+#     move_cnt = 0
+#     for nw, np in rest_animal:
+#         if total_weigh <= total_power:
+#             break
+        
+#         move_cnt += 1
+#         total_weigh -= nw
+#         total_power += np
+
+#     print(N-move_cnt)
 
 # D - Sum of Differences
 from bisect import bisect_left
