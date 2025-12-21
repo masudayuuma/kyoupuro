@@ -75,26 +75,110 @@
 #     print(N-move_cnt)
 
 # D - Sum of Differences
-from bisect import bisect_left
-MOD = 998244353
-N, M = map(int, input().split())
+# from bisect import bisect_left
+# MOD = 998244353
+# N, M = map(int, input().split())
 
-A = sorted(list(map(int, input().split())))
-B = sorted(list(map(int, input().split())))
+# A = sorted(list(map(int, input().split())))
+# B = sorted(list(map(int, input().split())))
 
-prefix = [0]*(M+1)
+# prefix = [0]*(M+1)
 
-for i in range(M):
-    prefix[i+1] = prefix[i]+B[i]
-ans = 0
+# for i in range(M):
+#     prefix[i+1] = prefix[i]+B[i]
+# ans = 0
 
-for a in A:
-    t_a = bisect_left(B, a)
-    total_smallers = prefix[t_a]
-    total_largers = prefix[-1] - prefix[t_a]
+# for a in A:
+#     t_a = bisect_left(B, a)
+#     total_smallers = prefix[t_a]
+#     total_largers = prefix[-1] - prefix[t_a]
 
-    result = (t_a*a - total_smallers + total_largers - a*(M-t_a))%MOD
+#     result = (t_a*a - total_smallers + total_largers - a*(M-t_a))%MOD
 
-    ans = (ans+result)%MOD
+#     ans = (ans+result)%MOD
 
-print(ans)
+# print(ans)
+
+# from bisect import bisect_left
+
+# N, M = map(int, input().split())
+# MOD = 998244353
+
+# A = list(map(int, input().split()))
+# B = sorted(list(map(int, input().split())))
+# ans = 0
+# prefix = [0]*(M+1)
+
+# for i in range(M):
+#     prefix[i+1] = prefix[i]+B[i]
+
+# for i in range(N):
+#     target_i = bisect_left(B, A[i])
+
+#     ans += (A[i]*target_i-prefix[target_i] + (prefix[-1]-prefix[target_i])-A[i]*(M-target_i))%MOD
+
+# print(ans%MOD)
+
+# E - Sort Arrays
+N = int(input())
+vid = [0]*(N+1)
+
+to = [dict()]
+
+for i in range(1, N+1):
+    x, y = map(int, input().split())
+    v = vid[x]
+    
+    nxt = to[v].append(dict())
+    to[v][y] =nxt
+    vid[i] = nxt
+
+m = len(to)
+is_ = [[] for _ in range(m)]
+for i in range(1, N+1):
+    is_ [vid[i]].append(i)
+
+ans = []
+stack = [0]
+while stack:
+    v = stack.pop()
+
+    ans.extend(is_[v])
+
+    if to[v]:
+        for y in sorted(to[v].keys(), reverse=True):
+            stack.append(to[v][y])
+
+print(" ".join(map(str, ans)))
+
+# E - Sort Arrays
+import sys
+
+sys.setrecursionlimit(300100)
+
+n = int(input())
+G = [{} for i in range(n + 1)]
+vs = [[] for i in range(n + 1)]
+pos = [-1] * (n + 1) # 数列 A_i がどのノードに属しているか
+pos[0] = 0
+tmp = 1
+for i in range(1, n + 1):
+    p, y = map(int, input().split())
+    if y not in G[pos[p]]:
+        G[pos[p]][y] = tmp
+        tmp += 1
+    pos[i] = G[pos[p]][y]
+    vs[pos[i]].append(i)
+
+ans = []
+
+
+def dfs(i):
+    global ans
+    ans += vs[i]
+    for j in sorted(list(G[i].keys())):
+        dfs(G[i][j])
+
+
+dfs(0)
+print(*ans)
