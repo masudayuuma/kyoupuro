@@ -12,3 +12,47 @@
 #         stack.pop()
 
 # A - 図書館 2 (Library 2)
+# Q = int(input())
+
+# read_stack = []
+# for q in range(Q):
+#     s = input()
+
+#     if s == 'READ':
+#         read = read_stack.pop()
+#         print(read)
+#     else:
+#         read_stack.append(s)
+
+# B - Card Pile
+# Q = int(input())
+
+# num_stack = [0]*100
+# for _ in range(Q):
+#     query = input().split()
+
+#     if query[0] == '1':
+#         num_stack.append(query[1])
+#     else:
+#         del_num = num_stack.pop()
+#         print(del_num)
+
+# C - Merge the balls
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# balls_stack = []
+
+# for a in A:
+#     balls_stack.append(a)
+#     if len(balls_stack) <= 1:
+#         continue
+    
+#     while len(balls_stack) >= 2 and balls_stack[-1] == balls_stack[-2]:
+#         pop_1 = balls_stack.pop()
+#         pop_2 = balls_stack.pop()
+
+#         balls_stack.append(pop_1+1)
+
+# print(len(balls_stack))
+
