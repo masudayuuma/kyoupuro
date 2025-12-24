@@ -56,3 +56,38 @@
 
 # print(len(balls_stack))
 
+# D - Strange Balls
+# N = int(input())
+
+# A = list(map(int, input().split()))
+
+# num_stack = []
+# cnt = 0
+# target = -1
+# total = 0
+# for a in A:
+#     if target != a:
+#         num_stack.append((target, cnt))
+#         target = a
+#         cnt = 0
+        
+#     cnt += 1
+#     total += 1
+#     if target == cnt:
+#         total -= cnt
+#         target, cnt = num_stack.pop()
+        
+#     print(total)
+
+# B51 - Bracket
+# S = input()
+
+# open_stack = []
+# for i in range(len(S)):
+#     if S[i] == '(':
+#         open_stack.append(i+1)
+#     else:
+#         t_i = open_stack.pop()
+#         print(t_i, i+1)
+
+# 
