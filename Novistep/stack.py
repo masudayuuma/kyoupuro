@@ -125,4 +125,57 @@
 
 # print(caculate_stack[0])
 
+# D - Take ABC
+# S = list(input())
+
+# char_stack = []
+# char_comb = {'A':'X', 'B': 'A', 'C':'B'}
+
+# for s in S:
+#     char_stack.append(s)
+#     if len(char_stack) > 2 and char_stack[-1] == 'C' and char_comb[char_stack[-1]] == char_stack[-2] and char_comb[char_stack[-2]] == char_stack[-3]:
+#         char_stack.pop()
+#         char_stack.pop()
+#         char_stack.pop()
+
+# print(''.join(char_stack))
+
+
+# B - Abbreviate Fox
+# N = int(input())
+# S = list(input())
+
+# char_stack = []
+
+# for s in S:
+#     char_stack.append(s)
+#     if len(char_stack) > 2 and char_stack[-1] == 'x' and char_stack[-2] == 'o' and char_stack[-3] == 'f':
+#         char_stack.pop()
+#         char_stack.pop()
+#         char_stack.pop()
+
+# print(len(char_stack))
+
+# D - Mismatched Parentheses
+# N = int(input())
+# S = input()
+
+# char_stack = []
+# open_cnt = -1
+# open_stack = 0
+# del_target = ''
+# for i in range(N):
+#     if S[i] == '(':
+#         open_stack += 1
+#         char_stack.append(S[i])
+#     elif S[i] == ')' and open_stack > 0:
+#         while del_target != '(':
+#             del_target = char_stack.pop()
+#         del_target = ''
+#         open_stack -= 1
+#     else:
+#         char_stack.append(S[i])
+
+# print(''.join(char_stack))
+
 # 
