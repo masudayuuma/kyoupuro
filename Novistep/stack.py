@@ -90,4 +90,39 @@
 #         t_i = open_stack.pop()
 #         print(t_i, i+1)
 
+# D - Colorful Bracket Sequence
+# S = input()
+
+# stack = []
+
+# bracket_dict = {')': '(', ']':'[', '>':'<'}
+
+# for s in S:
+#     if s in bracket_dict and len(stack) > 0 and bracket_dict[s] == stack[-1]:
+#         stack.pop()
+#     else:
+#         stack.append(s)
+
+# print('Yes' if len(stack) == 0 else 'No')
+
+# Stack
+# S = input().split()
+
+# operater = {'+': lambda a,b: a+b,
+#             '-': lambda a,b: a-b,
+#             '*': lambda a,b: a*b
+# }
+# caculate_stack = []
+
+# for s in S:
+#     if s in operater:
+#         num1 = caculate_stack.pop()
+#         num2 = caculate_stack.pop()
+#         # print(operater[s](num2, num1))
+#         caculate_stack.append(operater[s](num2, num1))
+#     else:
+#         caculate_stack.append(int(s))
+
+# print(caculate_stack[0])
+
 # 
