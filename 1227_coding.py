@@ -63,4 +63,59 @@
 
 # print(dp[2][N-1])
 
-# E - Heavy Buckets
+# N = int(input())
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
+# C = list(map(int, input().split()))
+
+# a = [list(x) for x in zip(A, B, C)]
+# INF = float('inf')
+# dp = [[-INF]*3 for _ in range(N)]
+
+# print(dp)
+
+# dp[0][0] = a[0][0]
+
+# for i in range(1, N):
+#     for j in range(3):
+#         mx = dp[i-1][j]
+#         if j > 0:
+#             mx = max(mx, dp[i-1][j-1])
+#         dp[i][j] = mx+a[i][j]
+# print(dp[N-1][2])
+
+# E - Heavy Buckets　ダブリング
+N, Q = map(int, input().split())
+A = list(map(int, input().split()))
+
+for i in range(N):
+    A[i] -= 1
+
+D = 30
+
+to = [[0]*N for _ in range(D)]
+
+sum_dp = [[0]*N for _ in range(D)]
+
+for i in range(N):
+    to[0][i] = A[i]
+    sum_dp[0][i] = i+1
+
+for j in range(D-1):
+    for i in range(N):
+        x = to[j][i]
+        to[j+1][i] = to[j][x]
+        sum_dp[j+1][i] = sum_dp[j][i] + sum_dp[j][x]
+
+for _ in range(Q):
+    t, b = map(int, input().split())
+    b -= 1
+
+    ans = 0
+
+    for j in range(D):
+        if (t >> j) & 1:
+            ans += sum_dp[j][b]
+            b = to[j][b]
+
+    print(ans)

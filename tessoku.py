@@ -391,3 +391,44 @@
 #         # print(dp[i][j])
 
 # print(dp[-1][-1])
+
+# A57 - Doubling
+# ダブリング
+# N, Q = map(int, input().split())
+# A = list(map(int, input().split()))
+# queries = [ list(map(int, input().split())) for i in range(Q)]
+
+# LEVELS = 31
+
+# dp = [[None] * N for i in range(LEVELS)]
+# for i in range(N):
+#     dp[0][i] = A[i]-1
+
+# for d in range(1, LEVELS):
+#     for i in range(N):
+#         dp[d][i] = dp[d-1][dp[d-1][i]]
+
+# for X, Y in queries:
+#     current_place = X-1
+#     for d in range(29, -1, -1):
+#         if ((Y >> d) & 1) == 1:
+#             current_place = dp[d][current_place]
+#     print(current_place+1)
+
+# B57 - Calculator
+# N, K = map(int, input().split())
+
+# dp = [[0]*300009 for _ in range(30)]
+
+# for i in range(N+1):
+#     dp[0][i] = i - sum(map(int, str(i)))
+
+# for d in range(29):
+#     for i in range(N+1):
+#         dp[d+1][i] = dp[d][dp[d][i]]
+
+# for num in range(1, N+1):
+#     for d in range(30):
+#         if K & (1 << d):
+#             num = dp[d][num]
+#     print(num)
