@@ -178,4 +178,91 @@
 
 # print(''.join(char_stack))
 
-# 
+# D - Scope
+# S = input()
+
+# char_stack = []
+# char_set = set()
+# for s in S:
+#     if s in char_set:
+#         print('No')
+#         exit()
+
+#     char_stack.append(s)
+#     if s != '(' and s != ')':
+#         char_set.add(s)
+#     if s == ')':
+#         target = ''
+#         while target != '(':
+#             target = char_stack.pop()
+#             if target in char_set:
+#                 char_set.remove(target)
+
+# print('Yes')
+
+# D - Moves on Binary Tree
+# 掛け算の値が増えると計算量が重くなりすぎてTLEする
+# N, X = map(int, input().split())
+
+# S = input()
+
+# diff_stack = []
+# for s in S:
+#     if s == 'U':
+#         if len(diff_stack) > 0:
+#             diff_stack.pop()
+#         else:
+#             X = X // 2
+#     else:
+#         diff_stack.append(s)
+
+# for s in diff_stack:
+#     if s == 'U':
+#         X = X // 2
+#     elif s == 'R':
+#         X = 2*X+1
+#     elif s == 'L':
+#         X = 2*X
+
+# print(X)
+
+# C - Brackets Stack Query
+Q = int(input())
+stack = []
+open_cnt = 0
+close_cnt = 0
+target = -1
+flag = True
+
+for q in range(Q):
+    query = input().split()
+
+    if query[0] == '1':
+        s = query[1]
+        stack.append(s)
+
+        if s == ')':
+            close_cnt += 1
+        else:
+            open_cnt += 1
+        
+        if flag == True and open_cnt < close_cnt:
+            flag = False
+            target = len(stack)
+
+    else:
+        s = stack.pop()
+
+        if s == '(':
+            open_cnt -= 1
+        else:
+            close_cnt -= 1
+
+        if len(stack) == target-1:
+            target = -1
+            flag = True
+
+    if flag == True and open_cnt == close_cnt:
+        print('Yes')
+    else:
+        print('No')
