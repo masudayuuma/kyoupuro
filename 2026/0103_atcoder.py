@@ -41,6 +41,28 @@
 # else:
 #     print()
 
+# もう一度
+# from collections import defaultdict
+# N = int(input())
+# num_dict = defaultdict(int)
+
+# x = 1
+# while x*x*2 < N:
+#     y = x+1
+#     while y**2+x**2 <= N:
+#         ans = x**2+y**2
+#         num_dict[ans] += 1
+#         y += 1
+#     x += 1
+
+# answer = [n for n in num_dict if num_dict[n] == 1]
+# answer.sort()
+
+# print(len(answer))
+# if answer:
+#     print(*answer)
+# else:
+#     print()
 
 # D - Kadomatsu Subsequence
 # from collections import Counter
@@ -69,6 +91,28 @@
 
 # print(ans)
 
+# もう一度
+# from collections import Counter
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# right = Counter(A)
+# left = Counter()
+# ans = 0
+# for x in A:
+#     right[x] -= 1
+#     if right[x] == 0:
+#         del right[x]
+
+#     if x % 5 == 0:
+#         t = x//5
+#         v7 = t*7
+#         v3 = t*3
+#         ans += left.get(v7, 0)*left.get(v3, 0)
+#         ans += right.get(v7, 0)*right.get(v3, 0)
+#     left[x] += 1
+# print(ans)
+
 # E - Kite
 from bisect import bisect_left
 
@@ -92,3 +136,5 @@ for a, b in pair:
         dp[position] = b
 
 print(len(dp))
+
+
