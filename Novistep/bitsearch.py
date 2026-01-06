@@ -47,21 +47,41 @@
 # print(ans)
 
 # C - Popcorn
-N, M = map(int, input().split())
+# N, M = map(int, input().split())
 
-S = [list(input()) for _ in range(N)]
-ans = float('inf')
-for mask in range(1 << N):
-    ans_set = set()
-    tmp_cnt = 0
-    for j in range(N):
-        if mask >> j & 1:
-            tmp_cnt += 1
-            for i in range(M):
-                if S[j][i] == 'o':
-                    ans_set.add(i)
+# S = [list(input()) for _ in range(N)]
+# ans = float('inf')
+# for mask in range(1 << N):
+#     ans_set = set()
+#     tmp_cnt = 0
+#     for j in range(N):
+#         if mask >> j & 1:
+#             tmp_cnt += 1
+#             for i in range(M):
+#                 if S[j][i] == 'o':
+#                     ans_set.add(i)
 
-    if len(ans_set) == M:
-        ans = min(ans, tmp_cnt)
+#     if len(ans_set) == M:
+#         ans = min(ans, tmp_cnt)
 
-print(ans)
+# print(ans)
+
+# C - Coverage
+# N, M = map(int, input().split())
+# group_list = []
+# ans = 0
+# for m in range(M):
+#     c = int(input())
+#     a = set(list(map(int, input().split())))
+#     group_list.append(a)
+
+# for mask in range(1 << M):
+#     tmp = set()
+#     for i in range(M):
+#         if mask >> i & 1:
+#             tmp |= group_list[i]
+    
+#     if len(tmp) == N:
+#         ans += 1
+
+# print(ans)
