@@ -85,3 +85,41 @@
 #         ans += 1
 
 # print(ans)
+
+# C - Submask
+# N = int(input())
+# hot_i = []
+# for i in range(60):
+#     if 1 << i & N:
+#         hot_i.append(i)
+
+# for mask in range(1 << len(hot_i)):
+#     tmp = 0
+#     for i in range(len(hot_i)):
+#         if mask >> i & 1:
+#             tmp += 2**hot_i[i]
+
+#     print(tmp)
+
+# C - Switches
+N, M = map(int, input().split())
+swiches_list = []
+for m in range(M):
+    k, *s = list(map(int, input().split()))
+    swiches_list.append(s)
+
+P = list(map(int, input().split()))
+ans = 0
+for mask in range(1 << N):
+    cnt = 0
+    for m in range(M):
+        right_tmp = 0
+        for target_swich in swiches_list[m]:
+            if mask >> (target_swich-1) & 1:
+                right_tmp += 1
+        if right_tmp % 2 == P[m]:
+            cnt += 1
+    if cnt == M:
+        ans += 1
+
+print(ans)
