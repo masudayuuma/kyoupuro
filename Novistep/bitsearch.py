@@ -102,24 +102,92 @@
 #     print(tmp)
 
 # C - Switches
-N, M = map(int, input().split())
-swiches_list = []
-for m in range(M):
-    k, *s = list(map(int, input().split()))
-    swiches_list.append(s)
+# N, M = map(int, input().split())
+# swiches_list = []
+# for m in range(M):
+#     k, *s = list(map(int, input().split()))
+#     swiches_list.append(s)
 
-P = list(map(int, input().split()))
-ans = 0
-for mask in range(1 << N):
-    cnt = 0
-    for m in range(M):
-        right_tmp = 0
-        for target_swich in swiches_list[m]:
-            if mask >> (target_swich-1) & 1:
-                right_tmp += 1
-        if right_tmp % 2 == P[m]:
-            cnt += 1
-    if cnt == M:
-        ans += 1
+# P = list(map(int, input().split()))
+# ans = 0
+# for mask in range(1 << N):
+#     cnt = 0
+#     for m in range(M):
+#         right_tmp = 0
+#         for target_swich in swiches_list[m]:
+#             if mask >> (target_swich-1) & 1:
+#                 right_tmp += 1
+#         if right_tmp % 2 == P[m]:
+#             cnt += 1
+#     if cnt == M:
+#         ans += 1
 
-print(ans)
+# print(ans)
+
+# C - Skill Up
+# N, M, X = map(int, input().split())
+# book2skills = []
+# cost = []
+# for n in range(N):
+#     c, *a = map(int, input().split())
+#     book2skills.append(a)
+#     cost.append(c)
+# ans_cost = float('inf')
+
+# for mask in range(1 << N):
+#     get_skills = [0]*M
+#     tmp_total= 0
+#     for n in range(N):
+#         if mask >> n & 1:
+#             tmp_total += cost[n]
+#             for i in range(M):
+#                 get_skills[i] += book2skills[n][i]
+#     flag = True
+#     for x in get_skills:
+#         if x < X:
+#             flag = False
+#             break
+
+#     if flag == True and tmp_total < ans_cost:
+#         ans_cost = tmp_total
+
+# print(ans_cost if ans_cost != float('inf') else -1)
+
+# C - Bowls and Dishes
+# N, M = map(int, input().split())
+
+# ans = 0
+# conditions = []
+# for i in range(M):
+#     a, b = map(int, input().split())
+#     conditions.append((a, b))
+
+# K = int(input())
+
+# people2choices = []
+# for i in range(K):
+#     c, d = map(int, input().split())
+#     people2choices.append((c, d))
+
+# for mask in range(1 << K):
+#     tmp = 0
+#     choices_set = set()
+#     choices = [0]*K
+#     for k in range(K):
+#         if mask >> k & 1:
+#             choices[k] = 1
+        
+#     for i in range(K):
+#         if choices[i] == 1:
+#             choices_set.add(people2choices[i][1])
+#         else:
+#             choices_set.add(people2choices[i][0])
+
+#     for c in conditions:
+#         a, b = c
+#         if a in choices_set and b in choices_set:
+#             tmp += 1
+
+#     ans = max(ans, tmp)
+
+# print(ans)
