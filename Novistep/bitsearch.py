@@ -191,3 +191,84 @@
 #     ans = max(ans, tmp)
 
 # print(ans)
+
+# C - Perfect Standings
+# a, b, c, d, e = map(int, input().split())
+
+# str_dict = {0:'A', 1:'B', 2:'C', 3:'D', 4:'E'}
+# point_dict = {0:a, 1:b, 2:c, 3:d, 4:e}
+# ans = []
+# for mask in range(1 << 5):
+#     tmp = ''
+#     point = 0
+#     for i in range(5):
+#         if mask >> i & 1:
+#             tmp += str_dict[i]
+#             point += point_dict[i]
+#     ans.append((point, tmp))
+
+# ans.sort(key=lambda x: (-x[0], x[1]))
+# answers = [s for p, s in ans]
+
+# print('\n'.join(map(str, answers)))
+
+# F - 一触即発
+# 断念
+# N, M = map(int, input().split())
+# a_b_c_list = list()
+# ans_cnt = 0
+# for m in range(M):
+#     a, b, c = map(int, input().split())
+#     a_b_c_list.append(set((a, b, c)))
+
+# for mask in range(1 << N):
+#     way_cnt = [0]*M
+#     continue_flag = True
+#     for i in range(N):
+#         if mask >> i & 1:
+#             for index, a_b_c in enumerate(a_b_c_list):
+#                 if i+1 in a_b_c:
+#                     way_cnt[index] += 1
+#                     if way_cnt[index] > 2:
+#                         continue_flag = False
+#                         break
+#     if continue_flag == False:
+#         continue
+#     tmp = 0
+#     if continue_flag == True:
+#         for way in way_cnt:
+#             if way == 2:
+#                 tmp += 1
+
+#     ans_cnt = max(tmp, ans_cnt)
+
+# print(ans_cnt)
+
+# F - 一触即発
+N, M = map(int, input().split())
+a_b_c_list = []
+for m in range(M):
+    a, b, c = map(int, input().split())
+    a_b_c_list.append({a, b, c})
+
+ans_cnt = 0
+
+for mask in range(1 << N):
+    selected = {i+1 for i in range(N) if mask >> i & 1}
+    explode = False
+    for abc in a_b_c_list:
+        if len(selected & abc) >= 3:
+            explode = True
+            break
+    if explode:
+        continue
+
+    danger_drugs = set()
+    for abc in a_b_c_list:
+        overlap = selected & abc
+        if len(overlap) == 2:
+            remaining = abc - selected
+            danger_drugs |= remaining
+    ans_cnt = max(ans_cnt, len(danger_drugs))
+
+print(ans_cnt)
