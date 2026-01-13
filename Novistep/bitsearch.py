@@ -245,30 +245,80 @@
 # print(ans_cnt)
 
 # F - 一触即発
+# N, M = map(int, input().split())
+# a_b_c_list = []
+# for m in range(M):
+#     a, b, c = map(int, input().split())
+#     a_b_c_list.append({a, b, c})
+
+# ans_cnt = 0
+
+# for mask in range(1 << N):
+#     selected = {i+1 for i in range(N) if mask >> i & 1}
+#     explode = False
+#     for abc in a_b_c_list:
+#         if len(selected & abc) >= 3:
+#             explode = True
+#             break
+#     if explode:
+#         continue
+
+#     danger_drugs = set()
+#     for abc in a_b_c_list:
+#         overlap = selected & abc
+#         if len(overlap) == 2:
+#             remaining = abc - selected
+#             danger_drugs |= remaining
+#     ans_cnt = max(ans_cnt, len(danger_drugs))
+
+# print(ans_cnt)
+
+# D - 派閥
+# N, M = map(int, input().split())
+# ans = 0
+# p2m = []
+# for m in range(M):
+#     x, y = map(int, input().split())
+#     p2m.append((x, y))
+
+# for mask in range(1 << N):
+#     cnt = 0
+#     for i in range(N):
+#         if mask >> i & 1:
+#             for x, y in p2m:
+#                 if (i == (x-1) or (y-1) == i) and mask >> x & 1 and mask >> y & 1:
+#                     cnt += 1
+#     ans = max(ans, cnt)
+
+# print(ans)
+
 N, M = map(int, input().split())
-a_b_c_list = []
-for m in range(M):
-    a, b, c = map(int, input().split())
-    a_b_c_list.append({a, b, c})
+p2m = [set() for _ in range(N)]
 
-ans_cnt = 0
+for _ in range(M):
+    x, y = map(int, input().split())
+    x -= 1
+    y -= 1
+    p2m[x].add(y)
+    p2m[y].add(x)
 
-for mask in range(1 << N):
-    selected = {i+1 for i in range(N) if mask >> i & 1}
-    explode = False
-    for abc in a_b_c_list:
-        if len(selected & abc) >= 3:
-            explode = True
-            break
-    if explode:
-        continue
+ans = 0
 
-    danger_drugs = set()
-    for abc in a_b_c_list:
-        overlap = selected & abc
-        if len(overlap) == 2:
-            remaining = abc - selected
-            danger_drugs |= remaining
-    ans_cnt = max(ans_cnt, len(danger_drugs))
+for mask in range(1, 1 << N):  # mask = 1 から 2^N - 1 まで
+    valid = True
+    # 現在の部分集合が完全な派閥かどうかをチェック
+    for i in range(N):
+        if mask >> i & 1:  # 議員iが現在の派閥に含まれている場合
+            for j in range(i + 1, N):  # iより後ろの議員について
+                if mask >> j & 1:  # 議員jが現在の派閥に含まれている場合
+                    if j not in p2m[i]:  # iとjが知り合いでない場合
+                        valid = False
+                        break
+            if not valid:
+                break
+    
+    if valid:
+        cnt = bin(mask).count('1')
+        ans = max(ans, cnt)
 
-print(ans_cnt)
+print(ans)
