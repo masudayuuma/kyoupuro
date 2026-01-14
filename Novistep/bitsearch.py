@@ -292,33 +292,76 @@
 
 # print(ans)
 
-N, M = map(int, input().split())
-p2m = [set() for _ in range(N)]
+# N, M = map(int, input().split())
 
-for _ in range(M):
-    x, y = map(int, input().split())
-    x -= 1
-    y -= 1
-    p2m[x].add(y)
-    p2m[y].add(x)
+# adj = [[False]*N for _ in range(N)]
+# for _ in range(M):
+#     x, y = map(int, input().split())
+#     x -= 1
+#     y -= 1
+#     adj[x][y] = True
+#     adj[y][x] = True
 
-ans = 0
+# ans = 0
 
-for mask in range(1, 1 << N):  # mask = 1 から 2^N - 1 まで
-    valid = True
-    # 現在の部分集合が完全な派閥かどうかをチェック
-    for i in range(N):
-        if mask >> i & 1:  # 議員iが現在の派閥に含まれている場合
-            for j in range(i + 1, N):  # iより後ろの議員について
-                if mask >> j & 1:  # 議員jが現在の派閥に含まれている場合
-                    if j not in p2m[i]:  # iとjが知り合いでない場合
-                        valid = False
-                        break
-            if not valid:
-                break
-    
-    if valid:
-        cnt = bin(mask).count('1')
-        ans = max(ans, cnt)
+# for mask in range(1 << N):
+#     members = []
+#     for i in range(N):
+#         if mask & (1 << i):
+#             members.append(i)
 
-print(ans)
+#     is_clique = True
+#     for i in range(len(members)):
+#         for j in range(i+1, len(members)):
+#             if not adj[members[i]][members[j]]:
+#                 is_clique = False
+#                 break
+#         if not is_clique:
+#             break
+#     if is_clique:
+#         ans = max(ans, len(members))
+# print(ans)
+
+# C - To 3
+# N = input()
+# ans = float('inf')
+# for mask in range(1, 1 << len(N)):
+#     total = 0
+#     cnt = 0
+#     for n in range(len(N)):
+#         if mask >> n & 1:
+#             total += int(N[n])
+#         else:
+#             cnt += 1
+
+#     if total % 3 == 0:
+#         ans = min(ans, cnt)
+# print(-1 if ans == float('inf') else ans)
+
+# 002 - Encyclopedia of Parentheses（★3）
+# N = int(input())
+# nums = []
+# for mask in range(1 << N):
+#     cnt = 0
+#     flag = True
+#     for i in range(N):
+#         if mask >> i & 1:
+#             cnt += 1
+#         else:
+#             cnt -= 1
+
+#         if cnt < 0:
+#             flag = False
+#             break
+#     if flag == True and cnt == 0:
+#         nums.append(mask)
+
+# for mask in nums:
+#     chars = ''
+#     for m in format(mask, f'0{N}b'):
+#         if m == '1':
+#             chars += ')'
+#         else:
+#             chars += '('
+
+#     print(chars)
