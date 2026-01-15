@@ -365,3 +365,29 @@
 #             chars += '('
 
 #     print(chars)
+
+# C - Just K
+from collections import Counter
+N, K = map(int, input().split())
+
+ans = 0
+chars = []
+for _ in range(N):
+    s = input()
+    chars.append(s)
+
+for mask in range(1 << N):
+    total = ''
+    tmp_ans = 0
+    for i in range(N):
+        if mask >> i & 1:
+            total += chars[i]
+    total_cnt = Counter(total)
+
+    for c in total_cnt:
+        if total_cnt[c] == K:
+            tmp_ans += 1
+
+    ans = max(tmp_ans, ans)
+
+print(ans)
