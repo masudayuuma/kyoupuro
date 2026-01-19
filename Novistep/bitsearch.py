@@ -367,27 +367,56 @@
 #     print(chars)
 
 # C - Just K
-from collections import Counter
-N, K = map(int, input().split())
+# from collections import Counter
+# N, K = map(int, input().split())
 
-ans = 0
-chars = []
-for _ in range(N):
-    s = input()
-    chars.append(s)
+# ans = 0
+# chars = []
+# for _ in range(N):
+#     s = input()
+#     chars.append(s)
+
+# for mask in range(1 << N):
+#     total = ''
+#     tmp_ans = 0
+#     for i in range(N):
+#         if mask >> i & 1:
+#             total += chars[i]
+#     total_cnt = Counter(total)
+
+#     for c in total_cnt:
+#         if total_cnt[c] == K:
+#             tmp_ans += 1
+
+#     ans = max(tmp_ans, ans)
+
+# print(ans)
+
+# C - Keys
+N, M, K = map(int, input().split())
+
+test_result = []
+test_num = []
+cnt = 0
+for m in range(M):
+    c, *query = input().split()
+    test_result.append(query.pop())
+    query = list(map(int, query))
+    test_num.append(set(query))
 
 for mask in range(1 << N):
-    total = ''
-    tmp_ans = 0
-    for i in range(N):
-        if mask >> i & 1:
-            total += chars[i]
-    total_cnt = Counter(total)
+    flag = True
+    for q, n in zip(test_num, test_result):
+        tmp_correct = set()
+        for i in q:
+            if mask >> (i-1) & 1:
+                tmp_correct.add(i)
 
-    for c in total_cnt:
-        if total_cnt[c] == K:
-            tmp_ans += 1
+        if (n == 'o' and len(tmp_correct) < K) or (n == 'x' and len(tmp_correct) >= K):
+            flag = False
+            break
 
-    ans = max(tmp_ans, ans)
+    if flag == True:
+        cnt += 1
 
-print(ans)
+print(cnt)
