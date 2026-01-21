@@ -393,30 +393,67 @@
 # print(ans)
 
 # C - Keys
-N, M, K = map(int, input().split())
+# N, M, K = map(int, input().split())
 
-test_result = []
-test_num = []
-cnt = 0
-for m in range(M):
-    c, *query = input().split()
-    test_result.append(query.pop())
-    query = list(map(int, query))
-    test_num.append(set(query))
+# test_result = []
+# test_num = []
+# cnt = 0
+# for m in range(M):
+#     c, *query = input().split()
+#     test_result.append(query.pop())
+#     query = list(map(int, query))
+#     test_num.append(set(query))
+
+# for mask in range(1 << N):
+#     flag = True
+#     for q, n in zip(test_num, test_result):
+#         tmp_correct = set()
+#         for i in q:
+#             if mask >> (i-1) & 1:
+#                 tmp_correct.add(i)
+
+#         if (n == 'o' and len(tmp_correct) < K) or (n == 'x' and len(tmp_correct) >= K):
+#             flag = False
+#             break
+
+#     if flag == True:
+#         cnt += 1
+
+# print(cnt)
+
+# C - HonestOrUnkind2
+from collections import defaultdict
+N = int(input())
+answer = 0
+p2inv = defaultdict(list)
+for i in range(N):
+    a = int(input())
+    for _ in range(a):
+        x, y = map(int, input().split())
+        p2inv[x-1].append((i, y))
 
 for mask in range(1 << N):
+    cnt = 0
     flag = True
-    for q, n in zip(test_num, test_result):
-        tmp_correct = set()
-        for i in q:
-            if mask >> (i-1) & 1:
-                tmp_correct.add(i)
+    for i in range(N):
+        if mask >> i & 1:
+            cnt += 1
+        for x, y in p2inv[i]:
+            if (mask >> x) & 1 == 0:
+                continue
 
-        if (n == 'o' and len(tmp_correct) < K) or (n == 'x' and len(tmp_correct) >= K):
-            flag = False
+            if y == 1 and (mask >> i & 1) == 0:
+                flag = False
+                break
+            if y == 0 and (mask >> i & 1) == 1:
+                flag = False
+                break
+
+        if flag == False:
             break
 
     if flag == True:
-        cnt += 1
+        answer = max(cnt, answer)
 
-print(cnt)
+print(answer)
+
