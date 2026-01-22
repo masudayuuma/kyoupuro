@@ -422,38 +422,65 @@
 # print(cnt)
 
 # C - HonestOrUnkind2
-from collections import defaultdict
-N = int(input())
-answer = 0
-p2inv = defaultdict(list)
-for i in range(N):
-    a = int(input())
-    for _ in range(a):
-        x, y = map(int, input().split())
-        p2inv[x-1].append((i, y))
+# from collections import defaultdict
+# N = int(input())
+# answer = 0
+# p2inv = defaultdict(list)
+# for i in range(N):
+#     a = int(input())
+#     for _ in range(a):
+#         x, y = map(int, input().split())
+#         p2inv[x-1].append((i, y))
 
-for mask in range(1 << N):
-    cnt = 0
-    flag = True
-    for i in range(N):
-        if mask >> i & 1:
-            cnt += 1
-        for x, y in p2inv[i]:
-            if (mask >> x) & 1 == 0:
-                continue
+# for mask in range(1 << N):
+#     cnt = 0
+#     flag = True
+#     for i in range(N):
+#         if mask >> i & 1:
+#             cnt += 1
+#         for x, y in p2inv[i]:
+#             if (mask >> x) & 1 == 0:
+#                 continue
 
-            if y == 1 and (mask >> i & 1) == 0:
-                flag = False
-                break
-            if y == 0 and (mask >> i & 1) == 1:
-                flag = False
-                break
+#             if y == 1 and (mask >> i & 1) == 0:
+#                 flag = False
+#                 break
+#             if y == 0 and (mask >> i & 1) == 1:
+#                 flag = False
+#                 break
 
-        if flag == False:
-            break
+#         if flag == False:
+#             break
 
-    if flag == True:
-        answer = max(cnt, answer)
+#     if flag == True:
+#         answer = max(cnt, answer)
 
-print(answer)
+# print(answer)
 
+# # C - ORXOR
+# N = int(input())
+
+# A = list(map(int, input().split()))
+# final = float('inf')
+# for mask in range(1 << N):
+#     ans = 0
+#     tmp = 0
+#     for i in range(N):
+#         if mask >> i & 1:
+#             if tmp == 0:
+#                 tmp = A[i]
+#             else:
+#                 tmp |= A[i]
+#             ans ^= tmp
+#             tmp = 0
+#         else:
+#             if tmp == 0:
+#                 tmp = A[i]
+#             else:
+#                 tmp |= A[i]
+#     if tmp != 0:
+#         ans ^= tmp
+
+#     final = min(final, ans)
+
+# print(final)
