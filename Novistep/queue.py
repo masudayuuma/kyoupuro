@@ -28,23 +28,52 @@
 #         print(num)
 
 # B52 - Ball Simulation
+# from collections import deque
+
+# N, X = map(int, input().split())
+# A = list(input())
+
+# A[X-1] = '@'
+
+# que = deque()
+# que.append(X-1)
+
+# while len(que) > 0:
+#     t = que.popleft()
+#     if t < N-1 and A[t+1] == '.':
+#         que.append(t+1)
+#         A[t+1] = '@'
+#     if t > 0 and A[t-1] == '.':
+#         que.append(t-1)
+#         A[t-1] = '@'
+
+# print(''.join(A))
+
+# C - Large Queue
 from collections import deque
 
-N, X = map(int, input().split())
-A = list(input())
-
-A[X-1] = '@'
-
+Q = int(input())
+ans = 0
 que = deque()
-que.append(X-1)
+for _ in range(Q):
+    query = input().split()
 
-while len(que) > 0:
-    t = que.popleft()
-    if t < N-1 and A[t+1] == '.':
-        que.append(t+1)
-        A[t+1] = '@'
-    if t > 0 and A[t-1] == '.':
-        que.append(t-1)
-        A[t-1] = '@'
-
-print(''.join(A))
+    if query[0] == '1':
+        que.append((int(query[1]), int(query[2])))
+    if query[0] == '2':
+        k = int(query[1])
+        tmp = 0
+        while k > 0:
+            c, x = que[0]
+            if k-c >= 0:
+                tmp += c*x
+                que.popleft()
+                k -= c
+            else:
+                c = c-k
+                tmp += k*x
+                que[0] = (c, x)
+                break
+        # ans += tmp
+        print(tmp)
+        
