@@ -50,30 +50,56 @@
 # print(''.join(A))
 
 # C - Large Queue
+# from collections import deque
+
+# Q = int(input())
+# ans = 0
+# que = deque()
+# for _ in range(Q):
+#     query = input().split()
+
+#     if query[0] == '1':
+#         que.append((int(query[1]), int(query[2])))
+#     if query[0] == '2':
+#         k = int(query[1])
+#         tmp = 0
+#         while k > 0:
+#             c, x = que[0]
+#             if k-c >= 0:
+#                 tmp += c*x
+#                 que.popleft()
+#                 k -= c
+#             else:
+#                 c = c-k
+#                 tmp += k*x
+#                 que[0] = (c, x)
+#                 break
+#         # ans += tmp
+#         print(tmp)
+        
+# D - Cylinder
 from collections import deque
 
 Q = int(input())
-ans = 0
 que = deque()
 for _ in range(Q):
-    query = input().split()
+    query = list(map(int, input().split()))
 
-    if query[0] == '1':
-        que.append((int(query[1]), int(query[2])))
-    if query[0] == '2':
-        k = int(query[1])
-        tmp = 0
+    if query[0] == 1:
+        que.append((query[1], query[2]))
+    else:
+        ans = 0
+        k = query[1]
         while k > 0:
-            c, x = que[0]
-            if k-c >= 0:
-                tmp += c*x
-                que.popleft()
+            # print(que[0])
+            c = que[0][1]
+            x = que[0][0]
+            if k < c:
+                ans += k*x
+                que[0] = (x, c-k)
                 k -= c
             else:
-                c = c-k
-                tmp += k*x
-                que[0] = (c, x)
-                break
-        # ans += tmp
-        print(tmp)
-        
+                que.popleft()
+                ans += x*c
+                k -= c
+        print(ans)
