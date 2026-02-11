@@ -78,28 +78,49 @@
 #         print(tmp)
         
 # D - Cylinder
+# from collections import deque
+
+# Q = int(input())
+# que = deque()
+# for _ in range(Q):
+#     query = list(map(int, input().split()))
+
+#     if query[0] == 1:
+#         que.append((query[1], query[2]))
+#     else:
+#         ans = 0
+#         k = query[1]
+#         while k > 0:
+#             # print(que[0])
+#             c = que[0][1]
+#             x = que[0][0]
+#             if k < c:
+#                 ans += k*x
+#                 que[0] = (x, c-k)
+#                 k -= c
+#             else:
+#                 que.popleft()
+#                 ans += x*c
+#                 k -= c
+#         print(ans)
+
+# Queue
 from collections import deque
-
-Q = int(input())
+n, q = map(int, input().split())
 que = deque()
-for _ in range(Q):
-    query = list(map(int, input().split()))
+for _ in range(n):
+    name, time = input().split()
 
-    if query[0] == 1:
-        que.append((query[1], query[2]))
+    que.append((name, int(time)))
+total =0
+while len(que) > 0:
+    t_n, t_q = que.popleft()
+
+    if t_q > q:
+        que.append((t_n, t_q-q))
+        total += q
     else:
-        ans = 0
-        k = query[1]
-        while k > 0:
-            # print(que[0])
-            c = que[0][1]
-            x = que[0][0]
-            if k < c:
-                ans += k*x
-                que[0] = (x, c-k)
-                k -= c
-            else:
-                que.popleft()
-                ans += x*c
-                k -= c
-        print(ans)
+        total += t_q
+        print(f"{t_n} {total}")
+
+
