@@ -105,22 +105,22 @@
 #         print(ans)
 
 # Queue
-from collections import deque
-n, q = map(int, input().split())
-que = deque()
-for _ in range(n):
-    name, time = input().split()
+# from collections import deque
+# n, q = map(int, input().split())
+# que = deque()
+# for _ in range(n):
+#     name, time = input().split()
 
-    que.append((name, int(time)))
-total =0
-while len(que) > 0:
-    t_n, t_q = que.popleft()
+#     que.append((name, int(time)))
+# total =0
+# while len(que) > 0:
+#     t_n, t_q = que.popleft()
 
-    if t_q > q:
-        que.append((t_n, t_q-q))
-        total += q
-    else:
-        total += t_q
-        print(f"{t_n} {total}")
+#     if t_q > q:
+#         que.append((t_n, t_q-q))
+#         total += q
+#     else:
+#         total += t_q
+#         print(f"{t_n} {total}")
 
-
+# D - Home Garden
