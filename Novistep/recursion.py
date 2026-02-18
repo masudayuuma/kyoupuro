@@ -8,3 +8,19 @@
 #     return x*recrusion(x-1)
 
 # print(recrusion(N))
+
+# D - Caracal vs Monster
+import sys
+sys.setrecursionlimit(1000000000)
+
+H = int(input())
+cnt = 0
+def fight(h):
+    if h == 1:
+        # cnt += 1
+        return 1
+    
+    return fight(h//2)*2+1
+
+
+print(fight(H))
