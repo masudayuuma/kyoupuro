@@ -10,17 +10,36 @@
 # print(recrusion(N))
 
 # D - Caracal vs Monster
-import sys
-sys.setrecursionlimit(1000000000)
+# import sys
+# sys.setrecursionlimit(1000000000)
 
-H = int(input())
-cnt = 0
-def fight(h):
-    if h == 1:
-        # cnt += 1
-        return 1
+# H = int(input())
+# cnt = 0
+# def fight(h):
+#     if h == 1:
+#         # cnt += 1
+#         return 1
     
-    return fight(h//2)*2+1
+#     return fight(h//2)*2+1
 
 
-print(fight(H))
+# print(fight(H))
+
+# C - Brute-force Attack
+# import sys
+# sys.setrecursionlimit(100000000)
+
+# N = int(input())
+
+# def recrusion(string):
+#     # print(string)
+#     if len(string) == N:
+#         print(string)
+#         return
+    
+#     recrusion(string +'a')
+#     recrusion(string + 'b')
+#     recrusion(string + 'c')
+
+
+# recrusion('')
