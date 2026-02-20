@@ -43,3 +43,21 @@
 
 
 # recrusion('')
+
+
+# C - 1 2 1 3 1 2 1
+import sys
+sys.setrecursionlimit(100000000)
+N = int(input())
+
+def recurusion(num):
+    if num == 1:
+        return [1]
+    
+    return recurusion(num-1)+[num]+recurusion(num-1)
+
+print(' '.join(map(str, recurusion(N))))
+
+
+
+
