@@ -46,18 +46,38 @@
 
 
 # C - 1 2 1 3 1 2 1
-import sys
-sys.setrecursionlimit(100000000)
-N = int(input())
+# import sys
+# sys.setrecursionlimit(100000000)
+# N = int(input())
 
-def recurusion(num):
-    if num == 1:
-        return [1]
+# def recurusion(num):
+#     if num == 1:
+#         return [1]
     
-    return recurusion(num-1)+[num]+recurusion(num-1)
+#     return recurusion(num-1)+[num]+recurusion(num-1)
 
-print(' '.join(map(str, recurusion(N))))
+# print(' '.join(map(str, recurusion(N))))
+
+# # C - Enumerate Sequences
+# import sys
+# sys.setrecursionlimit(100000000)
+# N, K = map(int, input().split())
+# R = list(map(int, input().split()))
 
 
+# def recrusion(cnt, total, tmp):
+#     if cnt == N:
+#         if total % K == 0:
+#             print(*tmp)
+#         return
 
 
+#     for i in range(1, R[cnt]+1):
+#         tmp.append(i)
+#         total += i
+#         recrusion(cnt+1, total, tmp)
+#         total -= i
+#         tmp.pop()    
+
+
+# recrusion(0, 0, [])
