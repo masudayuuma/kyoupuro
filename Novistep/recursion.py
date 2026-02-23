@@ -81,3 +81,34 @@
 
 
 # recrusion(0, 0, [])
+
+
+# C - Sierpinski carpet
+import sys
+sys.setrecursionlimit(100000000)
+
+N = int(input())
+
+def make_carpet(k):
+    if k == 0:
+        return['#']
+    
+    prev = make_carpet(k-1)
+    size = len(prev)
+
+    result = []
+
+    for row in prev:
+        result.append(row*3)
+
+    for row in prev:
+        result.append(row + '.' * size + row)
+
+    for row in prev:
+        result.append(row*3)
+
+    return result
+
+carpet = make_carpet(N)
+for row in carpet:
+    print(row)
