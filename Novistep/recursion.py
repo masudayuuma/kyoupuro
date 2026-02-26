@@ -84,31 +84,57 @@
 
 
 # C - Sierpinski carpet
+# import sys
+# sys.setrecursionlimit(100000000)
+
+# N = int(input())
+
+# def make_carpet(k):
+#     if k == 0:
+#         return['#']
+    
+#     prev = make_carpet(k-1)
+#     size = len(prev)
+
+#     result = []
+
+#     for row in prev:
+#         result.append(row*3)
+
+#     for row in prev:
+#         result.append(row + '.' * size + row)
+
+#     for row in prev:
+#         result.append(row*3)
+
+#     return result
+
+# carpet = make_carpet(N)
+# for row in carpet:
+#     print(row)
+
+# C - Changing Jewels
 import sys
 sys.setrecursionlimit(100000000)
+N, X, Y = map(int, input().split())
+total = 0
+def recrusion_red(level_r):
+    if level_r < 2:
+        return 0
 
-N = int(input())
+    level_r -= 1
+    blue_n = X*recrusion_blue(level_r+1) + recrusion_red(level_r)
 
-def make_carpet(k):
-    if k == 0:
-        return['#']
-    
-    prev = make_carpet(k-1)
-    size = len(prev)
+    return blue_n
 
-    result = []
 
-    for row in prev:
-        result.append(row*3)
+def recrusion_blue(level_b):
+    if level_b < 2:
+        return 1
 
-    for row in prev:
-        result.append(row + '.' * size + row)
+    level_b -= 1
+    blue_n = Y*recrusion_blue(level_b) + recrusion_red(level_b)
+    return blue_n
 
-    for row in prev:
-        result.append(row*3)
 
-    return result
-
-carpet = make_carpet(N)
-for row in carpet:
-    print(row)
+print(recrusion_red(N))
