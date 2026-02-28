@@ -114,27 +114,67 @@
 #     print(row)
 
 # C - Changing Jewels
+# import sys
+# sys.setrecursionlimit(100000000)
+# N, X, Y = map(int, input().split())
+# total = 0
+# def recrusion_red(level_r):
+#     if level_r < 2:
+#         return 0
+
+#     level_r -= 1
+#     blue_n = X*recrusion_blue(level_r+1) + recrusion_red(level_r)
+
+#     return blue_n
+
+
+# def recrusion_blue(level_b):
+#     if level_b < 2:
+#         return 1
+
+#     level_b -= 1
+#     blue_n = Y*recrusion_blue(level_b) + recrusion_red(level_b)
+#     return blue_n
+
+
+# print(recrusion_red(N))
+
+# C - Divide and Divide
+# import sys
+# sys.setrecursionlimit(100000000)
+
+# N = int(input())
+# memo = {}
+
+# def recrusion(num):
+#     if num == 1 or num == 0:
+#         return 0
+    
+#     if num in memo:
+#         return memo[num]
+
+#     a = (num+2-1)//2
+#     b = num//2
+#     result = recrusion(a)+recrusion(b)+a+b
+#     memo[num] = result
+#     return result
+
+# print(recrusion(N))
+
+# use cache
 import sys
+from functools import cache
 sys.setrecursionlimit(100000000)
-N, X, Y = map(int, input().split())
-total = 0
-def recrusion_red(level_r):
-    if level_r < 2:
+
+N = int(input())
+@cache
+
+def recrusion(num):
+    if num == 1 or num == 0:
         return 0
+    
+    a = (num+2-1)//2
+    b = num//2
+    return recrusion(a)+recrusion(b)+a+b
 
-    level_r -= 1
-    blue_n = X*recrusion_blue(level_r+1) + recrusion_red(level_r)
-
-    return blue_n
-
-
-def recrusion_blue(level_b):
-    if level_b < 2:
-        return 1
-
-    level_b -= 1
-    blue_n = Y*recrusion_blue(level_b) + recrusion_red(level_b)
-    return blue_n
-
-
-print(recrusion_red(N))
+print(recrusion(N))
