@@ -162,19 +162,38 @@
 # print(recrusion(N))
 
 # use cache
-import sys
-from functools import cache
-sys.setrecursionlimit(100000000)
+# import sys
+# from functools import cache
+# sys.setrecursionlimit(100000000)
 
-N = int(input())
-@cache
+# N = int(input())
+# @cache
 
-def recrusion(num):
-    if num == 1 or num == 0:
-        return 0
+# def recrusion(num):
+#     if num == 1 or num == 0:
+#         return 0
     
-    a = (num+2-1)//2
-    b = num//2
-    return recrusion(a)+recrusion(b)+a+b
+#     a = (num+2-1)//2
+#     b = num//2
+#     return recrusion(a)+recrusion(b)+a+b
 
-print(recrusion(N))
+# print(recrusion(N))
+
+# C - Concat (X-th)
+N, K, X = map(int, input().split())
+
+S_list = [input() for _ in range(N)]
+
+ans = []
+
+def recrusion(str, num):
+    if num == K:
+        ans.append(str)
+        return
+    
+    for s in S_list:
+        recrusion(str+s, num+1)
+
+recrusion('', 0)
+ans.sort()
+print(ans[X-1])
