@@ -180,20 +180,40 @@
 # print(recrusion(N))
 
 # C - Concat (X-th)
-N, K, X = map(int, input().split())
+# N, K, X = map(int, input().split())
 
-S_list = [input() for _ in range(N)]
+# S_list = [input() for _ in range(N)]
 
-ans = []
+# ans = []
 
-def recrusion(str, num):
-    if num == K:
-        ans.append(str)
-        return
+# def recrusion(str, num):
+#     if num == K:
+#         ans.append(str)
+#         return
     
-    for s in S_list:
-        recrusion(str+s, num+1)
+#     for s in S_list:
+#         recrusion(str+s, num+1)
 
-recrusion('', 0)
-ans.sort()
-print(ans[X-1])
+# recrusion('', 0)
+# ans.sort()
+# print(ans[X-1])
+
+
+# C - 755
+# N = int(input())
+# cnt = 0
+# def dnf(num):
+#     global cnt
+#     if int(num) > N:
+#         return
+    
+#     if '3' in num and '5' in num and '7' in num:
+#         cnt += 1
+    
+#     for s in ('3', '5', '7'):
+#         dnf(num+s)
+
+# dnf('3')
+# dnf('5')
+# dnf('7')
+# print(cnt)
