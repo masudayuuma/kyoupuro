@@ -217,3 +217,26 @@
 # dnf('5')
 # dnf('7')
 # print(cnt)
+
+# C - Product
+# import sys
+# sys.setrecursionlimit(100000000)
+# N, X = map(int, input().split())
+# napzac_list = []
+# cnt = 0
+# for _ in range(N):
+#     l, *a = map(int, input().split())
+#     napzac_list.append(a)
+
+# def dnf(n, sum):
+#     global cnt
+#     if n == N:
+#         if sum == X:
+#             cnt += 1
+#         return
+    
+#     for i in napzac_list[n]:
+#         dnf(n+1, sum*i)
+
+# dnf(0, 1)
+# print(cnt)
