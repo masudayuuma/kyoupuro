@@ -240,3 +240,25 @@
 
 # dnf(0, 1)
 # print(cnt)
+
+# C - 高橋くんのバグ探し
+N, K = map(int, input().split())
+
+q_list = []
+final = False
+for _ in range(N):
+    t = list(map(int, input().split()))
+    q_list.append(t)
+
+def dnf(index, ans):
+    global final
+    if index == N:
+        if ans == 0:
+            final = True
+        return
+    
+    for q in q_list[index]:
+        dnf(index+1, ans^q)
+    
+dnf(0, 0)
+print('Found' if final == True else 'Nothing')
