@@ -242,23 +242,60 @@
 # print(cnt)
 
 # C - 高橋くんのバグ探し
-N, K = map(int, input().split())
+# N, K = map(int, input().split())
 
-q_list = []
-final = False
-for _ in range(N):
-    t = list(map(int, input().split()))
-    q_list.append(t)
+# q_list = []
+# final = False
+# for _ in range(N):
+#     t = list(map(int, input().split()))
+#     q_list.append(t)
 
-def dnf(index, ans):
-    global final
-    if index == N:
-        if ans == 0:
-            final = True
-        return
+# def dnf(index, ans):
+#     global final
+#     if index == N:
+#         if ans == 0:
+#             final = True
+#         return
     
-    for q in q_list[index]:
-        dnf(index+1, ans^q)
+#     for q in q_list[index]:
+#         dnf(index+1, ans^q)
     
-dnf(0, 0)
-print('Found' if final == True else 'Nothing')
+# dnf(0, 0)
+# print('Found' if final == True else 'Nothing')
+
+# D - Christmas
+N, X = map(int, input().split())
+
+total = [0]*51
+patty = [0]*51
+
+total[0] = 1
+patty[0] = 1
+
+for i in range(1, 51):
+    total[i] = total[i-1]*2+3
+    patty[i] = patty[i-1]*2+1
+
+def f(level, x):
+    if x == 0:
+        return 0
+    
+    if level == 0:
+        return 1 if x >= 1 else 0
+    
+    if x == 1:
+        return 0
+    
+    elif x <= 1 + total[level-1]:
+        return f(level-1, x-1)
+    
+    elif x == 2+total[level-1]:
+        return patty[level - 1] + 1
+    
+    elif x <= 2+total[level-1]*2:
+        return patty[level - 1] + 1 + f(level - 1, x - (2 + total[level - 1]))
+
+    else:
+        return patty[level]
+    
+print(f(N, X))
