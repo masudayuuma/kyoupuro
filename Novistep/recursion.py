@@ -264,38 +264,53 @@
 # print('Found' if final == True else 'Nothing')
 
 # D - Christmas
-N, X = map(int, input().split())
+# N, X = map(int, input().split())
 
-total = [0]*51
-patty = [0]*51
+# total = [0]*51
+# patty = [0]*51
 
-total[0] = 1
-patty[0] = 1
+# total[0] = 1
+# patty[0] = 1
 
-for i in range(1, 51):
-    total[i] = total[i-1]*2+3
-    patty[i] = patty[i-1]*2+1
+# for i in range(1, 51):
+#     total[i] = total[i-1]*2+3
+#     patty[i] = patty[i-1]*2+1
 
-def f(level, x):
-    if x == 0:
-        return 0
+# def f(level, x):
+#     if x == 0:
+#         return 0
     
-    if level == 0:
-        return 1 if x >= 1 else 0
+#     if level == 0:
+#         return 1 if x >= 1 else 0
     
-    if x == 1:
-        return 0
+#     if x == 1:
+#         return 0
     
-    elif x <= 1 + total[level-1]:
-        return f(level-1, x-1)
+#     elif x <= 1 + total[level-1]:
+#         return f(level-1, x-1)
     
-    elif x == 2+total[level-1]:
-        return patty[level - 1] + 1
+#     elif x == 2+total[level-1]:
+#         return patty[level - 1] + 1
     
-    elif x <= 2+total[level-1]*2:
-        return patty[level - 1] + 1 + f(level - 1, x - (2 + total[level - 1]))
+#     elif x <= 2+total[level-1]*2:
+#         return patty[level - 1] + 1 + f(level - 1, x - (2 + total[level - 1]))
 
-    else:
-        return patty[level]
+#     else:
+#         return patty[level]
     
-print(f(N, X))
+# print(f(N, X))
+
+# D - Yet Another Recursive Function
+# N = int(input())
+# ans = {0: 1}
+# def dnf(num):
+#     if num in ans:
+#         return ans[num]
+    
+#     left = num//2
+#     right = num//3
+
+#     ans[num] = dnf(left) + dnf(right)
+#     return ans[num]
+
+# print(dnf(N))
