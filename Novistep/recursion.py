@@ -316,28 +316,29 @@
 # print(dnf(N))
 
 # D - Keep Distance
-N, M = map(int, input().split())
-ans = []
-def dnf(cnt, nums: list):
-    if cnt == N:
-        ans.append(nums[:])
-        return
+# N, M = map(int, input().split())
+# ans = []
+# def dnf(cnt, nums: list):
+#     if cnt == N:
+#         ans.append(nums[:])
+#         return
 
-    if cnt > 0:
-        target = nums[-1]+10
-    else:
-        target = 1
-    remain = N -(cnt+1)
-    end = M - 10*remain
+#     if cnt > 0:
+#         target = nums[-1]+10
+#     else:
+#         target = 1
+#     remain = N -(cnt+1)
+#     end = M - 10*remain
 
-    for i in range(target, end+1):
-        nums.append(i)
-        dnf(cnt+1, nums)
-        nums.pop()
+#     for i in range(target, end+1):
+#         nums.append(i)
+#         dnf(cnt+1, nums)
+#         nums.pop()
 
 
-dnf(0, [])
+# dnf(0, [])
 
-print(len(ans))
-for a in ans:
-    print(*a)
+# print(len(ans))
+# for a in ans:
+#     print(*a)
+
