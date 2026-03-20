@@ -5,3 +5,8 @@
 # len(set((A, B, C, D, E)))
 # len({A, B, C, D, E})
 # print(ans)
+
+# B - Count Distinct Integers
+# N = int(input())
+# A = list(map(int, input().split()))
+# print(len(set(A)))
