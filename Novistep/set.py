@@ -23,3 +23,23 @@
 #         ans_set.add(tmp)
 
 # print(len(ans_set))
+
+# B - Shiritori 
+N = int(input())
+ans = set()
+before = ''
+continue_flag = True
+for i in range(N):
+    if before == '':
+        before = input()
+        ans.add(before)
+        continue
+    else:
+        now = input()
+        if not before[-1] == now[0] or now in ans:
+            continue_flag = False
+        else:
+            ans.add(now)
+            before = now
+
+print('Yes') if continue_flag == True else print('No')
