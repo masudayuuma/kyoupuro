@@ -45,4 +45,35 @@
 #             final.append(a)
 
 #         return final
-    
+
+# # Top K Frequent Elements
+# from collections import defaultdict
+# class Solution:
+#     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+#         ans = defaultdict(int)
+
+#         for num in nums:
+#             ans[num] += 1
+
+#         ans_list = sorted(ans.keys(), key=ans.get, reverse=True)
+#         return ans_list[:k]
+
+# Encode and Decode Strings
+class Solution:
+
+    def encode(self, strs: List[str]) -> str:
+        ans = ""
+        for str in strs:
+            ans += str + " "
+
+        return ans
+
+    def decode(self, s: str) -> List[str]:
+        ans = s.split(' ')
+        return ans
+
+
+
+
+encoded_string = encode(strs)
+strs2 = decode(encoded_string)
