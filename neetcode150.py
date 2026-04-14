@@ -89,20 +89,24 @@
 #     strs2 = codec.decode(encoded_string)
 
 # Products of Array Except Self
-class Solution:
-    def productExceptSelf(self, nums: List[int]) -> List[int]:
-        left_ans = [0]*len(nums)
-        right_ans = [0]*len(nums)
-        left_tmp = 1
-        for i in range(len(nums)):
-            left_ans[i] += left_tmp
-            left_tmp *= nums[i]
-        right_tmp = 1
-        for i in range(len(nums)-1, -1, -1):
-            right_ans[i] += right_tmp
-            right_tmp *= nums[i]
-        ans = [0]*len(nums)
-        for i in range(len(nums)):
-            ans[i] = right_ans[i] * left_ans[i]
+# class Solution:
+#     def productExceptSelf(self, nums: List[int]) -> List[int]:
+#         left_ans = [0]*len(nums)
+#         right_ans = [0]*len(nums)
+#         left_tmp = 1
+#         for i in range(len(nums)):
+#             left_ans[i] += left_tmp
+#             left_tmp *= nums[i]
+#         right_tmp = 1
+#         for i in range(len(nums)-1, -1, -1):
+#             right_ans[i] += right_tmp
+#             right_tmp *= nums[i]
+#         ans = [0]*len(nums)
+#         for i in range(len(nums)):
+#             ans[i] = right_ans[i] * left_ans[i]
 
-        return ans
+#         return ans
+
+# Valid Sudoku
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
