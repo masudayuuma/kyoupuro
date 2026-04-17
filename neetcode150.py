@@ -407,3 +407,225 @@
 #         return stack[0]
 
 # Daily Temperatures
+# class Solution:
+#     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+#         stack = []
+#         ans = [0]*len(temperatures)
+
+#         for i, t in enumerate(temperatures):
+#             while len(stack) > 0 and stack[-1][1] < t:
+#                 index, tmp = stack.pop()
+#                 ans[index] = i-index
+#             stack.append((i, t))
+
+#         return ans
+
+# Car Fleet
+# class Solution:
+#     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+#         sort_list = []
+#         for p, s in zip(position, speed):
+#             sort_list.append((p, s))
+
+#         sort_list = sorted(sort_list)
+
+#         offset = 0
+#         fleets = len(position)
+
+#         while len(sort_list) > 0:
+
+#             p, s = sort_list.pop()
+#             cnt = (target-p)/s
+#             if cnt > offset:
+#                 offset = cnt
+#             else:
+#                 fleets -= 1
+#                 continue
+#         return fleets
+            
+# 
+# Car Fleet
+# class Solution:
+#     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+#         pair = [[p, s] for p, s in zip(position, speed)]
+
+#         stack = []
+
+#         for p, s in sorted(pair)[::-1]:
+#             stack.append((target-p)/s)
+#             if len(stack)>= 2 and stack[-1] <= stack[-2]:
+#                 stack.pop()
+
+#         return len(stack)
+    
+# Binary Search
+# class Solution:
+#     def search(self, nums: List[int], target: int) -> int:
+#         ok, ng = -1, len(nums)
+
+#         while ng - ok > 1:
+#             mid = (ok + ng) // 2
+#             if nums[mid] < target:
+#                 ok = mid
+#             else:
+#                 ng = mid
+
+#         return ng if ng < len(nums) and nums[ng] == target else -1
+
+
+# Search a 2D Matrix
+# class Solution:
+#     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        
+#         for numlist in matrix:
+#             ok = len(numlist)-1
+#             ng = -1
+#             while ok - ng < 1:
+#                 mid = (ok+ng)//2
+#                 if numlist[mid] < target:
+#                     ng = mid
+#                 else:
+#                     ok = mid
+#             if numlist[ok] == target:
+#                 return True
+            
+#         return False
+
+# Koko Eating Bananas
+# class Solution:
+#     def minEatingSpeed(self, piles: List[int], h: int) -> int:
+#         ok, ng = 1000000000, -1
+
+#         while ok - ng > 1:
+#             mid = (ok+ng)//2
+#             hour = 0
+#             for p in piles:
+#                 cnt = p//mid
+#                 if cnt == 0:
+#                     cnt = 1
+#                 hour += cnt
+#             if h >= hour:
+#                 ok = mid
+#             else:
+#                 ng = mid
+
+#         return ok
+
+# Find Minimum in Rotated Sorted Array
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        left, right = 0, len(nums)-1
+
+        while left < right:
+            mid = (left+right)//2
+            if nums[mid] > nums[right]:
+                left = mid+1
+            else:
+                right = mid
+
+        return nums[left]
+    
+# Search in Rotated Sorted Array
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        left, right = 0, len(nums) - 1
+
+        while left <= right:
+            mid = (left + right) // 2
+
+            if nums[mid] == target:
+                return mid
+
+            if nums[left] <= nums[mid]:  # 左がソート済み
+                if nums[left] <= target < nums[mid]:
+                    right = mid - 1
+                else:
+                    left = mid + 1
+            else:  # 右がソート済み
+                if nums[mid] < target <= nums[right]:
+                    left = mid + 1
+                else:
+                    right = mid - 1
+
+        return -1
+
+# Reverse Linked List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+            if not head:
+                return None
+            
+            newHead = head
+            if head.next:
+                newHead = self.reverseList(head.next)
+                head.next.next = head
+            head.next = None
+
+            return newHead
+    
+
+# Merge Two Sorted Linked Lists
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        if not list2 and not list1:
+            return None
+        if not list1:
+            return list2
+        if not list2:
+            return list1
+        
+        if list1.val <= list2.val:
+            head = list1
+            list1 = list1.next
+            head.next = self.mergeTwoLists(list1, list2)
+
+        else:
+            head = list2
+            list2 = list2.next
+            head.next = self.mergeTwoLists(list1, list2)
+
+        return head
+
+# Linked List Cycle Detection
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        if not head:
+            return None
+        
+        seen = set()
+
+        while head and head.next:
+            if head in seen:
+                return True
+            seen.add(head)
+            head = head.next
+
+        return False
+    
+# Reorder Linked List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        pass
