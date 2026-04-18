@@ -619,13 +619,95 @@ class Solution:
 
         return False
     
-# Reorder Linked List
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
+# Last Stone Weight
+import heapq
 
 class Solution:
-    def reorderList(self, head: Optional[ListNode]) -> None:
-        pass
+    def lastStoneWeight(self, stones):
+        stones = [-s for s in stones]
+        heapq.heapify(stones)
+
+        while len(stones) > 1:
+            stone1 = -heapq.heappop(stones)
+            stone2 = -heapq.heappop(stones)
+
+            if stone1 != stone2:
+                heapq.heappush(stones, -(stone1 - stone2))
+
+        return -stones[0] if stones else 0
+    
+
+    
+# K Closest Points to Origin
+# import heapq
+# import math
+# class Solution:
+#     def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+#         distance_heapq = []
+#         heapq.heapify(distance_heapq)
+#         ans = []
+#         for x, y in points:
+#             distance = math.sqrt(x**2+y**2)
+#             heapq.heappush(distance_heapq, (distance, x, y))
+
+#         for i in range(k):
+#             tmp = heapq.heappop(distance_heapq)
+#             ans.append([tmp[1], tmp[2]])
+#         return ans
+
+# Kth Largest Element in an Array
+# class Solution:
+#     def findKthLargest(self, nums: List[int], k: int) -> int:
+#         import heapq
+#         optimized_nums = []
+#         for i in nums:
+#             optimized_nums.append(-i)
+
+#         heapq.heapify(optimized_nums)
+#         ans = 0
+#         for i in range(k):
+#             ans = heapq.heappop(optimized_nums)
+
+#         return -ans
+
+# Task Scheduler
+# import collections
+# import heapq
+
+# class Solution:
+#     def leastInterval(self, tasks: List[str], n: int) -> int:
+#         count = collections.Counter(tasks)
+#         maxHeap = [-cnt for cnt in count.values()]
+#         heapq.heapify(maxHeap)
+
+#         time = 0
+#         q = collections.deque()
+
+#         while maxHeap or q:
+#             time += 1
+
+#             if not maxHeap:
+#                 time = q[0][1]
+#             else:
+#                 cnt = 1+ heapq.heappop(maxHeap)
+#                 if cnt:
+#                     q.append([cnt, time+n])
+#             if q and q[0][1] == time:
+#                 heapq.heappush(maxHeap, q.popleft()[0])
+#         return time
+
+# Subsets
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        
+        ans = set()
+
+        def recrusion(target_list):
+            for i in target_list:
+                
+                #ireru
+
+                #irenai
+
+
+
