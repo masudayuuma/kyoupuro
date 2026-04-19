@@ -697,17 +697,453 @@ class Solution:
 #         return time
 
 # Subsets
-class Solution:
-    def subsets(self, nums: List[int]) -> List[List[int]]:
+# class Solution:
+#     def subsets(self, nums: List[int]) -> List[List[int]]:
         
-        ans = set()
+#         res = []
+#         subset = []
+#         def dfs(i):
+#             if i > len(nums):
+#                 res.append(subset.copy())
+#                 return
+#             subset.append(nums[i])
+#             dfs(i+1)
+#             subset.pop()
+#             dfs(i+1)
+#         dfs(0)
+#         return res
 
-        def recrusion(target_list):
-            for i in target_list:
+# Combination Sum
+import sys
+sys.setrecursionlimit(100000000)
+class Solution:
+    def combinationSum(self, nums: List[int], target: int) -> List[List[int]]:
+        res = []
+        subset = []
+
+        def dfs(index):
+            if sum(subset) > target:
+                return
+            if sum(subset) == target:
+                res.append(subset[:])
+                return
+            if index >= len(nums):
+                return
+
+            subset.append(index)
+            dfs(subset)
+            subset.pop()
+
+            dfs(index+1)
+
+
+        dfs(0)
+        return res
+
+# Combination Sum II
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        res = []
+        subset = []
+        candidates.sort()
+
+        def dfs(index):
+            total = sum(subset)
+
+            if total == target:
+                res.append(subset[:])
+                return
+            if total > target:
+                return
+            if index >= len(candidates):
+                return
+
+            # 今の値を使う
+            subset.append(candidates[index])
+            dfs(index + 1)
+            subset.pop()
+
+            # 同じ値を飛ばして次へ
+            next_index = index + 1
+            while next_index < len(candidates) and candidates[next_index] == candidates[index]:
+                next_index += 1
+            dfs(next_index)
+
+        dfs(0)
+        return res
+    
+# Permutations
+# class Solution:
+#     def permute(self, nums: List[int]) -> List[List[int]]:
+#         res = []
+#         subset = []
+
+#         def dfs(length):
+#             if length == len(nums):
+#                 res.append(subset.copy())
+#                 return
+
+#             for i in nums:
+#                 if i in subset:
+#                     continue
+#                 subset.append(i)
+#                 dfs(length+1)
+#                 subset.pop()
+
+#         dfs(0)
+#         return res
+
+# class Solution:
+#     def permulte(self, nums:List[int]) -> List(List[int]):
+#         res = []
+#         path = []
+#         used = [False] * len(nums)
+
+#         def dfs():
+#             if len(path) == len(nums):
+#                 res.append(path[:])
+#                 return
+            
+#             for i in range(len(nums)):
+#                 if used[i]:
+#                     continue
+
+#                 used[i] = True
+#                 path.append(nums[i])
+
+#                 dfs()
+
+#                 path.pop()
+#                 used[i] = False
+
+#         dfs()
+#         return res
+
+# class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        subset = []
+
+        def dfs(length):
+            if length == len(nums):
+                res.append(subset.copy())
+                return
+
+            for i in nums:
+                if i in subset:
+                    continue
+                subset.append(i)
+                dfs(length+1)
+                subset.pop()
+
+        dfs(0)
+        return res
+    
+# class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        subset = []
+
+        def dfs(length):
+            if length == len(nums):
+                res.append(subset.copy())
+                return
+
+            for i in nums:
+                if i in subset:
+                    continue
+                subset.append(i)
+                dfs(length+1)
+                subset.pop()
+
+        dfs(0)
+        return res
+    
+# Subsets II
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        subset = []
+
+        def dfs(lenght):
+            if lenght == len(nums):
+                res.append(subset[:])
+                return
+            
+            dfs(lenght+1)
+            subset.append(nums[lenght])
+            dfs(lenght+1)
+            subset.pop()
+
+        dfs(0)
+        return res
+    
+
+# Subsets II
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        res = set()
+
+        def backtrack(i, subset):
+            if i == len(nums):
+                res.add(tuple(subset))
+                return
+            
+            subset.append(nums[i])
+            backtrack(i+1, subset)
+            subset.pop()
+            backtrack(i+1, subset)
+
+        nums.sort()
+        backtrack(0, [])
+        return [list(s) for s in res]
+    
+# Generate Parentheses
+# class Solution:
+#     def generateParenthesis(self, n: int) -> List[str]:
+#         res = []
+#         substr = ''
+
+#         def dfs(cnt, open_cnt):
+#             if cnt == n:
+#                 res.append(subset)
+
+#             substr + '('
+#             dfs(cnt+1)
+
+# Number of Islands
+# class Solution:
+#     def numIslands(self, grid: List[List[str]]) -> int:
+
+#         grid_flag = [[False for _ in range(len(grid[0]))] for _ in range(len(grid)) ]
+#         cnt = 0
+#         search_point = ((0, 1), (0, -1), (1, 0), (-1, 0))
+
+
+#         def search_island(i, j):
+#             for dy, dx in search_point:
+#                 t_x = dx+j
+#                 t_y = dy+i
+#                 if not 0 <= t_x < len(grid[0]) or not 0 <= t_y < len(grid):
+#                     continue
+
+
+#                 if grid[t_y][t_x] == '1' and grid_flag[t_y][t_x] == False:
+#                     grid_flag[t_y][t_x] = True
+#                     search_island(t_y, t_x)
+
+        
+#         for i in range(len(grid)):
+#             for j in range(len(grid[0])):
+#                 if grid_flag[i][j] == True or grid[i][j] == '0':
+#                     continue
+#                 grid_flag[i][j] = True
+#                 search_island(i, j)
+#                 cnt += 1
+
+#         return cnt
+
+# Max Area of Island
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        max_cnt = 0
+        direction = ((0, 1), (0, -1), (1, 0), (-1, 0))
+
+        def island_search(i, j):
+            count = 0
+            for dy, dx in direction:
+                y = i+dy
+                x = j+dx
+                if not 0 <= x < len(grid[0]) or not 0 <= y < len(grid):
+                    continue
+
+                if grid[y][x] == 1:
+                    count += 1
+                    grid[y][x] = 0
+                    count += island_search(y, x)
+            return count
+
+        for i in range(len(grid)):
+
+            for j in range(len(grid[0])):
+
+                if grid[i][j] == 1:
+                    grid[i][j] = 0
+                    cnt = 1
+                    cnt += island_search(i, j)
+
+                    max_cnt = max(max_cnt, cnt)
+
+        return max_cnt
+    
+
+# Clone Graph
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        pass
+
+# Islands and Treasure
+# from collections import deque
+# class Solution:
+#     def islandsAndTreasure(self, grid):
+#         row, col = len(grid), len(grid[0])
+#         diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+#         calc_grid = [row[:] for row in grid]
+#         queue = deque()
+
+#         for i in range(row):
+#             for j in range(col):
+#                 if grid[i][j] == 0:
+#                     calc_grid[i][j] = 0
+#                     queue.append((i, j))
+        
+#         while queue:
+#             i, j = queue.popleft()
+#             for dy, dx in diff:
+#                 x = dx+j
+#                 y = dy+i
+#                 if not 0 <= y < len(grid) or not 0 <= x < len(grid[0]) or grid[y][x] == -1:
+#                     continue
+#                 if grid[y][x] == 2147483647:
+#                     grid[y][x] = grid[i][j]+1
+#                     queue.append((y, x))
+
+# Rotting Fruit
+from collections import deque
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        q = deque()
+        diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+        final = 0
+
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == 2:
+                    q.append((i, j, 0))
+
+        while q:
+            i, j, time = q.popleft()
+            final =max(final, time)
+            for dy, dx in diff:
+                y = i+dy
+                x = j+dx
                 
-                #ireru
+                if not 0 <= y < len(grid) or not 0 <= x < len(grid[0]) or grid[y][x] == 0 or grid[y][x] == 2:
+                    continue
 
-                #irenai
+                grid[y][x] = 2 
+                q.append((y, x, time+1))
+        flag = False
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == 1:
+                    flag = True
 
+        return final if not flag else -1
+    
 
+# Climbing Stairs
+# DP
+# class Solution:
+#     def climbStairs(self, n: int) -> int:
+        
+#         if n <= 2:
+#             return n
+        
+#         dp = [0]*(n+1)
+#         dp[1], dp[2] = 1, 2
+#         for i in range(3, n+1):
+#             dp[i] = dp[i-1]+dp[i-2]
+#         return dp[n]
 
+# Single Number
+# class Solution:
+#     def singleNumber(self, nums: List[int]) -> int:
+#         ans = 0
+#         for num in nums:
+#             ans = ans^num
+
+#         return ans
+
+# Number of 1 Bits
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        
+        ans = 0
+
+        for i in len(str(n)):
+            if 1 << i & 1:
+                ans += 2*i
+
+        return ans
+    
+# Counting Bits
+class Solution:
+    def countBits(self, n: int) -> List[int]:
+        output = [0]*(n+1)
+
+        for i in range(n+1):
+            cnt = 0
+            for j in range(32):
+                if i >> j & 1:
+                    cnt +=1
+            output[i] = cnt
+
+        return output
+    
+# Reverse Bits
+
+class Solution:
+    def reverseBits(self, n: int) -> int:
+        output = 0
+
+        for i in range(32):
+            if n >> i & 1:
+                output += 2**(31-i)
+        return output
+
+# Missing Number
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        for n in range(len(nums)+1):
+            ans ^= n
+
+        for n in nums:
+            ans ^= n
+
+        return ans
+    
+# Sum of Two Integers
+class Solution:
+    def getSum(self, a: int, b: int) -> int:
+        carry = 0
+        res = 0
+        mask = 0xFFFFFFFF
+
+        for i in range(32):
+            a_bit = (a >> i) & 1
+            b_bit = (b >> i) & 1
+            cur_bit = a_bit ^ b_bit ^ carry
+            carry = (a_bit + b_bit + carry) >= 2
+            if cur_bit:
+                res |= (1 << i)
+
+        if res > 0x7FFFFFFF:
+            res = ~(res ^ mask)
+
+        return res
+    
+# Insert Interval
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        t_s, t_e = newInterval
+
+        
