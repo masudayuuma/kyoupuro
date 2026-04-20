@@ -1142,8 +1142,406 @@ class Solution:
         return res
     
 # Insert Interval
+from collections import deque
 class Solution:
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
-        t_s, t_e = newInterval
+        n = len(intervals)
+        i = 0
+        res = []
 
+        while i < n and intervals[i][1] < newInterval[0]:
+            res.append(intervals[i])
+            i += 1
+
+        while i < n and newInterval[1] >= intervals[i][0]:
+            newInterval[0] = min(newInterval[0], intervals[i][0])
+            newInterval[1] = max(newInterval[1], intervals[i][1])
+            i += 1
+        res.append(newInterval)
+
+        while i < n:
+            res.append(intervals[i])
+            i += 1
+
+        return res
+
+# Merge Intervals
+# class Solution:
+#     from collections import deque
+#     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
         
+#         n = len(intervals)
+#         i = 0
+#         res = []
+
+#         while i < n:
+#             t_s, t_e = intervals[i]
+#             if i+1 <n and t_e < intervals[i+1][0]:
+#                 res.append([t_s, t_e])
+#                 continue
+
+#             if i+1 < n and t_e >= intervals[i+1][0]:
+#                 while i+1 < n and t_e >= intervals[i+1][0]:
+#                     t_e = max(t_e, intervals[i+1][1])
+#                     i += 1
+#                 res.append([t_s, t_e])
+#                 continue
+            
+#             res.append([t_s, t_e])
+            
+#         return res
+
+# Non-overlapping Intervals
+class Solution:
+    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+        intervals.sort()
+
+        def dfs(i, prev):
+            if i == len(intervals):
+                return 0
+            res = dfs(i+1, prev)
+            if prev == -1 or intervals[prev][1] <= intervals[i][0]:
+                res = max(res, 1+dfs(i+1, i))
+        return len(intervals) - dfs(0, -1)
+    
+# Meeting Rooms
+"""
+Definition of Interval:
+class Interval(object):
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+"""
+
+class Solution:
+    def canAttendMeetings(self, intervals: List[Interval]) -> bool:
+        intervals.sort()
+        t_s, t_e = intervals[0][0], intervals[0][1]
+        for i in range(1, len(intervals)-1):
+            next_s, next_e = intervals[i+1][0], intervals[i+1][1]
+
+            if t_e >= next_e:
+                return False
+
+            t_s, t_e = intervals[i][0], intervals[i][1]
+
+        return True
+
+# Meeting Rooms II
+"""
+Definition of Interval:
+class Interval(object):
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+"""
+
+# class Solution:
+#     def minMeetingRooms(self, intervals: List[Interval]) -> int:
+#         intervals.sort(key=lambda x: x.start)
+#         min_heap = []
+
+#         for interval in intervals:
+#             if min_heap and min_heap[0] <= interval.start:
+#                 heapq.heappop(min_heap)
+#             heapq.heappush(min_heap, interval.end)
+
+#         return len(min_heap)
+
+# Climbing Stairs
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n <= 2:
+            return n
+        
+        dp= [0]*(n+1)
+        dp[1] = 1 
+        dp[2] = 2
+
+        for i in range(3, n+1):
+            dp[i] = dp[i-1]+dp[i-2]
+        return dp[n]
+    
+# Min Cost Climbing Stairs
+# class Solution:
+#     def minCostClimbingStairs(self, cost: List[int]) -> int:
+#         if len(cost) <= 2:
+#             return min(cost)
+#         n = len(cost)
+#         dp = [0]*(n)
+#         dp[0] = cost[0]
+#         dp[1] = cost[1]
+
+#         for i in range(2, n):
+#             dp[i] = min(dp[i-1], dp[i-2])+cost[i]
+
+#         return min(dp[-1], dp[-2])
+
+# House Robber
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums) <= 2:
+            return max(nums)
+        
+        n = len(nums)
+        dp = [0]*n
+
+        dp[0] = nums[0]
+        # これmax(dp[0], dp[1])にしたらi-2まで考慮でも通る
+        dp[1] = nums[1]
+        dp[2] = max(nums[0]+nums[2], nums[1])
+
+        for i in range(3, len(nums)):
+            dp[i] = max(dp[i-2]+nums[i], dp[i-1], dp[i-3]+nums[i])
+
+
+        return dp[-1]
+    
+# House Robber II
+# class Solution:
+#     def rob(self, nums: List[int]) -> int:
+#         if len(nums) <= 2:
+#             return max(nums)
+        
+#         n = len(nums)
+#         dp = [0]*n
+
+#         dp[0] = 0
+#         dp[1] = max(nums[1])
+#         dp[2] = max(nums[1:3])
+#         first_dp = [0]*(n-1)
+#         first_dp[0] = nums[0]
+#         first_dp[1] = max(nums[:2])
+        
+#         for i in range(2, n-1):
+#             first_dp[i] = max(dp[i-1], dp[i-2]+nums[i])
+
+#         for i in range(3, n):
+#             dp[i] = max(dp[i-1], dp[i-2]+nums[i])
+
+#         return max(dp[-1], first_dp[-1])
+
+# Longest Palindromic Substring
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        resIndex, resLen = 0, 0
+        n = len(s)
+
+        dp = [[False]*n for _ in range(n)]
+
+        for i in range(n-1, -1, -1):
+            for j in range(i, n):
+                if s[i] == s[j] and (j-i <= 2 or dp[i+1][j-1]):
+                    dp[i][j] = True
+
+                    if resLen < j-i+1:
+                        resIndex = i
+                        resLen = j-i+1
+
+        return s[resIndex: resIndex+resLen]
+
+# Palindromic Substrings
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        
+        n = len(s)
+        res = 0
+        dp = [[True]*n for _ in range(n)]
+
+        for i in range(n-1, -1, -1):
+            for j in range(i, n):
+                if s[i] == s[j] and (j-i <= 2 or dp[i-1][j-1] > 0):
+                    dp[i][j] += True
+                    res += 1
+
+        return res
+    
+# Decode Ways
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        if not s or s[0] == '0':
+            return 0
+        
+        n = len(s)
+        dp = [0] * (n+1)
+
+        dp[0] =1
+
+        dp[1] =1
+
+        for i in range(2, n+1):
+            if s[i-1] != '0':
+                dp[i] += dp[i-1]
+
+            two = int(s[i-2:i])
+            if 10 <= two <= 26:
+                dp[i] += dp[i-2]
+
+        return dp[n]
+    
+# Coin Change
+# class Solution:
+#     def coinChange(self, coins: List[int], amount: int) -> int:
+#         if amount == 0:
+#             return 0
+
+#         coins.sort()
+#         INF = 10**9
+#         n = len(coins)
+#         dp = [[INF]*(amount+1) for _ in range(n+1)]
+
+#         for i in range(n+1):
+#             dp[i][0] = 0
+
+#         for i in range(n+1):
+#             for j in range(1, amount+1):
+#                 dp[i][j] = dp[i-1][j]
+#                 if j >= coins[i-1]:
+#                     dp[i][j] = min(dp[i][j], dp[i][j-coins[i-1]]+1)
+
+#         return dp[-1][-1] if dp[-1][-1] != INF else -1
+
+
+# Invert Binary Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root: return None
+
+        root.left, root.right = root.right, root.left
+
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+
+        return root
+    
+# Maximum Depth of Binary Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root: return None
+
+        left_cnt = 1
+        right_cnt = 1
+
+        if self.maxDepth(root.left):
+            cnt += self.maxDepth(root.left) 
+
+        if self.maxDepth(root.right):
+            cnt += self.maxDepth(root.right)
+
+        return max(left_cnt, right_cnt)
+    
+# Diameter of Binary Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        ans = 0
+
+        def dfs(node):
+            nonlocal ans
+            if not node:
+                return 0
+            
+            left = dfs(node.left)
+            right = dfs(node.right)
+
+            ans = max(ans, left+right)
+            return 1+max(left, right)
+        
+        dfs(root)
+        return ans
+    
+# Balanced Binary Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        if not root:
+            return True
+        
+        def dfs(node):
+            if not node: return 0
+            length_r = dfs(node.right)
+            length_l = dfs(node.left)
+            if abs(length_r - length_r) > 1:
+                return -1
+
+            return max(length_l, length_r)+1
+
+        ans = True if dfs(root) >= 0 else False
+        return ans
+    
+# Same Binary Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if (p and not q) or (not p and q):
+            return False
+        if not p and not q:
+            return True
+        
+        if p.val == q.val:
+            result = self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        else:
+            result = False
+
+        return result
+
+# Subtree of Another Tree 
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        if not subRoot:
+            return True
+        if not root:
+            return False
+
+        if self.sameTree(root, subRoot):
+            return True
+        return (self.isSubtree(root.left, subRoot) or
+               self.isSubtree(root.right, subRoot))
+
+    def sameTree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        if not root and not subRoot:
+            return True
+        if root and subRoot and root.val == subRoot.val:
+            return (self.sameTree(root.left, subRoot.left) and
+                   self.sameTree(root.right, subRoot.right))
+        return False
