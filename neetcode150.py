@@ -1633,4 +1633,171 @@ class Solution:
 
         return dp[n][target]
     
+# Unique Paths
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[0]*(n) for _ in range(m)]
+        for i in range(n):
+            dp[0][i] = 1
+        for i in range(m):
+            dp[i][0] = 1
 
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] += dp[i-1][j]+dp[i][j]
+
+        return dp[-1][-1]
+
+# Longest Common Subsequence
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        m, n = len(text1), len(text2)
+        dp = [[0]*(m+1) for _ in range(n+1)]
+
+
+        for i in range(1,n+1):
+            for j in range(1, m+1):
+                dp[i][j] = max(dp[i][j-1], dp[i-1][j])
+                if text1[i-1] == text2[j-1]:
+                    dp[i][j] = max(dp[i][j], dp[i-1][j-1]+1)
+
+        return dp[-1][-1]
+    
+# Contains Duplicate
+class Solution:
+    def hasDuplicate(self, nums: List[int]) -> bool:
+        numset = set()
+
+        for i in nums:
+            if i in numset:
+                return True
+            
+            numset.add(i)
+
+        return False
+    
+# Valid Anagram
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        s =sorted(s)
+        t = sorted(t)
+
+        for i in len(s):
+            if s[i] != t[i]:
+                return False
+            
+        return True
+    
+# Two Sum
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        numsdict = {}
+
+        for i, val in enumerate(nums):
+            if target-val in numsdict:
+                return [numsdict[target-val], i]
+            
+            numsdict[val] = i 
+
+# Group Anagramss
+class Solution:
+    
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        from collections import defaultdict
+        strsdict = defaultdict(list)
+        ans = []
+
+        for string in strs:
+            str_sorted = str(sorted(string))
+            strsdict[str_sorted].append(string)
+
+        for str_list in strsdict.values():
+            ans.append(str_list)
+
+        return ans
+    
+# Top K Frequent Elements
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        from collections import defaultdict
+
+        numsdict = defaultdict(int)
+        ans = []
+
+        for num in nums:
+            numsdict[num] += 1
+
+        cnt = 0
+        for num in sorted(numsdict, key=numsdict.get, reverse=True):
+            if cnt >= k:
+                return ans
+            
+            ans.append(num)
+            cnt += 1
+
+        return ans
+    
+#bucket
+from collections import Counter
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        count = Counter(nums)
+        bucket = [[] for _ in range(len(nums)+1)]
+
+        for num, freq in count.items():
+            bucket[freq].append(num)
+
+        res = []
+        for i in range(len(bucket)-1, -1, -1):
+            for num in bucket[i]:
+                res.append(num)
+                if len(res) == k:
+                    return res
+                
+# Encode and Decode Strings
+
+
+# Products of Array Except Self
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        left_products = [1]*n
+        right_products = [1]*n
+        sum =[0]*n
+
+        for i in range(n-2, -1, -1):
+            right_products[i] *= nums[i+1]*right_products[i+1]
+
+        for i in range(1, n):
+            left_products[i] *= nums[i-1]*left_products[i-1]
+
+        for i in range(n):
+            sum[i] = left_products[i]*right_products[i]
+
+        return sum
+    
+# Valid Sudoku
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        pass
+
+# Longest Consecutive Sequence
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        if nums == []: return 0
+        numsset = set(nums)
+        res = 1
+
+        for n in numsset:
+            if not n-1 in numsset:
+                cnt = 1
+                while n+1 in numsset:
+                    cnt += 1
+                    n += 1
+                res = max(cnt, res)
+
+        return res  
+            
