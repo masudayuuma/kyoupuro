@@ -1545,3 +1545,92 @@ class Solution:
             return (self.sameTree(root.left, subRoot.left) and
                    self.sameTree(root.right, subRoot.right))
         return False
+
+
+# Maximum Product Subarray
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        cur_max = nums[0]
+        cur_min = nums[0]
+        ans =[0]
+
+        for i in range(1, len(nums)):
+            x = nums[i]
+            tmp_max = max(x, cur_max*x, cur_min*x)
+            tmp_min = min(x, cur_max*x, cur_min*x)
+
+            cur_max = tmp_max
+            cur_min = tmp_min
+
+            ans = max(ans, cur_max)
+
+        return ans
+    
+# Word Break
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        dp = [False]*(len(s)+1)
+        dp[len(s)] = True
+
+        for i in range(len(s)-1, -1, -1):
+            for w in wordDict:
+                if (i+len(w)) <= len(s) and s[i:i+len(w)] == w:
+                    dp[i] = dp[i+len(w)]
+                if dp[i]:
+                    break
+        return dp[0]
+    
+# Longest Increasing Subsequence
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        n = len(nums)
+        dp = [1] * n
+
+        for i in range(n):
+            for j in range(i):
+                if nums[j] < nums[i]:
+                    dp[i] = max(dp[i], dp[j] + 1)
+
+        return max(dp)
+
+# Partition Equal Subset Sum
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        if sum(nums) %2 != 0:
+            return False
+        
+        def dnf(i, target):
+            if i >= len(nums):
+                return target == 0
+            if target < 0:
+                return False
+            
+            return dnf(i+1, target) or dnf(i+1, target-nums[i])
+        
+        return dnf(0, sum(nums)//2)
+    
+# Partition Equal Subset Sum
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        total = sum(nums)
+        if total % 2 != 0:
+            return False
+
+        target = total // 2
+        n = len(nums)
+        dp = [[False] * (target + 1) for _ in range(n + 1)]
+
+        for i in range(n + 1):
+            dp[i][0] = True
+
+        for i in range(1, n + 1):
+            for j in range(1, target + 1):
+                if nums[i - 1] <= j:
+                    dp[i][j] = (dp[i - 1][j] or
+                                dp[i - 1][j - nums[i - 1]])
+                else:
+                    dp[i][j] = dp[i - 1][j]
+
+        return dp[n][target]
+    
+
