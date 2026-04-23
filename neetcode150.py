@@ -1800,4 +1800,599 @@ class Solution:
                 res = max(cnt, res)
 
         return res  
+
+# Valid Palindrome
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        chars = ''
+
+        for i in s:
+            if i.isalnum:
+                chars += i.lower()
+
+        for i in range(len(chars)//2):
+            if chars[i] != chars[-1-i]:
+                return False
             
+        return True
+    
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        l, r = 0, len(s)-1
+
+        while l < r:
+            while  l < r and not self.alphaNum(s[l]):
+                l += 1
+            while r > l and not self.alphaNum(s[l]):
+                r -= 1
+            if s[l].lower() != s[r].lower():
+                return False
+            l, r = l+1, r+1
+        return True
+    
+    def alphaNum(self, c):
+        return (ord('A') <= ord(c) <= ord('Z') or
+                ord('a') <= ord(c) <= ord('z') or 
+                ord('0') <= ord(c) <= ord('9'))
+    
+    
+# Two Integer Sum II
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        l, r = 0, len(numbers)-1
+
+        while l < r:
+            if target == numbers[l]+numbers[r]:
+                return [l+1, r+1]
+
+            if target > numbers[l]+numbers[r]:
+                l += 1
+            elif target < numbers[l]+numbers[r]:
+                r -= 1
+
+        return [-1, -1]
+    
+# 3Sum
+# two pointerで動かすところはどっちか端で
+
+# Container With Most Water
+class Solution:
+    def maxArea(self, heights: List[int]) -> int:
+        l, r = 0, len(heights)-1:
+        ans = 0
+        while l < r:
+            ans = max(min(l, r)*(r-l), ans)
+            if heights[r] <= heights[l]:
+                r -= 1
+
+            if heights[l] < heights[r]:
+                l +=1
+
+        return ans
+
+# Trapping Rain Water
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        if not height:
+            return 0
+        
+        l, r = 0, len(height)-1
+        leftMax, rightMax = height[l], height[r]
+        res = 0
+
+        while l < r:
+            if leftMax < rightMax:
+                l += 1
+                leftMax = max(leftMax, height[l])
+
+# Min Stack
+class MinStack:
+
+    def __init__(self):
+        self.stack = []
+        self.minStack = []
+        
+
+    def push(self, val: int) -> None:
+        self.stack.append(val)
+        val = min(val, self.minStack[-1] if self.minStack else val)
+        self.minStack.append(val)
+
+    def pop(self) -> None:
+        self.stack.pop()
+        self.minStack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1]
+
+    def getMin(self) -> int:
+        return self.minStack[-1]
+
+# Best Time to Buy and Sell Stock
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        stack = []
+        maxprofit = 0
+
+        for price in prices:
+            if not stack:
+                stack.append(price)
+                continue
+
+            if stack[-1] > price:
+                stack.append(price)
+            else:
+                maxprofit = max(maxprofit, price-stack[-1])
+
+        return maxprofit
+    
+# Longest Substring Without Repeating Characters
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        s_set = set()
+        ans = 0
+
+        for i in range(s):
+            if s[i] in s_set:
+                s_set.remove(s[i])
+            s_set.add(s[i])
+            ans = max(ans, len(s_set))
+
+        return ans
+
+# slide window
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        charSet = set()
+        l = 0
+        res = 0
+
+        for r in range(len(s)):
+            while s[r] in charSet:
+                charSet.remove(s[l])
+                l += 1
+            charSet.add(s[r])
+            res = max(res, r-l+1)
+        return res
+    
+# Valid Parentheses
+class Solution:
+    def isValid(self, s: str) -> bool:
+        if s == "[]": return True
+        
+    
+        stack = []
+        s_dict = {')':'(', '}': '{', ']':'['}
+
+        for i in range(len(s)):
+            if stack and s[i] in s_dict and s_dict[s[i]] == stack[-1]:
+                stack.pop()
+                continue
+            else:
+                stack.append(s[i])
+
+        return True if stack == [] else False
+    
+# Evaluate Reverse Polish Notation
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        pass
+
+# Daily Temperatures
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        stack = []
+        ans = [0]*(len(temperatures))
+
+        for i in range(len(temperatures), -1, -1):
+            if stack:
+                while stack[-1][0] < temperatures[i]:
+                    stack.pop()
+                    continue
+                if stack:
+                    j, temperature = stack[-1]
+                    ans[i] = j-i+1
+                stack.append((i, temperatures[i]))
+            else:
+                stack.append((i, temperatures[i]))
+
+        return ans
+    
+# Car Fleet
+class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        
+        car_stack = []
+        cars = []
+        for i in range(len(position)):
+            cars.append((position[i], speed[i]))
+        cars = sorted(cars)
+
+        for i in range(len(position)-1, -1, -1):
+            cnt = (target-cars[i][0])/cars[i][1]
+
+            if car_stack and cnt <= car_stack[-1]:
+                continue
+            else:
+                car_stack.append(cnt)
+
+        return len(car_stack)
+
+# Largest Rectangle In Histogram
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        n = len(heights)
+        stack = []
+
+        leftMost = [-1]*n
+
+        for i in range(n):
+            while stack and heights[stack[-1]] >= heights[i]:
+                stack.pop()
+            if stack:
+                leftMost[i] = stack[-1]
+            stack.append(i)
+
+        stack = []
+        rightMost = [n]*n
+        for i in range(n-1, -1, -1):
+            while stack and heights[stack[-1]] >= heights[i]:
+                stack.pop()
+            if stack:
+                rightMost[i] = stack[-1]
+            stack.append(i)
+
+        maxArea = 0
+        for i in range(n):
+            leftMost[i] += 1
+            rightMost[i] -= 1
+            maxArea = max(maxArea, heights[i]*(rightMost[i]-leftMost[i]+1))
+        return maxArea
+
+# Binary Search
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        l, r = 0, len(nums)-1
+
+        while l <= r:
+            mid = (l+r)//2
+
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                r = mid-1
+            else:
+                l = mid+1
+        return -1
+# めぐるしき
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        l, r = -1, len(nums)
+
+        while r-l > 1:
+            mid = (l+r)//2
+
+            if nums[mid] >= target:
+                r = mid
+            else:
+                l = mid
+        
+        return r if r < len(nums) and nums[r] == target else -1
+
+# Search a 2D Matrix
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        
+        for i in range(len(matrix)):
+            l, r = -1, len(matrix[0])
+
+            while r-l > 1:
+                mid = (l+r)//2
+
+                if matrix[i][mid] >= target:
+                    r = mid
+                else:
+                    l = mid
+                if target == matrix[i][mid]:
+                    return True
+        return False
+    
+# Koko Eating Bananas
+class Solution:
+    def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        l, r = 0, max(piles)
+
+        while r-l > 1:
+            mid = (l+r)//2
+            cnt = 0
+            for p in piles:
+                # math.cell使えばこれできそう関数で１行に
+                if p%mid == 0:
+                    cnt += p//mid  
+                else:
+                    cnt += p//mid+1
+                
+            if cnt <= h:
+                r = mid
+            else:
+                l = mid
+
+        return r
+    
+# Find Minimum in Rotated Sorted Array
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        l, r = 0, len(nums)-1
+
+        while r >= l:
+            mid = (l+r)//2
+
+            if nums[r] > nums[mid]:
+                r = mid
+            else:
+                l = mid+1
+
+        return nums[r]
+    
+# Search in Rotated Sorted Array
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        l, r = 0, len(nums)-1
+
+        while l <= r:
+            mid = (l+r) // 2
+
+            if nums[mid] == target:
+                return mid
+            
+            if nums[l] <= nums[mid]:
+                if nums[l] <= target < nums[mid]:
+                    r = mid-1
+                else:
+                    l = mid+1
+            else:
+                if nums[mid] < target <= nums[r]:
+                    l = mid +1
+                else:
+                    r = mid-1
+
+        return -1
+
+
+# Time Based Key-Value Store
+# use binary search for search-number
+from collections import defaultdict
+class TimeMap:
+    
+    def __init__(self):
+        self.timedict = defaultdict(list)
+        self.datadict = {}
+
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        self.timedict[key].append(timestamp)
+        self.datadict[(key, timestamp)] = value
+
+    def get(self, key: str, timestamp: int) -> str:
+        if self.timedict[key]:
+            if self.datadict.get((key, timestamp)):
+                return self.datadict[(key, timestamp)]
+            else:
+                l, r = -1, len(self.timedict[key])
+
+                while r - l > 1:
+                    mid = (r+l)//2
+                    if self.timedict[key][mid] <= timestamp:
+                        l = mid
+                    else:
+                        r = mid
+                time = self.timedict[key][l]
+                return self.datadict[(key, time)] if l > -1 else ""
+            
+            
+# Median of Two Sorted Arrays
+class Solution:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        pass
+
+# Longest Repeating Character Replacement
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        res = 0
+        charSet = set(s)
+
+        for c in charSet:
+            count = l = 0
+            for r in range(len(s)):
+                if s[r] == c:
+                    count += 1
+                
+                while (r -l +1) - count > k:
+                    if s[l] == c:
+                        count -= 1
+                    l += 1
+
+                res = max(res, r -l+1)
+        return res
+    
+# Permutation in String
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        if len(s1) > len(s2):
+            return False
+        
+        count1 = Counter(s1)
+        window = Counter()
+
+        l = 0
+
+        for r in range(len(s2)):
+            window[s2[r]] += 1
+
+            if r -l +1 > len(s1):
+                window[s2[l]] -= 1
+                if window[s2[l]] == 0:
+                    del window[s2[l]]
+                l += 1
+
+            if window == count1:
+                return True
+            
+        return False
+    
+# Kth Largest Element in a Stream
+import heapq
+class KthLargest:
+
+    def __init__(self, k: int, nums: List[int]):
+        self.k = k
+        self.heap = nums
+        heapq.heapify(self.heap)
+
+        while len(self.heap) > k:
+            heapq.heappop(self.heap)
+
+    def add(self, val: int) -> int:
+        heapq.heappush(self.heap)
+
+        if len(self.heap) > self.k:
+            heapq.heappop(self.heap)
+
+        return self.heap[0]
+        
+# Last Stone Weight
+class Solution:
+    def lastStoneWeight(self, stones: List[int]) -> int:
+        import heapq
+        hp = [-s for s in stones]
+        heapq.heapify(hp)
+
+        while len(hp) > 1:
+            hp1 = heapq.heappop(hp)
+            hp2 = heapq.heappop(hp)
+
+            smashed = abs(hp1-hp2)
+            heapq.heappush(hp, -smashed) if smashed != 0 else None
+
+        return 0 if not hp else hp[0]
+    
+# Maximum Subarray
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        cur = nums[0]
+        ans = nums[0]
+
+        for i in range(1, len(nums)):
+            cur = max(nums[i], nums[i]+cur)
+            ans = max(cur, ans)
+
+        return ans
+
+# Subsets
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        ans = []
+        tmp = []
+        def dfs(i):
+            if i >= len(nums):
+                ans.append(tmp[:])
+
+            dfs(i+1)
+            tmp.append(nums[i])
+            dfs(i+1)
+            tmp.pop()
+
+        
+        dfs(0)
+        return ans
+    
+# Combination Sum
+class Solution:
+    def combinationSum(self, nums: List[int], target: int) -> List[List[int]]:
+        ans = []
+        tmp = []
+
+        def dfs(i):
+            if len(nums) == i and sum(tmp) == target:
+                ans.append(tmp[:])
+
+            dfs(i+1)
+            tmp.append(nums[i])
+            dfs(i+1)
+            tmp.pop()
+
+        dfs(0)
+        return ans
+    
+# Combination Sum II
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        ans = []
+        tmp = []
+        candidates.sort()
+
+        def dfs(i):
+            if i >= len(candidates) or target <= sum(tmp):
+                if target == sum(tmp):
+                    ans.append(tmp[:])
+                return
+            nxt = i+1
+            while nxt < len(candidates) and candidates[nxt] == candidates[i]:
+                nxt += 1
+            tmp.append(candidates[i])
+            dfs(i+1)
+
+            tmp.pop()
+            dfs(nxt)
+
+        dfs(0)
+        return ans
+    
+
+# bfsはqueueを使う
+# Permutations
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        
+        ans = []
+        tmp = []
+
+        def dfs(i):
+            if i >= len(nums):
+                ans.append(tmp[:])
+                return 
+
+            for n in nums:
+                if n in tmp:
+                    continue
+                tmp.append(n)
+                dfs(i+1)
+                tmp.pop()
+
+        dfs(0)
+        return ans
+
+# Subsets II
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        tmp = []
+        nums.sort()
+
+        def dfs(i):
+            if i >= len(nums):
+                res.append(tmp[:])
+                return
+            nxt = i+1
+            while nxt < len(nums) and nums[nxt] == nums[i]:
+                nxt += 1
+
+            dfs(i+1)
+            tmp.append(nums[i])
+            dfs(nxt)
+            tmp.pop()
+
+        dfs(0)
+        return res
+    
+# Generate Parentheses
