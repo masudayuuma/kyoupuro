@@ -2395,4 +2395,244 @@ class Solution:
         dfs(0)
         return res
     
+# dfs( s+1)はimmutable
 # Generate Parentheses
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        ans = []
+
+        def dfs(open, close, s):
+            if open < close:
+                return
+            if len(s) > n*2 or open > n or close > n:
+                return
+            if len(s) == n*2:
+                ans.append(s[:])
+                return
+            
+            dfs(open+1, close, s+'(')
+            dfs(open, close+1, s+')')
+
+        dfs(0, 0, '')
+        return ans
+
+    
+# Word Search
+# visitedで訪問済みマス管理
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+        visited = set()
+        def dfs(i, j, index):
+            if index >= len(word):
+                return True
+
+            if not 0 <= i < len(board) or not 0 <= j < len(board[0]) or not board[i][j] == word[index] or (i, j) in visited:
+                return False
+            
+            for dy, dx in diff:
+                flag = dfs(i+dy, j+dx, index+1)
+                if flag == True:
+                    return True
+            visited.remove((i, j))
+                
+            return False
+        
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+
+                f = dfs(i, j, 0)
+                if f == True:
+                    return True
+        return False
+        
+# Palindrome Partitioning
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        ans = []
+        tmp = []
+
+        def is_palindrome(text):
+            return text == text[::-1]
+        
+        def dfs(start):
+            if start == len(s):
+                ans.append(tmp[:])
+                return
+            
+            for end in range(start+1, len(s)+1):
+                part = s[start:end]
+
+                if is_palindrome(part):
+                    tmp.append(part)
+                    dfs(end)
+                    tmp.pop()
+
+        dfs(0)
+        return ans
+    
+# Letter Combinations of a Phone Number
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        digits = list(digits)
+        ans = []
+        tmp = []
+        digits_dict = {
+            '2': ['a', 'b', 'c'],
+            '3': ['d', 'e', 'f'],
+            '4': ['g', 'h', 'i'],
+            '5': ['j', 'k', 'l'],
+            '6': ['m', 'n', 'o'],
+            '7': ['p', 'q', 'r', 's'],
+            '8': ['t', 'u', 'v'],
+            '9': ['w', 'x', 'y', 'z'],
+        }
+
+        def dfs(i):
+            if i >= len(digits):
+                ans.append("".join(tmp[:]))
+                return
+            
+            for d in digits_dict[digits[i]]:
+                tmp.append(d)
+                dfs(i+1)
+                tmp.pop()
+
+        dfs(0)
+        return ans
+
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        ans = []
+        board = [["."] * n for _ in range(n)]
+
+        cols = set()
+        diag1 = set()  # row - col
+        diag2 = set()  # row + col
+
+        def dfs(row):
+            if row == n:
+                ans.append(["".join(r) for r in board])
+                return
+
+            for col in range(n):
+                if col in cols or (row - col) in diag1 or (row + col) in diag2:
+                    continue
+
+                board[row][col] = "Q"
+                cols.add(col)
+                diag1.add(row - col)
+                diag2.add(row + col)
+
+                dfs(row + 1)
+
+                board[row][col] = "."
+                cols.remove(col)
+                diag1.remove(row - col)
+                diag2.remove(row + col)
+
+        dfs(0)
+        return ans
+
+# Number of Islands
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        visited = set()
+        diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+        cnt = 0
+
+        def dfs(i, j):    
+            if not 0 <= i < len(grid) or not 0 <= j < len(grid[0]) or (i, j) in visited or grid[i][j] == '0':
+                return False
+            visited.add((i, j))
+            for dy, dx in diff:
+                y = i+dy
+                x = j+dx
+                dfs(y, x)
+            return True
+
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                f = dfs(i, j)
+                if f == True:
+                    cnt += 1
+
+        return cnt
+    
+# Max Area of Island
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        maxisland = 0
+        diff = ((1, 0), (-1, 0), (0, 1,), (0, -1))
+        def dfs(i, j):
+            if not 0 <= i < len(grid) or not 0 <= j < len(grid[0] or grid[i][j] == 0):
+                return 0
+            cnt = 1
+            for dy, dx in diff:
+                y = dy+i
+                x = dx+j
+                cnt += dfs(y, x)
+
+            return cnt
+        
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                ans = dfs(i, j)
+                maxisland = max(maxisland, ans)
+
+        return maxisland
+    
+# Clone Graph
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        if not node:
+            return None
+        
+        old_to_new = {}
+
+        def dfs(n):
+            if n in old_to_new:
+                return old_to_new[n]
+            copy = Node(n.val)
+            old_to_new[n] = copy
+
+            for nei in n.neighbors:
+                copy.neighbors.append(dfs(nei))
+            return copy
+        return dfs(node)
+    
+# Islands and Treasure
+class Solution:
+    def islandsAndTreasure(self, grid: List[List[int]]) -> None:
+        INF = 2147483647
+        q = deque()
+        visited = set()
+        diff = ((1, 0), (-1, 0), (0, 1,), (0, -1))
+
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == 0:
+                    q.append((i, j, 0))
+                    visited.add((i, j))
+
+        while q:
+            i, j, cnt = q.popleft()
+            for dy, dx in diff:
+                y = dy+i
+                x = dx+j
+                if 0 <= y < len(grid) and 0 <= x < len(grid[0]) and (y, x) not in visited and not grid[y][x] == -1:
+                    q.append((y, x, cnt+1))
+                    grid[y][x] = cnt+1
+                    visited.add((y, x))
+
+# Rotting Fruit
+
+                
