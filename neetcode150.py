@@ -2634,5 +2634,218 @@ class Solution:
                     visited.add((y, x))
 
 # Rotting Fruit
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        
+        diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
 
+        anscnt = 0
+        q = deque()
+
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == 2:
+                    q.append(i, j, 0)
+
+        while q:
+            i, j, cnt = q.pop()
+            anscnt = max(anscnt, cnt)
+
+            for dy, dx in diff:
+                y = dy+i
+                x = dx+j
+                if not 0 <= y < len(grid) or not 0 <= x < len(grid[0]) or not grid[y][x] == 1:
+                    continue
                 
+                q.append((i, j, cnt+1))
+                grid[i][j] = 2
+                
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+
+                if grid[i][j] == 1:
+                    return -1
+                
+        return anscnt
+                
+# Pacific Atlantic Water Flow
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+        pacificset = set()
+        atlanticset = set()
+
+        def dfs(i, j, seaname):
+            if not 0 <= i < len(heights) or not 0 <= j < len(heights[0]):
+                return
+            if (seaname == 'pacific' and (i, j) in pacificset) or (seaname == 'atlantic' and (i, j) in atlanticset):
+                return
+            elif seaname == 'pacific':
+                pacificset.add((i, j))
+            elif seaname == 'atlantic':
+                atlanticset.add((i, j))
+
+            for dy, dx in diff:
+                y = dy+i
+                x = dx+j
+                if (not 0 <= i < len(heights) or not 0 <= j < len(heights[0])) and heights[y][x] >= heights[i][j]:
+                    dfs(y, x, seaname)
+
+
+        for i in range(len(heights)):
+            dfs(i, 0, 'pacific')
+            dfs(i, len(heights[0])-1, 'atlantic')
+
+        for j in range(len(heights[0])):
+            dfs(0, j, 'pacific')
+            dfs(len(heights)-1, j, 'atlantic')
+
+        ans = pacificset & atlanticset
+
+        ans = [ a for a in ans]
+
+        return ans
+    
+# Surrounded Regions
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+        visited = set()
+        targetisland = set()
+
+        def dfs(i, j):
+            if not 0 <= i < len(board) or not 0 <= j < len(board[0]) or board[i][j] != 'O' or (i, j) in visited:
+                return True
+            
+            visited.add((i, j))
+            targetisland.add((i, j))
+
+            surrounded = not (
+                i == 0 or i == len(board) - 1 or
+                j == 0 or j == len(board[0]) - 1
+            )
+
+            for dy, dx in diff:
+                y = dy + i
+                x = dx + j
+                flag = dfs(y, x)
+                if flag == False:
+                    surrounded = False
+
+            return surrounded
+
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if board[i][j] == 'O' and (i, j) not in visited:
+                    f = dfs(i, j)
+                    if f == True:
+                        for y, x in targetisland:
+                            board[y][x] = 'X'
+                    targetisland.clear()
+
+
+# Course Schedule
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        graph = {i: [] for i in range(numCourses)}
+
+        for a, b in prerequisites:
+            graph[b].append(a)
+
+        visiting = set()
+        visited = set()
+
+        def dfs(node):
+            if node in visiting:
+                return False
+            
+            if node in visited:
+                return True
+            
+            visiting.add(node)
+
+            for nei in graph[node]:
+                if not dfs(nei):
+                    return False
+                
+            visiting.remove(node)
+            visited.add(node)
+            return True
+        
+        for i in range(numCourses):
+            if not dfs(i):
+                return False
+            
+        return True
+    
+# Course Schedule II
+# トポロジカルソート　これ重要らしい
+# Iの拡張
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        graph = {i: [] for i in range(numCourses)}
+
+        for a, b in prerequisites:
+            graph[b].append(a)
+
+        visiting = set()
+        visited = set()
+        res = []
+
+        def dfs(node):
+            if node in visiting:
+                return False
+            if node in visited:
+                return True
+            
+            visiting.add(node)
+
+            for nei in graph[node]:
+                if not dfs(nei):
+                    return False
+            visiting.remove(node)
+            visited.add(node)
+            res.append(node)
+            return True
+        
+        for i in range(numCourses):
+            if not dfs(i):
+                return []
+            
+        return res[::-1]
+
+# BFS / indegree
+from collections import deque
+
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        graph = {i: [] for i in range(numCourses)}
+        indegree = [0] * numCourses
+
+        for a, b in prerequisites:
+            graph[b].append(a)
+            indegree[a] += 1
+
+        q = deque()
+
+        for i in range(numCourses):
+            if indegree[i] == 0:
+                q.append(i)
+
+        res = []
+
+        while q:
+            node = q.popleft()
+            res.append(node)
+
+            for nei in graph[node]:
+                indegree[nei] -= 1
+                if indegree[nei] == 0:
+                    q.append(nei)
+
+        if len(res) == numCourses:
+            return res
+        else:
+            return []
+        
+# Graph Valid Tree
