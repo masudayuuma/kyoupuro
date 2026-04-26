@@ -2849,3 +2849,374 @@ class Solution:
             return []
         
 # Graph Valid Tree
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        pass
+
+# Best Time to Buy and Sell Stock
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        maxprofit = 0
+        minp = 1000000
+        for p in prices:
+            if p < minp:
+                minp = p
+
+            maxprofit = max(maxprofit, p-minp)
+
+        return maxprofit
+    
+# Longest Substring Without Repeating Characters
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        maxlenght = 0
+        charset = set()
+        deli = 0
+
+        for r in range(len(s)):
+            while s[r] in charset:
+                charset.remove(s[deli])
+                deli += 1
+
+            charset.add(s[r])
+            maxlenght = max(maxlenght, len(charset))
+
+        return maxlenght
+
+# Longest Repeating Character Replacement
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        charset = set(list(s))
+        maxlenght = 0
+
+        for c in charset:
+            i = 0
+            l = 0
+            others = 0
+            while i < len(s):
+                if c != s[i]:
+                    others += 1
+                
+                while others > k:
+                    if s[l] != c:
+                        others -= 1
+                    l += 1
+
+                maxlenght = max(maxlenght, i-l+1)
+                i += 1
+        return maxlenght
+    
+# Permutation in String
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        s1counter = Counter(s1)
+        window = Counter()
+
+        l = 0
+        for r in range(len(s2)):
+            window[s2[r]] += 1
+            while s1counter[s2[r]] < window[s2[r]]:
+                window[s2[l]] -= 1
+                l += 1
+
+            if s1counter == window:
+                return True
+            
+        return False
+    
+# Minimum Window Substring
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        need = Counter(t)
+        window = Counter()
+        l = 0
+
+        def contains():
+            for c in need:
+                if window[c] < need[c]:
+                    return False
+            return True
+        
+        ans = ''
+
+        for r in range(len(s)):
+            window[s[r]] += 1
+
+            while contains():
+                cur = s[l:r+1]
+                if ans == '' or len(cur) < len(ans):
+                    ans = cur
+
+                window[s[l]] -= 1
+                l += 1
+        return ans
+    
+# Sliding Window Maximum
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        output = []
+        q = deque()
+        l = r = 0
+
+        while r < len(nums):
+            while q and nums[q[-1]] < nums[r]:
+                q.pop()
+            q.append(r)
+
+            if l > q[0]:
+                q.popleft()
+
+            if (r+1) >= k:
+                output.append(nums[q[0]])
+                l += 1
+            r += 1
+        return output
+    
+# Binary Search
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        
+        l, r = -1, len(nums)
+
+        while r - l > 1:
+            mid = (r+l)//2
+            if nums[mid] >= target:
+                r = mid
+            else:
+                l = mid
+
+        return r if nums[r] == target else -1
+    
+# Search a 2D Matrix
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        ng, ok = -1, len(matrix[0])
+
+        for i in range(len(matrix)):
+            while ok - ng > 1:
+                mid = (ng+ok)//2
+
+                if matrix[i][mid] >= target:
+                    ok = mid
+                else:
+                    ng = mid
+            if matrix[i][ok] == target:
+                return True
+            
+        return False
+
+# Koko Eating Bananas
+class Solution:
+    def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        ng, ok = -1, max(piles)
+        import math
+
+        while ok-ng > 1:
+            mid = (ok+ng)//2
+
+            cnt = 0
+            for p in piles:
+                cnt += math.ceil(p/mid)
+
+            if mid >= cnt:
+                ok = mid
+            else:
+                ng = mid
+
+        return ok
+    
+# Find Minimum in Rotated Sorted Array
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        l, r = 0, len(nums)-1
+
+        while r > l:
+            mid = (r+l)//2
+
+            if nums[mid] > nums[r]:
+                l = mid
+            else:
+                r = mid-1
+
+        return nums[r]
+
+# Search in Rotated Sorted Array
+# index系は r>=lでやる, 値を見つけたい時はこれ
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        l, r = 0, len(nums)-1
+
+        while r >= l:
+            mid = (r+l)//2
+            if nums[mid] == target:
+                return mid
+
+            if nums[mid] >= nums[l]:
+                if nums[l] <= target < nums[mid]:
+                    r = mid-1
+                else:
+                    l = mid+1
+            else:
+                if nums[mid] < target <= nums[r]:
+                    l = mid+1
+                else:
+                    r = mid-1
+
+        return -1
+
+# Time Based Key-Value Store
+class TimeMap:
+    from collections import defaultdict
+
+    def __init__(self):
+        self.timedict = defaultdict(list)
+        self.timeworddict = defaultdict(str)
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        self.timedict[key].append(timestamp)
+        self.timeworddict[(key, timestamp)] = value
+
+    def get(self, key: str, timestamp: int) -> str:
+        l, r = -1, len(self.timedict[key])
+
+        while r-l > 1:
+            mid = (r+l)//2
+            if self.timedict[key][mid] <= timestamp:
+                l = mid
+            else:
+                r = mid
+        if l == -1:
+            return ''
+
+        return self.timeworddict[(key, self.timedict[key][l])]
+
+
+# Median of Two Sorted Arrays
+class Solution:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        def get_kth(a, b, k):
+            i = 0
+            j = 0
+
+            while True:
+                if i == len(a):
+                    return b[j+k-1]
+                if j == len(b):
+                    return a[i+k-1]
+                if k == 1:
+                    return min(a[i], b[j])
+                
+                half = k//2
+
+                new_i = min(i+half, len(a))-1
+                new_j = min(j+half, len(b))-1
+                if a[new_i] <= b[new_j]:
+                    k -= new_i-i+1
+                    i = new_i+1
+                else:
+                    k -= new_j-j+1
+                    j = new_j+1
+
+        total = len(nums1)+len(nums2)
+        left = (total+1)//2
+        right = (total+2)//2
+        return (get_kth(nums1, nums2, left)+get_kth(nums1, nums2, right))/2
+
+# Single Number
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        
+        for n in nums:
+            ans ^= n
+
+        return ans
+    
+# Number of 1 Bits
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        
+        ans = 0
+
+        for i in range(32):
+            if n >> i & 1:
+                ans += 1
+
+        return ans
+    
+# Counting Bits
+class Solution:
+    def countBits(self, n: int) -> List[int]:
+        output = [0]*(n+1)
+
+        for i in range(1, n+1):
+            for mask in range(32):
+                if i >> mask & 1:
+                    output[i] += 1
+
+        return output
+    
+# Reverse Bits
+class Solution:
+    def reverseBits(self, n: int) -> int:
+        
+        ans = 0
+
+        for i in range(32):
+            if n >> i & 1:
+                ans += 2**(32-i-1)
+
+        return ans
+    
+# Missing Number
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        ans = 0
+        for n in nums:
+            ans ^= n
+
+        for n in range(1, len(nums)+1):
+            ans ^= n
+
+        return ans
+    
+class Solution:
+    def getSum(self, a: int, b: int) -> int:
+        ans = 0
+        carry = 0
+
+        for i in range(32):
+            af = 1 if (a >> i) & 1 else 0
+            bf = 1 if (b >> i) & 1 else 0
+
+            bit = af ^ bf ^ carry
+            carry = 1 if (af & bf) or (af & carry) or (bf & carry) else 0
+
+            ans += 2 ** i if bit == 1 else 0
+
+        # 32bit符号付き整数に変換
+        if ans >= 2 ** 31:
+            ans -= 2 ** 32
+
+        return ans
+    
+# Reverse Integer
+class Solution:
+    def reverse(self, x: int) -> int:
+        res = 0
+        sign = -1 if x < 0 else 1
+        x = abs(x)
+
+        while x:
+            digit = x % 10
+            x //= 10
+
+            # オーバーフローチェック
+            if res > (2**31 - 1) // 10:
+                return 0
+            if res == (2**31 - 1) // 10 and digit > 7:
+                return 0
+
+            res = res * 10 + digit
+
+        return sign * res
+    

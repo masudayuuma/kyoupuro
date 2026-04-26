@@ -1261,33 +1261,60 @@
 #     print(*a)
 
 # D - Count Simple Paths
-H, W, K = map(int, input().split())
+# H, W, K = map(int, input().split())
 
-grid = [list(input()) for _ in range(H)]
-ans = 0
+# grid = [list(input()) for _ in range(H)]
+# ans = 0
 
-diff = ((-1, 0), (1, 0), (0, -1), (0, 1))
-def dfs(i, j, rest):
-    global ans
-    if rest == 0:
-        ans += 1
-        return
+# diff = ((-1, 0), (1, 0), (0, -1), (0, 1))
+# def dfs(i, j, rest):
+#     global ans
+#     if rest == 0:
+#         ans += 1
+#         return
     
-    original = grid[i][j]
-    grid[i][j] = '#' 
+#     original = grid[i][j]
+#     grid[i][j] = '#' 
 
-    for dx, dy in diff:
-        tx, ty = i+dx, j+dy
-        if not 0 <= tx < H or not 0 <= ty < W or grid[tx][ty] == '#':
-            continue
-        dfs(tx, ty, rest-1)
+#     for dx, dy in diff:
+#         tx, ty = i+dx, j+dy
+#         if not 0 <= tx < H or not 0 <= ty < W or grid[tx][ty] == '#':
+#             continue
+#         dfs(tx, ty, rest-1)
     
-    grid[i][j] = original
+#     grid[i][j] = original
 
 
-for i in range(H):
-    for j in range(W):
-        if grid[i][j] == '.':
-            dfs(i, j, K)
+# for i in range(H):
+#     for j in range(W):
+#         if grid[i][j] == '.':
+#             dfs(i, j, K)
 
-print(ans)
+# print(ans)
+
+# D - Forbidden List 2
+from bisect import bisect_left
+N, Q = map(int, input().split())
+A = list(map(int, input().split()))
+A.sort()
+
+for _ in range(Q):
+    x, y = map(int, input().split())
+    si = bisect_left(A, x)
+
+    ng = si-1
+    ok = N
+
+    while ok - ng > 1:
+        mid = (ok+ng)//2
+        total = A[mid]-x+1
+        forbidden = mid-si+1
+        allowed = total - forbidden
+
+        if allowed >= y:
+            ok = mid
+        else:
+            ng = mid
+
+    ans = x+(y-1)+(ok-si)
+    print(ans)
