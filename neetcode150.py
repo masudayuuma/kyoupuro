@@ -3220,3 +3220,202 @@ class Solution:
 
         return sign * res
     
+# Graph Valid Tree
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        graph = defaultdict(list)
+
+        for a, b in edges:
+            graph[a].append(b)
+            graph[b].append(a)
+
+        visited = set()
+
+        def dfs(node, parent):
+            visited.add(node)
+
+            for nei in graph[node]:
+                if nei == parent:
+                    continue
+                if nei in visited:
+                    return False
+                if not dfs(nei, node):
+                    return False
+            return True
+        
+        if not dfs(0, -1):
+            return False
+        return len(visited) == n
+    
+# Number of Connected Components in an Undirected Graph
+class Solution:
+    def countComponents(self, n: int, edges: List[List[int]]) -> int:
+        graphdict = defaultdict(list)
+        graph = [False]*n
+
+        for a, b in edges:
+            graphdict[a].append(b)
+            graphdict[b].append(a)
+
+
+        def dfs(i):
+            if i >= n or graph[i] == True:
+                return
+            
+            graph[i] = True
+            for a in graphdict[i]:
+                dfs(a)
+
+
+        for i in range(n):
+            if graph[i] == True:
+                continue
+            else:
+                dfs(i)
+                cnt += 1
+
+        return cnt
+
+# Redundant Connection
+class Solution:
+    def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
+        parent = [i for i in range(len(edges)+1)]
+
+        def find(x):
+            while parent[x] != x:
+                parent[x] = parent[parent[x]]
+                x = parent[x]
+            return x
+        
+        def union(a, b):
+            rootA = find(a)
+            rootB = find(b)
+
+            if rootA == rootB:
+                return False
+            
+            parent[rootB] = rootA
+            return True
+        
+        for a, b in edges:
+            if not union(a, b):
+                return [a, b]
+
+# Word Ladder
+from collections import deque
+from typing import List
+
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        wordSet = set(wordList)
+
+        if endWord not in wordSet:
+            return 0
+
+        q = deque([(beginWord, 1)])
+        visited = set([beginWord])
+
+        while q:
+            word, dist = q.popleft()
+
+            if word == endWord:
+                return dist
+
+            for i in range(len(word)):
+                for ch in "abcdefghijklmnopqrstuvwxyz":
+                    nxt = word[:i] + ch + word[i+1:]
+
+                    if nxt in wordSet and nxt not in visited:
+                        visited.add(nxt)
+                        q.append((nxt, dist + 1))
+
+        return 0
+
+# Climbing Stairs
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        dp = [0]*(n+1)
+        dp[1] = 1
+        dp[2] = 2
+        for i in range(3, n+1):
+            dp[i] = dp[i-1]+dp[i-2]
+
+        return dp[-1]
+    
+# Min Cost Climbing Stairs
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        dp = [0]*(len(cost)+1)
+
+        for i in range(2, len(cost)+1):
+            dp[i] = min(dp[i-1]+cost[i-1], dp[i-2]+cost[i-2])
+
+        return dp[-1]
+
+# House Robber
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        dp = [0]*len(nums)
+
+        if len(nums) == 1:
+            return nums[0]
+        if len(nums) == 2:
+            return max(nums[0], nums[1])
+        dp[0] = nums[0]
+        dp[1] = max(nums[0], nums[1])
+
+        for i in range(2, len(nums)):
+            dp[i] = max(dp[i-1], dp[i-2]+nums[i])
+
+        return dp[-1]
+        
+# House Robber II
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n == 1:
+            return nums[0]
+        if n == 2:
+            return max(nums[0], nums[1])
+        if n == 3:
+            return max(nums[0]+nums[2], nums[1])
+        dp1 = [0]*(len(nums))
+        dp1[0] = nums[0]
+        dp1[1] = max(nums[0], nums[1])
+        dp2 = [0]*(len(nums))
+        dp2[1] = nums[1]
+        dp2[2] = nums[2]
+
+
+        for i in range(2, len(nums)-1):
+            dp1[i] = max(dp1[i-1], dp1[i-2]+nums[i])
+
+        for i in range(3, len(nums)):
+            dp2[i] = max(dp2[i-1], dp2[i-2]+nums[i])
+
+        return max(dp1[-1], dp2[-1])
+
+# Longest Palindromic Substring
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        dp = [1]*len(s)
+
+        for c in range(len(s)):
+            now1 = 1
+            now2 = 0
+            l = c-1
+            r = c+1
+            while l <= 0 and r < len(s) and s[l] == s[r]:
+                now1 += now1+2
+                l -= 1
+                r += 1
+
+            l = c
+            r = c+1
+            while l <= 0 and r < len(s) and s[l] == s[r]:
+                now2 += now2+2
+                l -= 1
+                r += 1
+
+            dp[c] = max(now1, now2)
+
