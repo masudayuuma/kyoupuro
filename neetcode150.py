@@ -3398,24 +3398,326 @@ class Solution:
 # Longest Palindromic Substring
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        dp = [1]*len(s)
+        ans = ''
 
         for c in range(len(s)):
-            now1 = 1
-            now2 = 0
-            l = c-1
-            r = c+1
-            while l <= 0 and r < len(s) and s[l] == s[r]:
-                now1 += now1+2
+            l = c
+            r = c
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                if r-l +1 > len(ans):
+                    ans = s[l:r+1]
                 l -= 1
                 r += 1
 
             l = c
             r = c+1
-            while l <= 0 and r < len(s) and s[l] == s[r]:
-                now2 += now2+2
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                if r-l + 1 > len(ans):
+                    ans = s[l+r+1]
                 l -= 1
                 r += 1
 
-            dp[c] = max(now1, now2)
+        return ans
 
+# Palindromic Substrings
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        ans = 0
+
+        for c in range(len(s)):
+            l = c
+            r = c
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                ans += 1
+                l -= 1
+                r += 1
+
+            l = c
+            r = c+1
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                ans += 1
+                l -= 1
+                r += 1
+
+        return ans
+    
+# Decode Ways
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        if s[0] == '0':
+            return 0
+        if len(s) == 1:
+            return 1
+        
+        dp = [0]*(len(s)+1)
+        dp[0] = 1
+        dp[1] = 1
+
+        for i in range(2, len(s)+1):
+            if s[i-1] != '0':
+                dp[i] += dp[i-1]
+                
+            if '10' <= s[i-2:i] <= '26':
+                dp[i] += dp[i-2]
+
+        return dp[-1]
+    
+# Coin Change
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        dp = [[-1]*(len(amount)+1) for _ in range(len(coins)+1)]
+
+        
+        for i in range(1, len(coins)+1):
+            for j in range(len(amount)+1):
+
+                dp[i][j] = dp[i-1][j]
+                if i-1 >= 0 and j-coins[i-1] >= 0:
+                    dp[i][j] = max(dp[j-1][i], dp[i][j-coins[i-1]]+1)
+
+        return dp[-1][-1]
+    
+# Maximum Product Subarray
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        cur_max = nums[0]
+        cur_min = nums[0]
+        ans = nums[0]
+
+        for i in range(1, len(nums)):
+            x = nums[i]
+            tmp_max = max(cur_max*nums[i], cur_min*nums[i], x)
+            tmp_min = min(cur_max*nums[i], cur_min*nums[i], x)
+
+            ans = max(tmp_max, tmp_min, x)
+
+        return ans
+        
+# Word Break
+# Word Break
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        dp = [False]*(len(s)+1)
+        dp[-1] = True
+
+        for i in range(len(s)-1, -1, -1):
+            for word in wordDict:
+                if i+len(word) <= len(s) and s[i:i+len(word)] == word:
+                    dp[i] = dp[i+len(word)]
+                if dp[i] == True:
+                    break
+
+        return dp[0]
+    
+# Longest Increasing Subsequence
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        dp = [1]*len(nums)
+
+        for i in range(len(nums)):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j]+1)
+
+        return max(dp)
+
+# Longest Increasing Subsequence
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        import bisect
+
+        tails = []
+
+        for x in nums:
+            i = bisect.bisect_left(tails, x)
+            if i == len(tails):
+                tails.append(x)
+            else:
+                tails[i] = x
+        return len(tails)
+    
+# Partition Equal Subset Sum
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        if sum(nums) % 2 == 1:
+            return False
+        
+        total = sum(nums)//2
+        dp = [False]*(len(nums)+1)
+        dp[0] = True
+
+        for i in range(len(nums)+1, -1, 0):
+            if i-nums[i] >= 0 and dp[i-nums[i]]:
+                dp[i] = dp[i-nums[i]]
+
+        return dp[-1]
+
+# Unique Paths
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[0]*(n+1) for _ in range(m+1)]
+        dp[1][1] = 1
+
+        for i in range(1, m+1):
+            for j in range(1, n+1):
+                dp[i][j] += dp[i-1][j]+dp[i][j-1]
+
+
+        return dp[-1][-1]
+    
+# Longest Common Subsequence
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        m = len(text1)
+        n = len(text2)
+
+        dp= [[0]*(n+1) for _ in range(m+1)]
+
+        for i in range(1, m+1):
+            for j in range(1, n+1):
+                dp[i][j] = max(dp[i][j-1], dp[i-1][j])
+
+                if text1[i] == text2[j]:
+                    dp[i][j] = max(dp[i][j], dp[i-1][j-1] + 1)
+
+        return dp[-1][-1]
+    
+# Best Time to Buy and Sell Stock with Cooldown
+# 状態DP
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        hold = -prices[0]
+        sold = 0
+        rest = 0
+
+        for price in prices[1:]:
+            prev_hold = hold
+            prev_sold = sold
+            prev_rest = rest
+
+            hold = max(prev_hold, prev_rest-price)
+            sold = prev_hold+price
+            rest = max(prev_rest, prev_sold)
+
+        return max(sold, rest)
+    
+# Rotate Image
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        n = len(matrix)
+
+        # 転置（対角線で反転）
+        for i in range(n):
+            for j in range(i+1, n):
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+
+        # 各行を反転
+        for row in matrix:
+            row.reverse()
+                
+# Coin Change II
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        a = len(amount)+1
+        b = len(coins)+1
+
+        dp = [[0]*a for _ in range(b)]
+
+        for i in range(b):
+            dp[i][0] = 1
+
+        for i in range(1, b):
+            for j in range(1, a):
+                dp[i][j] = dp[i-1][j]
+
+                if j-coins[i-1] >= 0:
+                    dp[i][j] += dp[i][j-coins[i-1]]
+
+        return dp[-1][-1]
+    
+# Target Sum
+# memo+DFS
+class Solution:
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        memo = {}
+
+        def dfs(i, total):
+            if i == len(nums):
+                if total == target:
+                    return 1
+                else:
+                    return 0
+            if (i, total) in memo:
+                return memo[(i, total)]
+            plus = dfs(i+1, total+nums[i])
+            minus = dfs(i+1, total-nums[i])
+
+            memo[(i, total)] = plus+minus
+            return memo[(i, total)]
+        
+        return dfs(0, 0)
+    
+# Target Sum
+# 辞書DP
+class Solution:
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        dp = {0: 1}
+
+        for num in nums:
+            next_dp = {}
+            for total, count in dp.items():
+                next_dp[total+num] = next_dp.get(total+num, 0)+ count
+                next_dp[total-num] = next_dp.get(total-num, 0)+ count
+            dp = next_dp
+
+        return dp.get(target, 0)
+    
+# Interleaving String
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        
+        if len(s1) + len(s2) != len(s3):
+            return False
+        
+        m, n = len(s1), len(s2)
+
+        dp = [[False]*(n+1) for _ in range(m+1)]
+        dp[0][0] = True
+
+        for i in range(m+1):
+            for j in range(n+1):
+                if i > 0 and s1[i-1] == s3[i+j-1]:
+                    dp[i][j] |= dp[i-1][j]
+                if j > 0 and s2[j-1] == s3[i+j-1]:
+                    dp[i][j] |= dp[i][j-1]
+
+        return dp[m][n]
+    
+# Interleaving String
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        
+        memo = {}
+
+        def dfs(i, j):
+            if i == len(s1) and j == len(s2):
+                return True
+            
+            if (i, j) in memo:
+                return memo[(i, j)]
+            
+            k = i+j
+
+            if i < len(s1) and s[i] == s3[k]:
+                if dfs(i+1, j):
+                    memo[(i, j)] = True
+                    return True
+                
+            if j < len(s2) and s2[j] == s3[k]:
+                if dfs(i, j+1):
+                    memo[(i, j)] = True
+                    return True
+                
+            memo[(i, j)] = False
+            return False
+        return dfs(0, 0)
