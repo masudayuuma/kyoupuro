@@ -3708,7 +3708,7 @@ class Solution:
             
             k = i+j
 
-            if i < len(s1) and s[i] == s3[k]:
+            if i < len(s1) and s1[i] == s3[k]:
                 if dfs(i+1, j):
                     memo[(i, j)] = True
                     return True
@@ -3721,3 +3721,5 @@ class Solution:
             memo[(i, j)] = False
             return False
         return dfs(0, 0)
+    
+
