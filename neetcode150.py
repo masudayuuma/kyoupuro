@@ -3723,3 +3723,841 @@ class Solution:
         return dfs(0, 0)
     
 
+# Longest Increasing Path in Matrix
+class Solution:
+    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+        memo = {}
+        diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+        m = len(matrix)
+        n = len(matrix[0])
+        maxans = 0
+
+        def dfs(i, j):
+            if (i, j) in memo:
+                return memo[(i, j)]
+            
+            ans = memo.get((i, j), 1)
+            for dy, dx in diff:
+                y = dy+i
+                x = dx+j
+                if 0 <= y < m and 0 <= x < n and matrix[i][j] < matrix[y][x]:
+                    ans = max(dfs(y, x)+1, ans )
+
+            memo[(i, j)] = ans
+            return memo[(i, j)]
+
+        for i in range(m):
+            for j in range(n):
+                maxans = max(dfs(i, j), maxans)
+
+        return maxans
+
+# Distinct Subsequences
+class Solution:
+    def numDistinct(self, s: str, t: str) -> int:
+        m = len(s)
+        n = len(t)
+
+        dp = [[0]*(n+1) for _ in range(m+1)]
+
+        for i in range(m+1):
+            dp[i][0] == 1
+
+        for i in range(1, m+1):
+            for j in range(1, n+1):
+                if s[i-1] == t[j-1]:
+                    dp[i][j] = dp[i-1][j]+dp[i-1][j-1]
+                else:
+                    dp[i][j] = dp[i-1][j]
+        
+        return dp[-1][-1]
+
+# Edit Distance
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        m = len(word1)
+        n = len(word2)
+
+        dp = [[0]*(n+1) for _ in range(m+1)]
+
+        for i in range(m+1):
+            dp[i][0] = i
+
+        for j in range(n+1):
+            dp[0][j] = j
+
+        for i in range(1, m+1):
+            for j in range(1, n+1):
+                if word1[i-1] == word2[j-1]:
+                    dp[i][j] = dp[i-1][j-1]
+                else:
+                    dp[i][j] = 1+min(dp[i-1][j], dp[i-1][j-1], dp[i][j-1])
+
+        return dp[m][n]
+
+# Burst Balloons
+class Solution:
+    def maxCoins(self, nums: List[int]) -> int:
+        nums = [1]+nums+[1]
+
+        n = len(nums)
+
+        dp = [[0]*n for _ in range(n)]
+
+        for length in range(2, n):
+            for l in range(n-length):
+                r = l+length
+
+                for k in range(l+1, r):
+                    dp[l][r] = max(dp[l][r], dp[l][k]+dp[k][r]+nums[l]*nums[k]*nums[r])
+
+        return dp[0][n-1]
+    
+# Regular Expression Matching
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        m, n = len(s), len(p)
+
+        dp = [[False]*(n+1) for _ in range(m+1)]
+        dp[0][0] = True
+
+        for j in range(2, n+1):
+            if p[j-1] == '*':
+                dp[0][j] = dp[0][j-2]
+
+        for i in range(1, m+1):
+            for j in range(1, n+1):
+                if p[j-1] == s[i-1] or p[j-1] == '.':
+                    dp[i][j] = dp[i-1][j-1]
+
+                elif p[j-1] == '*':
+                    dp[i][j] = dp[i][j-2]
+
+                    if p[j-2] == s[i-1] or p[j-2] == '.':
+                        dp[i][j] |= dp[i-1]
+
+        return dp[m][n]
+
+# Maximum Subarray
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        ans = nums[0]
+        cur = nums[0]
+
+        for i in range(1, len(nums)):
+            cur = max(cur+nums[i], nums[i])
+            ans = max(cur, ans)
+
+        return ans 
+    
+# Jump Game
+# memo化 dfsでもいけそう
+# bfs?
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        dp = [0]*len(nums)
+        q = deque()
+        q.append(0)
+
+        while q:
+            target = q.pop()
+            if target == len(nums)-1:
+                return True
+
+            for i in range(1, nums[target]+1):
+                if i+target >= len(nums):
+                    break
+
+                if dp[i+target] == True:
+                    continue
+
+                dp[i+target] = True
+                q.append(i+target)
+
+
+
+        return True if dp[-1] else False
+
+    
+# Jump Game II
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        dp = [0]*len(nums)
+        q = deque()
+        q.append(0, 0) #0回目にindex0に到着できる
+
+        while q:
+            target, cnt = q.pop()
+            if target == len(nums)-1:
+                return cnt
+
+            for i in range(1, nums[target]+1):
+                if i+target >= len(nums):
+                    break
+
+                if dp[i+target] > 0:
+                    continue
+
+                dp[i+target] = cnt+1
+                q.append(i+target, cnt+1)
+
+
+
+        return dp[-1]
+    
+# Gas Station
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        if sum(gas) < sum(cost):
+            return -1
+        
+        tank = 0
+        start = 0
+
+        for i in range(len(gas)):
+            diff = gas[i] - cost[i]
+            tank += diff
+            if tank < 0:
+                tank = 0
+                start = i+1
+
+        return start
+    
+# Hand of Straights
+class Solution:
+    def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
+        if len(hand) % groupSize != 0:
+            return False
+
+        handcnt = Counter(hand)
+
+        for x in sorted(handcnt):
+            if handcnt[x] > 0:
+                need = handcnt[x]
+
+                for num in range(x, x+groupSize):
+                    if handcnt[num] < need:
+                        return False
+                    handcnt[num] -= need
+        return True
+
+# Merge Triplets to Form Target
+class Solution:
+    def mergeTriplets(self, triplets: List[List[int]], target: List[int]) -> bool:
+        ta, tb, tc = target
+        ma, mb, mc = 0, 0, 0
+
+        for a,b,c in triplets:
+            if a > ta or b > tb or c > tc:
+                continue
+                
+
+            ma = max(ma, a)
+            mb = max(mb, b)
+            mc = max(mc, c)
+
+        if ta == ma and tb == mb and tc == mc:
+            return True
+        else:
+            return False
+        
+# Partition Labels
+class Solution:
+    def partitionLabels(self, s: str) -> List[int]:
+        scnt = Counter(s)
+        ans = []
+        tmpset = set()
+
+        r = 0
+        l = 0
+        while r < len(s):
+            scnt[s[r]] -= 1
+            tmpset.add(s[r])
+            if scnt[s[r]] <= 0:
+                tmpset.remove(s[r])
+
+                if len(tmpset) == 0:
+                    ans.append(r-l+1)
+                    r += 1
+                    l = r
+                    continue
+
+                r += 1
+                continue
+            r += 1
+            continue
+
+        return ans
+    
+# Valid Parenthesis String
+class Solution:
+    def checkValidString(self, s: str) -> bool:
+        minopen = 0
+        maxopen = 0
+
+        for i in range(len(s)):
+
+            if s[i] == '*':
+                minopen -= 1
+                maxopen += 1
+
+            if s[i] == ')':
+                maxopen -= 1
+                minopen -= 1
+
+            if s[i] == '(':
+                maxopen += 1
+                minopen += 1
+
+            if maxopen < 0:
+                return False
+            
+            minopen = max(minopen, 0)
+                
+        return True
+    
+
+# Set Matrix Zeroes
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        m = len(matrix)
+        n = len(matrix[0])
+
+        first_row_zero = False
+        first_col_zero = False
+
+        # 1行目に元から0があるか
+        for j in range(n):
+            if matrix[0][j] == 0:
+                first_row_zero = True
+
+        # 1列目に元から0があるか
+        for i in range(m):
+            if matrix[i][0] == 0:
+                first_col_zero = True
+
+        # 内側だけ見て、1行目・1列目に印をつける
+        for i in range(1, m):
+            for j in range(1, n):
+                if matrix[i][j] == 0:
+                    matrix[i][0] = 0
+                    matrix[0][j] = 0
+
+        # 印を見て、内側を0にする
+        for i in range(1, m):
+            for j in range(1, n):
+                if matrix[i][0] == 0 or matrix[0][j] == 0:
+                    matrix[i][j] = 0
+
+        # 最後に1行目
+        if first_row_zero:
+            for j in range(n):
+                matrix[0][j] = 0
+
+        # 最後に1列目
+        if first_col_zero:
+            for i in range(m):
+                matrix[i][0] = 0
+
+# Non-Cyclical Number
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        if n == 1:
+            return True
+
+        intset = set()
+
+        def recrusion(n):
+            if n == 1:
+                return True
+            ans = 0
+
+            for i in str(n):
+                ans += int(i)**2
+
+            if n == 1:
+                return True
+
+            if ans in intset:
+                return False
+            intset.add(ans)
+            return recrusion(ans)
+
+
+        return recrusion(n)
+
+# Plus One
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+        
+        carry = 0
+
+        for i in range(len(digits)-1, -1, -1):
+            if digits[i]+carry > 9:
+                carry = 1
+                digits[i] = 0
+            else:
+                digits[i] += carry
+                carry = 0
+
+        if carry == 1:
+            digits = [1]+digits
+
+        return digits
+    
+# Pow(x, n)
+class Solution:
+    def myPow(self, x: float, n: int) -> float:
+        def fastpow(x, n):
+            if n == 0:
+                return 1
+            out = 0
+            half = fastpow(x, n//2)
+
+            if n % 2 == 0:
+                out = half*half
+            else:
+                out = half*half*x
+
+            return out
+        
+        if n < 0:
+            n = -n
+            x = 1/x
+
+        return fastpow(x, n)
+    
+# Multiply Strings
+class Solution:
+    def multiply(self, num1: str, num2: str) -> str:
+        if num1 == '0' or num2 == '0':
+            return '0'
+        ans = 0  
+        carry = 0
+        cnt = 0
+        for i in range(len(num1)-1, -1, -1):
+            product = 0
+            
+            for j in range(len(num2)-1, -1, -1):
+                product += int(num1[i])*int(num2[j])
+
+            ans += product*(10**cnt)
+            cnt += 1
+            
+        return str(ans)
+
+# Detect Squares
+class CountSquares:
+    def __init__(self):
+        squaresdict = Counter()
+
+
+    def add(self, point: List[int]) -> None:
+        a, b = point
+        self.squaresdict[(a, b)] += 1
+
+    def count(self, point: List[int]) -> int:
+        a, b = point
+        
+        for pa, pb in self.squaresdict:
+            if abs(pa-a) != abs(pb-b) or pa==a or pb== b:
+                continue
+
+            ans += self.squaresdict[(pa, b)]*self.squaresdict[(a, pb)]*self.squaresdict[(pa, pb)]
+        return ans
+    
+
+
+# Contains Duplicate 
+class Solution:
+    def hasDuplicate(self, nums: List[int]) -> bool:
+        numsset = set()
+
+        for num in nums:
+            if num in numsset:
+                return False
+            
+            numsset.add(num)
+
+        return True
+
+# Valid Anagram
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        
+        scnt = Counter(s)
+        tcnt = Counter(t)
+
+        return True if tcnt == scnt else False
+    
+# Two Sum
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        seen = {}
+
+        for i, n in enumerate(nums):
+            if target-n in seen:
+                return [seen[target-n], i]
+            
+            seen[n] = i
+
+# Group Anagrams
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        strdict = defaultdict(list)
+
+        for str in strs:
+            sortstr = ''.join(sorted(str))
+            strdict[sortstr].append(str)
+
+        out = [anaglamlist for anaglamlist in strdict.values()]
+
+        return out
+    
+# Top K Frequent Elements
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        numscnt = Counter(nums)
+
+        sortednumscnt = [ num for num in sorted(nums, key=numscnt.get(), reverse=True) ]
+        return sortednumscnt[:k]
+    
+# Encode and Decode Strings
+class Solution:
+
+    def encode(self, strs: List[str]) -> str:
+        out = []
+        for string in strs:
+            out.append(str(len(string))+'#'+string)
+
+        return ''.join(out)
+
+    def decode(self, s: str) -> List[str]:
+        r = 0
+        l = 0
+        out = []
+
+        while r < len(s):
+            if s[r] != '#':
+                r += 1
+                continue
+
+            cnt = int(s[l:r])
+            out.append(s[r+1:r+cnt+1])
+
+            r, l = r+cnt+1, r+cnt+1
+
+        return out
+    
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        
+        leftout = [1]*len(nums)
+        rightout = [1]*len(nums)
+        out = [0]*len(nums)
+
+        for i in range(1, len(nums)):
+            leftout[i] = nums[i-1]*leftout[i-1]
+
+        for j in range(len(nums)-2, -1, -1):
+            rightout[j] = nums[j+1]*rightout[j+1]
+
+        for i in range(len(nums)):
+            out[i] += leftout[i]*rightout[i]
+
+        return out
+    
+# Valid Sudoku
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        for i in range(len(board)):
+            row_set = set()
+            for j in range(len(board[0])):
+                if board[i][j] == '.':
+                    continue
+
+                if board[i][j] in row_set and board[i][j] != '.':
+                    return False
+                row_set.add(board[i][j])
+
+        for j in range(len(board[0])):
+            col_set = set()
+            for i in range(len(board)):
+                if board[i][j] == '.':
+                    continue
+                if board[i][j] in col_set and board[i][j] != '.':
+                    return False
+                col_set.add(board[i][j])
+
+        for n in range(9):
+            grid_set = set()
+            for i in range(3):
+                for j in range(3):
+                    y = (n // 3)*3+i
+                    x = (n % 3)*3+j
+                    if board[y][x] == '.':
+                        continue
+
+                    if board[y][x] in grid_set and board[y][x] != '.':
+                        return False
+                    grid_set.add(board[y][x])
+                    
+        return True
+
+# # Valid Sudoku
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        for i in range(len(board)):
+            row_set = set()
+            for j in range(len(board[0])):
+                if board[i][j] == '.':
+                    continue
+
+                if board[i][j] in row_set and board[i][j] != '.':
+                    return False
+                row_set.add(board[i][j])
+
+        for j in range(len(board[0])):
+            col_set = set()
+            for i in range(len(board)):
+                if board[i][j] == '.':
+                    continue
+                if board[i][j] in col_set and board[i][j] != '.':
+                    return False
+                col_set.add(board[i][j])
+
+        for n in range(9):
+            grid_set = set()
+            for i in range(3):
+                for j in range(3):
+                    y = (n // 3)*3+i
+                    x = (n % 3)*3+j
+                    if board[y][x] == '.':
+                        continue
+
+                    if board[y][x] in grid_set and board[y][x] != '.':
+                        return False
+                    grid_set.add(board[y][x])
+                    
+        return True
+
+# Longest Consecutive Sequence
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        if len(nums) == 0:
+            return 0
+
+        numsset = set(nums)
+        maxcnt = 0
+        
+        for n in nums:
+            if n-1 in nums:
+                continue
+            cnt = 1
+
+            while n+1 in numsset:
+                n += 1
+                cnt += 1
+
+            maxcnt = max(cnt, maxcnt)
+
+        return maxcnt
+    
+# Valid Palindrome
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        strings = ''
+
+        for i in range(len(s)):
+            if 'a' <= s[i] <= 'z' or 'A' <= s[i] <= 'Z' or '0' <= s[i] <= '9':
+                strings += s[i].lower()
+
+        return True if strings == strings[::-1] else False
+    
+# Two Integer Sum II
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        r = len(numbers)-1
+        l = 0
+
+        while r > l:
+            if target == numbers[r]+numbers[l]:
+                return [l, r]
+            
+            if target > numbers[r]+numbers[l]:
+                l += 1
+                continue
+            else:
+                r -= 1
+                continue
+
+# 3Sum
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        out = []
+
+
+        for i in range(len(nums)-2):
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
+
+            target = nums[i]
+            l = i+1
+            r = len(nums)
+            while r > l:
+                if target == 0:
+                    out.append([nums[i], nums[l], nums[r]])
+                    break
+                if target < 0:
+                    l += 1
+                    continue
+                if target > 0:
+                    r -= 1
+                    continue
+        return out
+    
+# Container With Most Water
+class Solution:
+    def maxArea(self, heights: List[int]) -> int:
+        ans = 0
+        l = 0
+        r = len(heights)-1
+
+        while r > l:
+            ans = max(ans, (r-l)*min(heights[l], heights[r]))
+
+            if heights[l] >= heights[r]:
+                r -= 1
+            else:
+                l += 1
+        return ans
+    
+# Trapping Rain Water
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        l = 0
+        r = len(height)-1
+        ans = 0
+        maxl, maxr = height[0], height[r]
+        while r > l:
+            if maxl >= maxr:
+                r -= 1
+                maxr = max(maxr, height[r])
+                ans += maxr - height[r]
+            else:
+                l += 1
+                maxl = max(maxl, height[l])
+                ans += maxl - height[l]
+
+        return ans
+    
+# Best Time to Buy and Sell Stock
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        maxprofit = 0
+        minbuy = 1000000
+
+        for n in prices:
+            if minbuy <= n:
+                maxprofit = max(maxprofit, n-minbuy)
+            else:
+                minbuy = min(minbuy, n)
+        return maxprofit
+
+# Longest Substring Without Repeating Characters
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        strset = set()
+        del_i = 0
+        ans = 0
+        for i in range(len(s)):
+            while s[i] in strset:
+                strset.remove(s[del_i])
+                del_i += 1
+
+            strset.add(s[i])
+            ans = max(ans, len(strset))
+
+        return ans
+    
+# Longest Repeating Character Replacement
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        count = {}
+        l = 0
+        res = 0
+        maxfleq = 0
+
+        for r in range(len(s)):
+            count[s[r]] = count.get(s[r], 0)+1
+            maxfleq = max(maxfleq, count[s[r]])
+
+            while r-l+1-maxfleq > k:
+                count[s[l]] -= 1
+                l -= 1
+            res = max(res, r-l+1)
+
+        return res
+    
+# Permutation in String
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        s1counter = Counter(s1)
+        window = Counter()
+        l = 0
+
+        for i in range(len(s2)):
+            window[s2[i]] += 1
+
+            while s1counter[s2[i]] < window[s2[i]]:
+                window[s2[l]] -= 1
+                l -= 1
+
+            if s1counter == window:
+                return True
+            
+        return False
+
+# Minimum Window Substring
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        if len(s) < len(t):
+            return ''
+        tcnt = Counter(t)
+        scnt = Counter()
+        l = 0
+        ans = 0
+        for r in range(len(s)):
+            scnt[s[r]] += 1
+
+            while tcnt <= scnt:
+                ans = min(ans, r-l+1)
+                scnt[s[l]] -= 1
+                l += 1
+            
+        return ans
+
+# Sliding Window Maximum
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        q = deque()
+        r = 0
+        l = 0
+        out = []
+        
+        for r in range(len(nums)):
+            while q and nums[q[-1]] < nums[r]:
+                q.pop()
+            q.append(r)
+
+            if l > q[0]:
+                q.popleft()
+
+            if r+1 >= k:
+                out.append(nums[q[0]])
+                l += 1
+
+        return out
