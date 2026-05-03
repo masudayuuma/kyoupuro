@@ -4561,3 +4561,516 @@ class Solution:
                 l += 1
 
         return out
+    
+# Valid Parentheses
+class Solution:
+    def isValid(self, s: str) -> bool:
+        chardict = {')': '(', '}': '{', ']':'['}
+
+        stacklist = []
+
+        for i in range(len(s)):
+            if s[i] in chardict and len(stacklist) < 1:
+                return False
+            elif s[i] in chardict and stacklist[-1] == chardict[s[i]]:
+                stacklist.pop()
+                continue
+            elif s[i] in chardict and stacklist[-1] != chardict[s[i]]:
+                return False
+            else:
+                stacklist.append(s[i])
+
+        return True if len(stacklist) == 0 else False
+                
+# Min Stack
+class MinStack:
+
+    def __init__(self):
+        self.stack = []
+        self.minstack = []
+
+    def push(self, val: int) -> None:
+        self.stack.append(val)
+        self.minstack.append(min(val, self.minstack[-1]) if len(self.minstack) > 0 else val)
+
+    def pop(self) -> None:
+        self.minstack.pop()
+        return self.stack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1]
+
+    def getMin(self) -> int:
+        return self.minstack[-1]
+
+# Evaluate Reverse Polish Notation
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        numsstack = []
+
+        for n in tokens:
+            if n == '+':
+                n1 = numsstack.pop()
+                n2 = numsstack.pop()
+                numsstack.append(n1+n2)
+            elif n == '-':
+                n1 = numsstack.pop()
+                n2 = numsstack.pop()
+                numsstack.append(n2-n1)
+            elif n == '*':
+                n1 = numsstack.pop()
+                n2 = numsstack.pop()
+                numsstack.append(n1*n2)
+            elif n == '/':
+                n1 = numsstack.pop()
+                n2 = numsstack.pop()
+                numsstack.append(int(n2/n1))
+            else:
+                numsstack.append(int(n))
+
+        return numsstack[-1]                           
+    
+# Daily Temperatures
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        output = [0]*(len(temperatures))
+        stack = []
+
+        for i, t in enumerate(temperatures):
+            while len(stack) > 0 and stack[-1][1] < t:
+                index, target = stack.pop()
+                output[index] = i-index
+
+            stack.append((i, t))
+
+        return output
+
+# Car Fleet
+class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        p2s = []
+        stack = []
+
+        for p, s in zip(position, speed):
+            p2s.append((p,s))
+
+        p2s.sort(reverse=True)
+        for p, s in p2s:
+            if stack and stack[-1] >= (target-p)/s:
+                continue
+            else:
+                stack.append((target-p)/s)
+
+        return len(stack)
+    
+# Largest Rectangle In Histogram
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        
+        maxarea = 0
+
+        for i in range(len(heights)):
+            minstack = []
+            for j in range(i, len(heights)):
+                if not minstack or minstack[-1] > heights[j]:
+                    minstack.append()
+                
+                maxarea = max(maxarea, (i-j+1)*minstack[-1])
+
+        return maxarea
+    
+# O(N)
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        stack = []
+        maxans = 0
+        heights.append(0)
+
+        for i, height in enumerate(heights):
+            while stack and stack[-1][0] > height:
+                width = i if not stack else i-stack[-1][0]
+                h = height
+                maxans = max(maxans, width*h)
+
+            stack.append((i, height))
+
+# Binary Search
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        ok, ng = len(nums), -1
+
+        while ok - ng > 1:
+            mid =  (ok+ng)//2
+
+            if nums[mid] >= target:
+                ok = mid
+            else:
+                ng = mid
+
+        return ok
+    
+# Search a 2D Matrix
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        for i in range(len(matrix)):
+            ok, ng = len(matrix[0]), -1
+
+            while ok - ng > 1:
+                mid = (ok+ng)//2
+                if matrix[i][mid] >= target:
+                    ok = mid
+                else:
+                    ng = mid
+            if ok < len(matrix[0]) and target == matrix[i][ok]:
+                return True
+            else:
+                continue
+        return False
+    
+# Koko Eating Bananas
+class Solution:
+    def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        import math
+        ok, ng = max(piles), 0
+
+        while ok - ng > 1:
+            mid = (ok+ng)//2
+            cnt = 0
+
+            for p in piles:
+                cnt += math.ceil(p/mid)
+
+            if cnt <= h:
+                ok = mid
+            else:
+                ng = mid
+
+        return ok
+    
+# Find Minimum in Rotated Sorted Array
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        l, r = 0, len(nums)-1
+
+        while r>=l:
+            mid = (r+l)//2
+
+            if nums[mid] > nums[r]:
+                l = mid+1
+            else:
+                r = mid
+
+        return r
+
+# Search in Rotated Sorted Array
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        l, r = 0, len(nums)-1
+
+        while r >= l:
+            mid = (r+l)//2
+
+            if nums[mid] == target:
+                return mid
+            
+            if nums[mid] >= nums[l]:
+                if nums[l] <= target < nums[mid]:
+                    r = mid-1
+                else:
+                    l = mid+1
+            else:
+                if nums[mid] < target <= nums[r]:
+                    l = mid+1
+                else:
+                    r = mid-1
+        return -1
+            
+# Time Based Key-Value Store
+class TimeMap:
+
+    def __init__(self):
+        self.keytimedict = defaultdict(str)
+        self.keydict = defaultdict(list)
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        self.keydict[key].append(timestamp)
+        self.keytimedict[(key, timestamp)] = value
+
+    def get(self, key: str, timestamp: int) -> str:
+        if self.keytimedict[(key, timestamp)]:
+            return self.keytimedict[(key, timestamp)]
+        
+        ok, ng = len(self.keydict[key]), -1
+
+        while ok - ng > 1:
+            mid = (ok+ng)//2
+
+            if self.keydict[key][mid] > timestamp:
+                ok = mid
+            else:
+                ng = mid
+
+        return self.keytimedict[(key, self.keydict[key][ng])] if ng != -1 else ""
+
+# Median of Two Sorted Arrays
+class Solution:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        A, B = nums1, nums2
+        if len(A) > len(B):
+            A, B = B, A
+
+        total = len(A)+len(B)
+
+        half = total//2
+        l, r =0, len(A)
+
+        while True:
+            i = (l+r)//2
+            j = half-i
+
+            Aleft = A[i-1] if i > 0 else float('-inf')
+            Aright = A[i] if i < len(A) else float('inf')
+            Bleft = B[j-1] if i > 0 else float('-inf')
+            Bright = B[j] if i < len(A) else float('inf')            
+
+            if Aleft <= Bright and Bleft <= Aright:
+                if total % 2 == 1:
+                    return min(Aright, Bright)
+                else:
+                    return (max(Aleft, Bleft) + min(Aright, Bright)) / 2
+                
+            elif Aleft > Bright:
+                r = i-1
+            else:
+                l = i+1
+            
+# Subsets
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        out = []
+        tmp = []
+        def dfs(i):
+            if i >= len(nums):
+                return out.append(tmp[:])
+            
+            dfs(i+1)
+            tmp.append(nums[i])
+            dfs(i+1)
+            tmp.pop()
+
+
+        dfs(0)
+        return out
+
+# Combination Sum
+class Solution:
+    def combinationSum(self, nums: List[int], target: int) -> List[List[int]]:
+        tmp = []
+        out = []
+        def dfs(i):
+            if i >= len(nums):
+                if sum(tmp) == target:
+                    out.append(tmp[:])
+                return
+            
+            dfs(i+1)
+            tmp.append(nums[i])
+            dfs(i+1)
+            tmp.pop()
+
+        dfs(0)
+        return out
+
+# Combination Sum II
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        
+        tmp = []
+        out = []
+        candidates.sort()
+
+        def dfs(i):
+            if i >= len(candidates) or target <=  sum(tmp):
+                if target == sum(tmp):
+                    out.append(tmp[:])
+                return
+
+            tmp.append(candidates[i])
+            dfs(i+1)
+            tmp.pop()
+            
+            while i+1 < len(candidates) and candidates[i] == candidates[i+1]:
+                i += 1
+            dfs(i+1)
+
+        dfs(0)
+        return out
+
+# Permutations
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        out = []
+        tmp = []
+        
+        def dfs(c):
+            if c == len(nums):
+                out.append(tmp[:])
+                return
+        
+            for n in nums:
+                if n in tmp:
+                    continue
+                
+                tmp.append(n)
+                dfs(c+1)
+                tmp.pop()
+
+        dfs(0)
+        return out
+
+# Subsets II
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        tmp = []
+        out = []
+        nums.sort()
+
+        def dfs(i):
+            if i >= len(nums):
+                out.append(tmp[:])
+                return
+            
+            tmp.append(nums[i])
+            dfs(i+1)
+            tmp.pop()
+
+            while i+1 < len(nums) and nums[i] == nums[i+1]:
+                i += 1
+
+            dfs(i+1)
+
+        dfs(0)
+        return out
+    
+    
+# Generate Parentheses
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        out = []
+        tmp = []
+        
+        def dfs(opc, clc):
+            if clc == n and opc == clc:
+                return out.append(''.join(tmp[:]))
+            
+            if opc < n:
+                opc += 1
+                tmp.append('(')
+                dfs(opc, clc)
+                opc -= 1
+                tmp.pop()
+            if clc < opc:
+                clc += 1
+                tmp.append(')')
+                dfs(opc, clc)
+                clc -= 1
+                tmp.pop()
+
+        dfs(0, 0)
+        return out
+    
+# Word Search
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        
+        diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+        visited = [[False]*len(board[0]) for _ in range(len(board))]
+
+        def dfs(i, j, ti):
+            if ti >= len(word):
+                return True
+            
+            for dy, dx in diff:
+                y = dy+i
+                x = dx+j
+
+                if not 0 <= y < len(board) or not 0 <= x < len(board[0]):
+                    continue
+
+                if board[y][x] == word[ti] and visited[y][x] == False:
+                    visited[y][x] = True
+                    f = dfs(y, x, ti+1)
+                    visited[y][x] = False
+                    if f == True:
+                        return f
+
+            return False
+                
+        flag = False
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if board[i][j] == word[0]:
+                    visited[i][j] = True
+                    flag = dfs(i, j, 1)
+                    if flag:
+                        return True
+                    visited[i][j] = False
+
+        if not flag:
+            return False 
+        else: 
+            return True
+
+# Palindrome Partitioning
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        ans = []
+        tmp = []
+
+        def dfs(start):
+            if start >= len(s):
+                ans.append(tmp[:])
+                return
+            
+            for end in range(start+1, len(s)+1):
+                if s[start:end] == s[start:end][::-1]:
+                    tmp.append(s[start:end])
+                    dfs(end)
+                    tmp.pop()
+
+        dfs(0)
+        return ans
+
+# Letter Combinations of a Phone Number
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        if digits == "":
+            return []
+        digits_dict = {
+            '2': ['a', 'b', 'c'],
+            '3': ['d', 'e', 'f'],
+            '4': ['g', 'h', 'i'],
+            '5': ['j', 'k', 'l'],
+            '6': ['m', 'n', 'o'],
+            '7': ['p', 'q', 'r', 's'],
+            '8': ['t', 'u', 'v'],
+            '9': ['w', 'x', 'y', 'z'],
+        }
+
+        tmp = []
+        ans = []
+
+        def dfs(i):
+            if i >= len(digits):
+                ans.append(''.join(tmp[:]))
+                return
+
+            for c in digits_dict[digits[i]]:
+                tmp.append(c)
+                dfs(i+1)
+                tmp.pop()
+
+        dfs(0)
+        return ans
+    
+# N-Queens
