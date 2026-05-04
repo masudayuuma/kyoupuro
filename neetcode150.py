@@ -5074,3 +5074,308 @@ class Solution:
         return ans
     
 # N-Queens
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        grid = [['.'] * n for _ in range(n)]
+        plus = set()
+        minus = set()
+        col_set = set()
+        ans = []
+        
+        def dfs(i):
+            if i >= n:
+                tmp = [''.join(r) for r in grid]
+                ans.append(tmp)
+                return
+
+            for x in range(n):
+                if x+i in plus or abs(x-i) in minus or x in col_set:
+                    continue
+
+                plus.add(x+i)
+                minus.add(x-i)
+                col_set.add(x)
+                
+                dfs(i+1)
+
+                plus.remove(x+i)
+                minus.remove(x-i)
+                col_set.remove(x)
+
+        dfs(0)
+        return ans
+
+# Climbing Stairs
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        dp = [0]*(n+1)
+
+        dp[0] = 0
+        dp[1] = 1
+        if n >= 2:
+            dp[2] = 2
+        else:
+            return 1
+        
+        for i in range(3, n):
+            dp[i] = dp[i-1]+dp[i-2]
+
+        return dp[-1]
+    
+# Min Cost Climbing Stairs
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        dp = [1000000]*(len(cost)+1)
+        dp[0] = 0
+        dp[1] = 0
+
+        for i in range(2, len(cost)+1):
+            dp[i] = min(dp[i-2]+cost[i-2], dp[i-1]+cost[i-1])
+
+        return dp[-1]
+    
+# House Robber
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return nums[0]
+        elif len(nums) == 2:
+            return max(nums[0], nums[1])    
+
+        dp = [0]*(len(nums))
+        dp[0] = nums[0]
+        dp[1] = max(nums[0], nums[1])
+
+        for i in range(2, len(nums)):
+            dp[i] = dp[i-1]
+
+            dp[i] = max(dp[i], dp[i-2]+nums[i])
+
+        return dp[-1]
+    
+# House Robber II
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+
+        if len(nums) == 1:
+            return nums[0]
+        elif len(nums) == 2:
+            return max(nums[0], nums[1])
+        elif len(nums) == 3:
+            return max(nums[0], nums[1], nums[2])
+
+        dp1 = [0]*(len(nums))
+        dp2 = [0]*(len(nums))
+        dp1[0] = nums[0]
+        dp1[1] = max(nums[0], nums[1])
+        dp2[1] = nums[1]
+        dp2[2] = max(nums[1], nums[2])  
+
+        for i in range(2, len(nums)-1):
+            dp1[i] = dp1[i-1]
+            dp1[i] = max(dp1[i], dp1[i-2]+nums[i])
+
+        for i in range(3, len(nums)):
+            dp2[i] = dp2[i-1]
+            dp2[i] = max(dp2[i], dp2[i-2]+nums[i])
+
+        return max(dp1[-2], dp2[-1])
+
+# Longest Palindromic Substring
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        maxans = ""
+        
+        for c in range(len(s)):
+            l = c
+            r = c
+            while l >= 0 and r < len(s) and s[l]==s[r]:
+                if len(maxans) < len(r-l+1):
+                    s[l:r+1]
+                l -= 1
+                r += 1
+
+            l = c
+            r = c+1
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                if len(maxans) < len(r-l+1)
+                l -= 1
+                r += 1
+
+        return maxans
+                
+
+# Palindromic Substrings
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        ans = 0
+
+        for c in range(len(s)):
+            l = c
+            r = c
+            while l >= 0 and r < len(s) and s[l]==s[r]:
+                ans += 1
+                l -= 1
+                r += 1
+
+            l = c
+            r = c+1
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                ans += 1
+                l -= 1
+                r += 1
+
+        return ans
+    
+# Decode Ways
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        dp = [0]*(len(s))
+        dp[0] = 1 if '0' < s[0] <= '9' else 0
+        if dp[0] == 0:
+            return 0
+
+        for i in range(1, len(s)):
+            if s[i] != '0':
+                dp[i] = dp[i-1]
+
+            if '10' <= s[i-1:i+1] <= '26':
+                if i > 1:
+                    dp[i] += 1
+                else:
+                    dp[i] = dp[i-2]
+
+            if dp[i] == 0:
+                return 0
+
+        return dp[-1]
+
+# Coin Change
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        dp = [[1000000]*(amount+1) for _ in range(len(coins)+1)]
+        
+        for i in range(len(coins)+1):
+            dp[i][0] = 0
+
+        for i in range(1, len(coins)+1):
+            for j in range(1, amount+1):
+                dp[i][j] = dp[i-1][j]
+
+                if j-coins[i-1] >= 0:
+                    dp[i][j] = min(dp[i][j-coins[i-1]]+1, dp[i][j])
+
+        return dp[-1][-1] if dp[-1][-1] != 1000000 else -1
+
+# Maximum Product Subarray
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        minusmax = nums[0]
+        plusmax = nums[0]
+        ans = nums[0]
+
+        for x in nums[1:]:
+            minusmax, plusmax = min(minusmax*x, plusmax*x, x), max(minusmax*x, plusmax*x, x)
+            ans = max(ans, plusmax)
+
+        return ans
+    
+# Word Break
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        dp = [False]*(len(s)+1)
+
+        dp[-1] = True
+
+        for i in range(len(s)-1, -1, -1):
+            for word in wordDict:
+                n = len(word)
+                if i+n <= len(s) and s[i:i+n] == word and dp[i+n] == True:
+                    dp[i] = True
+                
+        return dp[0]
+
+# Longest Increasing Subsequence
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        dp = [1]*(len(nums))
+
+        for i in range(len(nums)):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j]+1)
+
+        return max(dp)
+
+# Partition Equal Subset Sum
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        if total % 2 == 1:
+            return False
+
+        total = sum(nums)
+        half = total // 2
+        dp = [[False]*(half+1) for _ in range(len(nums)+1)]
+        dp[0][0] = True
+
+        for i in range(1, len(nums)+1):
+            for j in range(1, half+1):
+                if dp[i-1][j] == True:
+                    dp[i][j] = True
+
+                if j-nums[i] >= 0 and dp[i-1][j-nums[i]] == True:
+                    dp[i][j] = True
+
+        return True if dp[-1][-1] else False
+    
+# Unique Paths
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[0]*(n+1) for _ in range(m+1)]
+
+        dp[1][1] = 1
+
+        for i in range(1, m+1):
+            for j in range(1, n+1):
+                dp[i][j] += dp[i-1][j] + dp[i][j-1]
+
+        return dp[-1][-1]
+    
+# Longest Common Subsequence
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        dp = [[0]*(len(text1)+1) for _ in range(len(text2)+1)]
+
+
+        for i in range(1, len(text2)+1):
+            for j in range(1, len(text1)+1):
+                dp[i][j] = max(dp[i][j-1], dp[i-1][j])
+
+                if text1[j-1] == text2[i-1]:
+                    dp[i][j] = max(dp[i][j], dp[i-1][j-1]+1)
+
+        return dp[-1][-1]
+    
+# Best Time to Buy and Sell Stock with Cooldown
+# 状態DPです。過去の状態から現在の最適がわかる
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        sell = 0
+        have = -prices[0]
+        rest = 0
+
+        for i in range(1, len(prices)):
+            before_sell = sell
+            before_have = have
+            before_rest = rest
+
+            have = max(before_have, before_rest-prices[i])
+            sell = before_have+prices[i]
+            rest = max(before_rest, before_sell)
+            
+        return max(sell, rest)
+
+# Coin Change II
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        
