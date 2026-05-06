@@ -5378,4 +5378,172 @@ class Solution:
 # Coin Change II
 class Solution:
     def change(self, amount: int, coins: List[int]) -> int:
+        dp = [[0]*((amount+1)) for _ in range(len(coins)+1)]
+        dp[0][0] = 1
+
+        for i in range(1, len(coins)+1):
+            for j in range(amount+1):
+                dp[i][j] = dp[i-1][j]
+
+                if j-coins[i-1] >= 0:
+                    dp[i][j] += dp[i][j-coins[i-1]]
+
+        return dp[-1][-1]
+
+# Target Sum
+class Solution:
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        # index == iでsumが何かを求めてdictに入れる
+        memo = defaultdict(int)
+        total = 0
+        cnt = 0
+
+        def dfs(i, total):
+            if i >= len(nums):
+                if total == target:
+                    return 1
+                else:
+                    return 0
+            
+            if (i, total) in memo:
+                return memo[(i, total)]
+
+            plus = dfs(i+1, total+nums[i])
+            minus = dfs(i+1, total-nums[i])
+
+            memo[(i, total)] = plus+minus
+            return memo[(i, total)]
+            
+        return dfs(0, 0)
+
+# Interleaving String
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
         
+        if len(s3) != len(s1)+len(s2):
+            return False
+        m = len(s1)
+        n = len(s2)
+        
+        dp = [[False]*(n+1) for _ in range(m+1)]
+        dp[0][0] = True
+
+        for i in range(m+1):
+            for j in range(n+1):
+                if i > 0 and s1[i-1] == s3[i+j-1]:
+                    dp[i][j] |= dp[i-1][j]
+                if j > 0 and s2[j-1] == s3[i+j-1]:
+                    dp[i][j] |= dp[i][j-1]
+
+        return dp[-1][-1]
+    
+# Longest Increasing Path in Matrix
+class Solution:
+    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+        diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+        visited = dict()
+        maxans = 0
+
+        def dfs(i, j):
+            if (i, j) in visited:
+                return visited[(i, j)]
+            maxcnt = 0
+            for dy, dx in diff:
+                y = dy+i
+                x = dx+j
+                if not 0 <= y < len(matrix) or not 0 <= x < len(matrix[0]) or matrix[i][j] >= matrix[y][x]:
+                    continue
+                if (y, x) in visited:
+                    maxcnt = max(maxcnt, visited[(y, x)])
+                    continue
+                maxcnt = max(maxcnt, dfs(y, x))
+            visited[(i, j)] = maxcnt+1
+            return maxcnt+1
+        
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                maxans = max(dfs(i, j), maxans)
+
+        return maxans
+
+# Distinct Subsequences
+class Solution:
+    def numDistinct(self, s: str, t: str) -> int:
+        dp = [[0]*(len(s)+1) for _ in range(len(t)+1)]
+
+        for i in range(len(s)+1):
+            dp[0][i] = 1
+
+        for i in range(1, len(t)+1):
+            for j in range(1, len(s)+1):
+                dp[i][j] = dp[i][j-1]
+
+                if t[i-1] == s[j-1]:
+                    dp[i][j] += dp[i-1][j-1]
+
+        return dp[-1][-1]
+
+# Edit Distance
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        m = len(word1)
+        n = len(word2)
+        dp = [[0]*(n+1) for _ in range(m+1)]
+        for i in range(n+1):
+            dp[0][i] = i
+
+        for j in range(m+1):
+            dp[j][0] = j
+
+        for i in range(1, m+1):
+            for j in range(1, n+1):
+                if word1[i-1] == word2[j-1]:
+                    dp[i][j] = dp[i-1][j-1]
+                    continue
+
+                dp[i][j] += 1+min(dp[i-1][j], dp[i-1][j-1], dp[i][j-1])
+
+        return dp[-1][-1]
+
+# Burst Balloons
+class Solution:
+    def maxCoins(self, nums: List[int]) -> int:
+        
+        nums = [1]+nums[1]
+        dp = [[0]*(len(nums)) for _ in range(len(nums))]
+
+        for length in range(2, len(nums)):
+            for l in range(len(nums)-length):
+                r = l+length
+
+                for k in range(l+1, r):
+                    dp[l][r] = max(dp[l][r], dp[l][k]+dp[k][r]+nums[l]*nums[k]*nums[r])
+
+        return dp[0][len(nums)-1]
+
+# Regular Expression Matching
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        dp = [[False]+(len(p)+1) for _ in range(len(s)+1)]
+        dp[0][0] = True
+        for i in range(2, len(p)+1):
+            if p[i] == '*' and dp[0][i-2] == True:
+                dp[0][i] = True
+
+        for i in range(1,len(s)+1):
+            for j in range(1,len(p)+1):
+                if s[i-1] == p[j-1]:
+                    dp[i][j] |= dp[i-1][j-1]
+
+                if p[j-1] == '*':
+                    if p[j-2] == '.':
+                        dp[i][j] |= dp[i-1][j]
+                    elif p[j-2] == s[i-1]:
+                        dp[i][j] |= dp[i-1][j]
+                    elif dp[i][j-2] == True:
+                        dp[i][j] |= dp[i][j-2]
+
+                if p[j-1] == '.':
+                    dp[i][j] |= dp[i-1][j-1]
+
+        return dp[-1][-1]
