@@ -5656,3 +5656,714 @@ class Solution:
             second = tmp2
 
 # Remove Node From End of Linked List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        dummy = ListNode(0, head)
+
+        fast = dummy
+        slow = dummy
+
+        for _ in range(n):
+            fast = fast.next
+
+        while fast.next:
+            fast = fast.next
+            slow = slow.next
+
+        slow.next = slow.next.next
+
+        return dummy.next
+    
+# Copy Linked List with Random Pointer
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+"""
+
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        if not head:
+            return None
+        
+        oldToNew = {}
+
+        cur = head
+
+        while cur:
+            oldToNew[cur] = Node(cur.val)
+
+            cur = cur.next
+
+        cur = head
+
+        while cur:
+            copy = oldToNew[cur]
+            copy.next = oldToNew.get(cur.next)
+            copy.random = oldToNew.get(cur.random)
+
+            cur = cur.next
+
+        return oldToNew[head]
+    
+# Add Two Numbers
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode()
+
+        head = dummy
+        carry = 0
+
+        while l1 or l2 or carry:
+            v1 = l1.val if l1 else 0
+            v2 = l2.val if l2 else 0
+
+            total = v1+v2+carry
+
+            carry = total//10
+            digit = total % 10
+
+            cur.next = ListNode(digit)
+            cur = cur.next
+
+            if l1:
+                l1 = l1.next
+            if l2:
+                l2 = l2.next
+
+        return dummy.next
+
+# Find the Duplicate Number
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        slow = nums[0]
+        fast = nums[0]
+
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+
+            if slow == fast:
+                break
+
+        slow = nums[0]
+
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[fast]
+
+            return slow
+        
+# LRU Cache
+from collections import OrderedDict
+class LRUCache:
+
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = OrderedDict()
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        
+        self.cache.move_to_end(key)
+        return self.cache[key]
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            self.cache.move_to_end(key)
+
+        self.cache[key] = value
+
+        if len(self.cache) > self.capacity:
+            self.cache.popitem(last=False)
+
+# Invert Binary Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+        
+        def dfs(root):
+            if not root:
+                return None
+            ans = TreeNode(root.val)
+            ans.right = dfs(root.left)
+            ans.left = dfs(root.right)    
+
+            return ans     
+
+        
+        return dfs(root)
+
+# Maximum Depth of Binary Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        
+
+        def dfs(root):
+            if not root:
+                return 0
+            
+            c = max(dfs(root.left), dfs(root.right))+1
+
+            return c
+        
+        return dfs(root)
+    
+# Diameter of Binary Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        maxpath = 0
+        
+        def dfs(root):
+            nonlocal maxpath
+            if not root:
+                return 0
+            
+            left = dfs(root.left)
+            right = dfs(root.right) 
+
+            if maxpath < left+right:
+                maxpath = left+right
+
+            return max(left, right)+1
+        
+        dfs(root)
+        return maxpath
+        
+# Balanced Binary Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        if not root:
+            return True
+        flag = True
+        
+        def dfs(root):
+            if not root:
+                return 0
+            nonlocal flag
+            maxpath = 0
+            right = dfs(root.right)
+            left = dfs(root.left)
+            if abs(left - right) > 1:
+                flag = False
+            maxpath = max(right, left)+1
+
+            return maxpath
+        
+        dfs(root)
+        return flag
+
+# Same Binary Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+
+
+        def dfs(p, q):
+            if not p and not q:
+                return True
+            
+            if not p or not q:
+                return False
+            
+            if p.val != q.val:
+                return False
+            
+            return dfs(p.left, q.left) and dfs(p.right, q.right)
+
+        return dfs(p, q)
+    
+# Subtree of Another Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:   
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        def sametree(root, subroot):
+            if not root and not subroot:
+                return True
+            if not root or not subroot or root.val != subroot.val:
+                return False 
+            
+            return sametree(root.left, subroot.left) and sametree(root.right, subroot.right)
+
+        def dfs(root, subroot):
+            if not root or not subroot:
+                return False
+            f = False
+            if root.val == subroot.val:
+                f |= sametree(root, subroot)
+            f |= dfs(root.left, subroot)
+            f |= dfs(root.right, subroot)
+
+            return f
+
+        return dfs(root, subRoot)
+
+# Lowest Common Ancestor in Binary Search Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+        while root:
+            if root > p and root > q:
+                root = root.left
+            elif root < p and root < q:
+                root = root.right
+            else:
+                return root
+
+# Binary Tree Level Order Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        level_list = [[]*(1000)]
+        ans = []
+        
+        def dfs(root, c):
+            if not root:
+                return
+            
+            level_list[c].append(root.val)
+
+            dfs(root.left, c+1)
+            dfs(root.right, c+1)
+
+
+        dfs(root, 0)
+        for lst in level_list:
+            if lst != []:
+                ans.append(lst)
+
+        return ans
+            
+# Binary Tree Right Side View
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        if not root:
+            return []
+        q = deque()
+        q.append((root, 0))
+        viewset = set()
+        ans = []
+
+        while q:
+            target = q.popleft()
+
+            if target[1] not in viewset:
+                viewset.add(target[1])
+                ans.append(target[0].val)
+
+            if target[0].right:
+                q.append((target[0].right, target[1]+1))
+            if target[0].left:
+                q.append((target[0].left, target[1]+1))
+
+        return ans
+
+
+# Count Good Nodes in Binary Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def goodNodes(self, root: TreeNode) -> int:
+        maxans = 0
+        
+        def dfs(root, maxnum):
+            nonlocal maxans
+            if not root:
+                return None
+            
+            if root.val >= maxnum:
+                maxnum = root.val
+                maxans += 1
+            
+            dfs(root.left, maxnum)
+            dfs(root.right, maxnum)
+
+
+        dfs(root, root.val)
+        return maxans
+    
+# Valid Binary Search Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        minval = -100000
+        maxval = 100000
+
+        def dfs(root, minv, maxv):
+            if not root:
+                return True
+            
+            if not minv < root.val < maxv:
+                return False
+            
+            f1 = dfs(root.left, minv, root.val)
+            f2 = dfs(root.right, root.val, maxv)
+            if f1 and f2:
+                return True
+            else:
+                return False
+
+        return dfs(root, minval, maxval)
+        
+# Kth Smallest Integer in BST
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        minsortlist = []
+        
+        def dfs(root):
+            if not root:
+                return None
+            
+            dfs(root.left)
+            minsortlist.append(root.val)
+            dfs(root.right)
+
+        dfs(root)
+        return minsortlist[k-1]
+
+# Construct Binary Tree from Preorder and Inorder Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        #preorder 前順
+        # inorder 中間順
+
+        idx_map = {num: i for i, num in enumerate(inorder)}
+        self.pre_idx = 0
+
+        def dfs(l, r):
+            if l > r:
+                return None
+            
+            root_v = preorder[self.pre_idx]
+            self.pre_idx += 1
+            mid = idx_map[root_v]
+            root = TreeNode(root_v)
+
+            root.left = dfs(l, mid-1)
+            root.right = dfs(mid+1, r)
+
+            return root
+
+        return dfs(0, len(preorder)-1)
+
+# Binary Tree Maximum Path Sum
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        self.maxans = -10000000
+        
+        def dfs(root):
+            if not root:
+                return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            maxtmp = max(root.val, left+root.val, right+root.val, left+right+root.val)
+            self.maxans = max(maxtmp, self.maxans)
+            return max(left+root.val, right+root.val, root.val)
+
+        
+        dfs(root)
+        return self.maxans
+
+# Serialize and Deserialize Binary Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Codec:
+    
+    # Encodes a tree to a single string.
+    def serialize(self, root: Optional[TreeNode]) -> str:
+        res = []
+
+        def dfs(node):
+            if not node:
+                res.append('N')
+                return
+            
+            res.append(str(node.val))
+            dfs(node.left)
+            dfs(node.right)
+
+        dfs(root)
+        return ",".join(res)
+        
+    # Decodes your encoded data to tree.
+    def deserialize(self, data: str) -> Optional[TreeNode]:
+        vals = data.split(',')
+        self.i = 0
+
+        def dfs()
+            if vals[self.i] == "N":
+                self.i += 1
+                return None
+            
+            node = TreeNode(int(vals[self.i]))
+            self.i += 1
+
+            node.left = dfs()
+            node.right = dfs()
+
+            return node
+        return dfs()
+
+# Reverse Linked List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        
+        dummy = ListNode()
+        dummy.next = head
+
+        def dfs(head):
+            a = head.next
+            if head.next:
+                a = dfs(head.next)
+            head.next.next = head
+            head.next = None
+            
+            return a
+            
+# Merge Two Sorted Linked Lists
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        if not list1 and not list2:
+            return None
+        
+        if not list1:
+            return list2
+        if not list2:
+            return list1
+        
+        ans = ListNode()
+        if list1.val <= list2.val:
+            ans = ListNode(list1.val)
+            ans.next = self.mergeTwoLists(list1.next, list2)
+        else:
+            ans = ListNode(list2.val)
+            ans.next = self.mergeTwoLists(list1, list2.next)
+
+        return ans
+        
+# Linked List Cycle Detection
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        if not head:
+            return False
+        
+        fast = head
+        slow = head
+
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+
+            if fast == slow:
+                return True
+            
+        return False
+            
+# Reorder Linked List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        slow = head
+        fast = head
+        dummy = ListNode()
+        dummy.next = head
+
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+        tmp = slow.next
+        prev = None
+        slow.next = None
+        while tmp:
+            nxt = tmp.next
+            tmp.next = prev
+            prev = tmp
+            tmp = nxt 
+
+        while prev:
+            nxt = head.next
+            head.next = prev
+            prev = prev.next
+            head = head.next
+            head.next = nxt
+            head = head.next
+
+# Remove Node From End of Linked List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        dummy = ListNode()
+        dummy.next = head
+        fast = dummy
+        slow = dummy
+
+        for _ in range(n):
+            fast = fast.next
+
+        while fast and fast.next:
+            fast = fast.next
+            slow = slow.next
+
+        slow.next = slow.next.next
+
+        return dummy.next
+    
+# Copy Linked List with Random Pointer
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+"""
+
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        
