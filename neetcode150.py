@@ -6366,4 +6366,317 @@ class Node:
 
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        oldtonew = {}
+        tmphead = head
+
+        while tmphead:
+            oldtonew[tmphead] = Node(tmphead.val)
+            tmphead = tmphead.next
+
+        dummy = Node(0)
+        tmphead = dummy
+        while head:
+            dummy.next = oldtonew[head]
+            dummy = dummy.next
+            dummy.next = oldtonew[head.next] if head.next else None
+            dummy.random = oldtonew[head.random] if head.random else None
+
+            head = head.next
+
+        return tmphead.next
+
+
+# Add Two Numbers
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        carry = 0
+        dummy = ListNode()
+        dummyhead = dummy
+
+        while l1 or l2:
+            t1 = l1.val if l1 else 0
+            t2 = l2.val if l2 else 0
+            total = t1+t2+carry
+            carry = total//10
+            digit = total%10
+            dummy.next = ListNode(digit)
+            dummy = dummy.next
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
+
+        if carry > 0:
+            dummy.next = ListNode(carry)
+            
+        return dummyhead.next
+    
+# Find the Duplicate Number
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        fast = nums[0]
+        slow = nums[0]
+
+        while True:
+            slow = slow[nums]
+            fast = fast[nums[fast]]
+
+            if slow == fast:
+                break
+
+        slow = nums[0]
+
+        while slow != fast:
+            slow = slow[nums]
+            fast = fast[nums]
+
+        return slow
+
+# LRU Cache
+class Node:
+    def __init__(self, key=0, val=0):
+        self.key = key
+        self.val = val
+        self.prev = None
+        self.next = None
+
+class LRUCache:
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = {}
+        self.left = Node()
+        self.right = Node()
+        self.left.next = self.right
+        self.right.prev = self.left
         
+    def remove(self, node):
+        prev = node.prev
+        nxt = node.next
+        prev.next =nxt
+        nxt.prev = prev
+
+    def insert(self, node):
+        prev = self.right.prev
+        nxt = self.right
+
+        prev.next = node
+        node.prev = prev
+
+        node.next = nxt
+        nxt.prev = node
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        
+        node = self.cache[key]
+        self.remove(node)
+        self.insert(node)
+        return node.val
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            self.remove(self.cache[key])
+        
+        node = Node(key, value)
+        self.cache[key] = node
+        self.insert(node)
+
+        if len(self.cache) > self.capacity:
+            lru = self.left.next
+            self.remove(lru)
+
+            del self.cache[lru.key]
+
+# Implement Trie (Prefix Tree)
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.end = False
+class PrefixTree:
+
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word: str) -> None:
+        root = self.root
+        for ch in word:
+            if ch not in root.children:
+                root.children[ch] = TrieNode()
+            root = root.children[ch]
+        root.end = True
+
+
+    def search(self, word: str) -> bool:
+        root = self.root
+        for ch in word:
+            if ch not in root.children:
+                return False
+            root = root.children[ch]
+        return root.end
+
+    def startsWith(self, prefix: str) -> bool:
+        root = self.root
+
+        for ch in prefix:
+            if ch not in root.children:
+                return False
+            root = root.children[ch]
+        return True
+        
+# Design Add and Search Word Data Structure
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.end = False
+class WordDictionary:
+
+    def __init__(self):
+        self.root = TrieNode()
+
+    def addWord(self, word: str) -> None:
+        cur = self.root
+        for ch in word:
+            if ch not in cur.children:
+                cur.children[ch] = TrieNode()
+            cur = cur.children[ch]
+        cur.end = True
+            
+
+    def search(self, word: str) -> bool:
+        cur = self.root
+        lenght = len(word)
+        def dfs(i,cur):
+            if i >= lenght:
+                return cur.end
+            f = False
+            if word[i] in cur.children:
+                f |= dfs(i+1, cur.children[word[i]])
+            elif word[i] == '.':
+                for c in cur.children:
+                    f |= dfs(i+1, cur.children[c])
+            return f
+
+        return dfs(0,cur)
+
+# Network Delay Time
+from collections import defaultdict
+import heapq
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        graph = defaultdict(list)
+        maxtime = 0
+
+        for u, v, t in times:
+            graph[u].append([v, t])
+
+        heap = []
+        heapq.heappush(heap, (0, k))
+        visited = set()
+
+        while heap:
+            time, k = heapq.heappop(heap)
+            
+            if k in visited:
+                continue
+
+            for nei, cost in graph[k]:
+                heapq.heappush(heap, (cost+time, nei))
+
+            maxtime = max(maxtime, time)
+            visited.add(k)
+
+        if len(visited) != n: return -1
+        return maxtime
+
+# Reconstruct Flight Path
+from collections import defaultdict
+import heapq
+
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        graph = defaultdict(list)
+
+        for src, dst in tickets:
+            heapq.heappush(graph[src], dst)
+
+        route = []
+
+        def dfs(src):
+            while graph[src]:
+                nei = heapq.heappop(graph[src])
+                dfs(nei)
+
+            route.append(src)
+
+        dfs('JFK')
+        return route[::-1]
+
+
+# Min Cost to Connect Points
+import heapq
+
+class Solution:
+    def minCostConnectPoints(self, points: List[List[int]]) -> int:
+        n = len(points)
+
+        visited = set()
+
+        heap = [(0, 0)]
+        ans = 0
+
+        while len(visited) < n:
+            cost, i = heapq.heappop(heap)
+            if i in visited:
+                continue
+
+            visited.add(i)
+
+            ans += cost
+
+            x1, y1 = points[i]
+
+            for j in range(n):
+                if j not in visited:
+                    x2, y2 = points[j]
+                
+                    dist = abs(x1-x2)+abs(y1-y2)
+                    heapq.heappush(heap, (dist, j))
+
+        return ans
+    
+# Swim in Rising Water
+import heapq
+class Solution:
+    def swimInWater(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+
+        heap = [(grid[0][0], 0, 0)]
+        visited = set()
+
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+        while heap:
+            time, r, c = heapq.heappop(heap)
+            if (r, c) in visited:
+                continue
+
+            visited.add((r, c))
+
+            if r == n-1 and c == n-1:
+                return time
+            
+            for dr, dc in directions:
+                nr = r+dr
+                nc = c+dc
+
+                if 0 <= nr < n and 0 <= nc < n and (nr, nc) not in visited:
+                    new_time = max(time, grid[nr][nc])
+                    heapq.heappush(heap, (new_time, nr, nc))
+
+#  Alien Dictionary
