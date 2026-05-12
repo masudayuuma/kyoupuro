@@ -6679,4 +6679,226 @@ class Solution:
                     new_time = max(time, grid[nr][nc])
                     heapq.heappush(heap, (new_time, nr, nc))
 
-#  Alien Dictionary
+# Contains Duplicate
+class Solution:
+    def hasDuplicate(self, nums: List[int]) -> bool:
+        numsset = set()
+
+        for n in nums:
+            if n not in numsset:
+                numsset.add(n)
+            else:
+                return True
+        return False
+
+# Valid Anagram
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        
+        scnt = Counter(s)
+        tcnt = Counter(t)
+
+        if tcnt == scnt:
+            return True
+        else:
+            return False
+
+# Two Sum
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        
+        numsset = dict()
+
+        for i, n in enumerate(nums):
+            if target-n in numsset:
+                return [numsset[target-n], i]
+            
+            numsset[n] = i
+        
+        return [-1, -1]
+    
+# Group Anagrams
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        numsdict = defaultdict(list)
+
+        for n in strs:
+            tn = "".join(sorted(n))
+            numsdict[tn].append(n)
+
+        ans = []
+
+        for key, num in numsdict.items():
+            ans.append(num)
+
+        return ans
+    
+# Top K Frequent Elements
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        numscnt = Counter(nums)
+
+        sortnumscont = sorted(numscnt, reverse=True, key=numscnt.get())
+        return sortnumscont
+
+# Encode and Decode Strings
+class Solution:
+
+    def encode(self, strs: List[str]) -> str:
+        out = ""
+        for s in strs:
+            l = len(s)
+            out += str(l)+'#'+s
+
+        return out
+    def decode(self, s: str) -> List[str]:
+        out = []
+        r=0
+        l=0
+        while r < len(s):
+            if s[r] != '#':
+                r += 1
+                continue
+            length = int(s[l:r])
+            out.append(s[r+1:r+1+length])
+            r = r+1+length
+            l = r
+
+        return out
+    
+# Products of Array Except Self
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        rans = [1]*(len(nums))
+        lans = [1]*(len(nums))
+
+        for l in range(1, len(nums)):
+            lans[l] = nums[l-1]*lans[l-1]
+
+        for r in range(len(nums)-2, -1, -1):
+            rans[r] = nums[r+1]*rans[r+1]
+
+        for i in range(len(nums)):
+            rans[i] *= lans[i]
+
+        return rans
+    
+# Valid Sudoku
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        row_set = set()
+        col_set = set()
+        board_set = set()
+
+        for i in range(len(board)):
+            row_set = set()
+            for j in range(len(board[0])):
+                if board[i][j] == '.':
+                    continue
+                if board[i][j] in row_set:
+                    return False
+                row_set.add(board[i][j])
+
+        for i in range(len(board[0])):
+            col_set = set()
+            for j in range(len(board)):
+                if board[j][i] == '.':
+                    continue
+                if board[j][i] in col_set:
+                    return False
+                col_set.add(board[j][i])
+
+        for n in range(9):
+            board_set = set()
+            for i in range(3):
+                for j in range(3):
+                    row = (n//3)*3+i
+                    col = (n%3)*3+j
+                    if board[row][col] == '.':
+                        continue
+                    if board[row][col] in board_set:
+                        return False
+                    board_set.add(board[row][col])
+                    
+        return True
+    
+# Longest Consecutive Sequence
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        if len(nums) == 0:
+            return 0
+        numsset = set(nums)
+        maxans = 1
+
+        for n in nums:
+            if n-1 in nums:
+                continue
+            cnt = 1
+            while n+1 in numsset:
+                cnt += 1
+                n += 1
+
+            maxans  = max(cnt, maxans)
+        return maxans
+    
+# Valid Palindrome
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        out = []
+        
+        for c in s:
+            if not c.isalnum():
+                continue
+
+            out.append(c.lower())
+
+        if out == out[::-1]:
+            return True
+        else:
+            return False
+        
+# Two Integer Sum II
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        l = 0
+        r = len(numbers)-1
+
+        while r > l:
+            if target == numbers[l]+numbers[r]:
+                return [l+1, r+1]
+            
+            if target > numbers[l]+numbers[r]:
+                l += 1
+            else:
+                r -=1
+
+        return [-1, -1]
+
+# 3Sum
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        out = []
+
+        for i in range(len(nums)-2):
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
+            r = len(nums)-1
+            l = i+1
+
+            while r > l:
+                if nums[i]+nums[l]+nums[r] == 0:
+                    out.append([nums[i],nums[l],nums[r]])
+                    l += 1
+                    while l < r and nums[l] == nums[l-1]:
+                        l += 1
+                    continue
+                if nums[i]+nums[l]+nums[r] > 0:
+                    r -=1
+                elif nums[i]+nums[l]+nums[r] < 0:
+                    l +=1
+        return out
+
+# Container With Most Water
