@@ -6902,3 +6902,221 @@ class Solution:
         return out
 
 # Container With Most Water
+class Solution:
+    def maxArea(self, heights: List[int]) -> int:
+        maxans = 0
+        l, r = 0, len(heights)-1
+
+        while r > l:
+            maxans = max(maxans, min(heights[r], heights[l])*(r-l))
+
+            if  heights[r] >= heights[l]:
+                l +=1
+            else:
+                r -=1
+        return maxans
+    
+# Trapping Rain Water
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        r, l = len(height)-1, 0
+        maxl = 0
+        maxr = 0
+        ans = 0
+
+        while r >= l:
+            if maxl <= maxr:
+                maxl = max(maxl, height[l])
+                ans += maxl-height[l]
+                l += 1
+            else:
+                maxr = max(maxr, height[r])
+                ans += maxr-height[r]
+                r -= 1
+
+        return ans
+
+# Best Time to Buy and Sell Stock
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        maxans = 0
+        minbuy = 10000
+
+        for p in prices:
+            if p < minbuy:
+                minbuy = p
+
+            maxans = max(maxans, p-minbuy)
+
+        return maxans
+
+# Longest Substring Without Repeating Characters
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        maxans = 0
+        ansset = set()
+        l = 0
+
+        for r in range(len(s)):
+            while s[r] in ansset:
+                ansset.remove(s[l])
+                l += 1
+            
+            ansset.add(s[r])
+            maxans = max(maxans, len(ansset))
+        return maxans
+    
+# Longest Repeating Character Replacement
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        sset = set(s)
+        maxans = 0
+
+        for ts in sset:
+            r = 0
+            l = 0
+            diffcnt = 0
+            for r in range(len(s)):
+                if s[r] != ts:
+                    diffcnt += 1
+
+                while diffcnt > k:
+                    if s[l] != ts:
+                        diffcnt -= 1
+                    l += 1
+                maxans = max(maxans, r-l+1)
+
+        return maxans
+    
+class Solution:
+    def charecterReplacement(self, s: str, k: int) -> int:
+        count = {}
+        l = 0
+        max_freq = 0
+        ans = 0
+
+        for r in range(len(s)):
+            count[s[r]] = count.get(s[r], 0)+1
+            max_freq = max(max_freq, count[s[r]])
+
+            while r-l+1 - max_freq > k:
+                count[s[l]] -= 1
+                l += 1
+
+            ans = max(ans, r-l+1)
+        return ans
+    
+# Permutation in String
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        s1cnt = Counter(s1)
+        s2cnt = Counter()
+        sameset = set()
+        l = 0
+        r = 0
+
+        while r < len(s2):
+            if s1cnt[s2[r]] == 0:
+                r += 1
+                l = r
+                s2cnt = Counter()
+                sameset = set()
+                continue
+
+            s2cnt[s2[r]] += 1
+            while s2cnt[s2[r]] > s1cnt[s2[r]]:
+                if s2[l] in sameset:
+                    sameset.remove(s2[l])
+                s2cnt[s2[l]] -= 1
+                l += 1
+
+            if s2cnt[s2[r]] == s1cnt[s2[r]]:
+                sameset.add(s2[r])
+
+            if len(sameset) == len(s1cnt):
+                return True
+            r += 1
+            
+        return False
+
+# Minimum Window Substring
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        tcnt = Counter(t)
+
+        l= 0
+        scnt = Counter()
+        minans = "#"*10000
+
+        for r in range(len(s)):
+            if tcnt[s[r]] == 0:
+                scnt[s[r]] += 1
+                continue
+            
+            scnt[s[r]] += 1
+            while scnt >= tcnt:
+                if len(minans) > r-l+1:
+                    minans = s[l:r+1]
+                scnt[s[l]] -= 1
+                l += 1
+
+        return minans if minans != "#"*10000 else ""
+
+            
+# Sliding Window Maximum
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        heap = [(-n, i) for i, n in enumerate(nums[:k-1])]
+        heapq.heapify(heap)
+        out = []
+
+        for i in range(k-1, len(nums)):
+            heapq.heappush(heap, (-nums[i], i))
+
+            while heap[0][1] <= i-k:
+                heapq.heappop(heap)
+            out.append(-heap[0][0])
+
+        return out
+            
+
+# Valid Parentheses
+class Solution:
+    def isValid(self, s: str) -> bool:
+        opencnt = []
+        kakkodict = {'(':')', '{':'}', '[':']'}
+
+        for c in s:
+            if c in ('(', '{', '['):
+                opencnt.append(c)
+            else:
+                if len(opencnt) == 0:
+                    return False
+
+                t = opencnt.pop()
+
+                if kakkodict[t] != c:
+                    return False
+                
+        if len(opencnt) == 0:
+            return True
+        else:
+            return False
+
+# Min Stack
+class MinStack:
+
+    def __init__(self):
+        
+
+    def push(self, val: int) -> None:
+        
+
+    def pop(self) -> None:
+        
+
+    def top(self) -> int:
+        
+
+    def getMin(self) -> int:
+        
