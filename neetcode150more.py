@@ -240,3 +240,97 @@ class Solution:
         dfs(0)
         return ans
 
+# Reverse Linked List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        prev = None
+        cur = head
+
+        while cur:
+            nxt = cur.next
+            cur.next = prev
+            prev = cur
+            cur = prev
+
+        return cur
+
+# Reverse Linked List
+# # Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        
+        new = head
+
+        if head and head.next:
+            new = self.reverseList(head.next)
+            head.next.next = head
+            head.next = None
+
+        return new
+    
+# Merge Two Sorted Linked Lists
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        
+        if not list1 and not list2:
+            return None
+        if not list2:
+            return list1
+        if not list1:
+            return list2
+        if list1.val <= list2.val:
+            ans = list1
+            list1.next = self.mergeTwoLists(list1.next, list2)
+        else:
+            ans = list2
+            list2.next = self.mergeTwoLists(list1, list2.next)
+
+        return ans
+    
+# Linked List Cycle Detection
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        fast = head
+        slow = head
+
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+            if fast  == slow:
+                return True
+
+        return False
+    
+# Reorder Linked List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        
