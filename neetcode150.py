@@ -7107,16 +7107,263 @@ class Solution:
 class MinStack:
 
     def __init__(self):
-        
+        self.stack = []
+        self.minstack = []
 
     def push(self, val: int) -> None:
-        
+        self.stack.append(val)
+        if len(self.minstack) == 0:
+            self.minstack.append(val)
+        elif self.minstack[-1] >= val:
+            self.minstack.append(val)
 
     def pop(self) -> None:
-        
+        t = self.stack.pop()
+        if t == self.minstack[-1]:
+            self.minstack.pop()
 
     def top(self) -> int:
-        
+        return self.stack[-1]
 
     def getMin(self) -> int:
+        return self.minstack[-1]
+
+# Daily Temperatures
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        out = [0]*(len(temperatures))
+
+        stack = []
+
+        for i in range(len(temperatures)):
+            while stack and stack[-1][0] < temperatures[i]:
+                out[stack[-1][1]] = i-stack[-1][1]
+                stack.pop()
+            stack.append((temperatures[i], i))
+
+        return out
+
+# Car Fleet
+class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        p2s = [[p, s] for p, s in zip(position, speed)]
+
+        p2s = sorted(p2s, reverse=True)
+        stack = []
+
+        for p, s in p2s:
+            tt = (target-p)/s
+            if stack and tt > stack[-1]:
+                stack.append(tt)
+            elif not stack:
+                stack.append(tt)
+
+        return len(stack)
+
+# Largest Rectangle In Histogram
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        stack = []
+        maxans = 0
+        heights.append(0)
+
+        for i in range(len(heights)):
+            while stack and heights[i] < stack[-1][0]:
+                h, index = stack.pop()
+                width = i if not stack else i-stack[-1][1]-1
+                maxans = max(maxans, h*width)
+            stack.append((heights[i], i))
+
+        return maxans
+
+# Binary Search
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        l, r = -1, len(nums)
+
+        while r - l >1:
+            mid = (r+l)//2
+            if nums[mid] >= target:
+                r = mid
+            else:
+                l = mid
+
+        return r if r < len(nums) and nums[r] == target else -1
+    
+# Search a 2D Matrix
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         
+
+        for i in range(len(matrix)):
+            l, r = 0, len(matrix[0])-1
+            while r >= l:
+                mid = (r+l)//2
+                if matrix[i][mid] == target:
+                    return True
+                
+                if matrix[i][mid] > target:
+                    r = mid-1
+                else:
+                    l = mid+1
+
+        return False
+
+# Koko Eating Bananas
+class Solution:
+    def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        import math
+
+        ok = max(piles)
+        ng = 0
+
+        while ok > ng:
+            mid = (ok+ng)//2
+            cnt = 0
+            for p in piles:
+                cnt = math.ceil(p/mid)
+
+            if cnt >= h:
+                ok = mid
+            else:
+                ng = mid
+
+        return ok
+
+# Find Minimum in Rotated Sorted Array
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        l, r = 0, len(nums)-1
+
+        while r > l:
+            mid = (r+l)//2
+
+            if nums[mid] > nums[r]:
+                l = mid+1
+            else:
+                r = mid
+        return nums[r]
+    
+# Search in Rotated Sorted Array
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        l = 0
+        r = len(nums)-1
+
+        while r >= l:
+            mid = (r+l)//2
+
+            if nums[mid] == target:
+                return mid
+
+            if nums[mid] < nums[r]:
+                if nums[mid] < target <= nums[r]:
+                    l = mid+1
+                else:
+                    r = mid-1
+            else:
+                if nums[l] <= target < nums[mid]:
+                    r = mid-1
+                else:
+                    l = mid+1
+
+        return -1
+
+# Time Based Key-Value Store
+class TimeMap:
+
+    def __init__(self):
+        self.timestamps = defaultdict(list)
+        self.keyvaldict = defaultdict(str)
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        self.keyvaldict[(key, timestamp)] = value
+        self.timestamps[key].append((timestamp))
+
+    def get(self, key: str, timestamp: int) -> str:
+        l, r = -1, len(self.timestamps[key]) 
+        while r -l > 1:
+            mid = (r+l)//2
+            if self.timestamps[key][mid] > timestamp:
+                r = mid
+            else:
+                l = mid
+
+        return self.keyvaldict[(key, self.timestamps[key][l])] if l != -1 else ""
+        
+# Median of Two Sorted Arrays
+class Solution:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        A, B = len(nums1), len(nums2)
+
+        if len(A) > len(B):
+            A, B = B, A
+
+        total = len(A)+len(B
+        half = total//2
+        l, r = 0,len(A)
+
+        while True:
+            i = (i+j)//2
+            j = half-i
+
+            Aleft = A[i-1] if i > 0 else float('-inf')
+            Aright = A[i] if i < len(A) else float('inf')
+            Bleft = B[i-1] if i > 0 else float('-inf')
+            Bright = B[i] if i < len(B) else float('float')
+
+            if Aleft <= Bright and Bleft <= Aright:
+                if total % 2 == 1:
+                    return min(Aright, Bright)
+                else:
+                    return (max(Aleft, Bleft)+min(Aright, Brihgt))/2
+            elif Aleft > Bright:
+                r = i-1
+            else:
+                l = i+1
+
+# Reverse Linked List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head:
+            return None
+
+        new = head
+        if head.next:
+            new = self.reverseList(head.next)
+            new.next = head
+            head.next.next = head
+            head.next = None
+        return new
+
+
+# 前からときたい
+# Reverse Linked List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head:
+            return None
+        
+        prev = None
+        cur = head
+        while cur:
+            nxt = cur.next
+            cur.next = prev
+            prev = cur
+            cur = nxt
+        
+        return prev
+
+# 
