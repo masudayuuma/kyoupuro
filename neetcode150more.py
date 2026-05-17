@@ -1426,3 +1426,279 @@ class Solution:
 class Solution:
     def solve(self, board: List[List[str]]) -> None:
         
+        diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+        visited = set()
+        tmpchanges = set()
+
+        def dfs(i, j):
+            if not 0 < i < len(board)-1 or not 0 < j < len(board[0])-1:
+                return True
+            tmpchanges.add((i, j))
+            f = False
+            for dy, dx in diff:
+                y = dy+i
+                x = dx+j
+                if not 0 <= y < len(board) or not 0 <= x < len(board[0]) or board[y][x] == 'X' or (y, x) in visited:
+                    continue
+                visited.add((y, x))
+                f |= dfs(y, x)
+            return f
+
+        for i in range(1, len(board)):
+            for j in range(1, len(board[0])):
+                if (i, j) in visited or board[i][j] == 'X':
+                    continue
+                visited.add((i, j))
+                f = dfs(i, j)
+                if f == False:
+                    for y, x in tmpchanges:
+                        board[y][x] = 'X'
+                tmpchanges.clear()
+
+# Course Schedule
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        prerequisitesdict = defaultdict(list)
+
+        for i, j in prerequisites:
+            prerequisitesdict[i].append(j)
+
+        need = set()
+
+        def dfs(i):
+            if i in need:
+                return False
+            f = True
+            need.add(i)
+            for want in prerequisitesdict[i]:
+                f = dfs(want)
+                if f == False:
+                    return False
+            need.remove(i)
+            return f
+        
+        for i, j in prerequisites:
+            f = dfs(i)
+            need.clear()
+            if f == False:
+                return False
+            
+        return True
+
+from collections import defaultdict
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        graph = defaultdict(list)
+
+        for course, pre in prerequisites:
+            graph[course].append(pre)
+
+        visiting = set()
+        visited = set()
+
+        def dfs(course):
+            if course in visiting:
+                return False
+            if course in visited:
+                return True
+            
+            visiting.add(course)
+
+            for pre in graph[course]:
+                if dfs(pre) == False:
+                    return False
+                
+            visiting.remove(course)
+            visited.add(course)
+            return True
+        
+        for course in range(numCourses):
+            if not dfs(course):
+                return False
+            
+        return True
+    
+# Course Schedule II
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        graph = defaultdict(list)
+        visited = set()
+        visiting = set()
+        res = []
+
+        for i, j in prerequisites:
+            graph[i].append(j)
+
+        def dfs(i):
+            if i in visiting:
+                return False
+            if i in visited:
+                return True
+            visiting.add(i)
+            for pre in graph[i]:
+                if dfs(pre) == False:
+                    return False
+            visiting.remove(i)
+            visited.add(i)
+            res.append(i)
+            return True
+
+        for i in range(numCourses):
+            if dfs(i) == False:
+                return []
+            
+        return res
+
+# Graph Valid Tree
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        visited = set()
+        visiting = set()
+
+        graph = defaultdict(list)
+
+        for i, j in edges:
+            graph[i].append(j)
+            graph[j].append(i)
+
+        def dfs(i, preb=None):
+            if i in visiting:
+                return False
+            
+            visiting.add(i)
+            for pre in graph[i]:
+                if pre == preb:
+                    continue
+                if dfs(pre, i) == False:
+                    return False
+            visiting.remove(i)
+            visited.add(i)
+            return True
+        
+
+        dfs(0)
+        if len(visited) == n:
+            return True
+        else:
+            return False
+
+# Number of Connected Components in an Undirected Graph
+class Solution:
+    def countComponents(self, n: int, edges: List[List[int]]) -> int:
+        graphdict = defaultdict(list)
+
+        for i, j in edges:
+            graphdict[i].append(j)
+            graphdict[j].append(i)
+
+        graph = [False]*n
+        cnt = 0
+
+        def dfs(i):
+            if graph[i] == True:
+                return
+            graph[i] = True
+            for j in graphdict[i]:
+                dfs(j)
+
+        for i in range(n):
+            if graph[i] == False:
+                dfs(i)
+                cnt += 1
+
+        return cnt
+    
+# Redundant Connection
+class Solution:
+    def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
+        graph = defaultdict(list)
+
+        parent = [i for i in range(len(edges))]
+
+        def find(x):
+            while x != parent[x]:
+                x = parent[parent[x]]
+            return x
+
+        def unionfind(i, j):
+            a = find(i)
+            b = find(j)
+            if a == b:
+                return True
+            parent[b] = a
+            return False
+
+        for i, j in edges:
+            if unionfind(i-1, j-1) == True:
+                return [i, j]
+
+
+# Word Ladder
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        visited = set()
+
+        graph = defaultdict(list)
+
+        wordList.append(beginWord)
+
+        for word1 in wordList:
+            for word2 in wordList:
+                if word1 == word2:
+                    continue
+                if len(word1) != len(word2):
+                    continue
+                cnt = 0
+                for w1, w2 in zip(word1, word2):
+                    if w1 == w2:
+                        continue
+                    else:
+                        cnt += 1
+                if cnt < 2:
+                    graph[word1].append(word2)
+                    graph[word2].append(word1)
+        
+        q = deque()
+        q.append((beginWord, 1))
+        visited.add(beginWord)
+        while q:
+            word, c = q.popleft()
+
+            if word in graph[endWord]:
+                return c+1
+            for nxt in graph[word]:
+                if nxt in visited:
+                    continue
+                visited.add(nxt)
+                q.append((nxt, c+1))
+
+        return 0
+
+# Network Delay Time
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        graph = defaultdict(list)
+        
+        for i, target, cost in times:
+            graph[i].append((cost, target))
+
+        heap = [(0, k)]
+        dist = {}
+        
+        while heap:
+            cost, target = heapq.heappop(heap)
+
+            if target in dist:
+                continue
+            
+            dist[target] = cost
+            for time, nxt in graph[target]:
+                heapq.heappush(heap, (time+cost, nxt))
+
+
+        if len(dist) == n:
+            return max(dist.values())
+        else:
+            return -1
+
+# Reconstruct Flight Path
