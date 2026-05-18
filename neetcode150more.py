@@ -1701,4 +1701,239 @@ class Solution:
         else:
             return -1
 
+# Network Delay Time
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        graph = defaultdict(list)
+
+        for u, v, t in times:
+            graph[u].append([t, v])
+
+        heap = [(0, k)]
+        dist = {}
+
+        while heap:
+            t, v = heapq.heappop(heap)
+            if v in dist:
+                continue
+            dist[v] = t
+            for nxtime, nxt in graph[v]:
+                if nxt in dist:
+                    continue
+
+                heapq.heappush(heap, (t+nxtime, nxt))
+
+        if len(dist) != n:
+            return -1
+
+        return max(dist.values())
+
+
 # Reconstruct Flight Path
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        
+        graph = defaultdict(list)
+        final = []
+
+        for i, j in tickets:
+            graph[i].append(j)
+
+        for i in graph:
+            heapq.heapify(graph[i])
+
+        used = set()
+        def dfs(target):
+            nonlocal final
+            if len(out) == len(tickets):
+                final = out.copy()
+                return
+            if final or not graph[target]:
+                return
+            for _ in range(len(graph[target])):
+                nxt = heapq.heappop(graph[target])
+                out.append(nxt)
+                dfs(nxt)
+                if final:
+                    return
+                out.pop()
+                heapq.heappush(graph[target], nxt)
+        out = []
+
+        dfs('JFK')
+        return ['JFK'] + final
+    
+# 
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        graph = defaultdict(list)
+        for i, j in tickets:
+            heapq.heappush(graph[i], j)
+
+        out = []
+        def dfs(i):
+            while graph[i]:
+                dfs(heapq.heappop(graph[i]))
+
+            out.append(i)
+
+        dfs('JFK')
+        return out[::-1]
+    
+# Min Cost to Connect Points
+# prim法
+# 今ある木から、一番安く新ノードを追加
+class Solution:
+    def minCostConnectPoints(self, points: List[List[int]]) -> int:
+        # cost, index
+        heap = [(0, 0)]
+        dist = {}
+        while heap:
+            cost, index = heapq.heappop(heap)
+            if index in dist:
+                continue
+            dist[index] = cost
+
+            y1, x1 = points[index]
+            for i in len(points):
+                if i in dict:
+                    continue
+                y2, x2 = points[i]
+
+                heapq.heappush(heap, (abs(y2-y1)+abs(x2-x1)+cost, i))
+
+        return max(dist.values())
+
+# Kruskal 法
+# cycle 判定には：Union Find
+class Solution:
+    def minCostConnectPoints(self, points: List[List[int]]) -> int:
+        n = len(points)
+
+        edges = []
+
+        # 全辺生成
+        for i in range(n):
+            x1, y1 = points[i]
+
+            for j in range(i + 1, n):
+                x2, y2 = points[j]
+
+                dist = abs(x1 - x2) + abs(y1 - y2)
+
+                edges.append((dist, i, j))
+
+        # 重み順 sort
+        edges.sort()
+
+        parent = [i for i in range(n)]
+        rank = [1] * n
+
+        def find(x):
+            while x != parent[x]:
+                parent[x] = parent[parent[x]]
+                x = parent[x]
+            return x
+
+        def union(a, b):
+            ra = find(a)
+            rb = find(b)
+
+            if ra == rb:
+                return False
+
+            if rank[ra] >= rank[rb]:
+                parent[rb] = ra
+                rank[ra] += rank[rb]
+            else:
+                parent[ra] = rb
+                rank[rb] += rank[ra]
+
+            return True
+
+        ans = 0
+        used = 0
+
+        for dist, i, j in edges:
+            if union(i, j):
+                ans += dist
+                used += 1
+
+                if used == n - 1:
+                    break
+
+        return ans
+    
+# Swim in Rising Water
+class Solution:
+    def swimInWater(self, grid: List[List[int]]) -> int:
+        # time, i, j
+        heap = [(grid[0][0], 0, 0)]
+        diff = ((1, 0), (-1, 0), (0, -1), (0, 1))
+        visited = set()
+
+        while heap:
+            time, i, j = heapq.heappop(heap)
+
+            if (i, j) in visited:
+                continue
+            if i == len(grid)-1 and j == len(grid[0])-1:
+                return time
+            visited.add((i, j))
+            for dy, dx in diff:
+                y = dy+i
+                x = dx+j
+                if 0 <= y < len(grid) and 0 <= x < len(grid[0]) and (y, x) not in visited:
+                    heapq.heappush(heap, (max(time, grid[y][x]), y, x))
+
+        return -1
+    
+# Alien Dictionary
+class Solution:
+    def foreignDictionary(self, words: List[str]) -> str:
+        graph = {c: set() for word in words for c in word}
+        indegree = {c: 0 for c in graph}
+
+        for i in range(len(words)-1):
+            w1 = words[i]
+            w2 = words[i+1]
+
+            if len(w1) > len(w2) and w1.startswith(w2):
+                return ''
+            
+            for c1, c2 in zip(w1, w2):
+                if c1 != c2:
+                    if c2 not in graph[c1]:
+                        graph[c1].add(c2)
+                        indegree[c2] += 1
+                    break
+
+        q = deque()
+
+        for c in indegree:
+            if indegree[c] == 0:
+                q.append(c)
+
+        res = []
+
+        while q:
+            c = q.popleft()
+            res.append(c)
+
+            for nei in graph[c]:
+                indegree[nei] -= 1
+                if indegree[nei] == 0:
+                    q.append(nei)
+
+        if len(res) != len(graph):
+            return ""
+        
+        return "".join(res)
+    
+# Cheapest Flights Within K Stops
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        graph = defaultdict(list)
+
+        heap = [(src, k)]
+        

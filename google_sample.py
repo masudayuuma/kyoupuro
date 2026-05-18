@@ -22,4 +22,3 @@ class Solution:
                 opencnt -= 1
                 out += dfs(products, l, r)
             r += 1
-
