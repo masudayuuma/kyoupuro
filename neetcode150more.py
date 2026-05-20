@@ -1935,5 +1935,26 @@ class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
         graph = defaultdict(list)
 
-        heap = [(src, k)]
+        for i, to, cost in flights:
+            graph[i].append((cost, to))
         
+        heap = [(0, src, k)]
+        dist = {}
+
+        while heap:
+            cost, target, k = heapq.heappop(heap)
+            if target == dst:
+                dist[target] = cost
+                return
+
+            if target in dist or k <= 0:
+                continue
+
+            dist[target] = cost
+
+            for nxtcst, nxt in graph[target]:
+                if nxt not in dist:
+                    heapq.heappush(heap, (cost+nxtcst, nxt, k-1))
+
+        return dist[dst] if dist[dst] else -1
+
