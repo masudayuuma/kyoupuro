@@ -1958,3 +1958,173 @@ class Solution:
 
         return dist[dst] if dist[dst] else -1
 
+# Cheapest Flights Within K Stops
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        prices = [float('inf')]*n
+        prices[src] = 0
+
+        for _ in range(k+1):
+            tmp = prices.copy()
+
+            for frm, to, cost in flights:
+                if prices[frm] == float('inf'):
+                    continue
+
+                tmp[to] = min(tmp[to], prices[frm]+cost)
+
+            prices = tmp
+
+        return -1 if prices[dst] == float('inf') else prices[dst]
+    
+# Insert Interval
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        out = []
+        heapq.heapify(intervals)
+        heapq.heappush(intervals, newInterval)
+
+        while intervals:
+            i, j = heapq.heappop(intervals)
+
+            if out and out[1] >= i:
+                out[-1][1] = max(j, out[-1][1])
+
+        return out
+    
+# Insert Interval
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        res = []
+        i = 0
+
+        n = len(intervals)
+
+        while i < n and intervals[i][1] < newInterval[0]:
+            res.append(intervals[i])
+            i += 1
+
+        while i < n and intervals[i][0] <= newInterval[1]:
+            newInterval[0] = min(newInterval[0], intervals[i][0])
+            newInterval[1] = max(newInterval[1], intervals[i][1])
+            i += 1
+
+        res.append(newInterval)
+
+        while i < n:
+            res.append(intervals[i])
+            i += 1
+
+        return res
+        
+# Merge Intervals
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        n = len(intervals)
+        res = []
+        intervals.sort()
+        i = 0
+        while i < n:
+            if res and res[-1][1] >= intervals[i][0]:
+                res[-1][1] = max(res[-1][1], intervals[i][1])
+            else:
+                res.append(intervals[i])
+            i += 1
+
+        return res 
+    
+# Non-overlapping Intervals
+class Solution:
+    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+        res = []
+        ans = 0
+        intervals = sorted(intervals, key=lambda x: x[1])
+
+        for i, j in intervals:
+            if res and res[-1][1] > i:
+                ans += 1
+                continue
+            else:
+                res.append([i, j])
+
+        return ans
+    
+# Meeting Rooms
+"""
+Definition of Interval:
+class Interval(object):
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+"""
+
+class Solution:
+    def canAttendMeetings(self, intervals: List[Interval]) -> bool:
+        res = []
+        intervals.sort(key=lambda x: x.start)
+        n = len(intervals)
+
+        for i in range(n):
+            s = intervals[i].start
+            e = intervals[i].end
+            if res and res[-1][1] > s:
+                return False
+            else:
+                res.append([s, e])
+
+        return True
+    
+# Meeting Rooms II
+"""
+Definition of Interval:
+class Interval(object):
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+"""
+
+class Solution:
+    def minMeetingRooms(self, intervals: List[Interval]) -> int:
+        if not intervals:
+            return 0
+        
+        intervals.sort(key= lambda x : x.start)
+
+        heap = []
+
+        for interval in intervals:
+            if heap and heap[0] <= interval.start:
+                heapq.heappop(heap)
+            heapq.heappush(heap, interval.end)
+
+        return len(heap)
+    
+# Minimum Interval to Include Each Query
+class Solution:
+    def minInterval(self, intervals: List[List[int]], queries: List[int]) -> List[int]:
+        
+        intervals.sort()
+
+        sorted_queries = sorted((q, i) for i, q in enumerate(queries))
+
+        res = [-1]*len(queries)
+
+        heap = []
+
+        j = 0
+
+        for q, idx in sorted_queries:
+            while j < len(intervals) and intervals[j][0] <= q:
+                left, right = intervals[j]
+                lenght = right-left+1
+                heapq.heappush(heap, (lenght, right))
+
+                j +=1
+
+            while heap and heap[0][1] < q:
+                heap.heappop(heap)
+
+            if heap:
+                res[idx] = heap[0][0]
+
+        return res
