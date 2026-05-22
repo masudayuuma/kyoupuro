@@ -2128,3 +2128,380 @@ class Solution:
                 res[idx] = heap[0][0]
 
         return res
+
+# Maximum Subarray
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        maxans = 0
+        ans = 0
+        l = 0
+        for r in range(len(nums)):            
+            if ans < 0:
+                ans = 0
+                l = r
+            ans += nums[r]
+            maxans = max(maxans, ans)
+
+        return maxans if maxans != 0 else max(nums)
+    
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        cur = nums[0]
+        ans = nums[0]
+
+        for r in range(len(nums)):
+            cur = max(cur+nums[r], nums[r])
+            ans = max(cur, ans)
+
+        return ans
+    
+# Jump Game
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        maxjump_i = 0
+
+        for i in range(len(nums)):
+            if maxjump_i < i:
+                return False
+
+            maxjump_i = max(nums[i]+i, maxjump_i)
+
+        return True
+
+# Jump Game II
+# if there are maxjump, tmp_max_jump = maxjump
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        l = 0
+        r = 0
+        ans = 0
+
+        while r < len(nums)-1:
+            ans += 1
+            maxlenght = 0
+            for i in range(l, r+1):
+                maxlenght = max(maxlenght, nums[i]+i)
+                
+            if maxlenght >= len(nums):
+                return ans
+            
+            l = r+1
+            r = maxlenght
+
+        return ans
+    
+# Gas Station
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        total = 0
+        tank = 0
+        start = 0
+
+        for i in range(len(gas)):
+            diff = gas[i]-cost[i]
+
+            total += diff
+            tank += diff
+
+            if tank < 0:
+                tank = 0
+                start = i+1
+        
+        if total < 0:
+            return -1
+        return start
+
+# Hand of Straights
+class Solution:
+    def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
+        handcnt = Counter(hand)
+
+        for x in sorted(handcnt):
+            if not handcnt[x]:
+                continue
+            need = handcnt[x]
+
+            for i in range(x, x+groupSize):
+                if handcnt[i] >= need:
+                    handcnt[i] -= need
+                else:
+                    return False
+        return True
+
+# Merge Triplets to Form Target
+class Solution:
+    def mergeTriplets(self, triplets: List[List[int]], target: List[int]) -> bool:
+        ans = [0, 0, 0]
+
+        for i, j, k in triplets:
+            if i <= target[0] and  j <= target[1] and k <= target[2]:
+                ans[0] = max(ans[0], i)
+                ans[1] = max(ans[1], j)
+                ans[2] = max(ans[2], k)
+
+        return True if ans == target else False
+    
+# Partition Labels
+class Solution:
+    def partitionLabels(self, s: str) -> List[int]:
+        strcnt = Counter(s)
+        res = []
+        r = 0
+        wait_num = set()
+        tmp = []
+        while r < len(s):
+            strcnt[s[r]] -= 1
+            wait_num.add(s[r])
+            tmp.append(s[r])
+            if strcnt[s[r]] == 0:
+                del strcnt[s[r]]
+                wait_num.remove(s[r])
+            if len(wait_num) == 0:
+                res.append(len(tmp))
+                tmp  = []
+            r += 1
+        return res
+    
+# Valid Parenthesis String
+class Solution:
+    def checkValidString(self, s: str) -> bool:
+        minopen = 0
+        maxopen = 0
+
+        for i in s:
+            if i == '(':
+                minopen += 1
+                maxopen += 1
+            elif i == ')':
+                minopen -= 1
+                maxopen -= 1
+            else:
+                minopen -= 1
+                maxopen += 1
+            
+            if maxopen < 0:
+                return False
+
+            minopen = max(minopen, 0)
+
+        return True if minopen == 0 else False
+
+# Climbing Stairs
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n == 1:
+            return 1
+        if n == 2:
+            return 2
+        dp = [0]*(n+1)
+        dp[1] = 1
+        dp[2] = 2
+        for i in range(3, n+1):
+            dp[i] = dp[i-1]+dp[i-2]
+
+        return dp[-1]
+    
+# Min Cost Climbing Stairs
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        dp = [float('inf')] * (len(cost)+1)
+
+        dp[0] = 0
+        dp[1] = 0
+
+        for i in range(2, len(cost)+1):
+            dp[i] = min(dp[i-1]+cost[i-1], dp[i-2]+cost[i-2])
+
+        return dp[-1]
+
+# House Robber
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return nums[0]
+        if len(nums) == 2:
+            return max(nums[0], nums[1])
+        dp = [0]*(len(nums))
+
+        dp[0] = nums[0]
+        dp[1] = max(nums[0], nums[1])
+
+        for i in range(2, len(nums)):
+            dp[i] = max(dp[i-1], dp[i-2]+nums[i])
+
+        return dp[-1]
+    
+# House Robber II
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return nums[0]
+        if len(nums) == 2:
+            return max(nums[0], nums[1])
+        if len(nums) == 3:
+            return max(nums[0], nums[1], nums[2])
+
+        dp1 = [0]*len(nums)
+        dp2 = [0] *len(nums)
+        dp1[0] = nums[0]
+        dp1[1] = max(nums[0], nums[1])
+        dp2[1] = nums[1]
+        dp2[2] = max(nums[1], nums[2])
+
+        for i in range(2, len(nums)-1):
+            dp1[i] = max(nums[i]+dp1[i-2], dp1[i-1])
+        
+        for i in range(3, len(nums)):
+            dp2[i] = max(nums[i]+dp2[i-2], dp2[i-1])
+
+        return max(dp1[-2], dp2[-1])
+    
+# Longest Palindromic Substring
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        maxans = ''
+        for i in range(len(s)):
+            r = i
+            l = i
+            while l >= 0 and r < len(s) and s[r] == s[l]:
+                if len(maxans) < len(s[l:r+1]):
+                    maxans = s[l:r+1]
+                r += 1
+                l -= 1
+
+            while l >= 0 and r < len(s) and s[r] == s[l]:
+                if len(maxans) < len(s[l:r+1]):
+                    maxans = s[l:r+1]
+                r += 1
+                l -= 1
+
+        return maxans
+    
+# Longest Palindromic Substring
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        n = len(s)
+        dp = [[False]*n for _ in range(n)]
+
+        ans_l = 0
+        ans_r = 0
+
+        for lenght in range(1, n+1):
+            for l in range(n-lenght+1):
+                r = l+lenght-1
+
+                if lenght == 1:
+                    dp[l][r] = True
+                elif lenght == 2 and s[r] == s[l]:
+                    dp[l][r] = True
+                else:
+                    dp[l][r] = s[r]==s[l] and dp[l+1][r-1]
+
+                if lenght > ans_r-ans_l+1 and dp[l][r] == True:
+                    ans_l = l
+                    ans_r = r
+
+        return s[ans_l:ans_r+1]
+    
+# Palindromic Substrings
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n = len(s)
+        dp = [[False]*n for _ in range(n)]
+        ans = 0
+
+        for lenght in range(n):
+            for l in range(n-lenght+1):
+                r = l+lenght-1
+
+                if lenght == 1:
+                    dp[l][r] = True
+                elif lenght == 2:
+                    dp[l][r] = s[l]==s[r]
+                else:
+                    dp[l][r] = dp[l+1][r-1] and s[r] == s[l]
+
+                if dp[l][r] == True:
+                    ans += 1
+
+        return ans
+
+# Decode Ways
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        # 123 -> 3
+        if s[0] == '0':
+            return 0
+        if len(s) == 1:
+            return 1
+        dp = [0]*(len(s)+1)
+        dp[1] = 1
+        dp[0] = 1
+
+        for i in range(2, len(s)+1):
+            if s[i-1] != '0':
+                dp[i] += dp[i-1]
+        
+            if '10' <= s[i-2:i] <= "26":
+                dp[i] += dp[i-2]
+
+            if dp[i] == 0:
+                return 0
+        
+        return dp[-1]
+    
+# Coin Change
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        dp = [float('inf')]*(amount+1)
+        dp[0] = 0
+
+        
+        for c in coins:
+            for i in range(1, amount+1):
+                if i-c >= 0:
+                    dp[i] = min(dp[i-c]+1, dp[i])
+
+        return dp[-1] if dp[-1] != float('inf') else -1
+    
+# Maximum Product Subarray
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        maxans = 1
+        minans = 1
+        res = -float('inf')
+
+        for n in nums:
+            nowmax = maxans
+            nowmin = minans
+
+            if n > 0:
+                maxans = max(nowmax*n, n)
+                minans = min(nowmin*n, n)
+            else:
+                maxans = max(nowmin*n, n)
+                minans = min(nowmax*n, n)
+
+            res = max(res, maxans, minans)
+        return res
+    
+# Word Break
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        wordset = set(wordDict)
+
+        n = len(s)
+        dp = [False]*(n+1)
+        dp[0] = True
+
+        for i in range(1, n+1):
+            for j in range(i):
+                if dp[j] and s[j:i] in wordset:
+                    dp[i] = True
+                    break
+        return dp[n]
+
+# Longest Increasing Subsequence
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        
