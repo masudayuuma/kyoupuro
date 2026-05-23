@@ -2504,4 +2504,325 @@ class Solution:
 # Longest Increasing Subsequence
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
+        dp = [1]*(len(nums))
+        for i in range(len(nums)):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j]+1)
+            
+        return max(dp)
+
+# Partition Equal Subset Sum
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        total = sum(nums)
+        if total % 2 == 1:
+            return False
+        half = total//2
+
+        dp = [False]*(half+1)
+        dp[0] = True
+        for n in nums:
+            dptmp = dp.copy()
+            for i in range(half+1): 
+                if dptmp[i-n] == True:
+                    dp[i] = True
+
+        return dp[-1]        
+    
+# Unique Paths
+# time complexity O(m*n) and space complexity O(m*n)
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[0]*(n+1) for _ in range(m+1)]
+        dp[1][1] = 1
+        for i in range(1, m+1):
+            for j in range(1, n+1):
+                dp[i][j] += dp[i][j-1]+dp[i-1][j]
+
+        return dp[-1][-1]
+
+# Longest Common Subsequence
+# time complexity O(m*n), space complexity O(m*n)
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        m = len(text1)
+        n = len(text2)
+
+        dp = [[0]*(m+1) for _ in range(n+1)]
+
+        for i in range(1, n+1):
+            for j in range(1, m+1):
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+                if text2[i-1] == text1[j-1]:
+                    dp[i][j] = max(dp[i][j], dp[i-1][j-1]+1)
+
+        return dp[-1][-1]
+    
+# Best Time to Buy and Sell Stock with Cooldown
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        wait = 0
+        hold = -prices[0]
+        buy = 0
+
+        for i in range(1, len(prices)):
+            prevbuy = buy
+            prevwait = wait
+            prevhold = hold
+
+            hold = max(prevwait-prices[i], prevhold)
+            buy = prevhold+prices[i]
+            wait = max(prevwait, prevbuy)
+            
+
+        return max(wait, buy) if max(wait, buy) > 0 else 0
+
+# Coin Change II
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        dp = [0]*(amount+1)
+        dp[0] = 1
+        for c in coins:
+            for i in range(1, amount+1):
+                if i-c >= 0:
+                    dp[i] += dp[i-c]
+        return dp[-1]
+    
+# Target Sum
+class Solution:
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        dp = defaultdict(int)
+        dp[-nums[0]] += 1
+        dp[nums[0]] += 1
+
+        for i in range(1, len(nums)):
+            nxtdp = defaultdict(int)
+            for total in dp:
+                nxtdp[total-nums[i]] += dp[total]
+                nxtdp[total+nums[i]] += dp[total]
+
+            dp = nxtdp
+
+        return dp[target]
+
+# Interleaving String
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        if len(s3) != len(s1)+len(s2):
+            return False
         
+        m = len(s1)
+        n = len(s2)
+        dp = [[False]*(n+1) for _ in range(m+1)]
+
+        dp[0][0] = True
+
+        for i in range(m+1):
+            for j in range(n+1):
+                if i > 0 and dp[i-1][j] == True and s1[i-1] == s3[i+j-1]:
+                    dp[i][j] = True
+
+                if j > 0 and dp[i][j-1] == True and s2[j-1] == s3[i+j-1]:
+                    dp[i][j] = True
+
+        return dp[-1][-1]
+
+# Longest Increasing Path in Matrix
+class Solution:
+    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+        dp = {}
+
+        def dfs(i, j):
+            if (i, j) in dp:
+                return dp[(i, j)]
+            res = 1
+
+            for dy, dx in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                y = dy+i
+                x = dx+j
+                if 0 <= y < len(matrix) and 0 <= x < len(matrix[0]) and matrix[i][j] < matrix[y][x]:
+                    res = max(res, dfs(y, x)+1)
+            dp[(i, j)] = res
+            return res
+        
+        out = 0
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                res = 0
+                if (i, j) in dp:
+                    res = dp[(i, j)]
+                else:
+                    res = dfs(i, j)
+
+                out = max(out, res)
+        return out
+    
+# Distinct Subsequences
+class Solution:
+    def numDistinct(self, s: str, t: str) -> int:
+        dp = [[0]*(len(s)+1) for _ in range(len(t)+1)]
+
+        if len(s) < len(t):
+            return 0
+        for i in range(len(s)+1):
+            dp[0][i] = 1
+        for i in range(1, len(t)+1):
+            for j in range(1, len(s)+1):
+                dp[i][j] = dp[i][j-1]
+                if s[j-1] == t[i-1]:
+                    dp[i][j] += dp[i-1][j-1]
+
+        return dp[-1][-1]
+    
+# Burst Balloons
+class Solution:
+    def maxCoins(self, nums: List[int]) -> int:
+        nums = [1]+nums+[1]
+        n = len(nums)
+        dp = [[0]*n for _ in range(n)]
+        for lenght in range(2, n+1):
+            for l in range(n-lenght):
+                r = l+lenght
+
+                for k in range(l+1, r):
+                    coins = dp[l][k]+nums[l]*nums[k]*nums[r]+dp[k][r]
+                    dp[l][r] = max(dp[l][r], coins)
+
+        return dp[0][n-1]
+    
+# Regular Expression Matching
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        dp = [[False]*(len(p)+1) for _ in range(len(s)+1)]
+        dp[0][0] = True
+        for i in range(2, len(p)+1):
+            if dp[0][i-2] == True and p[i-1] == '*':
+                dp[0][i] = True
+
+        for i in range(1, len(s)+1):
+            for j in range(1, len(p)+1):
+                if dp[i-1][j-1] == True and s[i-1] == p[j-1] or p[j-1] == '.':
+                    dp[i][j] = True
+                    continue
+                elif p[j-1] == '*':
+                    dp[i][j] = dp[i][j-2]
+
+                    if s[i-1] == p[j-2] or p[j-2] == '.':
+                        dp[i][j] |= dp[i-1][j]
+
+        return dp[-1][-1]
+    
+# Merge K Sorted Linked Lists
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:    
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        if not lists:
+            return None
+        
+        tail = ListNode()
+        dummy = tail
+        while True:
+            minval = -1
+            for i in range(len(lists)):
+                if lists[i] is None:
+                    continue
+                
+                if minval == -1 or lists[minval].val > lists[i].val:
+                    minval = i
+
+            if minval == -1:
+                break
+
+            tail.next = lists[minval]
+            tail = tail.next
+            lists[minval] = lists[minval].next
+
+        return dummy.next
+
+# Reverse Nodes in K-Group
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        root = ListNode()
+        dummy = root
+        
+        while True:
+            cnt = 0
+            now = head
+            for i in range(k):
+                head = head.next
+                if head:
+                    cnt += 1
+                else:
+                    break
+
+            if cnt < k:
+                root.next = now
+                break
+            else:
+                nxt = head.next
+                head.next = None
+                nxt = head
+                head.next 
+                prev = None
+                while now:
+                    nnxt = now.next
+                    now.next = prev
+                    prev = now
+                    now = nnxt
+                root.next = prev
+                root = head
+                head = nxt
+
+
+# Longest Palindromic Substring
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        dp = [[False]*len(s) for _ in range(len(s))]
+        ans_l = 0
+        ans_r = 0
+
+        for lenght in range(1, len(s)+1):
+            for l in range(len(s)-lenght+1):
+                r = l+lenght-1
+                
+                if lenght == 1:
+                    dp[l][r] = True
+                elif lenght == 2 and s[l] == s[r]:
+                    dp[l][r] = True
+                else:
+                    dp[l][r] = s[l]==s[r] and dp[l+1][r-1]
+
+                if dp[l][r] and ans_r-ans_l+1 < r-l+1:
+                    ans_l, ans_r = l, r
+                
+        return s[ans_l:ans_r+1]
+    
+
+# Burst Balloons
+class Solution:
+    def maxCoins(self, nums: List[int]) -> int:
+        nums = [1]+nums+[1]
+        dp = [[0]*n for _ in range(n)]
+        n = len(nums)
+
+        for lenght in range(2, len(nums)+1):
+            for l in range(n-lenght):
+                r = l+lenght
+
+                for k in range(l+1, r):
+                    coins = dp[l][k]+nums[l]*nums[k]*nums[r]+dp[k][r]
+                    dp[l][r] = max(coins, dp[l][r])
+
+        return dp[l][r]
