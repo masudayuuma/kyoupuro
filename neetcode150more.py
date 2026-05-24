@@ -2814,9 +2814,9 @@ class Solution:
 class Solution:
     def maxCoins(self, nums: List[int]) -> int:
         nums = [1]+nums+[1]
-        dp = [[0]*n for _ in range(n)]
+        
         n = len(nums)
-
+        dp = [[0]*n for _ in range(n)]
         for lenght in range(2, len(nums)+1):
             for l in range(n-lenght):
                 r = l+lenght
@@ -2826,3 +2826,453 @@ class Solution:
                     dp[l][r] = max(coins, dp[l][r])
 
         return dp[l][r]
+    
+# # Burst Balloons
+class Solution:
+    def maxCoins(self, nums: List[int]) -> int:
+        nums = [1]+nums+[1]
+        
+        n = len(nums)
+        dp = [[0]*n for _ in range(n)]
+        for lenght in range(2, len(nums)+1):
+            for l in range(n-lenght):
+                r = l+lenght
+
+                for k in range(l+1, r):
+                    coins = dp[l][k]+nums[l]*nums[k]*nums[r]+dp[k][r]
+                    dp[l][r] = max(coins, dp[l][r])
+
+        return dp[l][r]
+
+# Insert Interval
+"""
+input: intervals list[list[int]], newinterval : list[int]
+out: res : list[list[int]]
+
+0 <= intervals.length <= 1000
+newInterval.length == intervals[i].length == 2
+0 <= start <= end <= 1000
+
+for interval in intervals:
+    start, end = iterval
+
+time complexity O(n)
+space complexity O(1)
+"""
+from typing import List
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        lenght = len(intervals)
+        target_i = 0
+        res = []
+
+        while target_i < lenght and intervals[target_i][1] < newInterval[0]:
+            res.append(intervals[target_i])
+            target_i += 1
+        
+        while target_i < lenght and intervals[target_i][0] <= newInterval[1]:
+            newInterval[0] = min(newInterval[0], intervals[target_i][0])
+            newInterval[1] = max(newInterval[1], intervals[target_i][1])
+            target_i += 1
+        res.append(newInterval)
+
+        while target_i < lenght:
+            res.append(intervals[target_i])
+            target_i += 1
+
+        return res
+
+# Merge Intervals
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        intervals.sort()
+        mergestack = []
+
+        for i, j in intervals:
+            if mergestack and mergestack[-1][1] >= i:
+                ti, tj = mergestack.pop()
+                ti = min(ti, i)
+                tj = max(tj, j)
+                mergestack.append([ti, tj])
+            else:
+                mergestack.append([i, j])
+
+        return mergestack
+    
+# Non-overlapping Intervals
+"""
+input itervals: list[list[int]]
+output res: int
+
+return minmum remove count
+"""
+class Solution:
+    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+        intervals.sort(key= lambda x : x[1])
+        now_end_j = -float('inf')
+        res = 0
+
+        for i, j in intervals:
+            if i >= now_end_j:
+                now_end_j = j
+            else:
+                res += 1
+
+        return res
+    
+# Meeting Rooms
+"""
+Definition of Interval:
+class Interval(object):
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+
+input : intervals: list[list[int]]
+output : res : bool
+
+"""
+
+class Solution:
+    def canAttendMeetings(self, intervals: List[Interval]) -> bool:
+        res = True
+        before_j = -1
+        intervals.sort(key= lambda x : x.start)
+
+        for interval in intervals:
+            if interval.start >= before_j:
+                before_j = interval.end
+                continue
+            else:
+                return False
+            
+        return res
+
+# Meeting Rooms II
+"""
+Definition of Interval:
+class Interval(object):
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+"""
+
+class Solution:
+    def minMeetingRooms(self, intervals: List[Interval]) -> int:
+        min_heap = []
+        intervals.sort(key= lambda x: x.start)
+        ans = 0
+        for interval in intervals:
+            start = interval.start
+            end = interval.end
+
+            while min_heap and min_heap[0] <= start:
+                heapq.heappop(min_heap)
+
+            heapq.heappush(min_heap, end)
+            ans = max(ans, len(min_heap))
+
+        return ans
+
+# Minimum Interval to Include Each Query
+class Solution:
+    def minInterval(self, intervals: List[List[int]], queries: List[int]) -> List[int]:
+        intervals.sort()
+
+        heap = []
+
+        queries = [[q, i] for i, q in enumerate(queries)]
+        queries.sort()
+        ans = [0]*len(queries)
+        interval_i = 0
+
+        for q, i in queries:
+
+            while interval_i < len(intervals) and q >= intervals[interval_i][0]:
+                heapq.heappush(heap, (intervals[interval_i][1]-intervals[interval_i][0]+1, intervals[interval_i][1]))
+                interval_i += 1
+            
+            while heap and q > heap[0][1]:
+                heapq.heappop(heap)
+
+            if heap:
+                ans[i] = heap[0][0]
+            else:
+                ans[i] = -1
+
+        return ans
+
+# Maximum Subarray
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        ans = -float('inf')
+        cursum = 0
+
+        for n in nums:
+            if cursum < 0:
+                cursum = 0
+            cursum += n
+            ans = max(ans, cursum)
+
+        return ans
+    
+# Jump Game
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        maxlenght = 0
+
+        for i in range(len(nums)):
+            if i > maxlenght:
+                return False
+            
+            maxlenght = max(i+nums[i], maxlenght)
+        return True
+    
+# Jump Game II
+"""
+input nums: list[int]
+output res: int
+"""
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        n = len(nums)
+        
+        if n <= 1:
+            return 0
+        
+        longest = 0
+        count = 0
+        now_range = 0
+
+        for i in range(len(nums)):
+            longest = max(longest, nums[i]+i)
+
+            if now_range <= i:
+                now_range = longest
+                count += 1
+
+            if now_range >= len(nums)-1:
+                return count
+
+# Gas Station
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        if sum(gas) < sum(cost):
+            return -1
+        
+        diff = [g-c for g, c in zip(gas, cost)]
+
+        total = 0
+        target = 0
+        for i in range(len(diff)):
+            total += diff[i]
+            if total < 0:
+                target = i+1
+                total = 0
+
+        return target
+    
+# Hand of Straights
+class Solution:
+    def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
+        if len(hand) % groupSize != 0:
+            return False
+        
+        hand.sort()
+        count = Counter(hand)
+
+        for h in hand:
+            if count[h]:
+                for i in raneg(groupSize):
+                    if count[count[h]+i]:
+                        count[count[h]+i] -= 1
+                    else:
+                        return False
+        return True
+    
+# Merge Triplets to Form Target
+class Solution:
+    def mergeTriplets(self, triplets: List[List[int]], target: List[int]) -> bool:
+        
+        ans= [0, 0, 0]
+
+        for i, j, k in triplets:
+            if i <= target[0] and j <= target[1] and k <= target[2]:
+                ans= [max(ans[0], i), max(ans[1], j), max(ans[2], k)]
+
+        return True if ans == target else False  
+
+# Partition Labels
+class Solution:
+    def partitionLabels(self, s: str) -> List[int]:
+        count = Counter(s)
+        lenght = len(count)
+        ans = []
+        nowchar = set()
+        nowl = 0
+        for c in s:
+            nowchar.add(c)
+            nowl += 1
+            count[c] -= 1
+            if count[c] == 0:
+                del count[c]
+
+            if len(nowchar) == lenght-len(count):
+                ans.append(nowl)
+                nowl = 0
+        return ans
+    
+# Valid Parenthesis String
+class Solution:
+    def checkValidString(self, s: str) -> bool:
+        maxcnt = 0
+        mincnt = 0
+
+        for c in s:
+            if c == '(':
+                maxcnt += 1
+                mincnt += 1
+            elif c ==')':
+                maxcnt -=1
+                mincnt -=1
+            else:
+                maxcnt += 1
+                mincnt -=1
+            if maxcnt < 0:
+                return False
+            mincnt = max(mincnt, 0)
+
+        return True if mincnt == 0 else False
+
+# Network Delay Time
+"""
+input 
+output
+assamptions
+simple solve
+simple time&space complexity O(elogv) O(v+e)
+
+idea
+idea algolythm
+idea time&space complexity
+
+"""
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        heap = [(0, k)]
+        graph = defaultdict(list)
+        for frm, t, cost in times:
+            graph[frm].append((t, cost))
+
+        dist = {}
+
+        while heap:
+            cost, target = heapq.heappop(heap)
+            if target in dist:
+                continue
+            dist[target] = cost
+
+            for nxt, nxtcost in graph[target]:
+                if nxt in dist:
+                    continue
+
+                heapq.heappush(heap, (cost+nxtcost, nxt))
+        return max(dist.values()) if len(dist) == n else -1
+
+# Reconstruct Flight Path
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        graph = defaultdict(list)
+        out = []
+
+        for frm, to in tickets:
+            heapq.heappush(graph[frm], to)
+
+        def dfs(frm):
+            while graph[frm]:
+                dfs(heapq.heappop(graph[frm]))
+
+            out.append(frm)
+
+        dfs("JFK")
+        return out[::-1]
+    
+# Min Cost to Connect Points
+class Solution:
+    def minCostConnectPoints(self, points: List[List[int]]) -> int:
+        heap = [(0, 0)] #cost, index
+        dist = {}
+        while heap:
+            cost, index = heapq.heappop(heap)
+            if index in dist:
+                continue
+            dist[index] = cost
+            if len(dist) == len(points):
+                return sum(dist.values())
+            for i in range(len(points)):
+                if i in dist:
+                    continue
+                calc = abs(points[index][0]-points[i][0])+abs(points[index][1]-points[i][1])
+                heapq.heappush(heap, (calc, i))
+
+# Swim in Rising Water
+"""
+time O(n^2logn) space O(n^2)
+"""
+class Solution:
+    def swimInWater(self, grid: List[List[int]]) -> int:
+        visited = set((0, 0))
+        diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+        heap = [(grid[0][0], 0, 0)]
+
+        while heap:
+            k, i, j = heapq.heappop(heap)
+            if (i, j) in visited:
+                continue
+            if i == len(grid)-1 and j == len(grid[0])-1:
+                return k
+            visited.add((i, j))
+
+            for dy, dx in diff:
+                y = dy+i
+                x = dx+j
+                if (y, x) in visited or not 0 <= y < len(grid) or not 0 <= x < len(grid[0]):
+                    continue
+                heapq.heappush(heap, (max(k, grid[y][x]), y, x))
+
+        dfs(0, 0)
+        return -1
+    
+# Alien Dictionary
+class Solution:
+    def foreignDictionary(self, words: List[str]) -> str:
+        numset = {c: set() for word in words for c in word}
+        level = {c: 0 for c in numset}
+
+        for i in range(len(words)-1):
+            word1 = words[i]
+            word2 = words[i+1]
+            if len(word1) > len(word2) and word1.startswith(word2):
+                return ""
+
+            for c1, c2 in zip(word1, word2):
+                if c1 != c2:
+                    if c2 not in numset[c1]:
+                        numset[c1].add(c2)
+                        level[c2] += 1
+                    break
+
+        q = deque()
+        res = []
+        for l in level:
+            if level[l] == 0:
+                q.append(l)
+
+        while q:
+            t = q.pop()
+            res.append(t)
+            for nxt in numset[t]:
+                level[nxt] -= 1
+                if level[nxt] == 0:
+                    q.append(nxt)
+        return ''.join(res) if len(res) == len(level) else ""
