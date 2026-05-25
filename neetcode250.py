@@ -273,4 +273,42 @@ class Solution:
 # 4Sum
 class Solution:
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
-        
+        nums.sort()
+        n = len(nums)
+        res = []
+        for i in range(len(nums)-3):
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
+            for j in range(i+1, len(nums)-2):
+                if j > i+1 and nums[j] ==nums[j-1]:
+                    continue
+                l = j+1
+                r = len(nums)-1
+
+                while r > l:
+                    if nums[i]+nums[j]+nums[r]+nums[l] == target:
+                        res.append([nums[i], nums[j], nums[l], nums[r]])
+                        l +=1
+                        while r >= l > j+1 and nums[l] == nums[l-1]:
+                            l += 1
+                        continue
+                    elif nums[i]+nums[j]+nums[r]+nums[l] > target:
+                        r -= 1
+                    else:
+                        l += 1
+        return res
+
+# Rotate Array
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        l = 0
+        r = len(nums)-k
+
+        while r < len(nums):
+            nums[l], nums[r] = nums[r], nums[l]
+
+            l += 1
+            r += 1
