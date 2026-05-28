@@ -770,4 +770,187 @@ class Solution:
 
         dfs()
         return res
+
+# Matchsticks to Square
+"""
+input : matchsticks : list[int]
+output : res : bool
+
+assumptions
+
+backtracking
+variables
+difinition
+"""
+class Solution:
+    def makesquare(self, matchsticks: List[int]) -> bool:
+        total_length = sum(matchsticks)
+        if total_length % 4 != 0:
+            return False
+
+        length = total_length // 4
+        sides = [0] * 4
+        matchsticks.sort(reverse=True)
+
+        def dfs(i):
+            if i == len(matchsticks):
+                return True
+
+            for side in range(4):
+                if sides[side] + matchsticks[i] <= length:
+                    sides[side] += matchsticks[i]
+                    if dfs(i + 1):
+                        return True
+                    sides[side] -= matchsticks[i]
+
+                if sides[side] == 0:
+                    break
+
+            return False
+
+        return dfs(0)
+
+# Partition to K Equal Sum Subsets
+class Solution:
+    def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
+        total = sum(nums)
+        target = 0
+        visited = [False]*len(nums)
+        if total % k != 0:
+            return False
+        else:
+            target = total // k
+        backet = [0]*k
+
+        def dfs(i):
+            if i >= len(nums):
+                for i in range(k-1):
+                    if backet[i] != backet[i+1]:
+                        return False
+                return True
+
+            visited[i] = True
+            flag = False
+            for j in k:
+                backet[j] += nums[i]
+                flag = dfs(i+1)
+                if flag == True:
+                    return True
+                else:
+                    backet[j] -= nums[i]
+            visited[i] = False
+            return flag
+
+        return dfs(0)
+
+# N-Queens II
+class Solution:
+    def totalNQueens(self, n: int) -> int:
+        plus = set()
+        minus = set()
+        col = set()
+        tmp = []
+        ans = 0
+        def dfs(i):
+            nonlocal ans
+            if i >= n:
+                ans += 1
+                return
+
+            for j in range(n):
+                if j in col or i+j in plus or i-j in minus:
+                    continue
+
+                col.add(j)
+                plus.add(i+j)
+                minus.add(i-j)
+                dfs(i+1)
+                col.remove(j)
+                plus.remove(i+j)
+                minus.remove(i-j)
+
+        dfs(0)
+        return ans
     
+# Word Break II
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
+        output = []
+        res = []
+
+        def dfs(i):
+            if i >= len(s):
+                res.append(" ".join(output))
+                return
+            
+            for word in wordDict:
+                if len(word)+i <= len(s) and s[i:i+len(word)] == word:
+                    output.append(word)
+                    dfs(i+len(word))
+                    output.pop()
+
+        dfs(0)
+        return res
+
+
+# Island Perimeter
+class Solution:
+    def islandPerimeter(self, grid: List[List[int]]) -> int:
+        visited = set()
+        res = 0
+        diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+
+
+        def dfs(i, j):
+            nonlocal res
+            if grid[i][j] == 0:
+                return
+
+            tmp = 4
+            for dy, dx in diff:
+                y = dy+i
+                x = dx+j
+                if 0 <= y < len(grid) and 0 <= x < len(grid[0]) and grid[y][x] == 1:
+                    tmp -= 1
+                    if (y, x) in visited:
+                        continue
+                    visited.add((y, x))
+                    dfs(y, x)
+            res += tmp
+
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if (i, j) in visited:
+                    continue
+                visited.add((i, j))
+                dfs(i, j)
+
+        return res
+    
+# Verifying An Alien Dictionary
+from typing import Lists
+class Solution:
+    def isAlienSorted(self, words: List[str], order: str) -> bool:
+        
+        def dfs(i):
+            if i >= len(words):
+                return True
+            if len(words[i-1]) > len(words[i]) and words[i-1].startswith(words[i]):
+                return False
+            
+            for c1, c2 in zip(words[i-1], words[i]):
+                if c1 == c2:
+                    continue
+
+                if order.find(c1) < order.find(c2):
+                    return dfs(i+1)
+                else:
+                    return False
+            return dfs(i+1)
+        
+        return dfs(1)
+
+# Find the Town Judge
+class Solution:
+    def findJudge(self, n: int, trust: List[List[int]]) -> int:
+        
