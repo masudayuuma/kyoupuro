@@ -951,6 +951,202 @@ class Solution:
         return dfs(1)
 
 # Find the Town Judge
+from collections import defaultdict
 class Solution:
     def findJudge(self, n: int, trust: List[List[int]]) -> int:
+        ans = defaultdict(list)
+        for i, j in trust:
+            ans[j].append(i)
+
+        if len(ans) == 1:
+            return ans.keys()[0]
+        else:
+            return -1
+
+# Open The Lock
+class Solution:
+    def openLock(self, deadends: List[str], target: str) -> int:
+        dead = set(deadends)
+
+        if "0000" in dead:
+            return -1
+        
+        queue = deque()
+        queue.append(("0000", 0))
+
+        visited = set()
+        visited.add("0000")
+
+        while queue:
+            state, steps = queue.popleft()
+            if state == target:
+                return steps
+            
+            for i in range(4):
+                digit = int(state[i])
+
+                for move in (-1, 1):
+                    new_digit = (digit+move)%10
+                    new_state = state[:i]+str(new_digit)+state[i+1:]
+                    if new_state in dead:
+                        continue
+                    if new_state in visited:
+                        continue
+                    visited.add(new_state)
+                    queue.append((new_state, steps+1))
+
+        return -1
+    
+# Course Schedule IV
+"""
+
+"""
+class Solution:
+    def checkIfPrerequisite(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:
+        graph = defaultdict(list)
+        ans = []
+
+        for i, j in prerequisites:
+            graph[i].append(j)
+
+        visited = set()
+        needed = defaultdict(set)
+
+        def dfs(i):
+            if i in visited:
+                return needed[i]
+            for j in graph[i]:
+                needed[i].add(j)
+                needed[i] |= dfs(j)
+            visited.add(i)
+            return needed[i]
+
+        for i in range(numCourses):
+            dfs(i)
+
+        for i, j in queries:
+            if j in needed[i]:
+                ans.append(True)
+            else:
+                ans.append(False)
+        return ans
+
+# Redundant Connection
+class Solution:
+    def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
+        parent = [x for x in range(len(edges))]
+        def find(a):
+            if parent[a] != a:
+                return find(parent[a])
+            else:
+                return a
+
+        def unionfind(a, b):
+            a_parent = find(a)
+            b_parent = find(b)
+            if a_parent == b_parent:
+                return True
+            
+            parent[b_parent] = a_parent
+            return False
+
+        flag = False
+        for i, j in edges:
+            flag = unionfind(i-1, j-1)
+            if flag == True:
+                return [i, j]
+        return [-1, -1]
+    
+# Accounts Merge
+from collections import defaultdict
+class Solution:
+    def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
+        e2n = defaultdict(list)
+        n2e = defaultdict(list)
+        output = []
+
+        for account in account[1:]:
+            e2n[account] = account[0]
+
+        for email, name in e2n.items():
+            n2e[name].append(email)
+
+        for name, email in n2e.items():
+            output.append([name]+email)
+
+# N-th Tribonacci Number
+"""
+input: n:int
+output: res: int
+
+0 <= n <= 37
+numans = {}
+nums
+for i in range(len(n)):
+    numsans[i] = nums[i-3]+numsi-2
+"""
+
+class Solution:
+    def tribonacci(self, n: int) -> int:
+        memo = {}
+
+        memo[0] = 0
+        memo[1] = 1
+        memo[2] = 1
+
+        for i in range(3, n+1):
+            memo[i] = memo[i-3]+memo[i-2]+memo[i-1]
+
+        return memo[n]
+    
+# Combination Sum IV
+class Solution:
+    def combinationSum4(self, nums: List[int], target: int) -> int:
+        dp = [0]*(target+1)
+        dp[0] = 1
+
+        for i in range(1, target+1):
+            for n in nums:
+                if i-n >= 0:
+                    dp[i] += dp[i-n]
+
+        return dp[target]
+    
+# Perfect Squares
+class Solution:
+    def numSquares(self, n: int) -> int:
+        squares = []
+        dp = [float('inf')]*(n+1)
+        dp[0] = 0
+        x = 1
+        while x*x <= n:
+            squares.append(x*x)
+            x += 1
+
+        for i in range(1, n+1):
+            for s in squares:
+                if s > i:
+                    break
+                if i-s >= 0:
+                    dp[i] = min(dp[i], dp[i-s]+1)
+        return dp[n]
+
+# Integer Break
+class Solution:
+    def integerBreak(self, n: int) -> int:
+        dp = [0]*(n+1)
+        dp[0] = 1
+        dp[1] = 1
+
+        for num in range(1, n+1):
+            for i in range(2, n+1):
+                if i-num >= 1:
+                    dp[i] = max(dp[i-num]*num, dp[i], (i-num)*num)
+
+        return dp[-1]
+    
+
+# Stone Game III
+class Solution:
+    def stoneGameIII(self, stoneValue: List[int]) -> str:
         
