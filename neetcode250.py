@@ -1145,8 +1145,337 @@ class Solution:
 
         return dp[-1]
     
-
 # Stone Game III
 class Solution:
     def stoneGameIII(self, stoneValue: List[int]) -> str:
+        n = len(stoneValue)
+        dp = [0]*(n+1)
+        for i in range(n-1, -1, -1):
+            val = 0
+            best = float('-inf')
+
+            for k in range(3):
+                
+
+                if i+k >= n:
+                    break
+
+                val += stoneValue[i+k]
+
+                best = max(best, val-dp[i+k+1])
+            dp[i] = best
+
+        if dp[0] > 0:
+            return "Alice"
+        elif dp[0] < 0:
+            return "Bob"
+        else:
+            return "Tie"
         
+# Unique Paths II
+"""
+input: obstacleGrid : list[list[int]]
+output: res: int
+
+[]
+[]
+
+000.  111
+000 ->123 
+010   103
+time O(n*m) space O(n*m)
+"""
+class Solution:
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        n, m = len(obstacleGrid), len(obstacleGrid[0])
+        dp = [[0]*(m+1) for _ in range(n+1)]
+        dp[1][1] = 1
+
+        for i in range(1, n+1):
+            for j in range(1, m+1):
+                dp[i][j] += dp[i-1][j]+dp[i][j-1]
+
+                if obstacleGrid[i-1][j-1] == 1:
+                    dp[i][j] = 0
+
+        return dp[-1][-1]
+    
+# Minimum Path Sum
+"""
+input : grid: list[list[int]]
+output : res : int
+
+assumptions
+[]
+
+120.  133
+542 ->675
+113.  788 res=8
+"""
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        n, m = len(grid), len(grid[0])
+        dp = [[float('inf')]*(m) for _ in range(n)]
+        dp[0][0] = grid[0][0]
+        for i in range(1, n):
+            dp[i][0] = dp[i-1][0]+grid[i][0]
+        for j in range(1, m):
+            dp[0][j] = dp[0][j-1]+grid[0][j]
+
+        for i in range(1, n):
+            for j in range(1, m):
+                dp[i][j] = min(dp[i][j-1], dp[i-1][j])+grid[i][j]
+
+        return dp[-1][-1]
+    
+# Last Stone Weight II
+class Solution:
+    def lastStoneWeightII(self, stones: List[int]) -> int:
+        dp = set()
+        dp.add(0)
+
+        target = sum(stones)//2
+
+        for stone in stones:
+            new = dp.copy()
+
+            for n in dp:
+                if n+stone <= target:
+                    new.add(n+stone)
+                
+            dp = new
+
+        return sum(stones) - max(dp)*2
+    
+# Interleaving String
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        n, m = len(s1), len(s2)
+        dp = [[False]*(n+1) for _ in range(m+1)]
+        dp[0][0] = True
+        if len(s3) != len(s2)+len(s1):
+            return False
+
+        for i in range(1, n+1):
+            dp[0][i] |= dp[0][i-1] and s3[i-1] == s1[i-1]
+        for i in range(1, m+1):
+            dp[i][0] |= dp[i-1][0] and s3[i-1] == s2[i-1]
+
+        for i in range(1, m+1):
+            for j in range(1, n+1):
+                dp[i][j] |= dp[i-1][j] and s3[i+j-1] == s2[i-1]
+                dp[i][j] |= dp[i][j-1] and s3[i+j-1] == s1[j-1]
+        
+        return dp[-1][-1]
+
+
+# Stone Game
+class Solution:
+    def stoneGame(self, piles: List[int]) -> bool:
+        n = len(piles)
+        dp = [[0]*n for _ in range(n)]
+
+        for i in range(n):
+            dp[i][i] = piles[i]
+
+        for length in range(2, n+1):
+            for l in range(n-length+1):
+                r = l+length-1
+                dp[l][r] = max(piles[r]-dp[l][r-1], piles[l]-dp[l+1][r])
+
+        return dp[0][-1] > 0
+    
+# Stone Game II
+from functools import lru_cache
+class Solution:
+    def stoneGameII(self, piles: List[int]) -> int:
+        n = len(piles)
+        suffix = [0]*(n+1)
+        for i in range(n-1, -1, -1):
+            suffix[i] = suffix[i+1]+piles[i]
+
+        @lru_cache(None)
+        def dp(M, i): #M, index
+
+            if 2*M+i >= n:
+                return suffix[i]
+            best = 0
+            for x in range(1, 2*M+1):
+                other = dp(max(x, M), i+x)
+                me = suffix[i]-other
+                best = max(best, me)
+
+            return best
+
+        return dp(1, 0)
+         
+# Lemonade Change
+class Solution:
+    def lemonadeChange(self, bills: List[int]) -> bool:
+        five = 0
+        ten = 0
+        twelve = 0
+
+        for bill in bills:
+            if bill == 5:
+                five += 1
+            elif bill == 10:
+                if five > 0:
+                    five -= 1
+                    ten += 1
+                else:
+                    return False
+            else:
+                if five > 0 and ten > 0:
+                    five -= 1
+                    ten -= 1
+                    twelve += 1
+                elif five > 1:
+                    five -= 3
+                    twelve += 1
+                else:
+                    return False
+
+        return True
+    
+
+# Maximum Sum Circular Subarray
+class Solution:
+    def maxSubarraySumCircular(self, nums: List[int]) -> int:
+        numsdouble = nums+nums
+        maxans = float('-inf')
+        curr = 0
+        l = 0
+        for r in range(len(numsdouble)):
+            curr += nums[r]
+            maxans = max(maxans, curr)
+            if curr < 0 and l+len(nums) <= r:
+                l = r+1
+                curr = 0
+        return maxans
+    
+# Longest Turbulent Subarray
+class Solution:
+    def maxTurbulenceSize(self, arr: List[int]) -> int:
+        
+        flag = True
+        curr = 1
+        maxans = 1
+        for i in range(1, len(arr)):
+            if flag and arr[i-1] < arr[i]:
+                flag = False
+                curr += 1
+            elif not flag and arr[i-1] > arr[i]:
+                flag = True
+                curr += 1
+            else:
+                flag = True
+                curr = 1
+            maxans = max(maxans, curr)
+
+        flag = True
+        curr = 1
+        for i in range(1, len(arr)):
+            if flag and arr[i-1] > arr[i]:
+                flag = False
+                curr += 1
+            elif not flag and arr[i-1] < arr[i]:
+                flag = True
+                curr += 1
+            else:
+                flag = True
+                curr = 1
+            maxans = max(maxans, curr)
+
+        return maxans
+
+
+# Jump Game II
+from collections import deque
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        n = len(nums)
+        maxlenght = 0
+        ans = 0
+        l = 0
+        r = 0
+        
+        while r < n-1:
+            ans += 1
+
+            for j in range(l, r+1):
+                maxlenght = max(maxlenght, j+nums[j])
+            
+            if maxlenght >= len(nums)-1:
+                return ans
+            else:
+                l = r+1
+                r = maxlenght
+
+        return ans
+
+# Binary Tree Inorder Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        ans = []
+        def dfs(root):
+            if not root:
+                return
+            
+            dfs(root.left)
+            ans.append(root.val)
+            dfs(root.right)
+
+
+        dfs(root)
+        return ans
+    
+# Binary Tree Preorder Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        ans = []
+
+        def dfs(root):
+            if not root:
+                return
+
+            ans.append(root.val)
+            dfs(root.left)
+            dfs(root.right)
+
+        dfs(root)
+        return ans
+
+# Binary Tree Postorder Traversal
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        ans = []
+
+        def dfs(root):
+            if not root:
+                return
+
+            dfs(root.left)
+            dfs(root.right)
+            ans.append(root.val)
+
+        dfs(root)
+        return ans
