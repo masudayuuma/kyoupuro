@@ -2094,3 +2094,237 @@ class FreqStack:
 # obj.push(val)
 # param_2 = obj.pop()
 
+class Solution:
+    def getConcatenation(self, nums: List[int]) -> List[int]:
+        ans = nums+nums
+
+# Longest Common Prefix
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        ans_r = len(strs[0])
+
+        for s in strs:
+            while not s.startswith(strs[:ans_r]):
+                ans_r -=1
+
+        return strs[:ans_r]
+    
+# Remove Element
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        n = len(nums)
+        l = 0
+        r = n-1
+        ans = 0
+        while l <= r:
+            if nums[l] == val:
+                nums[l], nums[r] = nums[r], nums[l]
+                r -= 1
+            else:
+                ans += 1
+                l += 1
+        return ans
+
+
+# Majority Element 
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        cnt = Counter(nums)
+        maxans = 0
+        maxcnt = 0
+        for key, val in cnt.items():
+            if maxcnt < val:
+                maxans = key
+                maxcnt = val
+
+        return maxans
+    
+# linearって線形って意味だからO(n)はいける
+    
+# Majority Element 
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        candidate = None
+        cnt = 0
+
+        for n in nums:
+            if cnt == 0:
+                candidate = n
+                cnt += 1
+            else:
+                if n == candidate:
+                    cnt += 1
+                else:
+                    cnt -= 1
+
+        return candidate
+
+class MyHashSet:
+
+    def __init__(self):
+        self.flag = [False]*(10**6+1)
+
+    def add(self, key: int) -> None:
+        self.flag[key] = True
+
+    def remove(self, key: int) -> None:
+        self.flag[key] = False
+
+    def contains(self, key: int) -> bool:
+        return True if self.flag[key] else False
+
+
+# Your MyHashSet object will be instantiated and called as such:
+# obj = MyHashSet()
+# obj.add(key)
+# obj.remove(key)
+# param_3 = obj.contains(key)
+
+# Design HashMap
+class MyHashMap:
+
+    def __init__(self):
+        self.keyflag = [False]*(10**6+1)
+        self.val = [0]*(10**6+1)
+
+    def put(self, key: int, value: int) -> None:
+        self.keyflag[key] = True
+        self.val[key] = value
+
+    def get(self, key: int) -> int:
+        return self.val[key] if self.keyflag[key] else -1
+
+    def remove(self, key: int) -> None:
+        self.keyflag[key] = False        
+
+
+# Your MyHashMap object will be instantiated and called as such:
+# obj = MyHashMap()
+# obj.put(key,value)
+# param_2 = obj.get(key)
+# obj.remove(key)
+
+
+# Range Sum Query 2D Immutable
+class NumMatrix:
+
+    def __init__(self, matrix: List[List[int]]):
+        self.prefix = [[0]*(len(matrix[0])+1) for _ in range(len(matrix)+1)]
+
+        for i in range(1, len(matrix)+1):
+            for j in range(1, len(matrix[0])+1):
+                self.prefix[i][j] = self.prefix[i][j-1]+self.prefix[i-1][j]+self.prefix[i-1][j-1]+self.matrix[i-1][j-1]
+
+    def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -> int:
+        return self.prefix[row2+1][col2+1]-self.prefix[row2][col1-1]-self.prefix[row1-1][col2]
+
+
+# Your NumMatrix object will be instantiated and called as such:
+# obj = NumMatrix(matrix)
+# param_1 = obj.sumRegion(row1,col1,row2,col2)
+
+# Rotate Array
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        n = len(nums)
+        k %= n
+
+        nums.reverse()
+        nums[:k] = nums[:k][::-1]
+        nums[k:] = nums[k:][::-1]
+
+# Boats to Save People
+class Solution:
+    def numRescueBoats(self, people: List[int], limit: int) -> int:
+        people.sort()
+
+        l, r = 0, len(people)-1
+        ans = 0
+
+        while l <= r:
+            if people[l]+people[r] <= limit:
+                l += 1
+                r -=1
+                ans += 1
+            else:
+                ans += 1
+                r -= 1
+
+        return ans
+    
+
+# Split Array Largest Sum
+class Solution:
+    def splitArray(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        limit = sum(nums)+1
+        ng = 0
+        maxsum = 0
+
+        while limit-ng > 1:
+            mid = (limit+ng)//2
+            tmpsum = 0
+            anscnt = 0
+            # tmpmaxsum = 0
+            if max(nums) > mid:
+                ng = mid
+                continue
+
+            for n in nums:
+                tmpsum += n
+                if tmpsum > mid:
+                    anscnt += 1
+                    tmpsum = n
+            if tmpsum > 0:
+                anscnt += 1
+
+            if anscnt > k:
+                ng = mid
+            else:
+                limit = mid
+
+        return limit
+    
+# Find in Mountain Array
+class Solution:
+    def findInMountainArray(self, target: int, mountainArr: 'MountainArray') -> int:
+        n = mountainArr.length()
+
+        l, r = 0, n-1
+        while l < r:
+            mid = (l+r)//2
+            if mountainArr.get(mid) < mountainArr.get(mid+1):
+                l = mid+1
+            else:
+                r = mid
+
+        peek = l
+
+        l, r = 0, peek
+        while l <= r:
+            mid = (l+r)//2
+            val = mountainArr.get(mid)
+
+            if val == target:
+                return mid
+            elif val < target:
+                l = mid+1
+            else:
+                r = mid-1
+
+        l, r = peek+1, n-1
+        while l <= r:
+            mid = (l+r)//2
+            val = mountainArr.get(mid)
+
+            if val == target:
+                return mid
+            elif val < target:
+                r = mid-1
+            else:
+                l = mid+1
+
+        return -1     
