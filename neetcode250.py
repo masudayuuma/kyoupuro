@@ -1479,3 +1479,618 @@ class Solution:
 
         dfs(root)
         return ans
+    
+
+# Insert into a Binary Search Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def insertIntoBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+        
+        def dfs(root):
+            nonlocal val
+            if not root:
+                return
+
+            if val < root.val:
+                dfs(root.left) if root.left else root.left = TreeNode(val)
+            else:
+                dfs(root.right) if root.right else root.right = TreeNode(val)
+
+        dfs(root)
+        return root
+    
+# Delete Node in a BST
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
+        if not root:
+            return None
+        
+        def dfs(root):
+            if not root:
+                return
+            
+            if root.val == key:
+                if root.right:
+                    nxt = root.right
+                    while nxt and nxt.left:
+                        nxt = nxt.left
+                    nxt.left = root.left
+                    root = root.right
+                else:
+                    root = root.left
+                return
+            else:
+                dfs(root.left)
+                dfs(root.right)
+
+        dfs(root)
+        return root
+
+# First Missing Positive
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        max_num = max(nums)
+        heapq.heapify(nums)
+        curr_min = 0
+
+        while nums:
+            t = heapq.heappop(nums)
+            if t < 1:
+                continue
+            if curr_min+1 < t:
+                return curr_min+1
+            else:
+                curr_min = curr_min+1
+
+        return max_num+1
+
+
+# Longest Palindromic Substring
+"""
+input: s: str
+output res: str
+
+assemtpitons
+1 <= s.length <= 1000
+
+ababd
+bab
+
+
+"""
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        n = len(s)
+        dp = [[False]*n for _ in range((n))]
+        ans_l, ans_r = 0, 0
+
+        for lenght in range(1,n+1):
+            for l in range(n-lenght+1):
+                r = l+lenght-1
+
+                if lenght <= 2:
+                    if s[l] == s[r]:
+                        dp[l][r] = True
+                else:
+                    if s[l] == s[r] and dp[l+1][r-1]:
+                        dp[l][r] = True
+
+                if ans_r-ans_l+1 < r-l+1 and dp[l][r]:
+                    ans_r = r
+                    ans_l = l
+
+        return s[ans_l:ans_r+1]
+    
+
+# Stone Game III
+class Solution:
+    def stoneGameIII(self, stoneValue: List[int]) -> str:
+        n = len(stoneValue)
+        dp = [0]*(n+1)
+        dp
+        for i in range(n-1, -1, -1):
+            best = float('-inf')
+            total = 0
+            for k in range(3):
+                if i+k >=n:
+                    break
+                total += stoneValue[i+k]
+                if total -dp[i+k+1] > best:
+                    best = total-dp[i+k+1]
+            dp[i] = best
+        
+        if dp[0] > 0:
+            return 'Alice'
+        elif dp[0] < 0:
+            return 'Bob'
+        else:
+            return 'Tie'
+            
+
+# Last Stone Weight II
+class Solution:
+    def lastStoneWeightII(self, stones: List[int]) -> int:
+        half = sum(stones)//2
+        dp = [False]*(half+1)
+        dp[0] = True
+
+        for s in stones:
+            for i in range(half+1):
+                if dp[i] == True and i+s <= half:
+                    dp[i+s] = True
+
+        return dp[-1]
+    
+# Stone Game
+class Solution:
+    def stoneGame(self, piles: List[int]) -> bool:
+        n = len(piles)
+        dp = [[0]*(n) for _ in range(n)]
+        for i in range(n):
+            pass
+        for lenght in range(2, n+1):
+            for l in range(n-lenght+1):
+                r = l+lenght-1
+
+                if piles[r] - dp[l][r-1] > piles[l] - dp[l+1][r]:
+                    dp[l][r] = piles[r] - dp[l][r-1]
+                else:
+                    dp[l][r] = piles[l] - dp[l+1][r]
+
+        return True if dp[0][n-1] > 0 else False
+    
+
+# Burst Balloons
+class Solution:
+    def maxCoins(self, nums: List[int]) -> int:
+        nums = [1]+nums+[1]
+        n = len(nums)
+        dp = [[0]*n for _ in range(n)]
+        for i in range(n):
+            dp[i][i] = nums[i]
+
+        for lenght in range(2, n+1):
+            for l in range(n-lenght):
+                r = l+lenght #0+2
+
+                for k in range(l+1, r):
+                    dp[l][r] = max(dp[l][r], dp[l][k]+nums[l]*nums[k]*nums[r]+dp[k][r])
+
+        return dp[0][n-1]
+    
+# Accounts Merge
+class Solution:
+    def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
+        parent = {}
+        email_to_name = {}
+
+        def find(x):
+            if parent[x] != x:
+                parent[x] = find(parent[x])
+            return parent[x]
+        
+        def union(a, b):
+            root_a = find(a)
+            root_b = find(b)
+            if root_a != root_b:
+                parent[root_b] = root_a
+
+        for account in accounts:
+            name = account[0]
+            first_email =account[1]
+
+            for email in account[1:]:
+                if email not in parent:
+                    parent[email] = email
+                email_to_name[email] = name
+                union(first_email, email)
+
+        groups = defaultdict(list)
+
+        for email in parent:
+            root = find(email)
+            groups[root].append(email)
+
+        ans = []
+        for root, emails in groups.items():
+            name = email_to_name[root]
+            ans.append([name]+sorted(emails))
+
+        return ans
+
+
+# Evaluate Division
+class Solution:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        graph = defaultdict(list)
+
+        for (a, b), value in zip(equations, values):
+            graph[a].append((b, value))
+            graph[b].append((a, 1/value))
+
+        def dfs(cur, target, visited, product):
+            if cur == target:
+                return product
+            
+            visited.add(cur)
+
+            for nei, weight in graph[cur]:
+                if nei in visited:
+                    continue
+
+                result = dfs(nei, target, visited, product*weight)
+                if result != -1.0:
+                    return result
+            return -1.0
+        
+        ans = []
+
+        for start, end in queries:
+            if start not in graph or end not in graph:
+                ans.append(-1.0)
+            else:
+                ans.append(dfs(start, end, set(), 1.0))
+
+        return ans
+
+
+class Solution:
+    def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
+        if n == 1:
+            return [0]
+        
+        graph = defaultdict(list)
+        degree = [0]*n
+
+        for a, b in edges:
+            graph[a].append(b)
+            graph[b].append(a)
+
+            degree[a] += 1
+            degree[b] += 1
+
+        queue = deque()
+
+        for node in range(n):
+            if degree[node] == 1:
+                queue.append(node)
+
+        remaining = 0
+
+        while remaining > 2:
+            leaf_count = len(queue)
+            remaining -= leaf_count
+
+            for _ in range(leaf_count):
+                leaf = queue.popleft()
+
+                for nei in graph[leaf]:
+                    degree[nei] -= 1
+
+                    if degree[nei] == 1:
+                        queue.append(nei)
+
+        return list(queue)
+
+
+# Burst Balloons
+"""
+dp
+
+[]
+"""
+class Solution:
+    def maxCoins(self, nums: List[int]) -> int:
+        nums = [1]+nums[1]
+        n = len(nums)
+
+        dp = [[0]*n for _ in range(n)]
+
+        for lenght in range(1, n+1):
+            for l in range(n-lenght):
+                r = l+lenght
+
+                for k in range(l+1, r):
+                    coins = dp[l][k] + nums[l]*nums[k]*nums[r]+ dp[k][r]
+                    dp[l][r] = max(dp[l][r], coins)
+
+        return dp[0][n-1]
+    
+def decode_string(s: str) -> str:
+    stack = []
+    current_stiring = ""
+    current_number = 0
+
+    for ch in s:
+        if ch.isdigit():
+            current_number = current_number*10+int(ch)
+        elif ch =="[":
+            stack.append((current_stiring, current_number))
+            current_stiring = ""
+            current_number = 0
+        elif ch == "]":
+            prev_string, repeat_count = stack.pop()
+            current_stiring = prev_string+current_stiring*repeat_count
+        else:
+            current_stiring += ch
+
+    return current_stiring
+
+def click(board: List[List[int]], r: int, c:int) -> List[List[int]]:
+    rows = len(board)
+    cols = len(board[0])
+
+    result = [[-1 for _ in range(cols)] for _ in range(rows)]
+
+    if board[r][c] == 9:
+        result[r][c] = 9
+        return result
+    
+    if board[r][c] != 0:
+        result[r][c] = board[r][c]
+        return result
+    
+    if board[r][c] != 0:
+        result[r][c] = board[r][c]
+        return result
+    
+    directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+
+    queue = deque()
+    queue.append((r, c))
+    result[r][c] = 0
+
+    while queue:
+        cur_r, cur_c = queuq.popleft()
+
+        if board[cur_r][cur_c] != 0:
+            continue
+
+        for dr, dc in directions:
+            nr = cur_r+dr
+            nc = cur_c+dc
+
+            if nr < 0 or nr >= rows or nc < 0 or nc >= cols:
+                continue
+
+            if result[nr][nc] != -1:
+                continue
+
+            if board[nr][nc] == 9:
+                continue
+
+            result[nr][nc] = board[nr][nc]
+
+            if board[nr][nc] == 0:
+                queue.append((nr, nc))
+    return result
+
+
+# Implement Stack Using Queues
+"""
+[1, 2, 3]
+[2, 1, ]
+
+"""
+class MyStack:
+
+    def __init__(self):
+        self.q1 = deque()
+        self.q2 = deque()
+
+
+    def push(self, x: int) -> None:
+        self.q2 = self.q1.copy()
+        self.q1.clear()
+        self.q1.append(x)
+        self.q1.extend(self.q2)
+        self.q2.clear()
+
+    def pop(self) -> int:
+        return self.q1.popleft()
+
+    def top(self) -> int:
+        return self.q1[0]
+
+    def empty(self) -> bool:
+        return True if len(self.q1) == 0 else False        
+
+
+# Your MyStack object will be instantiated and called as such:
+# obj = MyStack()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.empty()
+
+
+# Implement Stack Using Queues
+"""
+[1, 2, 3]
+
+"""
+class MyStack:
+
+    def __init__(self):
+        self.q1 = deque()
+
+    def push(self, x: int) -> None:
+        self.q1.reverse()
+        self.q1.append(x)
+        self.q1.reverse()
+
+    def pop(self) -> int:
+        return self.q1.popleft()
+
+    def top(self) -> int:
+        return self.q1[0]
+
+    def empty(self) -> bool:
+        return True if len(self.q1) == 0 else False        
+
+
+# Your MyStack object will be instantiated and called as such:
+# obj = MyStack()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.empty()
+
+# Implement Queue using Stacks
+class MyQueue:
+
+    def __init__(self):
+        self.stack1 = []
+        self.stack2 = []
+
+    def push(self, x: int) -> None:
+        self.stack1.append(x)
+
+    def pop(self) -> int:
+        if self.stack2:
+            return self.stack2.pop()
+        else:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+
+    def peek(self) -> int:
+        if self.stack2:
+            return self.stack2[-1]
+        else:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+            return self.stack2[-1]
+        
+    def empty(self) -> bool:
+        if not self.stack2 and not self.stack1:
+            return True
+        else:
+            return False
+
+
+# Online Stock Span
+class StockSpanner:
+
+    def __init__(self):
+        self.stack = []
+        
+
+    def next(self, price: int) -> int:
+        consective = 1
+        while self.stack and self.stack[-1][0] <= price:
+            consective += self.stack[-1][1]
+            self.stack.pop()
+        self.stack.append(price, consective)
+        return self.stack[-1][1]
+
+
+# Your StockSpanner object will be instantiated and called as such:
+# obj = StockSpanner()
+# param_1 = obj.next(price)
+
+
+# Simplify Path
+class Solution:
+    def simplifyPath(self, path: str) -> str:
+        pathlist = path.split('/')
+        res = []
+
+        for s in pathlist:
+            if res and s == '..':
+                res.pop()
+            elif  s != '.' or s != '..':
+                res.append(s)
+
+        return '/' + '/'.join(res)
+
+# Decode String
+class Solution:
+    def decodeString(self, s: str) -> str:
+        stack = []
+        currnum = 0
+        currstr = ""
+
+        for c in s:
+            if c.isdecimal:
+                currnum = currnum*10+int(c)
+            elif c == '[':
+                stack.append([currstr, currnum])
+                currnum = 0
+                currstr = ""
+            elif c == ']':
+                prevstr, prevcnt = stack.pop()
+                currstr = prevstr+prevcnt*currstr
+            else:
+                currstr += c
+
+        return currstr 
+
+
+# Maximum Frequency Stack
+class FreqStack:
+
+    def __init__(self):
+        self.freq_cnt = defaultdict(int)
+        self.heap = []
+
+        self.index = -1
+        
+
+    def push(self, val: int) -> None:
+        self.freq_cnt[val] += 1
+        heapq.heappush(self.heap, [-self.freq_cnt[val], self.index, val])
+        self.index -= 1
+
+    def pop(self) -> int:
+        freq, i, value = heapq.heappop(self.heap)
+        self.freq_cnt[value] -= 1
+        return value
+        
+
+
+# Your FreqStack object will be instantiated and called as such:
+# obj = FreqStack()
+# obj.push(val)
+# param_2 = obj.pop()
+
+
+# Maximum Frequency Stack
+class FreqStack:
+
+    def __init__(self):
+        self.freq_cnt = defaultdict(int)
+        self.freq_group = defaultdict(list)
+        self.maxfreq = 0
+        
+
+    def push(self, val: int) -> None:
+        self.freq_cnt[val] += 1
+        self.maxfreq = max(self.maxfreq,  self.freq_cnt[val])
+        self.freq_group[self.freq_cnt[val]].append(val)
+
+    def pop(self) -> int:
+        target = self.freq_group[self.maxfreq].pop()
+        self.freq_cnt[target] -= 1
+        if not self.freq_group[self.maxfreq]:
+            del self.freq_group[self.maxfreq]
+            self.maxfreq -= 1
+        return target
+        
+
+
+# Your FreqStack object will be instantiated and called as such:
+# obj = FreqStack()
+# obj.push(val)
+# param_2 = obj.pop()
+
