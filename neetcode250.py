@@ -2327,4 +2327,358 @@ class Solution:
             else:
                 l = mid+1
 
-        return -1     
+        return -1
+
+# Reverse Linked List II
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+        
+        root = ListNode()
+        root.next = head
+        
+        prev = root
+
+        for _ in range(left-1):
+            prev = prev.next
+
+
+        curr = prev.next
+
+        for _ in range(right-left):
+            nxt = curr.next
+            curr.next = nxt.next
+            nxt.next = prev.next
+            prev.next = nxt
+
+        return root.next
+
+        
+# 
+class Solution:
+    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+        dummy = ListNode(0)
+        dummy.next = head
+
+        before = dummy
+        for _ in range(left-1):
+            before = before.next
+
+        start = before.next
+
+        prev = None
+        curr = start
+
+        for _ in range(right-left+1):
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+
+        before.next = prev
+        start.next = curr
+
+        return dummy.next
+    
+# Design Circular Queue
+class MyCircularQueue:
+
+    def __init__(self, k: int):
+        self.k = k
+        self.stack = [0]*len(k)
+        self.size = 0
+        self.rear = -1
+        self.front = 0
+
+    def enQueue(self, value: int) -> bool:
+        if self.isFull():
+            return False
+
+        self.rear += 1
+        self.rear %= self.k
+        self.size += 1
+        self.stack[self.rear] = value
+
+    def deQueue(self) -> bool:
+        if self.isEmpty():
+            return False
+        
+        self.front -= 1
+        self.front %= self.k
+        self.size -= 1
+
+    def Front(self) -> int:
+        return self.stack[self.front]
+        
+
+    def Rear(self) -> int:
+        return self.stack[self.rear]
+
+    def isEmpty(self) -> bool:
+        if self.size == 0:
+            return True
+        else:
+            return False
+
+    def isFull(self) -> bool:
+        if self.size == self.k:
+            return True
+        else:
+            return False
+
+
+# Your MyCircularQueue object will be instantiated and called as such:
+# obj = MyCircularQueue(k)
+# param_1 = obj.enQueue(value)
+# param_2 = obj.deQueue()
+# param_3 = obj.Front()
+# param_4 = obj.Rear()
+# param_5 = obj.isEmpty()
+# param_6 = obj.isFull()
+
+
+# 
+class ListNode:
+    def __init__(self, val, nxt, prev):
+        self.val, self.next, self.prev = val, nxt, prev
+class MyCircularQueue:
+
+    def __init__(self, k: int):
+        self.space = k
+        self.left = ListNode(0, None, None)
+        self.right = ListNode(0, None, self.left)
+        self.left.next = self.right
+
+    def enQueue(self, value: int) -> bool:
+        if self.isFull(): return False
+        cur = ListNode(value, self.right, self.right.prev)
+        self.right.prev.next = cur
+        self.right.prev = cur
+        self.space -= 1
+        return True
+
+    def deQueue(self) -> bool:
+        if self.isEmpty(): return False
+        self.left.next = self.left.next.next
+        self.left.next.prev = self.left
+        self.space += 1
+        return True
+        
+    def Front(self) -> int:
+        if self.isEmpty(): return -1
+        return self.left.next.val
+
+    def Rear(self) -> int:
+        if self.isEmpty(): return -1
+        return self.right.prev.val
+
+    def isEmpty(self) -> bool:
+        return self.left.next == self.right
+
+    def isFull(self) -> bool:
+        return self.space == 0
+
+
+# Your MyCircularQueue object will be instantiated and called as such:
+# obj = MyCircularQueue(k)
+# param_1 = obj.enQueue(value)
+# param_2 = obj.deQueue()
+# param_3 = obj.Front()
+# param_4 = obj.Rear()
+# param_5 = obj.isEmpty()
+# param_6 = obj.isFull()
+
+
+# LFU Cache
+class LFUCache:
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = []
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        heapq.heappush(self.cache, ())
+        return self.cache[key]
+
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            self.chche.move_to_end(key)
+        self.cache[key] = value
+
+        if len(self.cache) > self.capacity:
+
+
+
+# Your LFUCache object will be instantiated and called as such:
+# obj = LFUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
+
+class Node:
+    def __init__(self, key=0, value=0):
+        self.key = key
+        self.value = value
+        self.freq = 1
+        self.prev = None
+        self.next = None
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = Node()
+        self.tail = Node()
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        self.size = 0
+
+    def add_front(self, node):
+        first = self.head.next
+        self.head.next = node
+        node.prev = self.head
+        node.next = first
+        first.prev = node
+        self.size += 1
+
+    def remove(self, node):
+        prev_node = node.prev
+        next_node = node.next
+        prev_node.next = next_node
+        next_node.prev = prev_node
+        node.prev = Node
+        node.next = None
+        self.size -= 1
+
+    def remove_lru(self):
+        if self.size == 0:
+            return None
+        lru = self.tail.prev
+        self.remove(lru)
+        return lru
+
+class LFUCache:
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.key_to_node = {}
+        self.freq_to_list = defaultdict(DoublyLinkedList)
+        self.min_freq = 0
+
+    def _increase_freq(self, node):
+        old_freq = node.freq
+        old_list = self.freq_to_list[old_freq]
+        old_list.remove(node)
+
+        if old_freq == self.min_freq and old_list.size == 0:
+            self.min_freq += 1
+
+        node.freq += 1
+        new_freq = node.freq
+        self.freq_to_list[new_freq].add_front(node)
+
+    def get(self, key: int) -> int:
+        if key not in self.key_to_node:
+            return -1
+        
+        node = self.key_to_node[key]
+        self._increase_freq(node)
+        return node.value
+    
+    def put(self, key: int, value: int) -> None:
+        if self.capacity == 0:
+            return
+        
+        if key in self.key_to_node:
+            node = self.key_to_node[key]
+            node.value = value
+            self._increase_freq(node)
+            return
+        
+        if len(self.key_to_node) == self.capacity:
+            min_list = self.freq_to_list[self.min_freq]
+            removed = min_list.remove_lru()
+            del self.key_to_node[removed.key]
+
+        new_node = Node(key, value)
+        self.key_to_node[key] = new_node
+        self.freq_to_list[1].add_front(new_node)
+        self.min_freq = 1
+
+
+# Your LFUCache object will be instantiated and called as such:
+# obj = LFUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
+
+
+# Construct Quad Tree
+"""
+# Definition for a QuadTree node.
+class Node:
+    def __init__(self, val, isLeaf, topLeft, topRight, bottomLeft, bottomRight):
+        self.val = val
+        self.isLeaf = isLeaf
+        self.topLeft = topLeft
+        self.topRight = topRight
+        self.bottomLeft = bottomLeft
+        self.bottomRight = bottomRight
+"""
+
+class Solution:
+    def construct(self, grid: List[List[int]]) -> 'Node':
+        n = len(grid)
+
+        def build(row: int )
+            same = True
+
+# House Robber III
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def rob(self, root: Optional[TreeNode]) -> int:
+        
+        def dfs(root):
+            if not root:
+                return [0, 0]
+            
+            prev1, prevprev1 = dfs(root.left)
+            prev2, prevprev2 = dfs(root.right)
+
+            return [prevprev1+prevprev2+root.val, max(prev1, prevprev1)+max(prev2, prevprev2)]
+        
+        ans1, ans2 =  dfs(root)
+        return max(ans1, ans2)
+
+# Delete Leaves With a Given Value
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def removeLeafNodes(self, root: Optional[TreeNode], target: int) -> Optional[TreeNode]:
+        
+        def dfs(root):
+            if not root:
+                return None
+            
+            root.right = dfs(root.right)
+            root.left = dfs(root.left)
+
+            if root.right is None and root.left is None and root.val == target:
+                return None
+            
+            return root
+            
+        return dfs(root)
+
