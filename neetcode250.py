@@ -2682,3 +2682,267 @@ class Solution:
             
         return dfs(root)
 
+# Extra Characters in a String
+class Solution:
+    def minExtraChar(self, s: str, dictionary: List[str]) -> int:
+        dict_set = set(dictionary)
+        dp = [0]*(len(s)+1)
+        dp[0] = True
+        
+        for i in range(1, len(s)+1):
+            dp[i] += dp[i-1]+1
+            for j in range(j):
+                if dp[j] and s[j:i] in dict_set:
+                    dp[i] = min(dp[i], dp[j])
+
+        return dp[-1]
+    
+# Single Threaded CPU
+class Solution:
+    def getOrder(self, tasks: List[List[int]]) -> List[int]:
+        timeheap = []
+        for i, (enquetime, procestime) in enumerate(tasks):
+            heapq.heappush(timeheap, (enquetime, procestime, i))
+
+        now_time = 0
+        ans = []
+        process_heap = []
+        while timeheap or process_heap:
+            if not process_heap: now_time = max(now_time, timeheap[0][0])
+            while timeheap and now_time >= timeheap[0][0]:
+                t_enquetime, procestime, i = heapq.heappop(timeheap)
+                heapq.heappush(process_heap, (procestime, i, t_enquetime))
+
+            p_t, index, que_t = heapq.heappop(process_heap)
+            now_time += p_t
+            ans.append(index)
+
+        return ans
+    
+# Reorganize String
+class Solution:
+    def reorganizeString(self, s: str) -> str:
+        cnt_s = Counter(s)
+        heap = []
+
+        for key, val in cnt_s.items():
+            heapq.heappush(heap, (-val, key))
+
+        ans = []
+        save = None
+
+        while heap:
+            cnt, char = heapq.heappop(heap)
+            if save: heapq.heappush(heap, (save[0], save[1]))
+            if ans and ans[-1] == char:
+                return ""
+            else:
+                ans.append(char)
+            
+            cnt = cnt+1
+            if cnt != 0:
+                save = (cnt, char)
+            else:
+                save = None
+            
+
+        if save and save[0] == -1 and save[1] != ans[-1]:
+            ans.append(save[1])
+        elif save:
+            return ""
+
+        return "".join(ans)
+
+# Longest Happy String
+class Solution:
+    def longestDiverseString(self, a: int, b: int, c: int) -> str:
+        heap = []
+
+        heapq.heappush(heap, (a, 'a'))
+        heapq.heappush(heap, (b, 'b'))
+        heapq.heappush(heap, (c, 'c'))
+
+        save = None
+        ans = []
+        while heap:
+            char, cnt = heapq.heapop(heap)
+            if save:
+                heapq.heappush(heap, save)
+            save = None
+            ans.append(char)
+            cnt -= 1
+
+            if ans and ans[-1] == char:
+                save = (cnt, char)
+            else:
+                heapq.heappush(heap, (cnt, char))
+        
+        if save:
+            return ''
+        else:
+            return ''.join(ans)
+            
+# Car Pooling
+class Solution:
+    def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
+        heap = []
+        for num, frm, to in trips:
+            heapq.heappush(heap, (frm, 'bfm', num))
+            heapq.heappush(heap, (to, 'ato', num))
+
+        total = 0
+        while heap:
+            dict, way, num = heapq.heappop(heap)
+            if way == 'ato':
+                total -= num
+            else:
+                total += num
+                if total > capacity: return False
+
+        return True
+
+# IPO
+# heapに(capital, profit)で入れる
+# 初期capital以下の要素をnext_heapに入れる
+# その中から利益最大を取り出す。
+# その利益を現状のcapitalに足して、次のcapital以下の要素をnext_capitalに入れて...
+# を繰り返す。
+class Solution:
+    def findMaximizedCapital(self, k: int, w: int, profits: List[int], capital: List[int]) -> int:
+        heap = [(cap, pro) for cap, pro in zip(capital, profits)]
+        heapq.heapify(heap)
+        next_heap = []
+        count = 0
+        ans = w
+
+        while k > count:
+            while heap and w >= heap[0][0]:
+                cap, profit = heapq.heappop(heap)
+                heapq.heappush(next_heap, (-profit, cap))
+
+            if next_heap:
+                profit, cap = heapq.heappop(next_heap)
+            else:
+                return ans
+
+            ans += -profit
+            count += 1
+            w += -profit
+
+        return ans
+    
+
+# Meeting Rooms III
+class Solution:
+    def mostBooked(self, n: int, meetings: List[List[int]]) -> int:
+        meetings.sort()
+        available = list(range(n))
+        using = []
+        heapq.heapify(available)
+        room_cnt = [0]*(n)
+
+        for start, end in meetings:
+            diff = end-start
+            while using and using[0][0] <= start:
+                e, room = heapq.heappop(using)
+                heapq.heappush(available, room)
+
+            if available:
+                room = heapq.heappop(available)
+                room_cnt[room] += 1
+                heapq.heappush(using, (end, room))
+            else:
+                eariest_end, room = heapq.heappop(using)
+                room_cnt[room] += 1
+                heapq.heappush(using, (eariest_end+diff, room))
+
+        return room_cnt.index(max(room_cnt))
+    
+# Jump Game VII
+"""
+minjump+i ~ maxjump+iまでをwindowとしてもち、minjump+iの最も短い距離＋maxjump+iの最も長い距離を持てばいい。
+"""
+class Solution:
+    def canReach(self, s: str, minJump: int, maxJump: int) -> bool:
+        if s[-1] == '1':
+            return False
+        dp = [False]*len(s)
+        dp[0] = True
+        n = len(s)
+        window = 0
+        
+        for i in range(1, n):
+            
+            if i-minJump >= 0 and dp[i-minJump]:
+                window += 1
+
+            if i-maxJump-1 >= 0 and dp[i-maxJump-1]:
+                window -= 1
+
+            if window > 0 and s[i] == '0':
+                dp[i] = True
+ 
+        return dp[-1]
+    
+# Dota2 Senate
+class Solution:
+    def predictPartyVictory(self, senate: str) -> str:
+        q = deque()
+
+        for c in senate:
+            q.append(c)
+
+        s_cnt = Counter(senate)
+
+        if s_cnt['R'] == 0:
+            return 'Dire'
+        if s_cnt['D'] == 0:
+            return "Radiant"
+
+        while q:
+            c = q.popleft()
+
+            if c == 'D':
+                s_cnt['R'] -= 1
+                if s_cnt['R'] == 0:
+                    return 'Dire'
+            else:
+                s_cnt['D'] -= 1
+                if s_cnt['D'] == 0:
+                    return "Radiant"
+            q.append(c)
+                
+        return ""
+            
+
+# Candy
+"""
+heapを使って、ratingsが低い順にとる。隣が、低い場合のみ隣＋１の値を入れる。
+"""
+class Solution:
+    def candy(self, ratings: List[int]) -> int:
+        res = [float('inf')]*len(ratings)
+
+        i2r = [(r, i) for i, r in enumerate(ratings)]
+        heapq.heapify(i2r)
+        while i2r:
+            r, i = heapq.heappop(i2r)
+
+            left, right = float('inf'), float('inf')
+            inp = 1
+            if i-1 >= 0:
+                left = ratings[i-1]
+                if left < r:
+                    inp = left+1
+            if i+1 < len(ratings):
+                right = ratings[i+1]
+                if right < r:
+                    inp = max(inp, right+1)
+
+            res[i] = inp
+
+        return sum(res)
+# Add Binary
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        
