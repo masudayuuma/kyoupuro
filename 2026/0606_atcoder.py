@@ -135,25 +135,50 @@
 # print(ans)
 
 # D - Count Subgrid Sum = K
-H, W, K = map(int, input().split())
+# H, W, K = map(int, input().split())
 
-grid = [list(map(int, input())) for _ in range(H)]
+# grid = [list(map(int, input())) for _ in range(H)]
 
-prefix = [[0]*(W+1) for _ in range(H+1)]
+# prefix = [[0]*(W+1) for _ in range(H+1)]
 
-for i in range(1, H+1):
-    for j in range(1, W+1):
-        prefix[i][j] = prefix[i-1][j]+prefix[i][j-1]+grid[i-1][j-1]-prefix[i-1][j-1]
-ans = 0
+# for i in range(1, H+1):
+#     for j in range(1, W+1):
+#         prefix[i][j] = prefix[i-1][j]+prefix[i][j-1]+grid[i-1][j-1]-prefix[i-1][j-1]
+# ans = 0
 
-for h1 in range(1, H+1):
-    for h2 in range(h1, H+1):
-        total = dict()
-        total[0] = 1
-        for w in range(1, W+1):
-            s = prefix[h2][w]-prefix[h1-1][w]
-            ans += total.get(s-K, 0)
-            total[s] = total.get(s, 0)+1
+# for h1 in range(1, H+1):
+#     for h2 in range(h1, H+1):
+#         total = dict()
+#         total[0] = 1
+#         for w in range(1, W+1):
+#             s = prefix[h2][w]-prefix[h1-1][w]
+#             ans += total.get(s-K, 0)
+#             total[s] = total.get(s, 0)+1
 
-print(ans)
+# print(ans)
 
+# E - E-liter
+from atcoder.fenwicktree import FenwickTree
+
+N, Q = map(int, input().split())
+
+f = [FenwickTree (Q+1) for _ in range(2)]
+
+b = 0
+last = [[-1] * (N+1), [0]*(N+1)]
+
+for i in range(1, Q+1):
+    t, x = map(int, input().split())
+    t -= 1
+    if last[t][x] == -1:
+        b += N
+    else:
+        kind = f[1-t].sum(last[t][x], i)
+        b += kind if t == 0 else -kind
+        f[t].add(last[t][x], -1)
+    f[t].add(i, 1)
+    last[t][x] = i
+    print(b)
+
+
+# 
