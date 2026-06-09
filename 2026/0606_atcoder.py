@@ -158,14 +158,38 @@
 # print(ans)
 
 # E - E-liter
-from atcoder.fenwicktree import FenwickTree
+# from atcoder.fenwicktree import FenwickTree
 
+# N, Q = map(int, input().split())
+
+# f = [FenwickTree (Q+1) for _ in range(2)]
+
+# b = 0
+# last = [[-1] * (N+1), [0]*(N+1)]
+
+# for i in range(1, Q+1):
+#     t, x = map(int, input().split())
+#     t -= 1
+#     if last[t][x] == -1:
+#         b += N
+#     else:
+#         #前回の同じ行、列の操作の時刻の間の変化をカウント
+#         kind = f[1-t].sum(last[t][x], i)
+#         b += kind if t == 0 else -kind
+#         f[t].add(last[t][x], -1)
+#     f[t].add(i, 1)
+#     last[t][x] = i
+#     print(b)
+
+
+# 
+from atcoder.fenwicktree import FenwickTree
 N, Q = map(int, input().split())
 
 f = [FenwickTree (Q+1) for _ in range(2)]
 
 b = 0
-last = [[-1] * (N+1), [0]*(N+1)]
+last = [[-1]*(N+1), [0]*(N+1)]
 
 for i in range(1, Q+1):
     t, x = map(int, input().split())
@@ -180,5 +204,3 @@ for i in range(1, Q+1):
     last[t][x] = i
     print(b)
 
-
-# 
