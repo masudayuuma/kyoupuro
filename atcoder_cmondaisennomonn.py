@@ -1983,4 +1983,98 @@
 # print(len(ans))
 # print(*ans)
 
-# 
+# C - Sushi
+# N, M = map(int, input().split())
+
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
+
+# A.sort()
+# B.sort()
+# ans = 0
+
+# for i in range(len(A)-1, -1, -1):
+#     while B and B[-1] > A[i]*2:
+#         B.pop()
+
+#     if not B:
+#         break
+
+#     B.pop()
+#     ans += 1
+
+# print(ans)
+
+# C - Drop Blocks
+# from collections import defaultdict
+# N, Q = map(int, input().split())
+
+# curlist = [0]*(N)
+# cntgroup = defaultdict(list)
+# offset = 0
+
+
+# for i in range(Q):
+#     q, x = map(int, input().split())
+
+#     if q == 1:
+#         now = curlist[x-1]
+#         curlist[x-1] += 1
+#         cntgroup[now+1].append(x-1)
+#         if len(cntgroup[offset+1]) == N:
+#             offset += 1
+#     else:
+#         ans = len(cntgroup[x+offset])
+#         print(ans)
+
+# C - C Stands for Center
+# S = input()
+# ans = 0
+# for i in range(len(S)):
+
+#     if S[i] == 'C':
+#         l = i
+#         r = len(S)-1-i
+#         ans += 1+min(l, r)
+
+# print(ans)
+
+# C - Long Sequence
+# N, K = map(int, input().split())
+# lenght = [0]*N
+# string = [""]*N
+
+# for i in range(N):
+#     l, *A = map(int, input().split())
+#     lenght[i] = l
+#     string[i] = A
+
+# C = list(map(int, input().split()))
+# for i, c in enumerate(C):
+#     now = K
+#     nxt = K-c*lenght[i]
+#     if nxt <= 0:
+#         d = now%lenght[i]
+#         print(string[i][d-1])
+#         break
+#     else:
+#         K = nxt
+
+# C - Not Adjacent
+S = input()
+ans = 0
+r = 0
+l = 0
+while r < len(S):
+    
+    if r > 0 and S[r] == S[r-1]:
+        l = r
+        ans += 1
+    else:
+        ans += r-l+1
+    ans %= 998244353
+    r += 1
+
+print(ans)
+
+# C - Vanish

@@ -2945,4 +2945,7 @@ class Solution:
 # Add Binary
 class Solution:
     def addBinary(self, a: str, b: str) -> str:
-        
+        carry = 0
+
+        for i in range(len(a)-1, -1, -1):
+            

@@ -630,34 +630,107 @@ def zahyouassyuku(before_list):
 # ダイクストラ法
 # 良い記事　https://tech.aru-zakki.com/python-dfs-bfs-dijkstra/
 # ダイクストラ法は、幅優先探索と似たアルゴリズムですが、ノード間の距離が異なる場合はこちらを用いて最短経路を求めます。
-import heapq
+# import heapq
 
-N, M = map(int, input().split())
+# N, M = map(int, input().split())
 
-node = [[] for _ in range(N)]
-for i in range(M):
-    a, b, c = map(int, input().split())
-    a -= 1
-    b -= 1
-    node[a].append((b, c))
-    node[b].append((a, c))
+# node = [[] for _ in range(N)]
+# for i in range(M):
+#     a, b, c = map(int, input().split())
+#     a -= 1
+#     b -= 1
+#     node[a].append((b, c))
+#     node[b].append((a, c))
 
-inf = int(1e18)
-dist = [inf for _ in range(N)]
-dist[0] = 0
-pq = []
-heapq.heappush(pq, (0, 0))
+# inf = int(1e18)
+# dist = [inf for _ in range(N)]
+# dist[0] = 0
+# pq = []
+# heapq.heappush(pq, (0, 0))
 
 
-while len(pq) != 0:
-    cur_cost, cur = pq[0]
-    heapq.heappop(pq)
-    if cur_cost > dist[cur] : continue
-    for e, cost in node[cur]:
-        if dist[e] > dist[cur]+cost :
-            dist[e] = dist[cur] + cost
-            heapq.heappush(pq, (dist[e], e))
+# while len(pq) != 0:
+#     cur_cost, cur = pq[0]
+#     heapq.heappop(pq)
+#     if cur_cost > dist[cur] : continue
+#     for e, cost in node[cur]:
+#         if dist[e] > dist[cur]+cost :
+#             dist[e] = dist[cur] + cost
+#             heapq.heappush(pq, (dist[e], e))
 
-for e in dist:
-    if e == inf : print(-1)
-    else: print(e)
+# for e in dist:
+#     if e == inf : print(-1)
+#     else: print(e)
+
+
+# B - Fenwick Tree
+from atcoder.fenwicktree import FenwickTree
+N, Q = map(int, input().split())
+
+A = list(map(int, input().split()))
+fw = FenwickTree(N)
+for i, a_i in enumerate(A): fw.add(i, a_i)
+
+for i in range(Q):
+    q, a, b = map(int, input().split())
+
+    if q == 1:
+        print(fw.sum(a, b))
+    else:
+        fw.add(a, b)
+
+# 転倒数
+from atcoder.fenwicktree import FenwickTree
+
+N = int(input())
+A = list(map(int, input().split()))
+
+fw = FenwickTree(N)
+ans = 0
+
+for x in A:
+    x -= 1  # 0-indexed に直す
+
+    ans += fw.sum(x + 1, N)  # 今まで見た中で x より大きい数
+    fw.add(x, 1)             # x を見たことにする
+
+print(ans)
+
+# 転倒数×座標圧縮
+N = int(input())
+A = list(map(int, input().split()))
+
+sorted_unq = sorted(list(set(A)))
+compress_dict = {val: i for i, val in enumerate(sorted_unq)}
+compress_data = [compress_dict[x] for x in A]
+
+fw = FenwickTree(N)
+
+ans = 0
+
+for x in compress_data:
+    ans += fw.sum(x+1, N)
+    fw.add(x, 1)
+print(ans)
+
+# ↑の問題最適化
+from atcoder.fenwicktree import FenwickTree
+
+N = int(input())
+A = list(map(int, input().split()))
+
+sorted_unq = sorted(set(A))
+compress_dict = {val: i for i, val in enumerate(sorted_unq)}
+compress_data = [compress_dict[x] for x in A]
+
+M = len(sorted_unq)
+fw = FenwickTree(M)
+
+ans = 0
+
+for x in compress_data:
+    ans += fw.sum(x + 1, M)
+    fw.add(x, 1)
+
+print(ans)
+
