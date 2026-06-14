@@ -2061,20 +2061,33 @@
 #         K = nxt
 
 # C - Not Adjacent
-S = input()
-ans = 0
-r = 0
-l = 0
-while r < len(S):
+# S = input()
+# ans = 0
+# r = 0
+# l = 0
+# while r < len(S):
     
-    if r > 0 and S[r] == S[r-1]:
-        l = r
-        ans += 1
-    else:
-        ans += r-l+1
-    ans %= 998244353
-    r += 1
+#     if r > 0 and S[r] == S[r-1]:
+#         l = r
+#         ans += 1
+#     else:
+#         ans += r-l+1
+#     ans %= 998244353
+#     r += 1
 
-print(ans)
+# print(ans)
 
 # C - Vanish
+# from sortedcontainers import sorteddict
+# from collections import Counter
+# N, K = map(int, input().split())
+
+# A = list(map(int, input().split()))
+# a_cnt = Counter(A)
+
+# a_each_sum = [key*val for key, val in a_cnt.items()]
+# a_each_sum.sort(reverse=True)
+
+# print(sum(a_each_sum[K:]))
+
+

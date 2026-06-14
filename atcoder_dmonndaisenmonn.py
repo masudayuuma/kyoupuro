@@ -1293,28 +1293,142 @@
 # print(ans)
 
 # D - Forbidden List 2
-from bisect import bisect_left
-N, Q = map(int, input().split())
-A = list(map(int, input().split()))
-A.sort()
+# from bisect import bisect_left
+# N, Q = map(int, input().split())
+# A = list(map(int, input().split()))
+# A.sort()
 
-for _ in range(Q):
-    x, y = map(int, input().split())
-    si = bisect_left(A, x)
+# for _ in range(Q):
+#     x, y = map(int, input().split())
+#     si = bisect_left(A, x)
 
-    ng = si-1
-    ok = N
+#     ng = si-1
+#     ok = N
 
-    while ok - ng > 1:
-        mid = (ok+ng)//2
-        total = A[mid]-x+1
-        forbidden = mid-si+1
-        allowed = total - forbidden
+#     while ok - ng > 1:
+#         mid = (ok+ng)//2
+#         total = A[mid]-x+1
+#         forbidden = mid-si+1
+#         allowed = total - forbidden
 
-        if allowed >= y:
-            ok = mid
-        else:
-            ng = mid
+#         if allowed >= y:
+#             ok = mid
+#         else:
+#             ng = mid
 
-    ans = x+(y-1)+(ok-si)
-    print(ans)
+#     ans = x+(y-1)+(ok-si)
+#     print(ans)
+
+# D - Adjacent Distinct String
+# from collections import Counter
+# import heapq
+# T = int(input())
+
+# for q in range(T):
+#     s = list(input())
+#     s_cnt = Counter(s)
+#     s_cnt_list = [(-cnt, val) for val, cnt in s_cnt.items()]
+#     heapq.heapify(s_cnt_list)
+#     save = None
+#     ans = []
+
+#     while s_cnt_list:
+#         cnt, val = heapq.heappop(s_cnt_list)
+
+#         cnt += 1
+#         ans.append(val)
+#         if save:
+#             heapq.heappush(s_cnt_list, save)
+#             save = None
+#         if cnt < 0:
+#             save = (cnt, val)
+
+#     if save:
+#         print('No')
+#     else:
+#         print('Yes')
+#         print(''.join(ans))
+
+
+# D - Repeatedly Repainting
+# 最初でqueueに入れるタイミングで#がなければ、全部.で出力できる？
+# from collections import deque
+# H, W = map(int, input().split())
+# grid = []
+# for i in range(H):
+#     s = list(input())
+
+#     grid.append(s)
+
+# flag = [[False]*(W) for _ in range(H)]
+# queue = deque()
+# for i in range(H):
+#     for j in range(W):
+#         if grid[i][j] == '#':
+#             queue.append((i, j))
+        
+# if len(queue) == 0 or len(queue) == H*W:
+#     for _ in range(H):
+#         print('.'*W)
+#     exit()
+
+# diff = ((1, 0), (1, -1), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1))
+# nxt_q = deque()
+# cnt = 0
+
+# while queue:
+#     i, j = queue.popleft()
+#     for dy, dx in diff:
+#         y = dy+i
+#         x = dx+j
+#         if not 0 <= y < H or not 0 <= x < W or flag[y][x] or grid[y][x] != '.':
+#             continue
+#         flag[y][x] = True
+#         nxt_q.append((y, x))
+
+
+# while queue or nxt_q:
+#     if not queue:
+#         queue = nxt_q.copy()
+#         nxt_q = deque()
+#         cnt += 1
+
+#     i, j = queue.popleft()
+#     if cnt % 2 == 1:
+#         grid[i][j] = "."
+#     else:
+#         grid[i][j] = "#"
+
+#     for dy, dx in diff:
+#         y = dy+i
+#         x = dx+j
+
+#         if not 0 <= y < H or not 0 <= x < W or flag[y][x]:
+#             continue
+#         flag[y][x] = True
+#         nxt_q.append((y, x))
+
+# for i in range(H):
+#     print(''.join(grid[i]))
+
+# D - Accomplice
+# N, D = map(int, input().split())
+# prefix = [0]*(10**6+1)
+# ans = 0
+# for i in range(N):
+#     s, t = map(int, input().split())
+
+#     if s > t-D+1:
+#         continue
+
+#     prefix[s] += 1
+#     prefix[t-D+1] -= 1
+
+# for i in range(1, len(prefix)):
+#     prefix[i] += prefix[i-1]
+#     if prefix[i] >= 2:
+#         cnt = prefix[i]
+#         ans += cnt*(cnt-1)//2
+
+# print(ans)
+
