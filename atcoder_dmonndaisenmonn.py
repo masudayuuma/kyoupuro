@@ -1432,3 +1432,32 @@
 
 # print(ans)
 
+# D - Count Subgrid Sum = K
+# H, W, K = map(int, input().split())
+# grid = []
+# for _ in range(H):
+#     grid.append(list(map(int, input())))
+
+# for i in range(1, H):
+#     for j in range(W):
+#         grid[i][j] += grid[i-1][j]
+
+# ans = 0
+# for h1 in range(H):
+#     for h2 in range(h1, H):
+        
+#         total = 0
+#         l = 0
+#         c = {}
+#         c[0] = 1
+
+#         for w in range(W):
+#             h1_c = grid[h1-1][w] if h1-1 >= 0 else 0
+#             h2_c = grid[h2][w]
+#             total += h2_c-h1_c
+#             ans += c[total-K] if total-K in c else 0
+#             c[total] = c.get(total, 0) + 1
+
+# print(ans)
+
+# 
