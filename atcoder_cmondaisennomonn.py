@@ -2091,3 +2091,29 @@
 # print(sum(a_each_sum[K:]))
 
 
+# C - Straw Millionaire
+from collections import defaultdict, deque
+N, M = map(int, input().split())
+
+kind = set()
+i2nxt = defaultdict(set)
+
+for i in range(M):
+    a, b = map(int, input().split())
+
+    i2nxt[a].add(b)
+
+q = deque()
+q.append(1)
+while q:
+    t = q.popleft()
+    if t in kind:
+        continue
+    kind.add(t)
+
+    for b in i2nxt[t]:
+        if b in kind:
+            continue
+        else:
+            q.append(b)
+print(len(kind))

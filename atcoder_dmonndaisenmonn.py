@@ -1460,4 +1460,39 @@
 
 # print(ans)
 
+# D - Chalkboard Median
+# from sortedcontainers import SortedList
+
+# sorted_list = SortedList()
+# sorted_list.add(int(input()))
+
+# for i in range(int(input())):
+#     a, b = map(int, input().split())
+
+#     sorted_list.add(a)
+#     sorted_list.add(b)
+
+#     print(sorted_list[i+1])
+
+# D - Raise Minimum
+import math 
+N, K = map(int, input().split())
+
+A = list(map(int, input().split()))
+l = min(A)-1
+r = min(A) + K * N + 1
+while r-l > 1:
+    mid = (l+r)//2
+    cnt = 0
+    for i, a in enumerate(A):
+        cnt += (mid - a + i) // (i + 1) if mid > a else 0
+        if cnt > K:
+            break
+    if cnt > K:
+        r = mid
+    else:
+        l = mid
+
+print(l)
+
 # 

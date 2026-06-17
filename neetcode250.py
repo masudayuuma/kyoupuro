@@ -2942,10 +2942,16 @@ class Solution:
             res[i] = inp
 
         return sum(res)
-# Add Binary
-class Solution:
-    def addBinary(self, a: str, b: str) -> str:
-        carry = 0
 
-        for i in range(len(a)-1, -1, -1):
-            
+# D - Raise Minimum
+import heapq
+N, K = map(int, input().split())
+
+A = list(map(int, input().split()))
+
+heapq.heapify(A)
+
+for k in range(K):
+    A[0] = A[0]+1
+
+print(A[0])
