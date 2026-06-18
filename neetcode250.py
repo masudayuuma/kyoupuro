@@ -2943,15 +2943,5 @@ class Solution:
 
         return sum(res)
 
-# D - Raise Minimum
-import heapq
-N, K = map(int, input().split())
 
-A = list(map(int, input().split()))
-
-heapq.heapify(A)
-
-for k in range(K):
-    A[0] = A[0]+1
-
-print(A[0])
+# 
