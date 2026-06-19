@@ -1475,24 +1475,78 @@
 #     print(sorted_list[i+1])
 
 # D - Raise Minimum
-import math 
-N, K = map(int, input().split())
+# import math 
+# N, K = map(int, input().split())
 
-A = list(map(int, input().split()))
-l = min(A)-1
-r = min(A) + K * N + 1
-while r-l > 1:
-    mid = (l+r)//2
-    cnt = 0
-    for i, a in enumerate(A):
-        cnt += (mid - a + i) // (i + 1) if mid > a else 0
-        if cnt > K:
-            break
-    if cnt > K:
-        r = mid
-    else:
-        l = mid
+# A = list(map(int, input().split()))
+# l = min(A)-1
+# r = min(A) + K * N + 1
+# while r-l > 1:
+#     mid = (l+r)//2
+#     cnt = 0
+#     for i, a in enumerate(A):
+#         cnt += (mid - a + i) // (i + 1) if mid > a else 0
+#         if cnt > K:
+#             break
+#     if cnt > K:
+#         r = mid
+#     else:
+#         l = mid
 
-print(l)
+# print(l)
 
-# 
+# D - Not Adjacent 2
+# S = input()
+
+# c_dict = {'a': 0, 'b': 0, 'c': 0}
+
+# total = 0
+# for s in S:
+#     ans = 1
+#     for c in c_dict:
+#         if c == s:
+#             continue
+#         ans += c_dict[c]
+#     ans %= 998244353
+#     c_dict[s] += ans
+#     total += ans
+#     total %= 998244353
+
+# print(total)
+
+
+# D - Card Pile Query
+import sys
+sys.setrecursionlimit(10**7)
+N, Q = map(int, input().split())
+mount_dict = {i+1: i+1 for i in range(N)}
+not_move = {i+1 for i in range(N)}
+
+for i in range(Q):
+    c, p = map(int, input().split())
+
+    mount_dict[c] = p
+    not_move.discard(c)
+
+cnt = [0]*(N)
+memo_dict = {}
+
+def dfs(i):
+    if i in memo_dict:
+        return memo_dict[i]
+    
+    if i in not_move:
+        memo_dict[i] = mount_dict[i]
+        return i
+    
+    memo_dict[i] = dfs(mount_dict[i])
+    return memo_dict[i]
+
+
+for i in range(1, N+1):
+    cnt[dfs(i)-1] += 1
+
+print(*cnt)
+
+
+    

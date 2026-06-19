@@ -42,25 +42,48 @@
 # print(now)
 
 # 058 - Original Calculator（★4）
-N, K = map(int, input().split())
+# N, K = map(int, input().split())
 
-dp = [[0]*(10**5) for _ in range(60)]
+# dp = [[0]*(10**5) for _ in range(60)]
 
-for i in range(1, 10**5):
-    nxt = i
-    target = i
-    while i > 0:
-        nxt += i%10
-        i //= 10
-    nxt %= 10**5
-    dp[0][target] = nxt
+# for i in range(1, 10**5):
+#     nxt = i
+#     target = i
+#     while i > 0:
+#         nxt += i%10
+#         i //= 10
+#     nxt %= 10**5
+#     dp[0][target] = nxt
 
-for i in range(59):
-    for j in range(10**5):
-        dp[i+1][j] = dp[i][dp[i][j]]
+# for i in range(59):
+#     for j in range(10**5):
+#         dp[i+1][j] = dp[i][dp[i][j]]
 
-for i in range(60):
-    if 1 << i & K:
-        N = dp[i][N]
+# for i in range(60):
+#     if 1 << i & K:
+#         N = dp[i][N]
 
-print(N)
+# print(N)
+
+# # E - Sequence Sum
+# N, X, M = map(int, input().split())
+
+# dp = [[0]*M for _ in range(40)]
+# sm = [[0]*M for _ in range(40)]
+
+# for i in range(M):
+#     dp[0][i] = i**2 % M
+#     sm[0][i] = i
+
+# for i in range(39):
+#     for j in range(M):
+#         dp[i+1][j] = dp[i][dp[i][j]]
+#         sm[i+1][j] += sm[i][j]+sm[i][dp[i][j]]
+
+# ans = 0
+# for i in range(40):
+#     if 1 << i & N:
+#         ans += sm[i][X]
+#         X = dp[i][X]
+
+# print(ans)
