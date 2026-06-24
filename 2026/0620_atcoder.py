@@ -58,35 +58,37 @@
 
 
 # D - Maximize the Gap
-N, K = map(int, input().split())
+# N, K = map(int, input().split())
 
-heap = []
+# heap = []
 
-for i in range(N):
-    l, r = map(int, input().split())
-    heap.append([l, r])
-heap.sort(key=lambda x: x[1])
+# for i in range(N):
+#     l, r = map(int, input().split())
+#     heap.append([l, r])
+# heap.sort(key=lambda x: x[1])
 
-l = 0
-r = 10**9+1
+# l = 0
+# r = 10**9+1
 
-def possible(x):
-    cnt = 1
-    last_r = heap[0][1]
-    for i in range(1, len(heap)):
-        l, r = heap[i]
-        if l - last_r >= x:
-            cnt += 1
-            last_r = r
-    return cnt >= K
+# def possible(x):
+#     cnt = 1
+#     last_r = heap[0][1]
+#     for i in range(1, len(heap)):
+#         l, r = heap[i]
+#         if l - last_r >= x:
+#             cnt += 1
+#             last_r = r
+#     return cnt >= K
 
-while r - l > 1:
-    mid = (r+l)//2
+# while r - l > 1:
+#     mid = (r+l)//2
 
-    if possible(mid):
-        l = mid
-    else:
-        r = mid
+#     if possible(mid):
+#         l = mid
+#     else:
+#         r = mid
 
-ans = l if possible(1) and l >= 0 and possible(l) else -1
-print(ans)
+# ans = l if possible(1) and l >= 0 and possible(l) else -1
+# print(ans)
+
+# 

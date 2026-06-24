@@ -2943,5 +2943,7 @@ class Solution:
 
         return sum(res)
 
-
-# 
+# Longest Common Prefix
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        

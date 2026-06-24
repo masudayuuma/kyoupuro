@@ -2092,28 +2092,80 @@
 
 
 # C - Straw Millionaire
-from collections import defaultdict, deque
-N, M = map(int, input().split())
+# from collections import defaultdict, deque
+# N, M = map(int, input().split())
 
-kind = set()
-i2nxt = defaultdict(set)
+# kind = set()
+# i2nxt = defaultdict(set)
 
-for i in range(M):
-    a, b = map(int, input().split())
+# for i in range(M):
+#     a, b = map(int, input().split())
 
-    i2nxt[a].add(b)
+#     i2nxt[a].add(b)
 
-q = deque()
-q.append(1)
-while q:
-    t = q.popleft()
-    if t in kind:
-        continue
-    kind.add(t)
+# q = deque()
+# q.append(1)
+# while q:
+#     t = q.popleft()
+#     if t in kind:
+#         continue
+#     kind.add(t)
 
-    for b in i2nxt[t]:
-        if b in kind:
-            continue
-        else:
-            q.append(b)
-print(len(kind))
+#     for b in i2nxt[t]:
+#         if b in kind:
+#             continue
+#         else:
+#             q.append(b)
+# print(len(kind))
+
+# C - Sneaking Glances
+# import sys
+# sys.setrecursionlimit(10**9)
+# N = int(input())
+
+# L = list(map(int, input().split()))
+# max_ans = 0
+
+# def dfs(i, n, cnt):
+#     global max_ans
+
+#     if i >= len(L):
+#         max_ans = max(cnt, max_ans)
+#         return
+    
+#     if n*(n-L[i]) < 0:
+#         dfs(i+1, n-L[i], cnt+1)
+#     else:
+#         dfs(i+1, n-L[i], cnt)
+
+#     if n*(n+L[i]) < 0:
+#         dfs(i+1, n+L[i], cnt+1)
+#     else:
+#         dfs(i+1, n+L[i], cnt)
+
+# dfs(0, 0.5, 0)
+# print(max_ans)
+
+# C - Sneaking Glances
+#bit全探索でもいけます
+# N = int(input())
+# L = list(map(int, input().split()))
+# L = [i*2 for i in L]
+# max_cnt = 0
+# for mask in range(1 << N):
+#     now = 1
+#     cnt = 0
+#     for i in range(N):
+#         if 1 << i & mask:
+#             if now * (now + L[i]) < 0:
+#                 cnt += 1
+#             now += L[i]
+#         else:
+#             if now * (now - L[i]) < 0:
+#                 cnt += 1
+#             now -= L[i]
+#     max_cnt = max(cnt, max_cnt)
+
+# print(max_cnt)
+
+# 
