@@ -91,4 +91,37 @@
 # ans = l if possible(1) and l >= 0 and possible(l) else -1
 # print(ans)
 
-# 
+# D - Maximize the Gap
+# N, K = map(int, input().split())
+# lenght_list = []
+
+# for i in range(N):
+#     l, r = map(int, input().split())
+#     lenght_list.append([l, r])
+
+# lenght_list.sort(key= lambda x : x[1])
+
+# ok = 0
+# ng = 10**9+1
+
+# while ng - ok > 1:
+#     mid = (ok+ng)//2
+#     prev_r = lenght_list[0][1]
+#     cnt = 1
+#     for l, r in lenght_list[1:]:
+#         if prev_r+mid > l:
+#             continue
+
+#         cnt += 1
+#         prev_r = r
+
+#     if cnt >= K:
+#         ok = mid
+#     else:
+#         ng = mid
+
+# if ok > 0:
+#     print(ok)
+# else:
+#     print(-1)
+
