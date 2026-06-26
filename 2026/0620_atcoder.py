@@ -125,3 +125,97 @@
 # else:
 #     print(-1)
 
+# E - Roads and Gates
+# import heapq
+# from collections import defaultdict
+
+# N, M, Y = map(int, input().split())
+
+# graph = defaultdict(list)
+# for i in range(M):
+#     u, v, t = map(int, input().split())
+
+#     graph[u-1].append([v-1, t])
+#     graph[v-1].append([u-1, t])
+
+# X = list(map(int, input().split()))
+
+# s_g = N
+# s_o = N+1
+
+# for i in range(N):
+#     graph[i].append([s_g, X[i]])
+#     graph[s_o].append([i, X[i]])
+# graph[s_g].append([s_o, Y])
+
+# heap = [[0, 0]]
+
+# dist = [float('inf')]*(N+2)
+
+# while heap:
+#     cost, t = heapq.heappop(heap)
+
+#     if dist[t] != float('inf'):
+#         continue
+    
+#     dist[t] = cost
+
+#     while graph[t]:
+#         nxt, n_c = graph[t].pop()
+#         if dist[nxt] != float('inf'):
+#             continue
+
+#         heapq.heappush(heap, [n_c+cost, nxt])
+
+# print(*dist[1:N])
+
+
+# # E - Roads and Gates
+import sys
+import heapq
+
+input = sys.stdin.buffer.readline
+
+INF = 10**30
+
+N, M, Y = map(int, input().split())
+
+graph = [[] for _ in range(N + 2)]
+
+for _ in range(M):
+    u, v, t = map(int, input().split())
+    u -= 1
+    v -= 1
+
+    graph[u].append((v, t))
+    graph[v].append((u, t))
+
+X = list(map(int, input().split()))
+
+s_g = N
+s_o = N + 1
+
+for i in range(N):
+    graph[i].append((s_g, X[i]))   # 都市 i → ゲート入口
+    graph[s_o].append((i, X[i]))   # ゲート出口 → 都市 i
+
+graph[s_g].append((s_o, Y))        # ゲート入口 → ゲート出口
+
+dist = [INF] * (N + 2)
+dist[0] = 0
+
+heap = [(0, 0)]
+
+while heap:
+    cost, now = heapq.heappop(heap)
+
+    if dist[now] < cost:
+        continue
+
+    for nxt, c in graph[now]:
+        nd = cost + c
+        if nd < dist[nxt]:
+            dist[nxt] = nd
+            heapq.heappush(heap, (nd, nxt))
+
+print(*dist[1:N])

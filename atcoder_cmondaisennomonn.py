@@ -2169,3 +2169,155 @@
 # print(max_cnt)
 
 # C - Fishbones
+# N = int(input())
+
+# A = []
+# B = []
+
+# for _ in range(N):
+#     a, b = map(int, input().split())
+
+#     A.append(a)
+#     B.append(b)
+
+# M = int(input())
+# S = [input() for _ in range(M)]
+
+# ok = [set() for _ in range(N)]
+
+# for i in range(N):
+#     for s in S:
+#         if len(s) == A[i]:
+#             ok[i].add(s[B[i]-1])
+
+# for s in S:
+#     if len(s) != N:
+#         print('No')
+#         continue
+
+#     ans = 'Yes'
+
+#     for i in range(N):
+#         if s[i] not in ok[i]:
+#             ans = 'No'
+#             break
+
+#     print(ans)
+
+# C - Understory
+# import heapq
+# Q = int(input())
+# heap = []
+# for i in range(Q):
+#     n, h = map(int, input().split())
+
+#     if n == 1:
+#         heapq.heappush(heap, h)
+#     else:
+#         while heap:
+#             if heap[0] <= h:
+#                 heapq.heappop(heap)
+#             else:
+#                 break
+#     print(len(heap))
+
+# C - Puddles
+# import sys
+# sys.setrecursionlimit(10**8)
+# H, W = map(int, input().split())
+# grid = []
+# for _ in range(H):
+#     grid.append(list(input()))
+
+# diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+
+# def dfs(i, j):
+
+#     flag = False
+#     grid[i][j] = '#'
+#     for dy, dx in diff:
+#         y = dy+i
+#         x = dx+j
+
+#         if not 0 <= y < H or not 0 <= x < W:
+#             flag |= True
+#             continue
+#         if grid[y][x] != '.':
+#             continue
+#         if dfs(y, x):
+#             flag |= True
+
+#     return flag
+
+# total = 0
+# for i in range(H):
+#     for j in range(W):
+#         if grid[i][j] == '.' and not dfs(i, j):
+#             total += 1
+
+# print(total)
+
+
+# C - Puddles
+# import sys
+# input = sys.stdin.readline
+
+# H, W = map(int, input().split())
+# grid = [list(input().strip()) for _ in range(H)]
+
+# diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+
+# total = 0
+
+# for si in range(H):
+#     for sj in range(W):
+#         if grid[si][sj] != '.':
+#             continue
+
+#         stack = [(si, sj)]
+#         grid[si][sj] = '#'
+#         touches_outside = False
+
+#         while stack:
+#             i, j = stack.pop()
+
+#             for dy, dx in diff:
+#                 y = i + dy
+#                 x = j + dx
+
+#                 if not (0 <= y < H and 0 <= x < W):
+#                     touches_outside = True
+#                     continue
+
+#                 if grid[y][x] != '.':
+#                     continue
+
+#                 grid[y][x] = '#'
+#                 stack.append((y, x))
+
+#         if not touches_outside:
+#             total += 1
+
+# print(total)
+
+# C - Comfortable Distance
+# from collections import defaultdict
+# N, L, R = map(int, input().split())
+
+# S = input()
+# ans = 0
+# store = defaultdict(int)
+# for i in range(N):
+#     if i < L:
+#         continue
+
+#     store[S[i-L]] += 1
+
+#     if i > R:
+#         store[S[i-R-1]] -= 1
+
+#     ans += store[S[i]]
+
+# print(ans)
+
+# C - Except and Min

@@ -1516,37 +1516,70 @@
 
 
 # D - Card Pile Query
-import sys
-sys.setrecursionlimit(10**7)
-N, Q = map(int, input().split())
-mount_dict = {i+1: i+1 for i in range(N)}
-not_move = {i+1 for i in range(N)}
+# import sys
+# sys.setrecursionlimit(10**7)
+# N, Q = map(int, input().split())
+# mount_dict = {i+1: i+1 for i in range(N)}
+# not_move = {i+1 for i in range(N)}
 
-for i in range(Q):
-    c, p = map(int, input().split())
+# for i in range(Q):
+#     c, p = map(int, input().split())
 
-    mount_dict[c] = p
-    not_move.discard(c)
+#     mount_dict[c] = p
+#     not_move.discard(c)
 
-cnt = [0]*(N)
-memo_dict = {}
+# cnt = [0]*(N)
+# memo_dict = {}
 
-def dfs(i):
-    if i in memo_dict:
-        return memo_dict[i]
+# def dfs(i):
+#     if i in memo_dict:
+#         return memo_dict[i]
     
-    if i in not_move:
-        memo_dict[i] = mount_dict[i]
-        return i
+#     if i in not_move:
+#         memo_dict[i] = mount_dict[i]
+#         return i
     
-    memo_dict[i] = dfs(mount_dict[i])
-    return memo_dict[i]
+#     memo_dict[i] = dfs(mount_dict[i])
+#     return memo_dict[i]
 
 
-for i in range(1, N+1):
-    cnt[dfs(i)-1] += 1
+# for i in range(1, N+1):
+#     cnt[dfs(i)-1] += 1
 
-print(*cnt)
+# print(*cnt)
 
 
-    
+# D - (xx)
+# T = int(input())
+
+# for _ in range(T):
+#     A = list(input())
+#     B = list(input())
+#     astack = []
+#     for i, a in enumerate(A):
+#         if a == ')' and len(astack) >= 3 and astack[-1] == 'x' and astack[-2] == 'x' and astack[-3] == '(':
+#             astack.pop()
+#             astack.pop()
+#             astack.pop()
+#             astack.append('x')
+#             astack.append('x')
+#         else:
+#             astack.append(a)
+
+#     bstack = []
+#     for i, b in enumerate(B):
+#         if b == ')' and len(bstack) >= 3 and bstack[-1] == 'x' and bstack[-2] == 'x' and bstack[-3] == '(':
+#             bstack.pop()
+#             bstack.pop()
+#             bstack.pop()
+#             bstack.append('x')
+#             bstack.append('x')
+#         else:
+#             bstack.append(b)
+
+#     if bstack == astack:
+#         print('Yes')
+#     else:
+#         print('No')
+
+# 
