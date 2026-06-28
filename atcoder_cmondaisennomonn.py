@@ -2320,4 +2320,22 @@
 
 # print(ans)
 
-# C - Except and Min
+# C - Not Covered Points
+# N = int(input())
+# grid = []
+# for i in range(N):
+#     x, y = map(int, input().split())
+
+#     grid.append([x, y])
+
+# grid.sort()
+
+# min_y = float('inf')
+# ans = 0
+# for x, y in grid:
+#     if min_y >= y:
+#         min_y = y
+#         ans += 1
+
+# print(ans)
+

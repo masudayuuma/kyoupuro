@@ -1583,3 +1583,167 @@
 #         print('No')
 
 # 
+# D - Go Straight
+# D - Go Straight
+# import sys
+# from collections import deque
+
+# input = sys.stdin.readline
+
+# H, W = map(int, input().split())
+# grid = [input().strip() for _ in range(H)]
+
+# sy = sx = gy = gx = -1
+
+# for i in range(H):
+#     for j in range(W):
+#         if grid[i][j] == 'S':
+#             sy, sx = i, j
+#         elif grid[i][j] == 'G':
+#             gy, gx = i, j
+
+# # 0:U, 1:D, 2:L, 3:R
+# dy = [-1, 1, 0, 0]
+# dx = [0, 0, -1, 1]
+# move_char = "UDLR"
+
+# # 状態番号を作る
+# # 状態 = (y, x, d)
+# # d は「直前に動いた方向」
+# def encode(y, x, d):
+#     return (y * W + x) * 4 + d
+
+# # 状態番号から y, x, d に戻す
+# def decode(state):
+#     d = state % 4
+#     pos = state // 4
+#     y = pos // W
+#     x = pos % W
+#     return y, x, d
+
+# total_states = H * W * 4
+
+# # parent[state] の意味
+# # -2: まだ訪問していない
+# # -1: スタート状態
+# # それ以外: 1つ前の状態番号
+# parent = [-2] * total_states
+
+# q = deque()
+
+# # Sには「直前の方向」がないので、4方向すべてを初期状態にする
+# for d in range(4):
+#     st = encode(sy, sx, d)
+#     parent[st] = -1
+#     q.append(st)
+
+# goal_state = -1
+
+# while q:
+#     state = q.popleft()
+#     y, x, d = decode(state)
+
+#     if y == gy and x == gx:
+#         goal_state = state
+#         break
+
+#     cell = grid[y][x]
+
+#     # 今いるマスから、次に進める方向を決める
+#     if cell == 'o':
+#         # 直進しかできない
+#         next_dirs = [d]
+#     elif cell == 'x':
+#         # 直進以外ならOK
+#         next_dirs = []
+#         for nd in range(4):
+#             if nd != d:
+#                 next_dirs.append(nd)
+#     else:
+#         # '.', 'S', 'G' は自由に動ける
+#         next_dirs = [0, 1, 2, 3]
+
+#     for nd in next_dirs:
+#         ny = y + dy[nd]
+#         nx = x + dx[nd]
+
+#         if not (0 <= ny < H and 0 <= nx < W):
+#             continue
+#         if grid[ny][nx] == '#':
+#             continue
+
+#         next_state = encode(ny, nx, nd)
+
+#         if parent[next_state] != -2:
+#             continue
+
+#         parent[next_state] = state
+#         q.append(next_state)
+
+# if goal_state == -1:
+#     print("No")
+# else:
+#     ans = []
+#     cur = goal_state
+
+#     while parent[cur] != -1:
+#         y, x, d = decode(cur)
+#         ans.append(move_char[d])
+#         cur = parent[cur]
+
+#     ans.reverse()
+
+#     print("Yes")
+#     print("".join(ans))
+
+# D - No-Subsequence Substring
+# from collections import Counter
+# S = list(input())
+
+# T = list(input())
+
+# ans = len(S)*(len(S)+1)//2
+
+# t_cnt = Counter(T)
+# s_cnt = Counter()
+# l = 0
+# prev_l = -1
+# for r in range(len(S)):
+#     s_cnt[S[r]] += 1
+
+#     if t_cnt > s_cnt:
+#         continue
+
+#     while t_cnt < s_cnt:
+#         s_cnt[S[l]] -= 1
+#         l += 1
+    
+#     ans -= (l-prev_l)*(len(S)-r)
+#     prev_l = l
+#     l += 1
+
+# print(ans)
+
+# D - Count Subgrid Sum = K
+# H, W, K = map(int, input().split())
+
+# S = [list(map(int, input())) for _ in range(H)]
+
+# for i in range(H):
+#     for j in range(1, W):
+#         S[i][j] += S[i][j-1]
+
+# ans = 0
+
+# for h1 in range(H):
+#     now = [0]*W
+#     for h2 in range(h1, H):
+#         cnt_dict = {0: 1}
+#         for j in range(W):
+#             now[j] += S[h2][j]
+#             ans += cnt_dict.get(now[j]-K, 0)
+#             cnt_dict[now[j]] = cnt_dict.get(now[j], 0) + 1
+
+# print(ans)
+
+# D - No-Subsequence Substring

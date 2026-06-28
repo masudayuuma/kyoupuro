@@ -89,3 +89,93 @@
 #         fw.add(1, 1)
 #         fw.add(k+1, -1)
 
+# E - E-liter
+# from atcoder.fenwicktree import FenwickTree
+# N, Q = map(int, input().split())
+
+# row_time = [-1]*N
+# col_time = [0]*N
+
+# fw_col = FenwickTree(Q+1)
+# fw_row = FenwickTree(Q+1)
+# ans = 0
+# for i in range(Q):
+#     q, n = map(int, input().split())
+
+#     if q == 1:
+#         if row_time[n-1] == -1:
+#             ans += N
+#             row_time[n-1] = i
+#             fw_row.add(i, 1)
+#         else:
+#             ans += fw_col.sum(row_time[n-1], i)
+#             fw_row.add(row_time[n-1], -1)
+#             row_time[n-1] = i
+#             fw_row.add(i, 1)
+#     else:
+#         ans -= fw_row.sum(col_time[n-1], i)
+#         if col_time[n-1] > 0: fw_col.add (col_time[n-1], -1)
+#         col_time[n-1] = i
+#         fw_col.add(i, 1)
+
+#     print(ans)
+
+# E - Roads and Gates
+# from collections import defaultdict
+# import heapq
+# N, M, Y = map(int, input().split())
+
+# graph = defaultdict(list)
+
+# for i in range(M):
+#     u, v, t = map(int, input().split())
+#     graph[u-1].append((v-1, t))
+#     graph[v-1].append((u-1, t))
+
+# X = list(map(int, input().split()))
+
+# s_g = N
+# s_o = N+1
+# for i in range(N):
+#     graph[i].append((s_g, X[i]))
+#     graph[s_o].append((i, X[i]))
+# graph[s_g].append((s_o, Y))
+
+# heap = [(0, 0)] # cost, index
+# dist = [float('inf')] * (N+2)
+# dist[0] = 0
+
+# while heap:
+#     cost, index = heapq.heappop(heap)
+#     if cost != dist[index]:
+#         continue
+
+#     for nxt, nxt_cost in graph[index]:
+#         if dist[nxt] > cost+nxt_cost:
+#             heapq.heappush(heap, (cost+nxt_cost, nxt))
+#             dist[nxt] = cost+nxt_cost
+
+# print(*dist[1:N])
+
+# J - 数列の反転
+# from atcoder.fenwicktree import FenwickTree
+# N, Q = map(int, input().split())
+
+# fw = FenwickTree(N+1)
+
+# for i in range(Q):
+#     t, k = map(int, input().split())
+
+#     if t == 1:
+#         target = N-k+1 if N >= k else k-N
+#         flag = fw.sum(target, N+1)%2
+#         if flag == 1:
+#             if k > N:
+#                 print(k-target*2+1)
+#             else:
+#                 print(k+target*2-1)
+#         else:
+#             print(k)
+#     else:
+#         fw.add(k, 1)
+
