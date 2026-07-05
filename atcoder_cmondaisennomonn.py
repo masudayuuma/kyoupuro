@@ -2339,3 +2339,210 @@
 
 # print(ans)
 
+# C - Except and Min
+# from sortedcontainers import SortedDict
+# N, Q = map(int, input().split())
+
+# A = list(map(int, input().split()))
+# sortdict_A = SortedDict()
+# for a in A:
+#     sortdict_A[a] = sortdict_A.get(a, 0)+1
+
+# for i in range(Q):
+#     k = int(input())
+#     B = list(map(int, input().split()))
+
+#     for i in range(k):
+#         sortdict_A[A[B[i]-1]] -= 1
+#         if sortdict_A[A[B[i]-1]] == 0:
+#             del sortdict_A[A[B[i]-1]]
+
+#     print(sortdict_A.keys()[0])
+
+#     for i in range(k):
+#         sortdict_A[A[B[i]-1]] = sortdict_A.get(A[B[i]-1], 0) +1
+
+
+# C - Insert and Erase A
+# S = input()
+# T = input()
+# s_i, t_i = 0, 0
+# cnt = 0
+# while s_i < len(S) and t_i < len(T):
+
+#     if S[s_i] == T[t_i]:
+#         s_i += 1
+#         t_i += 1
+#         continue
+
+#     if S[s_i] == 'A':
+#         s_i += 1
+#         cnt += 1
+#         continue
+#     if T[t_i] == 'A':
+#         t_i += 1
+#         cnt += 1
+#         continue
+
+#     print(-1)
+#     exit()
+
+# if not all(s == 'A' for s in S[s_i:]):
+#     print(-1)
+#     exit()
+# else:
+#     cnt += len(S[s_i:])
+# if not all(t == 'A' for t in T[t_i:]):
+#     print(-1)
+#     exit()
+# else:
+#     cnt += len(T[t_i:])
+
+# print(cnt)
+
+# C - Omelette Restaurant
+# from collections import deque
+# T = int(input())
+
+# for i in range(T):
+#     N, D = map(int, input().split())
+
+#     A = list(map(int, input().split()))
+#     B = list(map(int, input().split()))
+
+#     q = deque()
+
+#     for n in range(N):
+#         q.append([A[n], n])
+#         target = B[n]
+#         while target > 0:
+#             if target >= q[0][0]:
+#                 target -= q[0][0]
+#                 q.popleft()
+#                 continue
+#             else:
+#                 q[0][0] -= target
+#                 break
+
+#         while q and q[0][1]+D <= n:
+#             q.popleft()
+
+#     print(sum(a for a, i in q))
+
+# C - Sugoroku Destination
+# import sys
+# sys.setrecursionlimit(10**8)
+# N = int(input())
+
+# A = list(map(int, input().split()))
+
+# visited = [False]*(N+1)
+
+# def dfs(i):
+#     if visited[i]:
+#         return A[i-1]
+    
+#     if A[i-1] != i: A[i-1] = dfs(A[i-1])
+#     visited[i] = True
+
+#     return A[i-1]
+
+
+# for i in range(1, N+1):
+#     if not visited[i]:
+#         dfs(i)
+
+# print(*A)
+
+# C - AtCoder Riko
+# N = int(input())
+# A = sorted(list(map(int, input().split())))
+
+# def check(L):
+#     l = 0
+#     r = N - 1
+
+#     while l <= r:
+#         # 最大側が L なら、そのまま残った1本として使える
+#         if A[r] == L:
+#             r -= 1
+#             continue
+
+#         # そうでないなら、A[l] + A[r] で L を作る必要がある
+#         if l < r and A[l] + A[r] == L:
+#             l += 1
+#             r -= 1
+#         else:
+#             return False
+
+#     return True
+
+# candidates = {A[-1], A[0] + A[-1]}
+# ans = []
+
+# for L in sorted(candidates):
+#     if check(L):
+#         ans.append(L)
+
+# print(*ans)
+
+# C - Reverse Permutation
+# from collections import deque
+# N = int(input())
+
+# S = list(input())
+
+# ans_q = deque()
+# reverse_flag = False
+# for i in range(N):
+#     reverse_flag = not reverse_flag if S[i] == 'o' else reverse_flag
+
+#     if reverse_flag and S[i] == 'o':
+#         ans_q.append(i+1)
+#     elif not reverse_flag and S[i] == 'o':
+#         ans_q.appendleft(i+1)
+#     if reverse_flag and S[i] == 'x':
+#         ans_q.appendleft(i+1)
+#     elif not reverse_flag and S[i] == 'x':
+#         ans_q.append(i+1)
+
+# if reverse_flag: ans_q.reverse()
+
+# print(*ans_q)
+
+# C - Fishbones
+from collections import defaultdict
+N = int(input())
+a_b = []
+for i in range(N):
+    a, b = map(int, input().split())
+    a_b.append([a, b])
+
+M = int(input())
+m_list = []
+for i in range(M):
+    m = list(input())
+    m_list.append(m)
+
+b_c_dict = defaultdict(set)
+for i in range(N):
+    a, b = a_b[i]
+
+    for m in m_list:
+        if len(m) != a:
+            continue
+        
+        b_c_dict[i].add(m[b-1])
+
+for i, m in enumerate(m_list):
+    if len(m) != N:
+        print('No')
+        continue
+    flag = True
+
+    for j in range(len(m)):
+        if m[j] not in b_c_dict[j]:
+            flag = False
+            break
+
+    print('Yes') if flag else print('No')

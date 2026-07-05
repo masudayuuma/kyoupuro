@@ -1747,3 +1747,42 @@
 # print(ans)
 
 # D - No-Subsequence Substring
+# S = input()
+# T = input()
+
+# N = len(S)
+# M = len(T)
+
+# dp = [-1]*(M+1)
+
+# ans = 0
+
+# for i, ch in enumerate(S):
+#     dp[0] = i
+    
+#     for j in range(M-1, -1, -1):
+#         if dp[j] != -1 and ch == T[j]:
+#             dp[j+1] = max(dp[j+1], dp[j])
+
+#     if dp[M] == -1:
+#         ans += i+1
+#     else:
+#         ans += (i+1)-(dp[M]+1)
+
+# print(ans)
+
+# D - X to Y
+# T = int(input())
+
+# for i in range(T):
+#     X, Y, K = map(int, input().split())
+#     cnt = 0
+#     while X != Y:
+#         if X > Y:
+#             X //= K
+#         else:
+#             Y //= K
+
+#         cnt += 1
+
+#     print(cnt)

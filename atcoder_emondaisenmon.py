@@ -179,3 +179,36 @@
 #     else:
 #         fw.add(k, 1)
 
+# E - A > B substring
+# from atcoder.fenwicktree import FenwickTree
+# N = int(input())
+
+# S = list(input())
+# prefix = [0]
+# now = 0
+# for c in S:
+#     if c == 'A':
+#        now += 1
+#        prefix.append(now)
+#     elif c == 'B':
+#         now -= 1
+#         prefix.append(now)
+#     else:
+#         prefix.append(now) 
+
+
+# sort_s = sorted(list(set(prefix)))
+
+# fw = FenwickTree(len(sort_s)+1)
+
+# cmp_s = {v: i for i, v in enumerate(sort_s)}
+# ans = 0
+# for i in range(N+1):
+#     fw.add(cmp_s[prefix[i]], 1)
+
+#     ans += fw.sum(0, cmp_s[prefix[i]])
+
+# print(ans)
+
+
+# E - Roads and Gates
