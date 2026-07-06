@@ -2511,38 +2511,106 @@
 # print(*ans_q)
 
 # C - Fishbones
-from collections import defaultdict
-N = int(input())
-a_b = []
-for i in range(N):
-    a, b = map(int, input().split())
-    a_b.append([a, b])
+# from collections import defaultdict
+# N = int(input())
+# a_b = []
+# for i in range(N):
+#     a, b = map(int, input().split())
+#     a_b.append([a, b])
 
-M = int(input())
-m_list = []
-for i in range(M):
-    m = list(input())
-    m_list.append(m)
+# M = int(input())
+# m_list = []
+# for i in range(M):
+#     m = list(input())
+#     m_list.append(m)
 
-b_c_dict = defaultdict(set)
-for i in range(N):
-    a, b = a_b[i]
+# b_c_dict = defaultdict(set)
+# for i in range(N):
+#     a, b = a_b[i]
 
-    for m in m_list:
-        if len(m) != a:
-            continue
+#     for m in m_list:
+#         if len(m) != a:
+#             continue
         
-        b_c_dict[i].add(m[b-1])
+#         b_c_dict[i].add(m[b-1])
 
-for i, m in enumerate(m_list):
-    if len(m) != N:
-        print('No')
-        continue
-    flag = True
+# for i, m in enumerate(m_list):
+#     if len(m) != N:
+#         print('No')
+#         continue
+#     flag = True
 
-    for j in range(len(m)):
-        if m[j] not in b_c_dict[j]:
-            flag = False
-            break
+#     for j in range(len(m)):
+#         if m[j] not in b_c_dict[j]:
+#             flag = False
+#             break
 
-    print('Yes') if flag else print('No')
+#     print('Yes') if flag else print('No')
+
+# C - Chokutter Addiction
+# N, T = map(int, input().split())
+# A = list(map(int, input().split()))
+
+# if not A: 
+#     print(T)
+#     exit()
+
+# cnt = A[0]
+# endtime = A[0]
+# for a in A:
+#     if endtime+100 > a:
+#         continue
+
+#     cnt += a-endtime-100
+#     endtime = a
+
+# if T >= endtime+100:
+#     cnt += T-endtime-100
+
+# print(cnt)
+
+
+# C - Peer Review
+# from collections import defaultdict
+# N, M = map(int, input().split())
+# graph = defaultdict(list)
+# for i in range(M):
+#     a, b = map(int, input().split())
+
+#     graph[a-1].append(b-1)
+#     graph[b-1].append(a-1)
+# ans = []
+# for i in range(N):
+#     if len(graph[i]) > N-4:
+#         ans.append(0)
+#         continue
+#     n = N-len(graph[i])-1
+#     ans.append(n*(n-1)*(n-2)//6)
+
+# print(*ans)
+
+# C - Sake or Water
+# ランダム搾取じゃなくて愚直の最適解を求めるやつ
+# import bisect
+# N, K, X = map(int, input().split())
+
+# A = sorted(list(map(int, input().split())))
+# A = A[:K]
+# A.reverse()
+
+# prefix = [0]*(len(A)+1)
+
+# for i in range(len(A)):
+#     prefix[i+1] = prefix[i]+A[i]
+# # print(prefix)
+
+# for i in range(len(prefix)):
+#     if prefix[i] >= X:
+#         print(N-K+i)
+#         exit()
+
+
+# print(-1)
+
+
+# C - Striped Horse

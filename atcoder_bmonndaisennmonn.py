@@ -859,3 +859,38 @@
 
 # print(ans)
 
+# B - Crop
+# H, W = map(int, input().split())
+# grid = [list(input()) for i in range(H)]
+
+# l, r, t, d = W, -1, H, -1
+# for i in range(H):
+#     for j in range(W):
+#         if grid[i][j] == '#':
+#             l = min(l, j)
+#             r = max(r, j)
+#             t = min(t, i)
+#             d = max(d, i)
+
+# for i in range(t, d+1):
+#     print(''.join(grid[i][l:r+1]))
+
+H, W = map(int, input().split())
+
+grid = [list(input()) for i in range(H)]
+
+def rotate(grid):
+    ret = []
+    for x in zip(*grid[::-1]):
+        ret.append(x)
+    return ret
+
+
+for i in range(4):
+    while not '#' in grid[0]:
+        grid = grid[1:]
+
+    grid = rotate(grid)
+
+for row in grid:
+    print(''.join(row))

@@ -212,3 +212,68 @@
 
 
 # E - Roads and Gates
+# from collections import defaultdict
+# import heapq
+# N, M, Y = map(int, input().split())
+# graph = defaultdict(list)
+# for i in range(M):
+#     u, v, t = map(int, input().split())
+#     graph[u-1].append((v-1, t))
+#     graph[v-1].append((u-1, t))
+
+# X = list(map(int, input().split()))
+
+# s_o = N
+# s_c = N+1
+
+# for i in range(len(X)):
+#     graph[i].append((s_o, X[i]))
+#     graph[s_c].append((i, X[i]))
+
+# graph[s_o].append((s_c, Y))
+
+# q = [(0, 0)]
+# dist = [float('inf')]*(N+2)
+# dist[0] = 0
+# while q:
+#     cost, nxt = heapq.heappop(q)
+#     if cost != dist[nxt]:
+#         continue
+
+#     for nxtnxt, nxtcost in graph[nxt]:
+#         if dist[nxtnxt] <= cost+nxtcost:
+#             continue
+
+#         dist[nxtnxt] = cost+nxtcost
+#         heapq.heappush(q, (nxtcost+cost, nxtnxt))
+
+# print(*dist[1:N])
+
+
+# E - Fill-Rect Query
+H, W, Q = map(int, input().split())
+
+time_board = ['A']*(Q+1)
+
+grid = [[0]*W for i in range(H)]
+
+for i in range(Q):
+    r, c, x, = input().split()
+    r = int(r)
+    c = int(c)
+    grid[r-1][c-1] = i+1
+    time_board[i+1] = x
+
+for i in range(H-1, -1, -1):
+    for j in range(W-1, -1, -1):
+        if i > 0: grid[i-1][j] = max(grid[i][j], grid[i-1][j])
+        if j > 0: grid[i][j-1] = max(grid[i][j], grid[i][j-1])
+
+ans = [['A']*W for i in range(H)]
+
+for i in range(H):
+    for j in range(W):
+        ans[i][j] = time_board[grid[i][j]]
+
+for row in ans:
+    print(''.join(row))
