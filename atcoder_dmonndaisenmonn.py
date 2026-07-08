@@ -1786,3 +1786,183 @@
 #         cnt += 1
 
 #     print(cnt)
+
+# D - No-Subsequence Substring
+# S = list(input())
+# T = list(input())
+
+# dp = [-1]*len(T)
+# ans = (len(S)*(len(S)+1))//2
+# for i in range(len(S)):
+#     for j in range(len(T)-1, -1, -1):
+#         if T[j] != S[i]:
+#             continue
+        
+#         if j==0:
+#             dp[j] = i
+#             continue
+#         if dp[j-1] != -1:
+#             dp[j] = dp[j-1]
+            
+
+#     if dp[-1] != -1:
+#         ans -= dp[-1]+1
+
+# print(ans)
+
+# D - Concat Power of 2
+# N = int(input())
+
+# powers = []
+# x = 1
+
+# while x < 10**9:
+#     powers.append(str(x))
+#     x *= 2
+
+# good = set()
+
+# def dfs(s):
+#     if s:
+#         good.add(int(s))
+#     for p in powers:
+#         if len(s) + len(p) <= 9:
+#             dfs(s+p)
+
+# dfs("")
+
+# A = sorted(good)
+# print(A[N-1])
+
+# D - Minimize Range
+# N, K = map(int, input().split())
+
+# A = list(map(int, input().split()))
+
+# wari_A = [a%K for a in A]
+# wari_A.sort()
+
+# wari_A = wari_A+ [ a+K for a in wari_A]
+
+# min_wide = float('inf')
+# for i in range(N):
+#     min_wide = min(min_wide, abs(wari_A[i]-wari_A[i+N-1]))
+
+# print(min_wide)
+                   
+# D - Make Target 2
+# L, R, D, U = map(int, input().split())
+
+# ans = 0
+
+# for k in range(1000001):
+#     dx = max(0, min(R, k)-max(L, -k)+1)
+#     dy = max(0, min(U, k)-max(D, -k)+1)
+#     v = dx*dy
+#     if k % 2 ==0:
+#         ans += v
+#     else:
+#         ans -= v
+
+# print(ans)
+
+# L, R, D, U = map(int, input().split())
+
+# ans = 0
+
+# # ① |x| > |y| の場合
+# # このとき max(|x|, |y|) = |x|
+# # よって x が偶数なら数える
+# for x in range(L, R + 1):
+#     if x % 2 == 0:
+#         low = max(D, -abs(x) + 1)
+#         high = min(U, abs(x) - 1)
+
+#         cnt = high - low + 1
+#         ans += max(cnt, 0)
+
+# # ② |x| <= |y| の場合
+# # このとき max(|x|, |y|) = |y|
+# # よって y が偶数なら数える
+# for y in range(D, U + 1):
+#     if y % 2 == 0:
+#         low = max(L, -abs(y))
+#         high = min(R, abs(y))
+
+#         cnt = high - low + 1
+#         ans += max(cnt, 0)
+
+# print(ans)
+
+# L, R, U, D = map(int, input().split())
+
+# ans = 0
+
+# while L <= R and U <= D:
+#     ma = max(abs(L), abs(R), abs(U), abs(D))
+
+#     if abs(L) == ma:
+#         if L % 2 == 0:
+#             ans += D - U + 1
+#         L += 1
+
+#     elif abs(R) == ma:
+#         if R % 2 == 0:
+#             ans += D - U + 1
+#         R -= 1
+
+#     elif abs(U) == ma:
+#         if U % 2 == 0:
+#             ans += R - L + 1
+#         U += 1
+
+#     else:
+#         if D % 2 == 0:
+#             ans += R - L + 1
+#         D -= 1
+
+# print(ans)
+    
+# D - Integer-duplicated Path
+# import sys
+# sys.setrecursionlimit(10**7)
+# from collections import defaultdict
+# N = int(input())
+
+# A = list(map(int, input().split()))
+# a_flag = [False]*N
+# same_num = [False]*N
+# graph = defaultdict(list)
+
+# for i in range(N-1):
+#     u, v = map(int, input().split())
+
+#     graph[u-1].append(v-1)
+#     graph[v-1].append(u-1)
+
+# now = defaultdict(int)
+# def dfs(i, flag):
+#     a_flag[i] = True
+#     if flag or A[i] in now:
+#         same_num[i] = True
+#         now[A[i]] += 1
+#     else:
+#         now[A[i]] += 1
+
+#     for nxt in graph[i]:
+#         if a_flag[nxt]:
+#             continue
+#         dfs(nxt, same_num[i])
+
+#     now[A[i]] -= 1
+#     if now[A[i]] == 0:
+#         del now[A[i]]
+#     a_flag[i] = False
+
+# dfs(0, False)
+
+# for f in same_num:
+#     if f:
+#         print('Yes')
+#     else:
+#         print('No')

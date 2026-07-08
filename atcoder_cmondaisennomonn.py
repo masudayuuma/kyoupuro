@@ -2614,3 +2614,55 @@
 
 
 # C - Striped Horse
+# T = int(input())
+
+# for _ in range(T):
+#     N, W = map(int, input().split())
+#     C = list(map(int, input().split()))
+#     sum_same_col = [0]*(W*2)
+
+#     for i in range(len(C)):
+#         t = i % (W*2)
+#         sum_same_col[t] += C[i]
+
+#     sum_same_col = sum_same_col+sum_same_col
+#     prefix = [0]*(len(sum_same_col)+1)
+
+#     for i in range(1, len(prefix)):
+#         prefix[i] = prefix[i-1]+sum_same_col[i-1] 
+
+#     min_total = float('inf')
+
+#     for i in range(1, 2*W+1):
+#         min_total = min(min_total, prefix[i+W-1]-prefix[i-1])
+
+#     print(min_total)
+
+# C - Reindeer and Sleigh 2
+import heapq
+from collections import defaultdict
+T = int(input())
+
+for i in range(T):
+    N = int(input())
+    box = []
+    w2p = []
+    total_w = 0
+    total_p = 0
+    for i in range(N):
+        w, p = map(int, input().split())
+
+        heapq.heappush(box, (p+w, i))
+        w2p.append((w, p))
+        total_p += p
+    cnt = 0
+    while box:
+        diff, i = heapq.heappop(box)
+        tw, tp = w2p[i]
+        if total_p-tp < total_w+tw:
+            break
+        cnt += 1
+        total_w += tw
+        total_p -= tp
+
+    print(cnt)
