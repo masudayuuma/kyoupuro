@@ -1966,3 +1966,63 @@
 #         print('Yes')
 #     else:
 #         print('No')
+
+# D - Take ABC 2
+# S = list(input())
+
+# ans = 0
+# dp = {'A': 0, 'B': 0, 'C': 0}
+
+# for c in S:
+#     for key in dp:
+#         if key != c:
+#             continue
+
+#         if (key == 'B' and dp['A'] == dp['B']) or (key == 'C' and dp['B'] == dp['C']):
+#             continue
+
+#         dp[key] += 1
+
+#         if key == 'C':
+#             dp['A'] -= 1
+#             dp['B'] -= 1
+#             dp['C'] -= 1
+#             ans += 1
+# print(ans)
+
+# D - Celester
+# T = int(input())
+
+# for _ in range(T):
+#     N = int(input())
+
+#     S = [0 if s == 'S' else 1 for s in list(input())]
+#     X = list(map(int, input().split()))
+#     Y = [0]+list(map(int, input().split()))
+
+#     dp = [0, -float('inf')]
+
+#     for i in range(len(S)):
+#         prev = dp.copy()
+#         dp = [-float('inf'), -float('inf')]
+#         for j in range(2):
+#             for p_i in range(len(prev)):
+#                 cost = 0 if S[i] == j else -X[i]
+#                 if p_i == 1 and j == 0:
+#                     cost += Y[i]
+#                 cost += prev[p_i]
+#                 dp[j] = max(dp[j], cost)
+#     print(max(dp))
+
+# D - Max Straight
+# from collections import defaultdict
+
+# N = int(input())
+# A = list(map(int, input().split()))
+# cnt_a = defaultdict(int)
+# for i in range(len(A)):
+#     cnt_a[A[i]] = max(cnt_a[A[i]-1]+1, cnt_a[A[i]]) if cnt_a[A[i]-1] > 0 else 1
+
+# print(max(cnt_a.values()))
+
+# D - Reconstruct Chocolate
