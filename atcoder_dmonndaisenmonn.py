@@ -2026,3 +2026,130 @@
 # print(max(cnt_a.values()))
 
 # D - Reconstruct Chocolate
+# from collections import defaultdict
+# H, W, N = map(int, input().split())
+
+# h_dict = defaultdict(set)
+# w_dict = defaultdict(set)
+# i2hw = []
+# for i in range(N):
+#     h, w = map(int, input().split())
+#     h_dict[h].add((i, w))
+#     w_dict[w].add((i, h))
+#     i2hw.append((h, w))
+# ans = [(0, 0) for _ in range(N)]
+# now_H = 0
+# now_W = 0
+# while w_dict or h_dict:
+#     if h_dict[H]:
+#         i, w = h_dict[H].pop()
+#         if h_dict[H] == []: del h_dict[H]
+#         h, w = i2hw[i]
+#         w_dict[w].remove((i, h))
+#         if not w_dict[w]: del w_dict[w]
+#         nxt_W = w+now_W
+#         ans[i] = now_H+1, now_W+1
+#         now_W = nxt_W
+#         W -= w
+#     else: 
+#         i, h = w_dict[W].pop()
+#         if not w_dict[W]: del w_dict[W]
+#         h, w = i2hw[i]
+#         h_dict[h].remove((i, w))
+#         if h_dict[h] == []: del h_dict[h]
+#         nxt_H = h+now_H
+#         ans[i] = now_H+1, now_W+1
+#         now_H = nxt_H
+#         H -= h
+
+# for a in ans:
+#     print(*a)
+
+
+# from collections import defaultdict
+
+# H, W, N = map(int, input().split())
+
+# h_dict = defaultdict(set)
+# w_dict = defaultdict(set)
+# i2hw = []
+
+# for i in range(N):
+#     h, w = map(int, input().split())
+#     h_dict[h].add((i, w))
+#     w_dict[w].add((i, h))
+#     i2hw.append((h, w))
+
+# ans = [(0, 0) for _ in range(N)]
+
+# now_H = 0
+# now_W = 0
+
+# while h_dict or w_dict:
+#     if H in h_dict:
+#         i, w = h_dict[H].pop()
+
+#         if not h_dict[H]:
+#             del h_dict[H]
+
+#         h, w = i2hw[i]
+
+#         w_dict[w].remove((i, h))
+#         if not w_dict[w]:
+#             del w_dict[w]
+
+#         ans[i] = (now_H + 1, now_W + 1)
+
+#         now_W += w
+#         W -= w
+
+#     elif W in w_dict:
+#         i, h = w_dict[W].pop()
+
+#         if not w_dict[W]:
+#             del w_dict[W]
+
+#         h, w = i2hw[i]
+
+#         h_dict[h].remove((i, w))
+#         if not h_dict[h]:
+#             del h_dict[h]
+
+#         ans[i] = (now_H + 1, now_W + 1)
+
+#         now_H += h
+#         H -= h
+
+#     else:
+#         # 再構成できない入力への安全策
+#         break
+
+# for a in ans:
+#     print(*a)
+
+# D - Many Repunit Sum
+#累積和？　いもす方とかで桁分やってその後reverseとかで？
+N = int(input())
+A =list(map(int, input().split()))
+
+prefix = [0]*(2*10**6)
+
+for i in range(N):
+    prefix[A[i]] += -1
+    prefix[0] += 1
+
+for i in range(len(prefix)-1):
+    prefix[i+1] += prefix[i]
+
+carry = 0
+prev= 0
+for i in range(len(prefix)):
+    carry = (prefix[i]+prev)//10
+    prefix[i] = (prefix[i]+prev)%10
+    prev = carry
+
+j = len(prefix)-1
+while prefix[j] == 0:
+    j -= 1
+
+print(''.join(map(str, reversed(prefix[:j+1]))))
