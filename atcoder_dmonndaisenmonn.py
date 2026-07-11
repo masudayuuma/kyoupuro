@@ -2129,27 +2129,140 @@
 
 # D - Many Repunit Sum
 #累積和？　いもす方とかで桁分やってその後reverseとかで？
-N = int(input())
-A =list(map(int, input().split()))
+# N = int(input())
+# A =list(map(int, input().split()))
 
-prefix = [0]*(2*10**6)
+# prefix = [0]*(2*10**6)
 
-for i in range(N):
-    prefix[A[i]] += -1
-    prefix[0] += 1
+# for i in range(N):
+#     prefix[A[i]] += -1
+#     prefix[0] += 1
 
-for i in range(len(prefix)-1):
-    prefix[i+1] += prefix[i]
+# for i in range(len(prefix)-1):
+#     prefix[i+1] += prefix[i]
 
-carry = 0
-prev= 0
-for i in range(len(prefix)):
-    carry = (prefix[i]+prev)//10
-    prefix[i] = (prefix[i]+prev)%10
-    prev = carry
+# carry = 0
+# prev= 0
+# for i in range(len(prefix)):
+#     carry = (prefix[i]+prev)//10
+#     prefix[i] = (prefix[i]+prev)%10
+#     prev = carry
 
-j = len(prefix)-1
-while prefix[j] == 0:
-    j -= 1
+# j = len(prefix)-1
+# while prefix[j] == 0:
+#     j -= 1
 
-print(''.join(map(str, reversed(prefix[:j+1]))))
+# print(''.join(map(str, reversed(prefix[:j+1]))))
+
+# D - Pawn Line
+# import heapq
+
+# T = int(input())
+
+# for _ in range(T):
+#     N = int(input())
+#     R = list(map(int, input().split()))
+
+#     INF = float('inf')
+#     ans = [INF]*N
+
+#     que = []
+
+#     for i in range(N):
+#         heapq.heappush(que, (R[i], i))
+
+#     while que:
+#         value, i = heapq.heappop(que)
+#         if ans[i] != INF:
+#             continue
+#         ans[i] = value
+
+#         if i > 0 and ans[i-1] == INF:
+#             heapq.heappush(que, (value+1, i-1))
+#         if i+1 < N and ans[i+1] == INF:
+#             heapq.heappush(que, (value+1, i+1))
+
+#     answer = sum(R[i]-ans[i] for i in range(N))
+#     print(answer)
+
+# D - Swap and Range Sum
+# from atcoder.fenwicktree import FenwickTree
+# N, Q = map(int, input().split())
+# A = list(map(int, input().split()))
+# fw = FenwickTree(N+1)
+
+# for i in range(len(A)):
+#     fw.add(i, A[i])
+
+# for i in range(Q):
+#     q,  *a = map(int, input().split())
+
+#     if q == 1:
+#         a = int(a[0])
+#         a -= 1
+#         l = fw.sum(a, a+1)
+#         r = fw.sum(a+1, a+2)
+#         fw.add(a, -l+r)
+#         fw.add(a+1, -r+l)
+#     else:
+#         l, r = a
+#         l -= 1
+#         print(fw.sum(l, r))
+
+# from atcoder.segtree import SegTree
+# N, Q = map(int, input().split())
+# A = list(map(int, input().split()))
+
+# sg = SegTree(lambda a,b: a+b, 0, A)
+
+# for i in range(Q):
+#     q,  *a = map(int, input().split())
+
+#     if q == 1:
+#         a = int(a[0])
+#         a -= 1
+#         l = sg.get(a)
+#         r = sg.get(a+1)
+#         sg.set(a, r)
+#         sg.set(a+1, l)
+#     else:
+#         l, r = a
+#         l -= 1
+#         print(sg.prod(l, r))
+
+
+# D - Paid Walk
+from collections import defaultdict, deque
+# 4^10回が10回目までいったときの最大解数なのでT回graphを進めばいいのでは
+N, M, L, S, T = map(int, input().split())
+
+graph = defaultdict(list)
+for i in range(M):
+    u, v, c = map(int, input().split())
+
+    graph[u-1].append((v-1, c))
+
+que = deque() #index, cost
+que.append((0, 0))
+for i in range(L):
+    nxtque = deque()
+
+    while que:
+        index, cost = que.popleft()
+
+        for v, c in graph[index]:
+            if cost+c > T:
+                continue
+            nxtque.append((v, cost+c))
+    que = nxtque.copy()
+
+ans = []
+for ii, cc in que:
+    if not S <= cc <= T:
+        continue
+    ans.append(ii)
+
+ans = [a+1 for a in sorted(set(ans))]
+print(*ans)
+    
+
