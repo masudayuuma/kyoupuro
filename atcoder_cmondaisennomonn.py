@@ -2639,30 +2639,82 @@
 #     print(min_total)
 
 # C - Reindeer and Sleigh 2
-import heapq
-from collections import defaultdict
-T = int(input())
+# import heapq
+# from collections import defaultdict
+# T = int(input())
 
-for i in range(T):
-    N = int(input())
-    box = []
-    w2p = []
-    total_w = 0
-    total_p = 0
-    for i in range(N):
-        w, p = map(int, input().split())
+# for i in range(T):
+#     N = int(input())
+#     box = []
+#     w2p = []
+#     total_w = 0
+#     total_p = 0
+#     for i in range(N):
+#         w, p = map(int, input().split())
 
-        heapq.heappush(box, (p+w, i))
-        w2p.append((w, p))
-        total_p += p
-    cnt = 0
-    while box:
-        diff, i = heapq.heappop(box)
-        tw, tp = w2p[i]
-        if total_p-tp < total_w+tw:
-            break
-        cnt += 1
-        total_w += tw
-        total_p -= tp
+#         heapq.heappush(box, (p+w, i))
+#         w2p.append((w, p))
+#         total_p += p
+#     cnt = 0
+#     while box:
+#         diff, i = heapq.heappop(box)
+#         tw, tp = w2p[i]
+#         if total_p-tp < total_w+tw:
+#             break
+#         cnt += 1
+#         total_w += tw
+#         total_p -= tp
 
-    print(cnt)
+#     print(cnt)
+
+
+# C - AtCoder Riko
+# N = int(input())
+
+# A = list(map(int, input().split()))
+# A.sort()
+# candidates = [max(A),max(A)+min(A)]
+
+
+# ans = []
+# for c in candidates:
+#     l, r = 0, len(A)-1
+#     flag = True
+#     while l <= r:
+#         if c == A[r]:
+#             r -= 1
+#             continue
+#         elif l != r and A[r]+A[l] == c:
+#             r -= 1
+#             l += 1
+#             continue
+#         flag = False
+#         break
+
+#     if flag: ans.append(c)
+
+# print(*ans)
+
+# C - Striped Horse
+# T = int(input())
+
+
+# for _ in range(T):
+#     N, W = map(int, input().split())
+#     C = list(map(int, input().split()))
+#     each_w_sum = [0]*(2*W)
+#     for i in range(len(C)):
+#         each_w_sum[i%(2*W)] += C[i]
+
+#     each_w_sum = each_w_sum+each_w_sum
+#     prefix = [0]*(4*W+1)
+#     for i in range(4*W):
+#         prefix[i+1] += prefix[i]+each_w_sum[i]
+
+#     ans = float('inf')
+#     for i in range(2*W):
+#         ans = min(ans, prefix[W+i]-prefix[i])
+
+#     print(ans)
+
+# C - Adjacent Sums (easy)

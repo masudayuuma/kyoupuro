@@ -2232,37 +2232,70 @@
 
 
 # D - Paid Walk
-from collections import defaultdict, deque
+# from collections import defaultdict, deque
 # 4^10回が10回目までいったときの最大解数なのでT回graphを進めばいいのでは
-N, M, L, S, T = map(int, input().split())
+# N, M, L, S, T = map(int, input().split())
 
-graph = defaultdict(list)
-for i in range(M):
-    u, v, c = map(int, input().split())
+# graph = defaultdict(list)
+# for i in range(M):
+#     u, v, c = map(int, input().split())
 
-    graph[u-1].append((v-1, c))
+#     graph[u-1].append((v-1, c))
 
-que = deque() #index, cost
-que.append((0, 0))
-for i in range(L):
-    nxtque = deque()
+# que = deque() #index, cost
+# que.append((0, 0))
+# for i in range(L):
+#     nxtque = deque()
 
-    while que:
-        index, cost = que.popleft()
+#     while que:
+#         index, cost = que.popleft()
 
-        for v, c in graph[index]:
-            if cost+c > T:
-                continue
-            nxtque.append((v, cost+c))
-    que = nxtque.copy()
+#         for v, c in graph[index]:
+#             if cost+c > T:
+#                 continue
+#             nxtque.append((v, cost+c))
+#     que = nxtque.copy()
 
-ans = []
-for ii, cc in que:
-    if not S <= cc <= T:
-        continue
-    ans.append(ii)
+# ans = []
+# for ii, cc in que:
+#     if not S <= cc <= T:
+#         continue
+#     ans.append(ii)
 
-ans = [a+1 for a in sorted(set(ans))]
-print(*ans)
+# ans = [a+1 for a in sorted(set(ans))]
+# print(*ans)
     
 
+# D - Concat Power of 2
+# N = int(input())
+
+# good = [set() for _ in range(10)]
+
+# for i in range(30):
+#     x = 2**i
+#     if x >= 10**9:
+#         break
+#     digit = len(str(x))
+#     good[digit].add(x)
+
+# for digit in range(1, 10):
+#     for power_digit in range(1, digit+1):
+#         left_digit = digit-power_digit
+
+#         if left_digit == 0:
+#             continue
+
+#         for left in good[left_digit]:
+#             for power in good[power_digit]:
+#                 x = left*(10**power_digit)+power
+
+#                 if x < 10**9:
+#                     good[digit].add(x)
+# ans = []
+
+# for digit in range(1, 10):
+#     ans.extend(good[digit])
+
+# ans.sort()
+
+# print(ans[N-1])
