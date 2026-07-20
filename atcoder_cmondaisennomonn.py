@@ -2718,3 +2718,63 @@
 #     print(ans)
 
 # C - Adjacent Sums (easy)
+# N, M = map(int, input().split())
+
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
+# ans = N
+# for i in range(2):
+#     cur = i
+#     ope = 0
+#     for j in range(len(A)):
+#         if cur != A[j]%2:
+#             ope += 1
+
+#         if j < N-1:
+#             cur ^= B[j]
+#     ans = min(ans, ope)
+# print(ans)
+
+# C - 2x2 Placing
+# N, M = map(int, input().split())
+# build_set = set()
+# ans = 0
+# for i in range(M):
+#     r, c = map(int, input().split())
+#     if (r, c) in build_set or (r, c+1) in build_set or (r+1, c) in build_set or (r+1, c+1) in build_set:
+#         continue
+
+#     build_set.add((r, c))
+#     build_set.add((r+1, c))
+#     build_set.add((r, c+1))
+#     build_set.add((r+1, c+1))
+#     ans += 1
+
+# print(ans)
+
+# C - Flapping Takahashi
+# T = int(input())
+
+# for _ in range(T):
+#     N, H = map(int, input().split())
+
+#     time = 0
+#     now_l = H
+#     now_r = H
+#     possible = True
+
+#     for _ in range(N):
+#         t, l, u = map(int, input().split())
+#         cap = t-time
+
+#         now_l -= cap
+#         now_r += cap
+
+#         now_l = max(now_l, l)
+#         now_r = min(now_r, u)
+
+#         if now_l > now_r:
+#             possible = False
+
+#         time = t
+#     print("Yes" if possible else "No")
