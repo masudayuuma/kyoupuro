@@ -2778,3 +2778,62 @@
 
 #         time = t
 #     print("Yes" if possible else "No")
+
+# C - Snake Numbers
+# L, R = map(int, input().split())
+
+# def count_snake(X):
+#     if X < 10:
+#         return 0
+    
+
+#     digits = list(map(int, str(X)))
+
+#     n = len(digits)
+#     result = 0
+
+#     for lenght in range(2, n):
+#         for head in range(1, 10):
+#             result += head**(lenght-1)
+
+#     first = digits[0]
+
+#     for head in range(1, first):
+#         result += head ** (n-1)
+
+#     head = first
+
+#     for i in range(1, n):
+#         current = digits[i]
+#         remaining = n-i-1
+
+#         smaller_count = min(current, head)
+
+#         result += smaller_count*(head**remaining)
+
+#         if current >= head:
+#             return result
+    
+#     result += 1
+
+#     return result
+
+# print(count_snake(R)-count_snake(L-1))
+
+# C - Count Close Pairs
+# N = int(input())
+# # l = 0
+# r = 2
+# result = 0
+# for l in range(1, N):
+#     if l >= r: r = l+1
+#     while r <= N:
+#         print(f"? {l} {r}", flush=True)
+#         if input() == "No":
+#             break
+#         r += 1
+#     result += r-l-1
+    
+
+# print(f"! {result}")
+

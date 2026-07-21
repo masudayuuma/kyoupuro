@@ -2299,3 +2299,72 @@
 # ans.sort()
 
 # print(ans[N-1])
+
+
+# D - Teleport Maze
+
+from collections import deque, defaultdict
+
+H, W = map(int, input().split())
+grid = [list(input()) for _ in range(H)]
+
+# 各文字のワープマス一覧
+c_grid = defaultdict(list)
+
+for i in range(H):
+    for j in range(W):
+        if grid[i][j].isalpha():
+            c_grid[grid[i][j]].append((i, j))
+
+q = deque([(0, 0, 0)])
+visited = {(0, 0)}
+
+# すでにワープ処理を行った文字
+used_warp = set()
+
+diff = (
+    (1, 0),
+    (-1, 0),
+    (0, 1),
+    (0, -1),
+)
+
+while q:
+    y, x, cnt = q.popleft()
+
+    if y == H - 1 and x == W - 1:
+        print(cnt)
+        break
+
+    # 上下左右へ歩く
+    for dy, dx in diff:
+        ny = y + dy
+        nx = x + dx
+
+        if not (0 <= ny < H and 0 <= nx < W):
+            continue
+
+        if grid[ny][nx] == "#":
+            continue
+
+        if (ny, nx) in visited:
+            continue
+
+        visited.add((ny, nx))
+        q.append((ny, nx, cnt + 1))
+
+    # 現在地がワープマスならワープする
+    char = grid[y][x]
+
+    if char.isalpha() and char not in used_warp:
+        used_warp.add(char)
+
+        for ny, nx in c_grid[char]:
+            if (ny, nx) in visited:
+                continue
+
+            visited.add((ny, nx))
+            q.append((ny, nx, cnt + 1))
+
+else:
+    print(-1)
