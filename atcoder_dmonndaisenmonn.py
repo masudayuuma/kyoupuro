@@ -2302,69 +2302,153 @@
 
 
 # D - Teleport Maze
+# from collections import deque, defaultdict
 
-from collections import deque, defaultdict
+# H, W = map(int, input().split())
+# grid = [list(input()) for _ in range(H)]
 
-H, W = map(int, input().split())
-grid = [list(input()) for _ in range(H)]
+# # 各文字のワープマス一覧
+# c_grid = defaultdict(list)
 
-# 各文字のワープマス一覧
-c_grid = defaultdict(list)
+# for i in range(H):
+#     for j in range(W):
+#         if grid[i][j].isalpha():
+#             c_grid[grid[i][j]].append((i, j))
 
-for i in range(H):
-    for j in range(W):
-        if grid[i][j].isalpha():
-            c_grid[grid[i][j]].append((i, j))
+# q = deque([(0, 0, 0)])
+# visited = {(0, 0)}
 
-q = deque([(0, 0, 0)])
-visited = {(0, 0)}
+# # すでにワープ処理を行った文字
+# used_warp = set()
 
-# すでにワープ処理を行った文字
-used_warp = set()
+# diff = (
+#     (1, 0),
+#     (-1, 0),
+#     (0, 1),
+#     (0, -1),
+# )
 
-diff = (
-    (1, 0),
-    (-1, 0),
-    (0, 1),
-    (0, -1),
-)
+# while q:
+#     y, x, cnt = q.popleft()
 
-while q:
-    y, x, cnt = q.popleft()
+#     if y == H - 1 and x == W - 1:
+#         print(cnt)
+#         break
 
-    if y == H - 1 and x == W - 1:
-        print(cnt)
-        break
+#     # 上下左右へ歩く
+#     for dy, dx in diff:
+#         ny = y + dy
+#         nx = x + dx
 
-    # 上下左右へ歩く
-    for dy, dx in diff:
-        ny = y + dy
-        nx = x + dx
+#         if not (0 <= ny < H and 0 <= nx < W):
+#             continue
 
-        if not (0 <= ny < H and 0 <= nx < W):
-            continue
+#         if grid[ny][nx] == "#":
+#             continue
 
-        if grid[ny][nx] == "#":
-            continue
+#         if (ny, nx) in visited:
+#             continue
 
-        if (ny, nx) in visited:
-            continue
+#         visited.add((ny, nx))
+#         q.append((ny, nx, cnt + 1))
 
-        visited.add((ny, nx))
-        q.append((ny, nx, cnt + 1))
+#     # 現在地がワープマスならワープする
+#     char = grid[y][x]
 
-    # 現在地がワープマスならワープする
-    char = grid[y][x]
+#     if char.isalpha() and char not in used_warp:
+#         used_warp.add(char)
 
-    if char.isalpha() and char not in used_warp:
-        used_warp.add(char)
+#         for ny, nx in c_grid[char]:
+#             if (ny, nx) in visited:
+#                 continue
 
-        for ny, nx in c_grid[char]:
-            if (ny, nx) in visited:
-                continue
+#             visited.add((ny, nx))
+#             q.append((ny, nx, cnt + 1))
 
-            visited.add((ny, nx))
-            q.append((ny, nx, cnt + 1))
+# else:
+#     print(-1)
 
-else:
-    print(-1)
+
+# D - Minimize Range
+# N, K = map(int, input().split())
+# A = list(map(int, input().split()))
+
+# for i in range(N):
+#     A[i] = A[i]%K
+
+# A = sorted(set(A))
+# L = len(A)
+# A = A+[x+K for x in A]
+
+# ans = float('inf')
+# r = L-1
+# for l in range(L):
+#     ans = min(ans, A[r]-A[l])
+#     r += 1
+
+# print(ans)
+
+# D - Placing Rooks
+# N, M = map(int, input().split())
+# timestamps = []
+# for i in range(M):
+#     r, c = map(int, input().split())
+#     timestamps.append((r, c))
+
+# timestamps.reverse()
+
+# r_set = set()
+# c_set = set()
+# ans = 0
+# for r, c in timestamps:
+#     if r in r_set or c in c_set:
+#         r_set.add(r)
+#         c_set.add(c)
+#     else:
+#         r_set.add(r)
+#         c_set.add(c)
+
+#         ans += 1
+# print(ans)
+
+# E - Range Flip
+# N, K = map(int, input().split())
+# A = []
+# B = []
+# for i in range(N):
+#     a, b = map(int, input().split())
+#     A.append(a)
+#     B.append(b)
+
+# dp_a = [0]*(K+1)
+# dp_b = [0]*(K+1)
+
+# for i in range(N):
+#     a = A[i]
+#     b = B[i]
+#     nxt_a = [0]*(K+1)
+#     nxt_b = [0]*(K+1)
+
+#     for k in range(K+1):
+#         if k < 1:
+#             nxt_a[k] = a+dp_a[k]
+#             nxt_b[k] = b+dp_b[k]
+#         else:
+#             nxt_a[k] = (dp_a[k] if dp_a[k] > dp_b[k] else dp_b[k]) + a
+#             nxt_b[k] = (dp_b[k] if dp_b[k] > dp_a[k-1] else dp_a[k-1]) + b
+#     dp_a, dp_b = nxt_a, nxt_b
+    
+# print(max(max(dp_a), max(dp_b)))
+            
+# D - Flat Subsequence
+# from atcoder.segtree import SegTree
+# N, K = map(int, input().split())
+# A = [int(input()) for _ in range(N)]
+# seg = SegTree(max, 0, [0]*(300000+1))
+# for i in range(N):
+#     l = 0 if A[i]-K < 0 else A[i]-K
+#     r = 300000 if A[i]+K > 300000 else A[i]+K
+#     a = seg.prod(l, r+1)+1
+#     seg.set(A[i], a)
+
+# print(seg.all_prod())
