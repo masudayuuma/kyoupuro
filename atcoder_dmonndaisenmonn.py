@@ -2452,3 +2452,121 @@
 #     seg.set(A[i], a)
 
 # print(seg.all_prod())
+
+# E - A > B substring
+# from atcoder.fenwicktree import FenwickTree
+# N = int(input())
+# S = list(input())
+# fenwick = FenwickTree(2*N+1)
+# ans = 0
+# now = 0
+# fenwick.add(now+N, 1)
+
+
+# for i in range(N):
+#     if S[i] == 'A':
+#         now += 1
+#         fenwick.add(now+N, 1)
+#     elif S[i] == 'B':
+#         now -= 1
+#         fenwick.add(now+N, 1)
+#     else:
+#         fenwick.add(now+N, 1)
+#     ans += fenwick.sum(0, now+N)
+
+# print(ans)
+
+# E - Sequence Sum
+# from collections import defaultdict
+# N, X, M = map(int, input().split())
+
+# wariprefix = [0]
+# waridict = defaultdict(int)
+# total = 0
+
+# target_l = 1
+# target_i = 1
+# while N > 0:
+#     if X not in waridict:
+#         wariprefix.append(X)
+#         waridict[X] = len(wariprefix)-1
+#         total += X
+#         X = (X*X)%M
+#         N -= 1
+#     else:
+#         target_l = len(wariprefix)-waridict[X]
+#         target_i = waridict[X]
+#         break
+
+# target_sum = 0
+# for a in wariprefix[target_i:]:
+#     target_sum += a
+
+# warikiri = N//target_l
+# amari = N%target_l
+# N -= warikiri*target_l
+# total += warikiri*target_sum
+
+
+# for a in range(amari):
+#     total += wariprefix[target_+a]
+
+# print(total)
+
+# N, X, M = map(int, input().split())
+
+# LOG = N.bit_length()
+
+# nxt = [[0]*M for _ in range(LOG)]
+
+# total = [[0] * M for _ in range(LOG)]
+
+# for x in range(M):
+#     nxt[0][x] = x*x%M
+#     total[0][x] = x
+
+# for k in range(LOG-1):
+#     for x in range(M):
+#         mid = nxt[k][x]
+
+#         nxt[k+1][x] = nxt[k][mid]
+#         total[k+1][x] = total[k][x]+total[k][mid]
+
+# answer = 0
+# current = X
+
+# for k in range(LOG):
+#     if (N >> k) & 1:
+#         answer += total[k][current]
+#         current = nxt[k][current]
+# print(answer)
+
+# D - Make Target 2
+L, R, D, U = map(int, input().split())
+
+ans = 0
+
+# ① |x| > |y| の場合
+# このとき max(|x|, |y|) = |x|
+# よって x が偶数なら数える
+for x in range(L, R + 1):
+    if x % 2 == 0:
+        low = max(D, -abs(x) + 1)
+        high = min(U, abs(x) - 1)
+
+        cnt = high - low + 1
+        ans += max(cnt, 0)
+
+# ② |x| <= |y| の場合
+# このとき max(|x|, |y|) = |y|
+# よって y が偶数なら数える
+for y in range(D, U + 1):
+    if y % 2 == 0:
+        low = max(L, -abs(y))
+        high = min(R, abs(y))
+
+        cnt = high - low + 1
+        ans += max(cnt, 0)
+
+print(ans)
+

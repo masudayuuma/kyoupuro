@@ -2837,3 +2837,51 @@
 
 # print(f"! {result}")
 
+# C - Candy Tribulation
+# N, X, Y = map(int, input().split())
+# A = list(map(int, input().split()))
+
+# minmax = min(A)*Y
+# ans = 0
+# diff = Y-X
+# for a in A:
+#     sabun = (a*Y - minmax)
+#     if sabun % diff != 0:
+#         print(-1)
+#         exit()
+#     if sabun//diff > a:
+#         print(-1)
+#         exit()
+#     else:
+#         ans += (a-sabun//diff)
+#         # print(ans)
+# print(ans)
+
+# C - Truck Driver
+# import bisect
+# N, A, B = map(int, input().split())
+
+# S = list(input())
+# L = len(S)
+# prefix_a = [0]*(L+1)
+# prefix_b = [0]*(L+1)
+
+# for i in range(len(S)):
+#     prefix_a[i+1] = prefix_a[i] +(1 if S[i] == 'a' else 0)
+#     prefix_b[i+1] = prefix_b[i] +(1 if S[i] == 'b' else 0)
+
+# # print(prefix_a)
+# # print(prefix_b)
+
+# ans = 0
+# for i in range(1, L+1):
+#     t_a = prefix_a[i-1]+A
+#     t_b = prefix_b[i-1]+B
+#     t_a_i = bisect.bisect_left(prefix_a, t_a)
+#     t_b_i = bisect.bisect_left(prefix_b, t_b)-1
+#     # print(i, t_a_i, t_b_i)
+#     if t_a_i <= t_b_i and not t_a_i >= L+1:
+#         ans += t_b_i-t_a_i+1
+#         # print("z")
+
+# print(ans)
