@@ -2542,31 +2542,56 @@
 # print(answer)
 
 # D - Make Target 2
-L, R, D, U = map(int, input().split())
+# L, R, D, U = map(int, input().split())
 
-ans = 0
+# ans = 0
 
-# ① |x| > |y| の場合
-# このとき max(|x|, |y|) = |x|
-# よって x が偶数なら数える
-for x in range(L, R + 1):
-    if x % 2 == 0:
-        low = max(D, -abs(x) + 1)
-        high = min(U, abs(x) - 1)
+# # ① |x| > |y| の場合
+# # このとき max(|x|, |y|) = |x|
+# # よって x が偶数なら数える
+# for x in range(L, R + 1):
+#     if x % 2 == 0:
+#         low = max(D, -abs(x) + 1)
+#         high = min(U, abs(x) - 1)
 
-        cnt = high - low + 1
-        ans += max(cnt, 0)
+#         cnt = high - low + 1
+#         ans += max(cnt, 0)
 
-# ② |x| <= |y| の場合
-# このとき max(|x|, |y|) = |y|
-# よって y が偶数なら数える
-for y in range(D, U + 1):
-    if y % 2 == 0:
-        low = max(L, -abs(y))
-        high = min(R, abs(y))
+# # ② |x| <= |y| の場合
+# # このとき max(|x|, |y|) = |y|
+# # よって y が偶数なら数える
+# for y in range(D, U + 1):
+#     if y % 2 == 0:
+#         low = max(L, -abs(y))
+#         high = min(R, abs(y))
 
-        cnt = high - low + 1
-        ans += max(cnt, 0)
+#         cnt = high - low + 1
+#         ans += max(cnt, 0)
 
-print(ans)
+# print(ans)
+
+# D - Long Waiting
+import heapq
+
+N, K = map(int, input().split())
+heap = []
+time = 0
+for i in range(N):
+    a, b, c = map(int, input().split())
+
+    if K >= c:
+        time = max(time, a)
+        K -= c
+        print(time)
+        heapq.heappush(heap, (time+b, c))
+    else:
+        while K < c:
+            live_time, cus = heapq.heappop(heap)
+            time = max(time, live_time)
+            K += cus
+
+        time = max(time, a)
+        K -= c
+        print(time)
+        heapq.heappush(heap, (time+b, c))
 

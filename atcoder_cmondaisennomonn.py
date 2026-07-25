@@ -2885,3 +2885,156 @@
 #         # print("z")
 
 # print(ans)
+
+# C - Brackets Stack Query
+# Q = int(input())
+# stack = []
+# closed_i = set()
+# open_cnt = 0
+# close_cnt = 0
+# ans = []
+# for i in range(Q):
+#     q, *c = input().split()
+
+#     if q == '1':
+#         if '(' == c[0]:
+#             open_cnt += 1
+#         else:
+#             close_cnt += 1
+#             if close_cnt > open_cnt:
+#                 closed_i.add(len(stack)+1)
+#         stack.append(c[0])
+#         ans.append('Yes' if open_cnt == close_cnt and len(closed_i) == 0 else 'No')
+#     else:
+#         c = stack.pop()
+#         if c == '(':
+#             open_cnt -= 1
+#         else:
+#             close_cnt -= 1
+#             if len(stack)+1 in closed_i:
+#                 closed_i.remove(len(stack)+1)
+
+#         ans.append('Yes' if open_cnt == close_cnt and len(closed_i) == 0 else 'No')
+#     # print(stack, closed_i)
+# for a in ans:
+#     print(a)
+
+# C - Bipartize
+# from collections import defaultdict
+# N, M = map(int, input().split())
+# # graph = defaultdict(list)
+# graph = []
+# for i in range(M):
+#     u, v = map(int, input().split())
+#     # graph[u-1].append(v-1)
+#     # graph[v-1].append(u-1)
+#     graph.append((u-1, v-1))
+
+# del_hen = M
+# for mask in range(1 << N):
+#     cnt = 0
+#     for u, v in graph:
+#         if (mask >> u & 1 ) == (mask >> v & 1):
+#             # print('a')
+#             cnt += 1
+#     # print(del_hen, cnt)
+#     del_hen = min(cnt, del_hen)
+
+# print(del_hen)
+
+# C - Upgrade Required
+# import heapq
+# N, Q = map(int, input().split())
+# heap = [a for a in range(1, N+1)]
+# heapq.heapify(heap)
+# cnt_dict = {i: 1 for i in range(1, N+1)}
+# for i in range(Q):
+#     x, y = map(int, input().split())
+#     del_num = 0
+#     while heap[0] <= x:
+#         ver = heapq.heappop(heap)
+#         del_num += cnt_dict[ver]
+#         cnt_dict[ver] = 0
+#     print(del_num)
+#     cnt_dict[y] += del_num
+
+# C - AtCoder AAC Contest
+# T = int(input())
+
+# for _ in range(T):
+#     a, b, c, = map(int, input().split())
+#     ans = 0
+#     #bがある時
+#     min_n = min(a, b, c)
+#     ans += min_n
+#     a, b, c = a-min_n, b-min_n, c-min_n
+#     # print(a,b,c)
+#     if a <= 0 or c <= 0:
+#         print(ans)
+#         continue
+
+#     #a or c のみで考える場合
+#     #残りを何個にするかで二分探索？
+#     l, r = 0, min(a, c)+1
+#     # print(l, r)
+#     total = (a+c)
+#     while r - l > 1:
+#         mid = (l+r)//2 #a, bそれぞれ１つずつ取り出すかず
+#         # print(l, r)
+#         if (a-mid)+(c-mid) >= mid:
+#             l = mid
+#             # print(l)
+#         else:
+#             r = mid
+
+#     print(l+ans)
+
+# C - Flush
+# import bisect
+# N, Q = map(int, input().split())
+
+# A = list(map(int, input().split()))
+# A.sort()
+# prefix = [0]*(N+1)
+# for i in range(N):
+#     prefix[i+1] += prefix[i]+A[i]
+# max_a = max(A)
+
+# for q in range(Q):
+#     B = int(input())
+#     if max_a < B:
+#         print(-1)
+#         continue
+
+#     del_num = 0
+#     t_i = bisect.bisect_left(A, B)
+#     del_num += prefix[t_i]
+#     del_num += (N-t_i)*(B-1)
+#     print(del_num+1)
+
+
+# C - Mixture
+# T = int(input())
+
+# for _ in range(T):
+#     N = int(input())
+#     S = input()
+
+#     size = 1 << N
+
+#     dp = [False]*size
+#     dp[0] = True
+
+#     for mask in range(size):
+#         if not dp[mask]:
+#             continue
+
+#         for n in range(N):
+#             if mask >> n & 1 == 0:
+#                 nxt_mask = mask | (1 << n)
+
+#             if S[nxt_mask-1] == '0':
+#                 dp[nxt_mask] = True
+#     print("Yes" if dp[size -1] else "No")
+
+# C - Bingo 2
