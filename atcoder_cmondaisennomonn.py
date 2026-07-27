@@ -3037,4 +3037,123 @@
 #                 dp[nxt_mask] = True
 #     print("Yes" if dp[size -1] else "No")
 
-# C - Bingo 2
+# C - Adjacent Sums (easy)
+# N, M = map(int, input().split())
+
+# A = list(map(int, input().split()))
+# A_copy = A.copy()
+# B = list(map(int, input().split()))
+# ans = float('inf')
+# for first in (1, 0):
+#     diff = 0
+#     A = A_copy.copy()
+#     if first != A[0]: 
+#         diff += 1
+#         A[0] = (A[0]+1)%2
+#         # print(first)
+#     for i in range(1, N):
+#         if (A[i]+A[i-1]) % 2 != B[i-1]:
+#             A[i] = (A[i]+1)%2
+#             diff += 1
+#         # print(i, diff)
+#     ans = min(ans, diff)
+# print(ans)
+
+
+# C - Palindromic in Both Bases
+# 中間の回文を作成することが10**6内でできるのでそれを12桁分生成すればいい。
+# 1stepでn進数の回文を全部生成してそれを10進数に戻して回文か判定してcheckする
+# def to_base(x, A):
+#     s = ""
+
+#     while x > 0:
+#         s += str(x%A)
+#         x //= A
+#     return s
+
+# A = int(input())
+# N = int(input())
+# ans = 0
+# palindrom = []
+# for i in range(1, 10**6):
+#     s = str(i)
+#     even = int(s+s[::-1])
+#     odd = int(s+s[-2::-1])
+#     if odd <= N:
+#         t = to_base(odd, A)
+
+#         if t == t[::-1]:
+#             ans += odd
+
+#     if even <= N:
+#         t = to_base(even, A)
+
+#         if t == t[::-1]:
+#             ans += even
+
+# print(ans)
+
+# C - Giant Domino
+# T = int(input())
+
+# for _ in range(T):
+#     N = int(input())
+#     S = list(map(int, input().split()))
+
+#     now = S[0]
+#     final = S[-1]
+#     uses = sorted(S[1:N-1])
+#     if now*2 >= final:
+#         print(2)
+#         continue
+#     ans = 2
+#     flag = True
+#     # print(uses)
+#     for i in range(len(uses)):
+#         if now*2 >= final:
+#             print(ans)
+#             flag = False
+#             break
+#         if i+1 < len(uses) and now*2 >= uses[i+1]:
+#             continue
+#         if not uses[i] <= now*2:
+#             break
+
+#         now = uses[i]
+#         # print(now)
+#         # print(now)
+#         ans += 1
+#     if flag == True and now*2 >= final:
+#         print(ans)
+#     elif flag == True:
+#         print(-1)
+
+
+# C - Equilateral Triangle
+# N, L = map(int, input().split())
+
+# D = list(map(int, input().split()))
+# wari = 0
+# if L % 3 == 0:
+#     wari = L//3
+# else:
+#     print(0)
+#     exit()
+
+# distinct = [0]*(L)
+# distinct[0] = 1
+# dist = 0
+# for i in range((N)-1):
+#     dist += D[i]
+#     dist %= L
+#     distinct[dist] += 1
+
+# distinct = distinct+distinct
+
+# ans = 0
+# for i in range(wari):
+#     ans += distinct[i]*distinct[i+wari]*distinct[i+wari+wari]
+
+# print(ans)
+
+# C - ~
