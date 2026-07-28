@@ -3157,3 +3157,217 @@
 # print(ans)
 
 # C - ~
+# Afirst < Asecondのところまで進む
+# +->-と-->+の順でtopを見つけてそれが壊れない限りrを更新する
+# N = int(input())
+# P = list(map(int, input().split()))
+# sign = []
+
+# for i in range(N-1):
+#     if P[i] < P[i+1]:
+#         sign.append(1)
+#     else:
+#         sign.append(-1)
+
+# runs = []
+
+# for x in sign:
+#     if runs and runs[-1][0] == x:
+#         runs[-1][1] += 1
+#     else:
+#         runs.append([x, 1])
+
+# ans = 0
+
+# for i in range(len(runs)-2):
+#     if  (runs[i][0] == 1 and runs[i+1][0] == -1 and runs[i+2][0] == 1):
+#         ans += runs[i][1]*runs[i+2][1]
+
+# print(ans)
+
+# C - 2^a b^2
+# 2^nが60個しかないのでそれを全部試して割り切れるNが対象の値
+# その値を^(1/2)して出てきた数値以下の整数(1...a)
+from math import isqrt
+# N = int(input())
+# ans = 0
+
+# for a in range(1, 61):
+#     nizyou = 2**a
+
+#     if nizyou > N:
+#         break
+
+#     b_max = isqrt(N//nizyou)
+
+#     ans += (b_max+1)//2
+# print(ans)
+
+
+# C - Illuminate Buildings
+# N = int(input())
+# H = list(map(int, input().split()))
+
+
+# ans = 0
+# if N == 1:
+#     print(1)
+#     exit()
+
+# for w in range(1, N):
+#     dp = [0]*(N)
+#     for j in range(w): dp[j] = 1 
+#     # print(dp)
+#     for i in range(N-w):
+#         if H[i] == H[i+w]:
+#             dp[i+w] += dp[i]+1
+#         else:
+#             dp[i+w] = 1
+#     ans = max(ans, max(dp))
+# print(ans)
+
+# C - Humidifier 3
+# from collections import deque
+# H, W, D = map(int, input().split())
+
+# grid = [list(input()) for _ in range(H)]
+# q = deque()
+# ans = 0
+# visited = set()
+# for i in range(H):
+#     for j in range(W):
+#         if grid[i][j] == 'H':
+#             q.append((i, j, D))
+#             visited.add((i, j))
+#             ans += 1
+
+# diff = ((1, 0), (-1, 0), (0, -1), (0, 1))
+# while q:
+#     i, j, d = q.popleft()
+#     if d <= 0: continue
+#     d -= 1
+#     # print(i, j)
+#     for ni, nj in diff:
+#         y = i+ni
+#         x = j+nj
+#         if not 0 <= y < H or not 0 <= x < W or (y, x) in visited:
+#             continue
+#         if grid[y][x] == '#':
+#             continue
+#         visited.add((y, x))
+#         q.append((y, x, d))
+#         ans += 1
+# print(ans)
+
+# C - Kaiten Sushi
+# import bisect
+# N, M = map(int, input().split())
+
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
+
+# min_a = float('inf')
+# for i in range(N):
+#     min_a = min(min_a, A[i])
+#     A[i] = min_a
+# A.reverse()
+
+# ans = []
+# for b in B:
+#     if b < A[0]:
+#         ans.append(-1)
+#         continue
+#     t_i = bisect.bisect_right(A, b)
+
+#     ans.append(N-t_i+1)
+
+# print(*ans, sep="\n")
+
+# C - Sowing Stones
+# N, M = map(int, input().split())
+
+# X = list(map(int, input().split()))
+# A = list(map(int, input().split()))
+# now = N #0の際端
+# ans = 0
+# for i in range(M-1, -1, -1):
+#     if A[i] > now-X[i]+1: # now-X[i]+1以上の石は余るので終了
+#         print(-1)
+#         exit()
+#     wide = now-X[i] #右端からどこまでの距離に石を埋めるかの幅
+#     l = now - A[i] +1
+
+#     ans += (wide*(wide+1))//2
+#     if now - A[i] +1 > X[i]:
+#         ans -= (l-X[i]-1)* (l-X[i])//2
+#     now = l-1
+
+# print(ans if now == 0 else -1)
+
+# C - Sowing Stones
+
+# N, M = map(int, input().split())
+
+# X = list(map(int, input().split()))
+# A = list(map(int, input().split()))
+
+# # 右の石山から処理したいので、位置で降順ソート
+# XA = sorted(zip(X, A), reverse=True)
+
+# now = N
+# ans = 0
+
+# for x, a in XA:
+#     # x ～ now の範囲にa個置けなければ不可能
+#     if a > now - x + 1:
+#         print(-1)
+#         exit()
+
+#     wide = now - x
+#     l = now - a + 1
+
+#     # x→x, x+1, ..., now のコスト
+#     ans += wide * (wide + 1) // 2
+
+#     # 実際には l～now だけ使うので、
+#     # x～l-1 の分を引く
+#     if l > x:
+#         ans -= (l - x - 1) * (l - x) // 2
+
+#     now = l - 1
+
+# print(ans if now == 0 else -1)
+
+# C - Spiral Rotation
+# N = int(input())
+
+# grid = [list(input()) for _ in range(N)]
+# ans = [['.']*N for _ in range(N)]
+# start = 0
+# end = N-1
+# cnt = 0
+# while start < end:
+#     cnt += 1
+#     for i in (start, end):
+#         for j in range(start, end+1):
+#             y, x = i, j
+#             for k in range(cnt%4):
+#                 # print(i, j)
+#                 y, x = x, N-1-y
+#                 # print(i, j)
+#             # print(y, x, i, j)
+#             ans[y][x] = grid[i][j]
+#     for j in (start, end):
+#         for i in range(start+1, end):
+#             y, x = i, j
+#             for k in range(cnt%4):
+#                 # print(i, j)
+#                 y, x = x, N-1-y
+#                 # print(i, j)
+#             # print(y, x, i, j)
+#             ans[y][x] = grid[i][j]
+            
+#     start += 1
+#     end -= 1
+
+# for i in range(N): print("".join(ans[i]))
