@@ -3371,3 +3371,154 @@ from math import isqrt
 #     end -= 1
 
 # for i in range(N): print("".join(ans[i]))
+
+# C - Make Isomorphic
+# from itertools import permutations
+# N = int(input())
+# Mg = int(input())
+
+# G = [[False]*N for _ in range(N)]
+
+# for i in range(Mg):
+#     u, v = map(int, input().split())
+#     u -= 1
+#     v -= 1
+#     G[u][v] = True
+#     G[v][u] = True
+
+# Mh = int(input())
+# H = [[False]*N for _ in range(N)]
+
+# for i in range(Mh):
+#     a, b = map(int, input().split())
+#     a -= 1
+#     b -= 1
+#     H[a][b] = True
+#     H[b][a] = True
+
+# cost = [[0]*N for _ in range(N)]
+# for i in range(N-1):
+#     row = list(map(int, input().split()))
+
+#     for j in range(i+1, N):
+#         cost[i][j] = row[j-i-1]
+#         cost[j][i] = cost[i][j]
+
+# ans = float('inf')
+
+# for p in permutations(range(N)):
+#     now = 0
+
+#     for i in range(N):
+#         for j in range(i+1, N):
+
+#             if G[i][j] != H[p[i]][p[j]]:
+#                 now += cost[p[i]][p[j]]
+
+#     ans = min(ans, now)
+
+# print(ans)
+    
+# C - Average Length
+# from itertools import permutations
+# import math
+# N = int(input())
+# x_y = []
+# for i in range(N):
+#     x, y = map(int, input().split())
+#     x_y.append([x, y])
+
+# ans = 0
+# p_l = math.factorial(N)
+# for p in permutations(range(N)):
+#     now = 0
+#     for i in range(N-1):
+#         a, b = x_y[p[i]][0], x_y[p[i]][1]
+#         na, nb = x_y[p[i+1]][0], x_y[p[i+1]][1]
+#         now += ((na-a)**2+(nb-b)**2)**0.5
+
+#     ans += now
+
+# print(ans/p_l)
+        
+# C - Count Order
+# from itertools import permutations
+
+# N = int(input())
+# P = tuple(map(int, input().split()))
+# Q = tuple(map(int, input().split()))
+# p_i = 0
+# q_i = 0
+# for i, p in enumerate(permutations(range(1, N+1))):
+#     if p == P:
+#        p_i = i
+#     if p == Q:
+#         q_i = i
+
+# print(abs(p_i-q_i)) 
+
+
+# 8クイーン問題
+# from itertools import permutations
+# N = int(input())
+# i_j = []
+# for _ in range(N):
+#     i, j = map(int, input().split())
+#     i_j.append((i, j))
+
+
+# for p in permutations(range(8)):
+#     plus_set = set()
+#     minus_set = set()
+#     f = True
+#     for i, j in i_j:
+#         if p[i] != j:
+#             f = False
+#             break
+
+#     if not f:
+#         continue
+
+#     for i in range(8):
+#         if i+p[i] in plus_set:
+#             f = False
+#             break
+#         if i-p[i] in minus_set:
+#             f = False
+#             break
+#         plus_set.add(i+p[i])
+#         minus_set.add(i-p[i])
+
+#     if not f:
+#         continue
+
+#     for i in range(8):
+#         print('.'*(p[i])+'Q'+'.'*(7-p[i]))
+#     exit()
+
+# n = int(input())
+
+# lst = []
+
+# for i in range(n):
+#     r, c = map(int, input().split())
+
+#     if i == 0:
+#         lst.append(r)
+
+#     lst.append(c)
+# INF = 10**18
+# dp = [[0]*(n) for _ in range(n)]
+# for lenght in range(2, n+1):
+#     for i in range(n-lenght+1):
+#         j = i+lenght-1
+#         dp[i][j] = INF
+
+#         for k in range(i, j):
+#             cost = (dp[i][k]+dp[k+1][j]+lst[i]*lst[k+1]*lst[j+1])
+
+#             dp[i][j] = min(dp[i][j], cost)
+# print(dp[0][n-1])
+
+
+# 
