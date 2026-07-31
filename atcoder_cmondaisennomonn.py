@@ -3522,3 +3522,401 @@ from math import isqrt
 
 
 # 
+# N = int(input())
+# A = list(int(input() for _ in range(N)))
+
+# dp = [[0]*(2*N+1) for _ in range(2*N+1)]
+
+# for lenght in range(1, N):
+#     for l in range(2*N-lenght+1):
+
+#         r = l+lenght
+
+#         taken = N - lenght
+
+#         if taken % 2 == 0:
+#             dp[l][r] = max(A[l]+dp[l+1][r], A[r-1]+dp[l][r-1])
+#         else:
+#             if A[l] > A[r-1]:
+#                 dp[l][r] = dp[l+1][r]
+#             else:
+#                 dp[l][r] = dp[l][r-1]
+
+# ans = 0
+
+# for i in range(N):
+#     ans = max(ans, A[i]+dp[i+1][i+N])
+
+
+#
+# while True: 
+#     N = int(input())
+#     if N == 0:
+#         break
+
+#     W = list(map(int, input().split()))
+
+#     dp = [[0] * N for _ in range(N)]
+
+#     for lenght in range(2, N+1):
+#         for l in range(N-lenght+1):
+#             r = l + lenght -1
+
+#             for k in range(l, r):
+#                 dp[l][r] = max(
+#                     dp[l][r],
+#                     dp[l][k]+dp[k+1][r]
+#                 )
+
+#             if abs(W[l]-W[r]) <= 1:
+#                 if lenght == 2:
+#                     dp[l][r] = 2
+#                 elif dp[l+1][r-1] == lenght -2:
+#                     dp[l][r] = lenght
+
+#     print(dp[0][N-1])
+
+# 
+# N = int(input())
+# lst = []
+# for i in range(N):
+#     r, c = map(int, input().split())
+
+#     if i == 0:
+#         lst.append(r)
+
+#     lst.append(c)
+
+# INF = 10**18
+
+# dp = [[0]*N for _ in range(N)]
+
+# for length in range(2, N+1):
+#     for i in range(N-length+1):
+#         j = i+length-1
+#         dp[i][j] = INF
+
+#         for k in range(i, j):
+#             cost = dp[i][k]+dp[k+1][j]+lst[i]*lst[k+1]*lst[j+1]
+#             dp[i][j] = min(cost, dp[i][j])
+
+# print(dp[0][N-1])
+
+# B - ケーキの切り分け２ (Cake 2) 
+# N = int(input())
+
+# pai = [int(input()) for _ in range(N)]
+# pai = pai + pai
+
+# dp = [[0]*(2*N+1) for _ in range(2*N+1)]
+
+# for lenght in range(1, N):
+#     for l in range(2*N-lenght+1):
+#         r = l+lenght
+
+#         taken = N-lenght
+
+#         if taken % 2 == 0:
+#             dp[l][r] = max(
+#                 pai[l]+dp[l+1][r],
+#                 pai[r-1]+dp[l][r-1]
+#             )
+#         else:
+#             if pai[l] > pai[r-1]:
+#                 dp[l][r] = dp[l+1][r]
+#             else:
+#                 dp[l][r] = dp[l][r-1]
+
+# ans = 0
+
+# for i in range(N):
+#     ans = max(ans, pai[i]+dp[i])
+
+# print(ans)
+
+# 
+# while True:
+#     N = int(input())
+#     if N == 0:
+#         break
+
+#     W = list(map(int, input().split()))
+
+#     dp = [[0]*N for _ in range(N)]
+
+#     for lenght in range(2, N+1):
+#         for l in range(N-lenght+1):
+#             r = l+lenght-1
+
+#             for k in range(l, r):
+#                 dp[l][r] = max(
+#                     dp[l][r],
+#                     dp[l][k]+dp[k+1][r]
+#                 )
+
+#             if abs(W[l]-W[r]) < 2:
+#                 # print("a")
+#                 if lenght == 2:
+#                     dp[l][r] = 2
+#                 elif dp[l+1][r-1] == lenght-2:
+#                     dp[l][r] = dp[l+1][r-1]+2
+#     # print(dp)
+#     print(dp[0][N-1])
+
+# 
+# N = int(input())
+# lst = []
+# for i in range(N):
+#     p, a = map(int, input().split())
+#     lst.append((p-1, a))
+
+# dp = [[0]*N for _ in range(N)]
+
+# for lenght in range(N, 1, -1):
+#     for l in range(N-lenght+1):
+#         r = l+lenght-1
+
+#         la = lst[l][1] if l <= lst[l][0] <= r else 0
+#         dp[l+1][r] = max(dp[l+1][r], la+dp[l][r]) 
+#         ra = lst[r][1] if l <= lst[r][0] <= r else 0
+#         dp[l][r-1] = max(ra+dp[l][r], dp[l][r-1])        
+# # print(dp)
+# print(max(dp[i][i] for i in range(N)) )
+
+# B21 - Longest Subpalindrome
+# N = int(input())
+
+# S = list(input())
+
+# dp = [[0]*N for _ in range(N)]
+
+# for lenght in range(1, N+1):
+#     for l in range(N-lenght+1):
+#         r = l+lenght-1
+#         if lenght == 1:
+#             dp[l][r] = 1
+#             continue
+
+#         if S[l] == S[r]:
+#             dp[l][r] = dp[l+1][r-1]+2
+#         else:
+#             dp[l][r] = max(dp[l+1][r], dp[l][r-1])
+
+# print(dp[0][N-1])
+
+# N - Slimes
+# N = int(input())
+
+# A = list(map(int, input().split()))
+
+# dp = [[float('inf')]*N for _ in range(N)]
+# S = [0]*(N+1)
+# for i in range(N):
+#     S[i+1] = S[i]+A[i]
+
+# for lenght in range(1, N+1):
+#     for l in range(N-lenght+1):
+#         r = l+lenght-1
+#         if lenght == 1:
+#             dp[l][r] = 0
+#             continue
+
+#         for k in range(l, r):
+#             dp[l][r] = min(dp[l][k]+dp[k+1][r]+S[r+1]-S[l], dp[l][r])
+
+# print(dp[0][N-1])
+
+# class Solution:
+#     def maxCoins(self, nums: List[int]) -> int:
+#         nums = [1]+nums+[1]
+#         N = len(nums)
+
+#         dp = [[0]*N for _ in range(N)]
+
+#         for lenght in range(1, N+1):
+#             for l in range(N-lenght):
+#                 r = l+lenght
+
+#                 for k in range(l+1, r):
+#                     dp[l][r] = max(dp[l][r], dp[l][k-1]+nums[l]*nums[k]*nums[r]+dp[k+1][r])
+
+#         return dp[0][N-1]
+
+# C - Avoid K Palindrome 2
+# from itertools import permutations
+# N, K = map(int, input().split())
+
+# S = list(input())
+
+# all_s_perm = set([s for s in permutations(S)])
+
+# k_all_perm = [s for s in permutations(S, K)]
+# palidrom = set()
+# # print(k_all_perm)
+# for s in k_all_perm:
+#     l, r = 0, K-1
+#     flag = True
+#     while r > l:
+#         if s[l] == s[r]:
+#             l += 1
+#             r -= 1
+#         else:
+#             flag = False
+#             break
+#         # print("a")
+
+#     if flag:
+#         palidrom.add(tuple(s))
+#         # print('a')
+
+# cnt = 0
+# # print(palidrom)
+# for s in all_s_perm:
+#     length = N-K+1
+#     flag = True
+#     for i in range(length):
+#         if s[i:i+K] in palidrom:
+#             # print(s[i:i+K-1])
+#             flag = False
+#             break
+
+#     if flag:
+#         cnt += 1
+#         # print(s)
+
+# print(cnt)
+
+# C - Sum = 0
+# N = int(input())
+# plus = 0
+# minus = 0
+# diff = 0
+# l_r = []
+# ans = [0]*N
+# for i in range(N):
+#     l, r = map(int, input().split())
+#     l_r.append((l, r))
+#     if l <= 0 <= r:
+#         plus += abs(r)
+#         minus -= abs(l)
+#         ans[i] = 0
+#     else:
+#         if l >= 0:
+#             diff += l
+#             ans[i] = l
+#         else:
+#             diff += r
+#             ans[i] = r
+
+# for i in range(N):
+#     l, r = l_r[i]
+
+#     if l <= 0 <= r and diff > 0:
+#         if -l >= diff:
+#             ans[i] = -diff
+#             break
+#         else:
+#             ans[i] = l
+#             diff += l
+#     elif l <= 0 <= r and diff < 0:
+#         if -r <= diff:
+#             ans[i] = -diff
+#             break
+#         else:
+#             ans[i] = r
+#             diff += r
+
+# if sum(ans) == 0:
+#     print("Yes")
+#     print(*ans)
+# else:
+#     print("No")
+
+
+# C - Tile Distance 2
+# Sx, Sy = map(int, input().split())
+# Tx, Ty = map(int, input().split())
+# ans = 0
+
+# if (Sx+Sy) % 2 == 1:
+#     Sx -= 1
+
+# if (Tx+Ty) % 2 == 1:
+#     Tx -= 1
+
+# dx = abs(Tx-Sx)
+# dy = abs(Ty-Sy)
+
+# ans = dy+max(0, dx-dy)//2
+
+# print(ans)
+
+# C - Keys
+# N, M, K = map(int, input().split())
+# A = []
+# R = []
+# for i in range(M):
+#     c, *a,  = input().split()
+#     r = a[-1]
+#     a = list(map(int, a[:-1]))
+#     A.append(a)
+#     R.append(r)
+
+# ans = 0
+# for mask in range(1 << N):
+#     ok = True
+
+#     for i, a in enumerate(A):
+#         cnt = 0
+#         for m in a:
+#             if mask >> m-1 & 1:
+#                 cnt += 1
+
+#         if R[i] == "o" and cnt < K:
+#             ok = False
+#             break
+#         if R[i] == "x" and cnt >= K:
+#             ok = False
+#             break
+#     if ok:
+#         ans += 1
+
+# print(ans)
+
+# C - AtCoder Magics
+# N = int(input())
+# lst = []
+# for i in range(N):
+#     a, c = map(int, input().split())
+
+#     lst.append((a, c, i+1))
+
+# sort_lst = sorted(lst, key= lambda x : (x[0], -x[1]))
+# ans = []
+# now_p, now_c, now_i = sort_lst[-1][0], sort_lst[-1][1], sort_lst[-1][2]
+# ans.append(now_i)
+# for i in range(N-2, -1, -1):
+#     if now_p > sort_lst[i][0] and now_c < sort_lst[i][1]:
+#         continue
+
+#     now_p, now_c, now_i = sort_lst[i][0], sort_lst[i][1], sort_lst[i][2]
+#     ans.append(now_i)
+# print(len(ans))
+# print(*sorted(ans))
+
+# C - Sigma Problem
+N = int(input())
+
+A = list(map(int, input().split()))
+
+prefix = [0]*(N+1)
+
+for i in range(N):
+    prefix[i+1] = prefix[i]+A[i]
+print(prefix)
+ans = 0
+for i in range(N-1):
+    ans += (A[i]*(N-1-i)+prefix[N]-prefix[i+1])% 10**8
+    print(ans)
+
+print(ans)
