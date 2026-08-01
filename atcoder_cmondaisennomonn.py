@@ -3905,18 +3905,135 @@ from math import isqrt
 # print(*sorted(ans))
 
 # C - Sigma Problem
+# from bisect import bisect_left
+
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# MOD = 10**8
+
+# A.sort()
+
+# ans = sum(A)*(N-1)
+
+# for i in range(N):
+#     j = bisect_left(A, MOD-A[i], i+1)
+#     cnt = N-j
+
+#     ans -= cnt * MOD
+
+# print(ans)
+
+# C - Ideal Holidays
+# N, A, B = map(int, input().split())
+
+# D = list(map(int, input().split()))
+
+# D = sorted(set([d % (A+B) for d in D]))
+# L = len(D)
+# D = D+[d+(A+B) for d in D]
+# # print(D)
+
+# for i in range(L):
+#     # print(D[i], D[i+L-1])
+#     if D[i+L-1]-D[i]+1 > A:
+#         continue
+#     else:
+#         print('Yes')
+#         exit()
+
+# print('No')
+
+# C - One Time Swap
+# from collections import Counter
+# S = list(input())
+# N = len(S)
+# ans = 0
+# cnt_dict = Counter(S)
+# distinct_ok = True
+# visited = set()
+# for i, s in enumerate(S):
+#     if distinct_ok and cnt_dict[s] > 1:
+#         distinct_ok = False
+
+#     ans += (N-cnt_dict[s])
+
+# ans //= 2
+# if not distinct_ok:
+#     ans += 1
+
+# print(ans)
+        
+# C - Many Replacement
+# import string
+# N = int(input())
+# S = list(input())
+# Q = int(input())
+
+# alphabet = string.ascii_lowercase
+# c_dict = {c:c for c in alphabet}
+
+# for q in range(Q):
+#     c, d = input().split()
+
+#     for org, now in c_dict.items():
+#         if now == c:
+#             c_dict[org] = d
+
+# ans = []
+# for s in S:
+#     ans.append(c_dict[s])
+
+# print("".join(ans))
+
+# C - Takahashi Gets Lost
+# H, W, N = map(int, input().split())
+# T = list(input())
+
+# grid = [list(input()) for _ in range(H)]
+
+# def move(i, j):
+#     diff = {'U': (-1, 0), 'D': (1, 0), 'L':(0, -1), 'R': (0, 1)}
+#     ok = True
+#     # print("a", i, j)
+#     for t in T:
+#         dy, dx = diff[t]
+#         i += dy
+#         j += dx
+#         # print("x", i, j)
+#         if grid[i][j] == '#':
+#             ok = False
+#         if not ok:
+#             break
+#     # print("b", i, j)
+#     return 1 if ok else 0
+
+# ans = 0
+# for i in range(H):
+#     for j in range(W):
+#         if grid[i][j] == "." and move(i, j):
+#             ans += 1
+
+# print(ans)
+
+# C - Divide and Divide
+from collections import defaultdict
+import math
 N = int(input())
 
-A = list(map(int, input().split()))
+memo = defaultdict(int)
 
-prefix = [0]*(N+1)
+def dfs(i):
+    if i in memo:
+        return memo[i]
+    if i < 2:
+        return 0
+    total = 0
+    total += dfs((i+1)//2)
+    total += dfs(i//2)
+    memo[i] = total+i
+    # print(memo[i])
+    return memo[i]
 
-for i in range(N):
-    prefix[i+1] = prefix[i]+A[i]
-print(prefix)
-ans = 0
-for i in range(N-1):
-    ans += (A[i]*(N-1-i)+prefix[N]-prefix[i+1])% 10**8
-    print(ans)
-
-print(ans)
+print(dfs(N))
+    
