@@ -4016,24 +4016,96 @@ from math import isqrt
 
 # print(ans)
 
-# C - Divide and Divide
-from collections import defaultdict
-import math
-N = int(input())
+# # C - Divide and Divide
+# from collections import defaultdict
+# import math
+# N = int(input())
 
-memo = defaultdict(int)
+# memo = defaultdict(int)
 
-def dfs(i):
-    if i in memo:
-        return memo[i]
-    if i < 2:
-        return 0
-    total = 0
-    total += dfs((i+1)//2)
-    total += dfs(i//2)
-    memo[i] = total+i
-    # print(memo[i])
-    return memo[i]
+# def dfs(i):
+#     if i in memo:
+#         return memo[i]
+#     if i < 2:
+#         return 0
+#     total = 0
+#     total += dfs((i+1)//2)
+#     total += dfs(i//2)
+#     memo[i] = total+i
+#     # print(memo[i])
+#     return memo[i]
 
-print(dfs(N))
+# print(dfs(N))
     
+
+# C - Leftover Recipes
+#Aを何個作るかが決まればBが何個作れるか決まる
+# N = int(input())
+
+# Q = list(map(int, input().split()))
+
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
+# ans = 0
+# for a_c in range(10**6+1):
+#     b_c = float('inf')
+#     ok = True
+#     for i in range(len(A)):
+#         if A[i]*a_c > Q[i]:
+#             ok = False
+#             break
+#         zan = Q[i] - A[i]*a_c
+#         b_c = min(b_c, zan//B[i]) if B[i] > 0 else b_c
+#     if ok:
+#         ans = max(b_c+a_c, ans)
+
+# print(ans)
+
+# C - Loong Tracking
+# N, Q = map(int, input().split())
+# diff = {'R': (0, 1), 'L': (0, -1), 'U': (1, 0), 'D': (-1, 0)}
+# x_y = [(1, 0)]
+# move_cnt = 0
+# for q in range(Q):
+#     q, a = input().split()
+#     q = int(q)
+#     if q == 1:
+#         move_cnt += 1
+#         dy, dx = diff[a]
+#         x_y.append((x_y[-1][0]+dx, x_y[-1][1]+dy))
+#     else:
+#         a = int(a)
+#         if move_cnt < a:
+#             print(a-move_cnt, 0)
+#         else:
+#             # print(x_y)
+#             print(x_y[move_cnt-a+1][0], x_y[move_cnt-a+1][1])
+
+# C - Socks 2
+# N, K = map(int, input().split())
+# A = list(map(int, input().split()))
+
+# if K % 2 == 0:
+#     ans = 0
+
+#     for i in range(0, K, 2):
+#         ans += A[i+1] - A[i]
+
+#     print(ans)
+#     exit()
+
+# cost = 0
+
+# for i in range(1, K-1, 2):
+#     cost += A[i+1]-A[i]
+
+# ans = cost
+
+# for skip in range(2, K, 2):
+#     cost -= A[skip] - A[skip-1]
+
+#     cost += A[skip-1]-A[skip-2]
+
+#     ans = min(ans, cost)
+
+# print(ans)

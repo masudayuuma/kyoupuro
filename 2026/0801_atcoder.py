@@ -68,4 +68,45 @@
 #     ans -= 1
 # print(ans)
 
-# 
+# D - The Big Two
+# N, M = map(int, input().split())
+# a_b = []
+# for i in range(M):
+#     a, b = map(int, input().split())
+#     a_b.append((a, b))
+
+# ans = 0
+# for candidate in (a_b[0][0], a_b[0][1]):
+#     t = -1
+#     for i, now in enumerate(a_b[1:]):
+#         a, b = now
+#         if a != candidate and b != candidate:
+#             t = i+1
+#             break
+#     if t == -1:
+#         ans += N-1 
+#         continue
+
+#     tmp = 0
+#     ca, cb = a_b[t]
+#     for c in (ca, cb):
+#         ok = True
+#         for i in range(M):
+#             a, b = a_b[i]
+#             if (c == a or candidate == a) or (c == b or candidate == b):
+#                 continue
+#             else:
+#                 ok = False
+#                 break
+#         if ok:
+#             ans += 1
+# c, d = a_b[0]                               # 二重計上を1つ引く
+# ok = True
+# for a, b in a_b:
+#     if a != c and a != d and b != c and b != d:
+#         ok = False
+#         break
+# if ok:
+#     ans -= 1
+
+# print(ans)
