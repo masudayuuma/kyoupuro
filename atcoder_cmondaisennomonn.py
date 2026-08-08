@@ -4109,3 +4109,152 @@ from math import isqrt
 #     ans = min(ans, cost)
 
 # print(ans)
+
+# C - Minimize Abs 2
+# import bisect
+# D = int(input())
+# L = 2*10**6
+# x_list = []
+# now = 1
+# for i in range(L):
+#     now = i**2
+#     x_list.append(now)
+
+# x_list.sort()
+
+# min_diff = float('inf')
+# for i in range(L):
+#     diff_i = bisect.bisect_left(x_list, D-x_list[i])
+#     if diff_i < L:
+#         min_diff = min(min_diff, abs(x_list[i]+x_list[diff_i]-D))
+#     if diff_i > 0:
+#         min_diff = min(min_diff, abs(x_list[i]+x_list[diff_i-1]-D))
+#         # print(x_list[i], x_list[diff_i], min_diff)
+
+# print(min_diff)
+
+# C - Sensors
+# import sys
+# sys.setrecursionlimit(10**8)
+# H, W = map(int, input().split())
+
+# grid = [list(input()) for _ in range(H)]
+
+# diff = ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1))
+
+# def dfs(i, j):
+#     grid[i][j] = '.'
+#     for dy, dx in diff:
+#         y = dy+i
+#         x = dx+j
+#         if 0 <= y < H and 0 <= x < W and grid[y][x] == '#':
+#             dfs(y, x)
+
+# cnt = 0
+# for i in range(H):
+#     for j in range(W):
+#         if grid[i][j] == '.':
+#             continue
+#         dfs(i, j)
+#         cnt += 1
+
+# print(cnt)
+
+# C - Error Correction
+# N, T = input().split()
+# N = int(N)
+# T = list(T)
+# LEN = len(T)
+# # print(LEN)
+# ans = []
+# for j in range(1, N+1):
+#     s = list(input())
+
+#     L = len(s)
+#     diff = 0
+#     if LEN == L:
+#         for i in range(L):
+#             if s[i] != T[i]:
+#                 diff += 1
+#     elif LEN == L+1:
+#         for i in range(LEN):
+#             # print(i, diff, s)
+#             if diff > 1:
+#                 break
+#             if i-diff >= L or s[i-diff] != T[i]:
+#                 diff += 1
+#                 continue
+#     elif LEN+1 == L:
+#         for i in range(L):
+#             if diff > 1:
+#                 break
+#             if i-diff >= LEN or s[i] != T[i-diff]:
+#                 diff += 1
+#                 continue
+#     else:
+#         continue
+
+#     if diff <= 1:
+#         ans.append(j)
+
+
+# print(len(ans))
+# print(*ans)
+
+# C - 321-like Searcher
+# K = int(input())
+
+# cnt = 0
+# ans = []
+
+# def dfs(i, now):
+#     now.append(str(i))
+#     ans.append(int("".join(now[:])))
+
+#     for ii in range(i-1, -1, -1):
+#         # print(ii)
+#         dfs(ii, now)
+#     now.pop()
+
+
+# for i in range(1, 10):
+#     dfs(i, [])
+
+# ans.sort()
+# # print(ans)
+# print(ans[K-1])
+
+# C - Slot Strategy 2 (Easy)
+# from itertools import permutations
+# M = int(input())
+
+# A = list(map(int, input()))
+# B = list(map(int, input()))
+# C = list(map(int, input()))
+
+# A = A+A+A
+# B = B+B+B
+# C = C+C+C
+
+# list_dict = {0: A, 1: B, 2: C}
+# # print(list_dict)
+# ans = float('inf')
+# for perm in permutations(range(3)):
+
+#     for a_n in range(M):
+#         aa = list_dict[perm[0]]
+#         a = aa[a_n]
+#         for b_n in range(a_n+1, M*2):
+#             bb = list_dict[perm[1]]
+#             # print(b_n, len(bb))
+#             b = bb[b_n]
+#             if b == a:
+#                 for c_n in range(b_n+1, M*3):
+#                     cc = list_dict[perm[2]]
+#                     c = cc[c_n]
+#                     if c == a:
+#                         ans = min(c_n, ans)
+
+
+# print(ans if ans != float('inf') else -1)
+

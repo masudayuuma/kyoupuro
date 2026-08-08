@@ -2571,27 +2571,58 @@
 # print(ans)
 
 # D - Long Waiting
-import heapq
+# import heapq
 
-N, K = map(int, input().split())
-heap = []
-time = 0
-for i in range(N):
-    a, b, c = map(int, input().split())
+# N, K = map(int, input().split())
+# heap = []
+# time = 0
+# for i in range(N):
+#     a, b, c = map(int, input().split())
 
-    if K >= c:
-        time = max(time, a)
-        K -= c
-        print(time)
-        heapq.heappush(heap, (time+b, c))
-    else:
-        while K < c:
-            live_time, cus = heapq.heappop(heap)
-            time = max(time, live_time)
-            K += cus
+#     if K >= c:
+#         time = max(time, a)
+#         K -= c
+#         print(time)
+#         heapq.heappush(heap, (time+b, c))
+#     else:
+#         while K < c:
+#             live_time, cus = heapq.heappop(heap)
+#             time = max(time, live_time)
+#             K += cus
 
-        time = max(time, a)
-        K -= c
-        print(time)
-        heapq.heappush(heap, (time+b, c))
+#         time = max(time, a)
+#         K -= c
+#         print(time)
+#         heapq.heappush(heap, (time+b, c))
 
+# D - Minimum Width
+# N, M = map(int, input().split())
+
+# L = list(map(int, input().split()))
+
+# l, r = 0, 10**18
+
+# while r -l > 1:
+#     mid = (l+r)//2
+#     now = mid-L[0]
+#     if now < 0:
+#         l = mid
+#         continue
+#     cnt = 1
+#     for a in L[1:]:
+#         if a > mid:
+#             cnt = M+1
+#             break
+
+#         if now - (a+1) < 0:
+#             cnt += 1
+#             now = mid-a
+#         else:
+#            now -= a+1
+
+#     if cnt > M:
+#         l = mid
+#     else:
+#         r = mid
+
+# print(r)
