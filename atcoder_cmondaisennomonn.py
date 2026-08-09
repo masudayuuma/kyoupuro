@@ -4258,3 +4258,63 @@ from math import isqrt
 
 # print(ans if ans != float('inf') else -1)
 
+# C - Palindromic in Both Bases
+# A = int(input())
+# N = int(input())
+# palindroms = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22, 33, 44, 55, 66, 77, 88, 99]
+# candidates = [11, 22, 33, 44, 55, 66, 77, 88, 99]
+
+# for c in range(1, 6):
+#     nxt_c = []
+#     for candidate in candidates:
+#         s_c = str(candidate)
+#         L = len(s_c)//2
+#         for i in range(10):
+#             t_1 = int(s_c[:L]+str(i)+s_c[L:])
+#             t_2 = int(s_c[:L]+str(i)+str(i)+s_c[L:])
+#             palindroms.append(t_1)
+#             palindroms.append(t_2)
+#             nxt_c.append(t_2)
+#     candidates = nxt_c
+
+# ans = 0
+# for pali in palindroms:
+#     if pali > N:
+#         continue
+
+#     x = pali
+#     result = []
+#     while x > 0:
+#         wari, amari = x//A, x % A
+#         x = wari
+#         result.append(str(amari))
+
+#     if result == result[::-1]:
+#         ans += pali
+
+# print(ans)
+
+# C - Candy Tribulation
+# N, X, Y = map(int, input().split())
+
+# A = list(map(int, input().split()))
+
+# max_A = max(A)
+# min_A = min(A)
+
+# if max_A*X > min_A*Y:
+#     print(-1)
+#     exit()
+
+# max_g = min_A*Y
+# min_g = max_A*X
+# diff = Y-X
+# cnt = 0
+# for a in A:
+#     if (a*Y - max_g) % diff == 0 and (a*Y - max_g) // diff  <= a:
+#         cnt += a - ((a*Y - max_g) // diff)
+#     else:
+#         print(-1)
+#         exit()
+
+# print(cnt)
