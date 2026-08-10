@@ -2628,3 +2628,72 @@
 # print(r)
 
 # D - Relative Position
+# 1は原点であることがわかっている。１とつながるものから順にBFSを進めていくと片方が確定していてそれに付随するもう一方も確定されていく。
+#全ての辺へのアクセスを終わった時に、確定されていない点があればそれはundecidableになる。
+# from collections import defaultdict, deque
+# N, M = map(int, input().split())
+# candidates = defaultdict(list)
+# visited = set()
+# for i in range(M):
+#     a, b, x, y = map(int, input().split())
+
+#     candidates[a].append((b, x, y))
+#     candidates[b].append((a, -x, -y))
+
+# q = deque()
+# position = defaultdict(list)
+# position[1] = [0, 0]
+# for b, x, y in candidates[1]:
+#     visited.add(1)
+#     q.append((1, b, x, y))
+
+# while q:
+#     a, b, x, y = q.popleft()
+#     # print(a, b, x, y)
+#     if b in visited:
+#         continue
+#     position[b] = [x+position[a][0], y+position[a][1]]
+#     visited.add(b)
+
+#     for c, nx, ny in candidates[b]:
+#         if c in visited:
+#             continue
+
+#         q.append((b, c, nx, ny))
+
+# for i in range(1, N+1):
+#     if len(position[i]) == 2:
+#         print(*position[i])
+#     else:
+#         print("undecidable")
+
+# D - Set Menu
+import bisect
+N, M, P = map(int, input().split())
+
+A = sorted(list(map(int, input().split())), reverse=True)
+B = sorted(list(map(int, input().split())))
+
+b_prefix = [0]*(M+1)
+for i in range(M):
+    b_prefix[i+1] += b_prefix[i]+B[i]
+
+
+ans = 0
+b_i = 0
+b_total = 0
+for a in A:
+    if a >= P:
+        ans += M*P
+        continue
+
+    diff = P-a
+    while b_i < M and P-a > B[b_i]:
+        b_i += 1
+
+    ans += b_prefix[b_i]+b_i*a+(M-b_i)*P
+# print(b_i, b_prefix)
+
+print(ans)
+    
+
