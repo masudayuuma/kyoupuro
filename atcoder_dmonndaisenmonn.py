@@ -2668,32 +2668,157 @@
 #         print("undecidable")
 
 # D - Set Menu
-import bisect
-N, M, P = map(int, input().split())
+# import bisect
+# N, M, P = map(int, input().split())
 
-A = sorted(list(map(int, input().split())), reverse=True)
-B = sorted(list(map(int, input().split())))
+# A = sorted(list(map(int, input().split())), reverse=True)
+# B = sorted(list(map(int, input().split())))
 
-b_prefix = [0]*(M+1)
-for i in range(M):
-    b_prefix[i+1] += b_prefix[i]+B[i]
+# b_prefix = [0]*(M+1)
+# for i in range(M):
+#     b_prefix[i+1] += b_prefix[i]+B[i]
 
 
-ans = 0
-b_i = 0
-b_total = 0
-for a in A:
-    if a >= P:
-        ans += M*P
-        continue
+# ans = 0
+# b_i = 0
+# b_total = 0
+# for a in A:
+#     if a >= P:
+#         ans += M*P
+#         continue
 
-    diff = P-a
-    while b_i < M and P-a > B[b_i]:
-        b_i += 1
+#     diff = P-a
+#     while b_i < M and P-a > B[b_i]:
+#         b_i += 1
 
-    ans += b_prefix[b_i]+b_i*a+(M-b_i)*P
-# print(b_i, b_prefix)
+#     ans += b_prefix[b_i]+b_i*a+(M-b_i)*P
+# # print(b_i, b_prefix)
 
-print(ans)
+# print(ans)
     
 
+# D - Teleport Maze
+# from collections import deque, defaultdict
+# H, W = map(int, input().split())
+
+# grid = [list(input()) for _ in range(H)]
+# c_dict = defaultdict(list)
+
+# for i in range(H):
+#     for j in range(W):
+#         if grid[i][j] != '.' and grid[i][j] != '#':
+#             c_dict[grid[i][j]].append((i, j))
+# # print(c_dict)
+
+# q = deque()
+# q.append((0, 0, 0))
+# visited = set()
+# visited.add((0, 0))
+# diff = ((1, 0), (-1, 0), (0, 1), (0, -1))
+# ansgrid = [[0]*W for _ in range(H)]
+# already = set()
+# already.add('.')
+
+# while q:
+#     i, j, cnt = q.popleft()
+#     ansgrid[i][j] = cnt
+#     if i == H-1 and j == W-1:
+#         print(cnt)
+#         exit()
+#     cnt += 1
+#     # print(i, j)
+#     # print(c_dict[grid[i][j]])
+#     if grid[i][j] not in already:
+#         for ii, jj in c_dict[grid[i][j]]:
+#             if (ii, jj) in visited:
+#                 continue
+#             q.append((ii, jj, cnt))
+#             visited.add((ii, jj))
+#     already.add(grid[i][j])
+
+#     for dy, dx in diff:
+#         y = dy+i
+#         x = dx+j
+
+#         if 0 <= y < H and 0 <= x < W and (y, x) not in visited and grid[y][x] != '#':
+#             q.append((y, x, cnt))
+#             visited.add((y, x))
+
+# # print(ansgrid)
+# print(-1)
+
+# D - Polyomino
+# 3つある4*4のグリッドを90度回転を4回ずつやる。
+# １つの向きに対してその向きでのグリットの左位置を右下から進めていく。
+# つまり、4*4のグリッドを右下から進めて'#'である部分が全てその指定グリッドに含まれているのであれば、
+# そのブロックを指定した範囲を左端とした4*4の位置として持ち次のポリオミオに進めるこれを３つ分やるので
+# 計算量は3*4*4*4かな？
+
+# P = []
+
+# for _ in range(3):
+#     shape = []
+
+#     for y in range(4):
+#         row = input()
+
+#         for x in range(4):
+#             if row[x] == '#':
+#                 shape.append((y, x))
+
+#     P.append(shape)
+
+
+# def rotate(shape):
+#     return [(x, 3-y) for y, x in shape]
+
+
+# def make_candidates(shape):
+#     res = []
+
+#     for _ in range(4):
+
+#         for dy in range(-3, 4):
+#             for dx in range(-3, 4):
+
+#                 placed = set()
+#                 ok = True
+
+#                 for y, x in shape:
+#                     ny = y + dy
+#                     nx = x + dx
+
+#                     if not (0 <= ny < 4) or not (0 <= nx < 4):
+#                         ok = False
+#                         break
+
+#                     placed.add((ny, nx))
+
+#                 if ok:
+#                     res.append(placed)
+
+#         shape = rotate(shape)
+
+#     return res
+
+
+# c1 = make_candidates(P[0])
+# c2 = make_candidates(P[1])
+# c3 = make_candidates(P[2])
+
+# for a in c1:
+#     for b in c2:
+
+#         if a & b:
+#             continue
+
+#         for c in c3:
+
+#             if a & c or b & c:
+#                 continue
+
+#             if len(a | b | c) == 16:
+#                 print('Yes')
+#                 exit()
+
+# print('No')

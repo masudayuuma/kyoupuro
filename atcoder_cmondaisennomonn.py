@@ -4318,3 +4318,29 @@ from math import isqrt
 #         exit()
 
 # print(cnt)
+
+# # C - Flapping Takahashi
+# T = int(input())
+
+# for i in range(T):
+#     N, H = map(int, input().split())
+#     down = H
+#     up = H
+#     now = 0
+#     f = False
+#     for j in range(N):
+#         t, l, u = map(int, input().split())
+#         diff = t-now
+#         # down -= t-now
+#         # up += t-now
+#         if diff+up >= l and down-diff <= u:
+#             up = min(diff+up, u)
+#             down = max(down-diff, l)
+#         else:
+#             # print("No")
+#             f = True
+#         now = t
+#     if not f:
+#         print('Yes')
+#     else:
+#         print('No')
