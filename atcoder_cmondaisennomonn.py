@@ -4344,3 +4344,53 @@ from math import isqrt
 #         print('Yes')
 #     else:
 #         print('No')
+
+# C - Striped Horse
+# T = int(input())
+
+# for i in range(T):
+#     N, W = map(int, input().split())
+#     C = list(map(int, input().split()))
+
+#     row_total = [0]*(2*W)
+#     total = sum(C)
+
+#     for j in range(N):
+#         row_total[j%(2*W)] += C[j]
+    
+#     prefix_row = [0]*(2*W+1)
+
+#     for ii in range(2*W):
+#         prefix_row[ii+1] = prefix_row[ii]+row_total[ii]
+
+#     for i in range(2*W):
+#         prefix_row.append(prefix_row[-1]+row_total[i])
+#     # print(row_total, prefix_row)
+#     maxans = float('inf')
+#     for i in range(2*W):
+#         # print(prefix_row[W+i], prefix_row[i])
+#         maxans = min(maxans, prefix_row[W+i]-prefix_row[i])
+
+#     print(maxans)
+
+# C - Reindeer and Sleigh 2
+# T = int(input())
+
+# for _ in range(T):
+#     N = int(input())
+#     sum_list = []
+#     total = 0
+#     for i in range(N):
+#         w, p = map(int, input().split())
+#         sum_list.append((w+p, w, p))
+#         total += w
+
+#     sum_list.sort()
+#     power = 0
+#     # print(sum_list)
+#     while total > 0 and len(sum_list) > 0:
+#         wp, w, p = sum_list.pop()
+#         total -= wp
+#         # print(total)
+#     # print(sum_list)
+#     print(len(sum_list))

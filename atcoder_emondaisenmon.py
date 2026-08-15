@@ -251,29 +251,50 @@
 
 
 # E - Fill-Rect Query
-H, W, Q = map(int, input().split())
+# H, W, Q = map(int, input().split())
 
-time_board = ['A']*(Q+1)
+# time_board = ['A']*(Q+1)
 
-grid = [[0]*W for i in range(H)]
+# grid = [[0]*W for i in range(H)]
 
-for i in range(Q):
-    r, c, x, = input().split()
-    r = int(r)
-    c = int(c)
-    grid[r-1][c-1] = i+1
-    time_board[i+1] = x
+# for i in range(Q):
+#     r, c, x, = input().split()
+#     r = int(r)
+#     c = int(c)
+#     grid[r-1][c-1] = i+1
+#     time_board[i+1] = x
 
-for i in range(H-1, -1, -1):
-    for j in range(W-1, -1, -1):
-        if i > 0: grid[i-1][j] = max(grid[i][j], grid[i-1][j])
-        if j > 0: grid[i][j-1] = max(grid[i][j], grid[i][j-1])
+# for i in range(H-1, -1, -1):
+#     for j in range(W-1, -1, -1):
+#         if i > 0: grid[i-1][j] = max(grid[i][j], grid[i-1][j])
+#         if j > 0: grid[i][j-1] = max(grid[i][j], grid[i][j-1])
 
-ans = [['A']*W for i in range(H)]
+# ans = [['A']*W for i in range(H)]
 
-for i in range(H):
-    for j in range(W):
-        ans[i][j] = time_board[grid[i][j]]
+# for i in range(H):
+#     for j in range(W):
+#         ans[i][j] = time_board[grid[i][j]]
 
-for row in ans:
-    print(''.join(row))
+# for row in ans:
+#     print(''.join(row))
+
+# J - 数列の反転
+# from atcoder.fenwicktree import FenwickTree
+# N, Q = map(int, input().split())
+
+# fw = FenwickTree(N)
+
+# for i in range(Q):
+#     t, k = map(int, input().split())
+
+#     if t == 1:
+#         k_i = N-k if k <= N else k-N-1
+#         k_f = False if k-N >= 0 else True # 0,1,2やったらTrue
+#         total = fw.sum(k_i, N)
+#         if total % 2 == 1:
+#             print(2*N - k +1) if k <= N else print(N-(k-N)+1)
+#         else:
+#             print(k)
+#     else:
+#         fw.add(k-1, 1)
+

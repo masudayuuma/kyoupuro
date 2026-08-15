@@ -2822,3 +2822,224 @@
 #                 exit()
 
 # print('No')
+
+# D - Flat Subsequence
+# from atcoder.segtree import SegTree
+# N, K = map(int, input().split())
+# A = []
+# for a in range(N):
+#     A.append(int(input()))
+
+# sg = SegTree(max, 0, [0]*300001)
+# for a in A:
+#     left = max(0, a-K)
+#     right = min(300001, a+K+1)
+
+#     now_max = sg.prod(left, right)
+
+#     sg.set(a, now_max+1)
+
+# print(sg.prod(0, 300001))
+
+# D - Go Straight
+#上、下、右、左からそのセルに入ったというgridを作成してそのセルに入った時の方向ごとにvisitedを管理する。
+# これをDFSやBFSでできるところまで続けて最初にGした時に終了する。それぞれのセルにはそれがどこからきたものかを管理しておけば解けそう
+# from collections import deque
+
+# H, W = map(int, input().split())
+# grid = [list(input()) for _ in range(H)]
+
+# prev = [[[None] * 4 for _ in range(W)] for _ in range(H)]
+
+# for i in range(H):
+#     for j in range(W):
+#         if grid[i][j] == 'S':
+#             sy, sx = i, j
+#         elif grid[i][j] == 'G':
+#             gy, gx = i, j
+
+# directions = [
+#     (1, 0),   # D
+#     (-1, 0),  # U
+#     (0, -1),  # L
+#     (0, 1)    # R
+# ]
+
+# q = deque()
+
+# # Sには「直前方向」がないので、最初の移動を直接キューへ
+# for nd, (dy, dx) in enumerate(directions):
+#     y = sy + dy
+#     x = sx + dx
+
+#     if not (0 <= y < H and 0 <= x < W):
+#         continue
+#     if grid[y][x] == '#':
+#         continue
+
+#     prev[y][x][nd] = (sy, sx, -1)
+#     q.append((y, x, nd))
+
+# goal_state = None
+
+# while q:
+#     i, j, d = q.popleft()
+
+#     if grid[i][j] == 'G':
+#         goal_state = (i, j, d)
+#         break
+
+#     for nd, (dy, dx) in enumerate(directions):
+
+#         # 現在のマスが o → 同じ方向のみ
+#         if grid[i][j] == 'o' and nd != d:
+#             continue
+
+#         # 現在のマスが x → 同じ方向は禁止
+#         if grid[i][j] == 'x' and nd == d:
+#             continue
+
+#         y = i + dy
+#         x = j + dx
+
+#         if not (0 <= y < H and 0 <= x < W):
+#             continue
+
+#         if grid[y][x] == '#':
+#             continue
+
+#         if prev[y][x][nd] is not None:
+#             continue
+
+#         prev[y][x][nd] = (i, j, d)
+#         q.append((y, x, nd))
+
+
+# if goal_state is None:
+#     print("No")
+#     exit()
+
+# print("Yes")
+
+# ans = []
+
+# i, j, d = goal_state
+
+# while True:
+#     ans.append(d)
+
+#     pi, pj, pd = prev[i][j][d]
+
+#     if pd == -1:
+#         break
+
+#     i, j, d = pi, pj, pd
+
+# ans.reverse()
+
+# char = {
+#     0: 'D',
+#     1: 'U',
+#     2: 'L',
+#     3: 'R'
+# }
+
+# print(''.join(char[d] for d in ans))
+
+# D - No-Subsequence Substring
+# import math
+# S = list(input())
+# T = list(input())
+
+# dp = [-1]*len(T)
+# ans = (len(S)*(len(S)+1))//2
+# for i in range(len(S)):
+#     for j in range(len(T)-1, -1, -1):
+#         # print(dp)
+#         if S[i] == T[j] and (j == 0 or dp[j-1] > dp[j]):
+#             dp[j] = i if j == 0 else dp[j-1]
+#     if dp[-1] != -1:
+#         ans -= dp[-1] + 1
+#         # print(dp[-1] + 1)
+            
+# print(ans)
+
+# D - Make Target 2
+# L, R, D, U = map(int, input().split())
+
+# ans = 0
+
+# for i in range(L, R+1):
+#     if i % 2 == 0:
+#         low = max(D, -abs(i)+1)
+#         high = min(U, abs(i)-1)
+
+#         cnt = high-low+1
+#         ans += max(cnt, 0)
+#         # print(cnt)
+
+# for i in range(D, U+1):
+#     if i % 2 == 0:
+#         low = max(L, -abs(i))
+#         high = min(R, abs(i))
+
+#         cnt = high-low+1
+#         ans += max(cnt, 0)
+#         # print(cnt)
+
+# print(ans)
+
+# D - Pawn Line
+
+# T = int(input())
+
+# for _ in range(T):
+#     N = int(input())
+#     R = list(map(int, input().split()))
+#     final = R[:]
+#     total = sum(final)
+#     for i in range(1, N):
+#         # print(final, i, final[i], R[i-1]+1)
+#         final[i] = min(final[i], final[i-1]+1)
+#     # print(final)
+#     for i in range(N-1, 0, -1):
+#         final[i-1] = min(final[i-1], final[i]+1)
+#     # print(final)
+#     print(total-sum(final))
+
+
+# D - Count Subgrid Sum = K
+# import bisect
+# H, W, K = map(int, input().split())
+
+# grid = [list(map(int, input())) for _ in range(H)]
+# # print(grid)
+
+
+# prefix = [[0]*W]
+
+# for i in range(H):
+#     tmp = [0]*W
+#     for j in range(W):
+#         tmp[j] = prefix[-1][j]+grid[i][j]
+#     prefix.append(tmp)
+
+# # print(prefix)
+
+# ans = 0
+# for low in range(H+1):
+#     for high in range(low+1, H+1):
+#         cnt_dict = {}
+#         cnt_dict[0] = cnt_dict.get(0, 0)+1
+#         now = [0]*(W+1)
+#         for i in range(W):
+#             now[i+1] = prefix[high][i]-prefix[low][i]+now[i]
+
+#             if now[i+1]-K in cnt_dict:
+#                 ans += cnt_dict[now[i+1]-K]
+
+#             cnt_dict[now[i+1]] = cnt_dict.get(now[i+1], 0)+1
+
+# print(ans)
+
+# 
