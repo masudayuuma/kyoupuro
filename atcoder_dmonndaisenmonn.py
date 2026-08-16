@@ -3042,4 +3042,95 @@
 
 # print(ans)
 
-# 
+# E - E-liter
+# from atcoder.fenwicktree import FenwickTree
+# N, Q = map(int, input().split())
+# row = [-1]*N
+# col = [0]*N
+# fw_row = FenwickTree(Q+1)
+# fw_col = FenwickTree(Q+1)
+# total = 0
+# for i in range(1, Q+1):
+#     q, num = map(int, input().split())
+#     # print(row)
+#     # print(col)
+
+#     if q == 1:
+#         now = row[num-1]
+#         row[num-1] = i
+#         cnt = fw_col.sum(now+1, i+1)
+#         total += cnt if now != -1 else N
+#         print(total)
+#         fw_row.add(i, 1)
+#     else:
+#         now = col[num-1]
+#         row[num-1] = i
+#         cnt = fw_row.sum(now+1, i+1)
+#         total -= cnt
+#         print(total)
+#         fw_col.add(i, 1)
+
+# C - Cookies and Greedy Takahashi
+# N = int(input())
+# A = list(map(int, input().split()))
+
+
+
+# minus = []
+# plus = []
+
+# for a in A:
+#     if a > 0:
+#         plus.append(a)
+#     else:
+#         minus.append(a)
+
+# now = 0
+
+# plus.sort(reverse=True)
+# minus.sort()
+# ans = 0
+# while plus or minus:
+#     # print(plus, minus, ans, now)
+#     if not minus:
+#         a = plus.pop()
+#         ans += abs(now-a)
+#         now = a
+#         continue
+#     if not plus:
+#         a = minus.pop()
+#         ans += abs(now-a)
+#         now = a
+#         continue
+
+#     if abs(now-plus[-1]) >= abs(now-minus[-1]):
+#         a = minus.pop()
+#         ans += abs(now-a)
+#         now = a
+#     else:
+#         a = plus.pop()
+#         ans += abs(now-a)
+#         now = a
+
+# print(ans)
+
+# D - Merge Slimes
+# 2**nのうち割り切れる最大でわる。あまりをどうにかする。
+#それぞれが10**9なので30回ぐらいで済むので、数が小さいものから順にこれをやっていき、数を最小化する。
+# x = 1
+while x < 1000000000:
+    x *= 2
+print(1000000000//(x//2), x//2, 1000000000%(x//2))
+from sortedcontainers import SortedDict
+N = int(input())
+sd = SortedDict()
+for i in range(N):
+    s, c = map(int, input().split())
+    sd[s] = c
+
+while sd:
+    key, val = sd.popitem(0)
+    del sd[key]
+    x = 1
+    while x <= val:
+        x *= 2

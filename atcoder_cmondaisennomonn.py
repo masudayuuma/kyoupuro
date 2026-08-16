@@ -4394,3 +4394,30 @@ from math import isqrt
 #         # print(total)
 #     # print(sum_list)
 #     print(len(sum_list))
+
+# # C - Inc, Dec, Xor
+# N, Q = map(int, input().split())
+# total = 0
+# A = [0]*N
+# active = set()
+# for i in range(Q):
+#     query = list(map(int, input().split()))
+
+#     if query[0] == 1:
+#         index = query[1]-1
+#         total ^= A[index]
+#         A[index] += 1
+#         total ^= A[index]
+#         active.add(index)
+#         print(total)
+#     else:
+#         nowact = set()
+#         for a in active:
+#             total ^= A[a]
+#             A[a] -= 1
+#             total ^= A[a]
+#             if A[a] > 0:
+#                 nowact.add(a)
+#         active = nowact
+#         print(total)
+

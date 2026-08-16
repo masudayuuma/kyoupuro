@@ -298,3 +298,122 @@
 #     else:
 #         fw.add(k-1, 1)
 
+# E - Roads and Gates
+# from collections import defaultdict
+# import heapq
+# N, M, Y = map(int, input().split())
+
+# graph = defaultdict(list)
+
+# for i in range(M):
+#     u, v, t = map(int, input().split())
+#     graph[u-1].append((t, v-1))
+#     graph[v-1].append((t, u-1))
+
+# X = list(map(int, input().split()))
+
+# gate = N
+# exit = N+1
+# graph[gate].append((Y, exit))
+
+# for i in range(N):
+#     graph[i].append((X[i], gate))
+#     graph[exit].append((X[i], i))
+
+
+# dist = [float('inf')]*(N+2)
+# dist[0] = 0
+
+# heap = []
+# heap.append((0, 0)) #cost, index
+# visited = set()
+# while heap:
+#     # print(dist)
+#     cost, i = heapq.heappop(heap)
+#     if i in visited:
+#         continue
+#     visited.add(i)
+
+#     for nc, ni in graph[i]:
+#         if dist[ni] < cost+nc:
+#             continue
+
+#         dist[ni] = cost+nc
+#         heapq.heappush(heap, (cost+nc, ni))
+
+# print(*dist[1:-2])
+
+# B - Crop
+# H, W = map(int, input().split())
+
+# grid = [list(input()) for _ in range(H)]
+# u, r, d, l = 0, 0, 0, 0
+# ans = []
+# for i in range(4):
+#     u = 0
+#     W = len(grid[0])
+#     while all(grid[u][w] == '.' for w in range(W)):
+#         u += 1
+
+#     grid = [a for a in zip(*grid[u:][::-1])]
+#     # print(grid)
+
+
+# for i in range(len(grid)):
+#     print(''.join(grid[i]))
+
+# E - Fill-Rect Query
+# H, W, Q = map(int, input().split())
+# grid = [[0]*W for _ in range(H)]
+
+# time = ['A']
+# for i in range(Q):
+#     r, c, x = input().split()
+#     r = int(r)
+#     c = int(c)
+#     time.append(x)
+#     grid[r-1][c-1] = i+1
+
+# for i in range(H-1, -1, -1):
+#     for j in range(W-1, -1, -1):
+
+#         grid[i][j] = max(grid[i][j], grid[i][j+1]) if j+1 < W else grid[i][j]
+#         grid[i][j] = max(grid[i][j], grid[i+1][j]) if i+1 < H else grid[i][j]
+
+# for i in range(H):
+#     for j in range(W):
+#         grid[i][j] = time[grid[i][j]]
+
+# for i in range(H):
+#     print(''.join(grid[i]))
+
+# D - Celester
+# T = int(input())
+
+# for i in range(T):
+#     N = int(input())
+#     S = list(input())
+
+#     X = list(map(int, input().split()))
+#     Y = list(map(int, input().split()))
+#     Y = [0]+Y
+
+#     dp = [[0]*2 for _ in range(N+1)]
+#     dp[0][1] = -float('inf')
+
+#     for i in range(N):
+#         # print(S[i])
+#         for j in range(2):
+#             if j == 0:
+#                 if S[i] == 'S':
+#                     dp[i+1][0] = max(dp[i][0], dp[i][1]+Y[i])
+#                 else:
+#                     dp[i+1][0] = max(dp[i][0], dp[i][1]+Y[i])-X[i]
+#             else:
+#                 if S[i] == 'R':
+#                     dp[i+1][1] = max(dp[i][1], dp[i][0])
+#                 else:
+#                     dp[i+1][1] = max(dp[i][1], dp[i][0])-X[i]
+#             # print(dp)
+
+#     print(max(dp[-1]))
