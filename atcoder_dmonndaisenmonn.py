@@ -3118,19 +3118,110 @@
 # 2**nのうち割り切れる最大でわる。あまりをどうにかする。
 #それぞれが10**9なので30回ぐらいで済むので、数が小さいものから順にこれをやっていき、数を最小化する。
 # x = 1
-while x < 1000000000:
-    x *= 2
-print(1000000000//(x//2), x//2, 1000000000%(x//2))
-from sortedcontainers import SortedDict
-N = int(input())
-sd = SortedDict()
-for i in range(N):
-    s, c = map(int, input().split())
-    sd[s] = c
+# from sortedcontainers import SortedDict
+# N = int(input())
+# sd = SortedDict()
+# for i in range(N):
+#     s, c = map(int, input().split())
+#     sd[s] = c
 
-while sd:
-    key, val = sd.popitem(0)
-    del sd[key]
-    x = 1
-    while x <= val:
-        x *= 2
+# ans = 0
+# while sd:
+#     key, val = sd.popitem(0)
+#     carry = val//2
+#     ans += val%2
+
+#     if carry > 0:
+#         sd[key*2] = sd.get(key*2, 0)+carry
+
+
+# print(ans)
+
+# D - Square Permutation
+# from collections import Counter
+# N = int(input())
+# S = list(int(a) for a in input())
+# s_cnt = Counter(S)
+
+# ans_target = [a**2 for a in range(5*10**6)]
+# ans = 0
+# for a in ans_target:
+#     if len(str(a)) > len(S):
+#         break
+#     # print(a)
+#     s_copy = s_cnt.copy()
+
+#     a_cnt = Counter([int(b) for b in str(a)])
+
+#     if a_cnt == s_copy:
+#         ans += 1
+#         continue
+#     else:
+#         while s_copy[0] > 0:
+#             s_copy[0] -= 1
+#             if a_cnt == s_copy:
+#                 ans += 1
+#                 break
+# print(ans)
+
+
+# D - Good Tuple Problem
+# from collections import defaultdict, deque
+# N, M = map(int, input().split())
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
+
+# graph = defaultdict(list)
+
+# for a, b in zip(A, B):
+#     graph[a].append(b)
+#     graph[b].append(a)
+
+# color = [-1]*(N+1)
+
+# q = deque()
+# for i in range(1, N+1):
+#     if color[i] != -1:
+#         continue
+
+#     color[i] = 0
+#     q.append((i, 1)) #now_i, nxt_c
+
+#     while q:
+#         ii, nc = q.popleft()
+
+#         for ni in graph[ii]:
+#             if color[ni] == -1:
+#                 color[ni] = nc
+#                 nnc = 1 if nc == 0 else 0
+#                 q.append((ni, nnc))
+#             elif color[ni] != nc:
+#                 print('No')
+#                 exit()
+# print("Yes")
+
+# D - Take ABC
+from collections import deque
+S = list(input())
+
+prev = []
+nxt = deque(S)
+
+while True:
+    if len(nxt) > 2 and nxt[0] == 'A' and nxt[1] == 'B' and nxt[2] == 'C':
+        nxt.popleft()
+        nxt.popleft()
+        nxt.popleft()
+
+    if len(prev) > 2 and prev[-1] == 'C' and prev[-2] == 'B' and prev[-3] == 'A':
+        prev.pop()
+        prev.pop()
+        prev.pop()
+
+    if not nxt:
+        break
+    # print(nxt)
+    now = nxt.popleft()
+    prev.append(now)
+
+print("".join(prev))
