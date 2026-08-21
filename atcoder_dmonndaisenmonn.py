@@ -3201,27 +3201,70 @@
 # print("Yes")
 
 # D - Take ABC
-from collections import deque
-S = list(input())
+# from collections import deque
+# S = list(input())
 
-prev = []
-nxt = deque(S)
+# prev = []
+# nxt = deque(S)
 
-while True:
-    if len(nxt) > 2 and nxt[0] == 'A' and nxt[1] == 'B' and nxt[2] == 'C':
-        nxt.popleft()
-        nxt.popleft()
-        nxt.popleft()
+# while True:
+#     if len(nxt) > 2 and nxt[0] == 'A' and nxt[1] == 'B' and nxt[2] == 'C':
+#         nxt.popleft()
+#         nxt.popleft()
+#         nxt.popleft()
 
-    if len(prev) > 2 and prev[-1] == 'C' and prev[-2] == 'B' and prev[-3] == 'A':
-        prev.pop()
-        prev.pop()
-        prev.pop()
+#     if len(prev) > 2 and prev[-1] == 'C' and prev[-2] == 'B' and prev[-3] == 'A':
+#         prev.pop()
+#         prev.pop()
+#         prev.pop()
 
-    if not nxt:
-        break
-    # print(nxt)
-    now = nxt.popleft()
-    prev.append(now)
+#     if not nxt:
+#         break
+#     # print(nxt)
+#     now = nxt.popleft()
+#     prev.append(now)
 
-print("".join(prev))
+# print("".join(prev))
+
+# D - Election Quick Report
+# import heapq
+# N, M = map(int, input().split())
+# heap = []
+# cnt_n = [0]*(N+1)
+
+# for a in list(map(int, input().split())):
+#     cnt_n[a] += 1
+#     heapq.heappush(heap, (-cnt_n[a], a))
+#     print(heap[0][1])
+
+# import heapq
+# N, M = map(int, input().split())
+# heap = []
+# cnt_n = [0]*(N+1)
+# ans = 0
+# for a in list(map(int, input().split())):
+#     cnt_n[a] += 1
+#     if cnt_n[ans] < cnt_n[a]: ans = a
+#     elif cnt_n[ans] == cnt_n[a]: ans = min(ans, a)
+#     print(ans)
+
+# D - Counting Ls
+# N = int(input())
+# S = [list(input()) for _ in range(N)]
+
+# col_o = [0]*N
+# row_o = [0]*N
+# for i in range(N):
+#     for j in range(N):
+#         col_o[j] += 1 if S[i][j] == 'o' else 0
+#         row_o[i] += 1 if S[i][j] == 'o' else 0
+
+# ans = 0
+# for i in range(N):
+#     for j in range(N):
+#         if S[i][j] == 'o':
+#             # print(i, j, (col_o[j]-1)*(row_o[i]-1))
+#             ans += (col_o[j]-1)*(row_o[i]-1)
+
+# print(ans)
+
