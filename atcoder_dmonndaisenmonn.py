@@ -3268,3 +3268,103 @@
 
 # print(ans)
 
+# D - Placing Rooks
+# N, M = map(int, input().split())
+
+# play = []
+# for i in range(M):
+#     r, c = map(int, input().split())
+
+#     play.append((r, c))
+
+# play.reverse()
+# col_visited = set()
+# row_visited = set()
+
+# ans = 0
+# for i in range(M):
+#     row, col = play[i]
+
+#     if row not in row_visited and col not in col_visited:
+#         ans += 1
+
+#     row_visited.add(row)
+#     col_visited.add(col)
+
+# print(ans)
+
+# D - Pre-Palindrome
+# S = input()
+# L = len(S)
+
+# ans = 0
+
+# diff = 0
+# for i in range(L):
+#     l = i
+#     r = l+1
+#     diff = 0
+#     while r < L and 0 <= l:
+#         if S[l] != S[r]:
+#             diff += 1
+#         if diff > 1:
+#             break
+#         ans += 1
+#         l -= 1
+#         r += 1
+
+# for i in range(L):
+#     l = i
+#     r = l
+#     diff = 0
+#     while r < L and 0 <= l:
+#         if S[l] != S[r]:
+#             diff += 1
+#         if diff > 1:
+#             break
+#         ans += 1
+#         l -= 1
+#         r += 1
+
+
+# print(ans)
+
+# D - Good Tuple Problem
+from collections import defaultdict
+N, M = map(int, input().split())
+
+A = list(map(int, input().split()))
+B = list(map(int, input().split()))
+
+graph = defaultdict(list)
+
+for a, b in zip(A, B):
+    graph[a-1].append(b-1)
+    graph[b-1].append(a-1)
+
+color = [-1]*N
+
+def drowcolor(i, iro):
+    color[i] = iro
+
+    for nxt in graph[i]:
+        if color[nxt] == iro:
+            return False
+        if color[nxt] != -1:
+            continue
+
+        if not drowcolor(nxt, 1-iro):
+            return False
+    return True
+
+ok = True
+for i in range(N):
+    if color[i] != -1:
+        continue
+
+    if not drowcolor(i, 0):
+        ok = False
+        break
+
+
+print('Yes' if ok else 'No')

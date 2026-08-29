@@ -4421,3 +4421,38 @@ from math import isqrt
 #         active = nowact
 #         print(total)
 
+#C - Count Close Pairs
+# N = int(input())
+# ans = 0
+# r = 2
+# l = 1
+# while r < N+1:
+#     print(f"? {l} {r}" ,flush=True)
+#     if "Yes" == input():
+#         ans += r-l
+#         r += 1
+#     else:
+#         l += 1
+#         if l == r: r += 1
+
+# print(f"! {ans}")
+
+# C - Adjacent Sums (easy)
+# N, M = map(int, input().split())
+
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
+
+# dp = [[0]*2 for _ in range(N)]
+# dp[0][0] = 1 if A[0] == 1 else 0
+# dp[0][1] = 1 if A[0] == 0 else 0
+
+
+# for i in range(1, N):
+#     for j in range(2):
+#         now = 0 if A[i] == j else 1
+#         dp[i][j] += now
+#         dp[i][j] += dp[i-1][j] if (j+j) % 2 == B[i-1] else dp[i-1][(1-j)]
+
+# print(min(dp[-1]))
+

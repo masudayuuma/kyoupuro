@@ -417,3 +417,19 @@
 #             # print(dp)
 
 #     print(max(dp[-1]))
+
+# E - Range Flip
+N, K = map(int, input().split())
+
+A = []
+B = []
+for i in range(N):
+    a, b = map(int, input().split())
+    A.append(a)
+    B.append(b)
+
+INF = float('inf')
+
+dp = [[[-INF]*2 for _ in range(N)] for _ in range(K)]
+
+print(dp)
