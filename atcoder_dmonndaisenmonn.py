@@ -3330,41 +3330,102 @@
 # print(ans)
 
 # D - Good Tuple Problem
-from collections import defaultdict
-N, M = map(int, input().split())
+# import sys
+# from collections import defaultdict
+# sys.setrecursionlimit(10**6)
+# N, M = map(int, input().split())
 
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
+
+# graph = defaultdict(list)
+
+# for a, b in zip(A, B):
+#     graph[a-1].append(b-1)
+#     graph[b-1].append(a-1)
+
+# color = [-1]*N
+
+# def drowcolor(i, iro):
+#     color[i] = iro
+
+#     for nxt in graph[i]:
+#         if color[nxt] == iro:
+#             return False
+#         if color[nxt] != -1:
+#             continue
+
+#         if not drowcolor(nxt, 1-iro):
+#             return False
+#     return True
+
+# ok = True
+# for i in range(N):
+#     if color[i] != -1:
+#         continue
+
+#     if not drowcolor(i, 0):
+#         ok = False
+#         break
+
+
+# print('Yes' if ok else 'No')
+
+
+# C - Striped Horse
+#w ごとに分けて、そのlistにcostをsumしていく。
+#w*2してそれをwindowでwごとにとっていく。それのminが答え。
+
+# T = int(input())
+
+# for _ in range(T):
+#     N, W = map(int, input().split())
+
+#     C = list(map(int, input().split()))
+#     w_list = [0]*(W*2)
+#     for i, c in enumerate(C):
+#         w_list[i%(W*2)] += c
+
+#     w_list = w_list+w_list
+
+#     prefix = [0]
+
+#     for w in w_list:
+#         prefix.append(prefix[-1]+w)
+
+#     ans = float('inf')
+#     for i in range(W*2):
+#         ans = min(ans, prefix[i+W]-prefix[i])
+
+#     print(ans)
+
+
+# C - AtCoder Riko
+from collections import deque
+N = int(input())
 A = list(map(int, input().split()))
-B = list(map(int, input().split()))
 
-graph = defaultdict(list)
+candidates = [max(A), max(A)+min(A)]
+A_c = deque(sorted(A))
+ans = []
+for c in candidates:
+    ok = True
+    A = A_c.copy()
+    while A:
+        # print(A)
+        if A[-1] == c:
+            A.pop()
+        elif len(A) > 1 and A[-1]+A[0] == c:
+            A.pop()
+            A.popleft()
+        else:
+            ok = False
+            # print(A)
+            # print(c)
+            break
 
-for a, b in zip(A, B):
-    graph[a-1].append(b-1)
-    graph[b-1].append(a-1)
+    if ok:
+        # print(c)
+        ans.append(c)
 
-color = [-1]*N
-
-def drowcolor(i, iro):
-    color[i] = iro
-
-    for nxt in graph[i]:
-        if color[nxt] == iro:
-            return False
-        if color[nxt] != -1:
-            continue
-
-        if not drowcolor(nxt, 1-iro):
-            return False
-    return True
-
-ok = True
-for i in range(N):
-    if color[i] != -1:
-        continue
-
-    if not drowcolor(i, 0):
-        ok = False
-        break
-
-
-print('Yes' if ok else 'No')
+print(*ans)
