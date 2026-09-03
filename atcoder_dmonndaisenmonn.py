@@ -3401,31 +3401,76 @@
 
 
 # C - AtCoder Riko
-from collections import deque
-N = int(input())
-A = list(map(int, input().split()))
+# from collections import deque
+# N = int(input())
+# A = list(map(int, input().split()))
 
-candidates = [max(A), max(A)+min(A)]
-A_c = deque(sorted(A))
-ans = []
-for c in candidates:
-    ok = True
-    A = A_c.copy()
-    while A:
-        # print(A)
-        if A[-1] == c:
-            A.pop()
-        elif len(A) > 1 and A[-1]+A[0] == c:
-            A.pop()
-            A.popleft()
-        else:
-            ok = False
-            # print(A)
-            # print(c)
-            break
+# candidates = [max(A), max(A)+min(A)]
+# A_c = deque(sorted(A))
+# ans = []
+# for c in candidates:
+#     ok = True
+#     A = A_c.copy()
+#     while A:
+#         # print(A)
+#         if A[-1] == c:
+#             A.pop()
+#         elif len(A) > 1 and A[-1]+A[0] == c:
+#             A.pop()
+#             A.popleft()
+#         else:
+#             ok = False
+#             # print(A)
+#             # print(c)
+#             break
 
-    if ok:
-        # print(c)
-        ans.append(c)
+#     if ok:
+#         # print(c)
+#         ans.append(c)
 
-print(*ans)
+# print(*ans)
+
+
+# D - Minimize Range
+# N, K = map(int, input().split())
+# A = list(map(int, input().split()))
+
+# a_list = []
+# for a in A:
+#     target = a%K
+#     a_list.append(target)
+#     a_list.append(target+K)
+
+# a_list = sorted(a_list)
+# # print(a_list)
+
+# ans = float('inf')
+# for i in range(N):
+#     ans = min(ans, a_list[i+N-1]-a_list[i])
+
+# print(ans)
+
+
+# C - Bipartize
+from collections import defaultdict
+N, M = map(int, input().split())
+graph = defaultdict(list)
+
+for m in range(M):
+    u, v = map(int, input().split())
+
+    graph[u-1].append(v-1)
+    graph[v-1].append(u-1)
+
+ans = float('inf')
+for mask in range(1 << N):
+    cnt = 0
+
+    for i in range(N):
+        for j in graph[i]:
+            if ((mask >> i) & 1) == ((mask >> j) & 1):
+                cnt += 1
+
+    ans = min(ans, cnt//2)
+
+print(ans)
