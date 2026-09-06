@@ -3452,25 +3452,83 @@
 
 
 # C - Bipartize
-from collections import defaultdict
+# from collections import defaultdict
+# N, M = map(int, input().split())
+# graph = defaultdict(list)
+
+# for m in range(M):
+#     u, v = map(int, input().split())
+
+#     graph[u-1].append(v-1)
+#     graph[v-1].append(u-1)
+
+# ans = float('inf')
+# for mask in range(1 << N):
+#     cnt = 0
+
+#     for i in range(N):
+#         for j in graph[i]:
+#             if ((mask >> i) & 1) == ((mask >> j) & 1):
+#                 cnt += 1
+
+#     ans = min(ans, cnt//2)
+
+# print(ans)
+
 N, M = map(int, input().split())
-graph = defaultdict(list)
 
-for m in range(M):
-    u, v = map(int, input().split())
+edges = []
 
-    graph[u-1].append(v-1)
-    graph[v-1].append(u-1)
+for _ in range(M):
+    a, b = map(int, input().split())
+    edges.append((a, b))
 
-ans = float('inf')
-for mask in range(1 << N):
-    cnt = 0
+one_a, one_b = edges[0]
 
-    for i in range(N):
-        for j in graph[i]:
-            if ((mask >> i) & 1) == ((mask >> j) & 1):
-                cnt += 1
+ans = set()
 
-    ans = min(ans, cnt//2)
+# one_aを1人目にする
+candidates_a = []
 
-print(ans)
+for a, b in edges[1:]:
+    if one_a not in (a, b):
+        candidates_a.append((a, b))
+
+if not candidates_a:
+    # one_aだけですべてカバーできる
+    for x in range(1, N + 1):
+        if x != one_a:
+            ans.add(tuple(sorted((one_a, x))))
+
+else:
+    possible = set(candidates_a[0])
+
+    for c in candidates_a[1:]:
+        possible &= set(c)
+
+    for x in possible:
+        ans.add(tuple(sorted((one_a, x))))
+
+
+# one_bを1人目にする
+candidates_b = []
+
+for a, b in edges[1:]:
+    if one_b not in (a, b):
+        candidates_b.append((a, b))
+
+if not candidates_b:
+    for x in range(1, N + 1):
+        if x != one_b:
+            ans.add(tuple(sorted((one_b, x))))
+
+else:
+    possible = set(candidates_b[0])
+
+    for c in candidates_b[1:]:
+        possible &= set(c)
+
+    for x in possible:
+        ans.add(tuple(sorted((one_b, x))))
+
+print(len(ans))
