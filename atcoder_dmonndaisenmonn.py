@@ -3475,60 +3475,110 @@
 
 # print(ans)
 
+# N, M = map(int, input().split())
+
+# edges = []
+
+# for _ in range(M):
+#     a, b = map(int, input().split())
+#     edges.append((a, b))
+
+# one_a, one_b = edges[0]
+
+# ans = set()
+
+# # one_aを1人目にする
+# candidates_a = []
+
+# for a, b in edges[1:]:
+#     if one_a not in (a, b):
+#         candidates_a.append((a, b))
+
+# if not candidates_a:
+#     # one_aだけですべてカバーできる
+#     for x in range(1, N + 1):
+#         if x != one_a:
+#             ans.add(tuple(sorted((one_a, x))))
+
+# else:
+#     possible = set(candidates_a[0])
+
+#     for c in candidates_a[1:]:
+#         possible &= set(c)
+
+#     for x in possible:
+#         ans.add(tuple(sorted((one_a, x))))
+
+
+# # one_bを1人目にする
+# candidates_b = []
+
+# for a, b in edges[1:]:
+#     if one_b not in (a, b):
+#         candidates_b.append((a, b))
+
+# if not candidates_b:
+#     for x in range(1, N + 1):
+#         if x != one_b:
+#             ans.add(tuple(sorted((one_b, x))))
+
+# else:
+#     possible = set(candidates_b[0])
+
+#     for c in candidates_b[1:]:
+#         possible &= set(c)
+
+#     for x in possible:
+#         ans.add(tuple(sorted((one_b, x))))
+
+# print(len(ans))
+
+# D - Coefficient Stair
+# import sys
+# sys.setrecursionlimit(10*6)
+# N, K = map(int, input().split())
+# ans = []
+# now = [0]*N
+# def dfs(i, cost):
+#     if cost > K:
+#         return
+#     # print(K, cost, i, now)
+#     if i == 0:
+#         now[0] = K-cost
+#         ans.append((now.copy()))
+#         # print(ans)
+#         return
+    
+#     for j in range(((K-cost)//(i+1))+1):
+#         cost += (i+1)*j
+#         now[i] = j
+#         dfs(i-1, cost)
+#         cost -= (i+1)*j
+
+# dfs(N-1, 0)
+# ans.sort()
+# for a in ans:
+#     print(' '.join(map(str, a)))
+
+
+# E - K-Divisible Subarrays
 N, M = map(int, input().split())
 
-edges = []
+A = list(map(int, input().split()))
 
-for _ in range(M):
-    a, b = map(int, input().split())
-    edges.append((a, b))
+dp = {0: 0}
+total = 0
+max_cnt = 0
+for a in A:
+    total += a
 
-one_a, one_b = edges[0]
+    total %= M
 
-ans = set()
+    now = dp.get(total, -1)+1
 
-# one_aを1人目にする
-candidates_a = []
+    max_cnt = max(now, max_cnt)
 
-for a, b in edges[1:]:
-    if one_a not in (a, b):
-        candidates_a.append((a, b))
+    dp[total] = max_cnt
 
-if not candidates_a:
-    # one_aだけですべてカバーできる
-    for x in range(1, N + 1):
-        if x != one_a:
-            ans.add(tuple(sorted((one_a, x))))
-
-else:
-    possible = set(candidates_a[0])
-
-    for c in candidates_a[1:]:
-        possible &= set(c)
-
-    for x in possible:
-        ans.add(tuple(sorted((one_a, x))))
-
-
-# one_bを1人目にする
-candidates_b = []
-
-for a, b in edges[1:]:
-    if one_b not in (a, b):
-        candidates_b.append((a, b))
-
-if not candidates_b:
-    for x in range(1, N + 1):
-        if x != one_b:
-            ans.add(tuple(sorted((one_b, x))))
-
-else:
-    possible = set(candidates_b[0])
-
-    for c in candidates_b[1:]:
-        possible &= set(c)
-
-    for x in possible:
-        ans.add(tuple(sorted((one_b, x))))
-
-print(len(ans))
+# print(*dp.items())
+print(max_cnt)
