@@ -3562,23 +3562,70 @@
 
 
 # E - K-Divisible Subarrays
-N, M = map(int, input().split())
+# N, M = map(int, input().split())
 
-A = list(map(int, input().split()))
+# A = list(map(int, input().split()))
 
-dp = {0: 0}
-total = 0
-max_cnt = 0
-for a in A:
-    total += a
+# dp = {0: 0}
+# total = 0
+# max_cnt = 0
+# for a in A:
+#     total += a
 
-    total %= M
+#     total %= M
 
-    now = dp.get(total, -1)+1
+#     now = dp.get(total, -1)+1
 
-    max_cnt = max(now, max_cnt)
+#     max_cnt = max(now, max_cnt)
 
-    dp[total] = max_cnt
+#     dp[total] = max_cnt
 
-# print(*dp.items())
-print(max_cnt)
+# # print(*dp.items())
+# print(max_cnt)
+
+# C - Candy Tribulation
+# N, X, Y = map(int, input().split())
+
+# A = list(map(int, input().split()))
+
+# A.sort()
+
+# ans = 0
+# target_w = Y*A[0]
+# ans += A[0]
+# diff = Y-X
+# for a in A[1:]:
+#     now_max = a*Y
+#     if (now_max-target_w)%diff != 0:
+#         print(-1)
+#         exit()
+
+#     cnt = (now_max-target_w)//diff
+#     if cnt > a:
+#         print(-1)
+#         exit()
+
+#     ans += a-cnt
+
+# print(ans)
+
+# C - Upgrade Required
+# from sortedcontainers import SortedDict
+# N, Q = map(int, input().split())
+
+# sd = SortedDict() 
+# for i in range(1, N+1):
+#     sd[i] = 1
+
+# for i in range(Q):
+#     x, y = map(int, input().split())
+#     cnt = 0
+#     while sd.peekitem(0)[0] <= x:
+#         key, value = sd.peekitem(0)
+#         cnt += value
+#         del sd[key]
+#         sd[y] += value
+
+#     print(cnt)
+    
+
