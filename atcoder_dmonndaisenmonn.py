@@ -3628,4 +3628,442 @@
 
 #     print(cnt)
     
+# C - Mixture
+# dfsか？
+# T = int(input())
 
+# for _ in range(T):
+#     N = int(input())
+#     S = list(map(int, input()))
+#     visited = set()
+#     ok = False
+#     def dfs(now):
+#         global ok
+#         # print(now, visited)
+#         if now == 2**N-1:
+#             if S[-1] == 0:
+#                 print('Yes')
+#             else:
+#                 print('No')
+#             ok = True
+#             return
+
+#         for i in range(N):
+#             if i in visited:
+#                 continue
+#             # print(now+2**i, now, i)
+#             if S[now+2**i-1] == 1:
+#                 continue
+#             now += 2**i
+#             visited.add(i)
+#             dfs(now)
+#             visited.remove(i)
+#             now -= 2**i
+#             if ok:
+#                 return
+
+
+#     for i in range(N):
+#         visited.add(i)
+#         # print(S, 2**i, visited)
+#         if S[2**i-1] == 0: 
+#             dfs(2**i)
+#             if ok:
+#                 break
+#         # print(S, 2**i, visited)
+#         visited.remove(i)
+
+#     if not ok:
+#         print('No')
+
+# C - Palindromic in Both Bases
+# A = int(input())
+# N = int(input())
+
+# candidates = []
+# for i in range(1, 10**6+1):
+#     s = str(i)
+#     sr = s[::-1]
+#     # print(s+sr)
+#     candidates.append(s+sr)
+#     # print(s+sr[1:])
+#     candidates.append(s+sr[1:])
+# # print(candidates)
+# ans = 0
+# for c in candidates:
+#     c = int(c)
+#     if c > N:
+#         continue
+#     total = []
+#     now = c
+#     while c > 0:
+#         zan = c % A
+#         total.append(zan)
+#         c //= A
+
+#     rt = total[::-1]
+#     if total == rt:
+#         # print(total, now)
+#         ans += now
+
+# print(ans)
+
+# C - Minimize Abs 2
+# import bisect
+# D = int(input())
+
+# candidates = []
+# for i in range(10**6+1):
+#     candidates.append(i**2)
+# min_ans = float('inf')
+# # print(candidates)
+# for c in candidates:
+#     cc1 = candidates[bisect.bisect_left(candidates, D-c)-1]
+#     cc2 = candidates[bisect.bisect_left(candidates, D-c)]
+
+#     min_ans = min(min_ans, abs(D-(cc1+c)), abs(D-(cc2+c)))
+
+
+# print(min_ans)
+
+# C - False Hope
+#同じvalueが出た時に、それがルールにある
+# from collections import defaultdict
+# from itertools import permutations
+# import math
+# grid = list(map(int, input().split()) for _ in range(3))
+# n2d = {1: (0, 0), 2: (0, 1), 3: (0, 2), 4: (1, 0), 5: (1, 1), 6: (1, 2), 7: (2, 0), 8: (2, 1), 9: (2, 2)}
+
+# def check(a, b):
+#     ai, aj = n2d[a]
+#     bi, bj = n2d[b]
+
+#     if ai == bi or aj == bj or (ai-aj) == (bi-bj) or (ai+aj) == (bi+bj):
+#         return False
+#     else:
+#         return True
+# cnt = math.factorial(9)
+# ans = cnt
+# for zyunnzyo in permutations(range(1, 10)):
+#     now = defaultdict(list)
+#     for z in zyunnzyo:
+#         ok = True
+#         val = grid[n2d[z][0]][n2d[z][1]]
+#         for n in now[val]:
+#             if not check(z, n):
+#                 ok = False
+#                 break
+#         now[val].append(z)
+        
+#         if not ok:
+#             cnt -= 1
+#             break
+
+# print(cnt/ans)
+
+# 
+# from itertools import permutations
+
+# C = [list(map(int, input().split()))]
+
+# lines = [
+#     (0, 1, 2),
+#     (3, 4, 5),
+#     (6, 7, 8),
+#     (0, 3, 6),
+#     (1, 4, 7),
+#     (2, 5, 8),
+#     (0, 4, 8),
+#     (2, 4, 6)
+# ]
+
+# ans = 0
+
+# for perm in permutations(range(9)):
+#     order = [0]*9
+
+#     for i in range(9):
+#         order[perm[i]] = i
+
+#     ok = True
+
+#     for line in lines:
+#         x = sorted(line, key=lambda p: order[p])
+
+#         if C[x[0]] == C[x[1]]:
+#             ok = False
+#             break
+
+#     if ok:
+#         ans += 1
+
+# print(ans/ 362800)
+
+# D - Polyomino
+# print(4*4*4*16*3)
+# grid1 = [list(input()) for _ in range(4)]
+# grid2 = [list(input()) for _ in range(4)]
+# grid3 = [list(input()) for _ in range(4)]
+
+# print(grid1)
+# ng = [['.']*4 for _ in range(4)]
+
+# for i in range(4):
+#     for j in range(4):
+#         ng[i][j] = grid1[4-j-1][i]
+
+# print(ng)
+
+
+# g1 = set()
+# g2 = set()
+# g3 = set()
+
+# for grid, s1 in zip((grid1, grid2, grid3), (g1, g2, g3)):
+#     cnt = -1
+    
+#     for i in range(4):
+#         for j in range(4):
+#             cnt += 1
+
+#             if grid[i][j] == '#':
+#                 s1.add(cnt)
+
+# print(g1, g2, g3)
+
+# ans_g = set()
+# for c1 in range(4):
+#     for b1 in range(-3, 4):
+#         ans_g = set()
+#         ok = True
+#         for a in g1:
+#             if not 0 <= a+b1 < 16:
+#                 ok = False
+#                 break
+#             ans_g.add(a+b1)
+
+#         if not ok:
+#             continue
+
+#         for c2 in range(4):
+#             for b2 in range(-15, 16):
+#                 ok = True
+#                 for b in g2:
+#                     if not 0 <= b+b2 < 16 or b+b2 in ans_g:
+#                         ok = False
+#                         break
+#                     ans_g.add(b+b2)
+
+#                 if not ok:
+#                     continue
+
+#                 for c3 in range(4):
+#                     for b3 in range(-15, 16):
+#                         ok = True
+#                         for c in g3:
+#                             if not 0 <= c+b3 < 16 or c+b3 in ans_g:
+#                                 ok = False
+#                                 break
+#                             ans_g.add(c+b3)
+#                         if not ok:
+#                             continue
+#                         else:
+#                             print('Yes')
+#                             exit()
+#                     g3 = [4 * (i % 4) + 3 - (i // 4) for i in g3]
+                    
+#             g2 = [4 * (i % 4) + 3 - (i // 4) for i in g2]
+
+#     g1 = [4 * (i % 4) + 3 - (i // 4) for i in g1]
+
+# print('No')
+
+# N = 3
+# M = 4
+
+# pieces = []
+
+# for _ in range(N):
+#     p = [list(input()) for _ in range(M)]
+
+#     pieces.append(p)
+
+
+# placements = [[] for _ in range(3)]
+
+# def rotate(p):
+#     np = [['.'] * 4 for _ in range(4)]
+
+#     for i in range(4):
+#         for j in range(4):
+#             np[j][3-i] = p[i][j]
+
+#     return np
+
+
+# for pi in range(3):
+#     p = pieces[pi]
+
+#     for _ in range(4):
+#         for di in range(-4, 4):
+#             for dj in range(-4, 4):
+#                 np = [['.']*4 for _ in range(4)]
+#                 ok = True
+
+#                 for i in range(4):
+#                     for j in range(4):
+
+#                         if p[i][j] == '.':
+#                             continue
+
+#                         ni = i+di
+#                         nj = j+dj
+
+#                         if ni < 0 or nj < 0 or ni >= 4 or nj >= 4:
+#                             ok = False
+#                             continue
+
+#                         np[ni][nj] = '#'
+
+#                 if ok:
+#                     placements[pi].append(np)
+
+#         p = rotate(p)
+
+# for p0 in placements[0]:
+#     for p1 in placements[1]:
+#         for p2 in placements[2]:
+
+#             cnt = [[0]*4 for _ in range(4)]
+
+#             for p in (p0, p1, p2):
+#                 for i in range(4):
+#                     for j in range(4):
+#                         if p[i][j] == '#':
+#                             cnt[i][j] += 1
+
+#             if cnt == [[1]*4 for _ in range(4)]:
+#                 print('Yes')
+#                 exit()
+
+# print('No')
+
+# D - Merge Slimes
+# from sortedcontainers import SortedDict
+# sd = SortedDict(int)
+# N = int(input())
+# for i in range(N):
+#     s, c = map(int, input().split())
+#     sd[s] = c
+# ans = 0
+# while sd:
+#     ms, cnt = sd.peekitem(0)
+#     # print(ms, cnt)
+#     ans += cnt%2
+#     ncnt = cnt//2
+#     ns = ms*2
+#     del sd[ms]
+#     if ncnt > 0:
+#         sd[ns] = sd.get(ns, 0)+ncnt
+
+# print(ans)
+
+# 
+# import heapq
+# N = int(input())
+
+# sizes = {}
+# heap = []
+# for i in range(N):
+#     s, c = map(int, input().split())
+
+#     sizes[s] = c
+#     heapq.heappush(heap, s)
+
+# ans = 0
+# while heap:
+#     ms = heapq.heappop(heap)
+
+#     mcnt = sizes[ms]
+
+#     ncnt = mcnt//2
+#     ans += mcnt% 2
+#     ns = 2*ms
+#     if ncnt < 1:
+#         continue
+
+#     if ns in sizes:
+#         sizes[ns] += ncnt
+#     else:
+#         sizes[ns] = ncnt
+#         heapq.heappush(heap, ns)
+
+# print(ans)
+
+# D - Good Tuple Problem
+# import sys
+# sys.setrecursionlimit(10**6)
+# from collections import defaultdict
+# N, M = map(int, input().split())
+
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
+
+# visited = set()
+# ans = [-1]*N
+# graph = defaultdict(list)
+# for a, b in zip(A, B):
+#     graph[a-1].append(b-1)
+#     graph[b-1].append(a-1)
+
+# def dfs(i, color):
+#     visited.add(i)
+#     ans[i] = color
+#     nxt_c = 1-color
+#     for nxt in graph[i]:
+#         if nxt in visited:
+#             if ans[nxt] != nxt_c:
+#                 print('No')
+#                 exit()
+#             else:
+#                 continue
+
+#         dfs(nxt, nxt_c)
+
+# for i in range(N):
+#     if i in visited:
+#         continue
+#     else:
+#         dfs(i, 0)
+
+# print('Yes')
+
+# D - Counting Ls
+N = int(input())
+
+grid = []
+
+for i in range(N):
+    s = list(input())
+    grid.append(s)
+tate = [0]*N
+yoko = [0]*N
+total = sum(tate)
+for i in range(N):
+    
+    for j in range(N):
+        if grid[i][j] == 'o':
+            yoko[i] += 1
+            tate[j] += 1
+
+ans = 0
+
+for i in range(N):
+    for j in range(N):
+        t = tate[j]-1
+        y = yoko[i]-1
+        if t == 0 or y == 0 or grid[i][j] != 'o':
+            continue
+        ans += t*y
+
+print(ans)
