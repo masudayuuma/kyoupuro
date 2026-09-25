@@ -4039,31 +4039,229 @@
 # print('Yes')
 
 # D - Counting Ls
-N = int(input())
+# N = int(input())
 
-grid = []
+# grid = []
 
-for i in range(N):
-    s = list(input())
-    grid.append(s)
-tate = [0]*N
-yoko = [0]*N
-total = sum(tate)
-for i in range(N):
+# for i in range(N):
+#     s = list(input())
+#     grid.append(s)
+# tate = [0]*N
+# yoko = [0]*N
+# total = sum(tate)
+# for i in range(N):
     
-    for j in range(N):
-        if grid[i][j] == 'o':
-            yoko[i] += 1
-            tate[j] += 1
+#     for j in range(N):
+#         if grid[i][j] == 'o':
+#             yoko[i] += 1
+#             tate[j] += 1
 
-ans = 0
+# ans = 0
 
-for i in range(N):
-    for j in range(N):
-        t = tate[j]-1
-        y = yoko[i]-1
-        if t == 0 or y == 0 or grid[i][j] != 'o':
-            continue
-        ans += t*y
+# for i in range(N):
+#     for j in range(N):
+#         t = tate[j]-1
+#         y = yoko[i]-1
+#         if t == 0 or y == 0 or grid[i][j] != 'o':
+#             continue
+#         ans += t*y
 
-print(ans)
+# print(ans)
+
+# C - Socks 2
+# 奇数の時は多分、そのiによって左右のlenが偶奇どちらかに分かれるのでそれによって処理する
+# そのためには、それぞれ左、右両方からで２つずつのdiffの計算必要そう
+# N, K = map(int, input().split())
+# A = list(map(int, input().split()))
+
+# mae  = [0]
+# ushiro = [0]
+
+# for i in range(0, K-1, 2):
+#     # print(mae[-1]+A[i+1]-A[i])
+#     mae.append(mae[-1]+A[i+1]-A[i])
+
+# for i in range(1, K-1, 2):
+#     ushiro.append(ushiro[-1]+A[i+1]-A[i])
+
+# if K % 2 == 0:
+#     print(mae[-1])
+#     exit()
+
+# if K == 1:
+#     print(0)
+#     exit()
+
+# # print(mae, ushiro)
+# minans = min(ushiro[-1], mae[-1])
+# for i in range(len(ushiro)-1):
+#     minans = min(minans, mae[i]+ushiro[-1]-ushiro[i])
+
+# print(minans)
+
+# D - Count Subgrid Sum = K
+# import bisect
+# H, W, K = map(int, input().split())
+
+# grid = [list(map(int, input())) for _ in range(H)]
+
+# prefix = [[0]*(W+1) for _ in range(H+1)]
+
+# for i in range(1, H+1):
+#     for j in range(1, W+1):
+#         prefix[i][j] += prefix[i-1][j]+grid[i-1][j-1]
+# # print(prefix)
+# ans = 0
+# for h1 in range(H+1):
+#     for h2 in range(h1+1, H+1):
+#         w = [prefix[h2][i]-prefix[h1][i] for i in range(W+1)]
+
+#         w2 = 0
+#         now = 0
+#         for i in range(len(w)-1):
+#             w[i+1] += w[i]
+#         cntdict = {0:1}
+
+#         for i in range(1, W+1):
+#             ans += cntdict.get(w[i]-K, 0)
+#             cntdict[w[i]] = cntdict.get(w[i], 0)+1
+# print(ans)    
+# 0133345
+
+# C - Inc, Dec, Xor
+# from collections import defaultdict
+# plus = set()
+
+# cnt = defaultdict(int)
+
+# ans = 0
+
+# N, Q = map(int, input().split())
+
+# for _ in range(Q):
+#     q = list(map(int, input().split()))
+
+#     if q[0] == 1:
+#         ans ^=cnt[q[1]]
+#         cnt[q[1]] += 1
+#         ans ^= cnt[q[1]]
+#     else:
+#         cntcopy = cnt.copy()
+#         for key, val in cntcopy.items():
+#             ans ^= val
+#             val -= 1
+#             if val == 0:
+#                 del cnt[key]
+#             else:
+#                 cnt[key] = val
+
+#             ans ^= val
+#         # print(cnt)
+
+#     print(ans)
+
+# E - Sequence Sum
+# import sys
+# sys.setrecursionlimit(10**6)
+# from collections import defaultdict
+# N, X, M = map(int, input().split())
+
+# visited = set()
+# ans = 0
+# cnt = 0
+# cyclecnt = 0
+# cycleval = 0
+# cycletarget = -1
+# def dfs(i):
+#     global cycletarget, cycleval, cyclecnt, cnt, ans
+
+#     if cnt == N:
+#         return False
+
+#     if i in visited:
+#         cyclecnt += 1
+#         cycleval = i
+#         cycletarget = i
+#         return True
+
+#     visited.add(i)
+#     cnt += 1
+#     ans += i
+#     nxt_i = i*i % M
+
+#     ok = dfs(nxt_i)
+#     if ok and cycletarget != i:
+#         cyclecnt += 1
+#         cycleval += i
+#         return ok
+    
+#     if i == cycletarget and ok:
+#         tmp = (N - cnt) // cyclecnt
+#         ans += cycleval*tmp
+#         cnt += tmp*cyclecnt
+
+#     return False
+
+
+
+# dfs(X)
+
+# if cycletarget == -1:
+#     print(ans)
+#     exit()
+
+# now = cycletarget
+# while cnt < N:
+#     ans += now
+#     now = now*now %M
+#     cnt += 1
+
+# print(ans)
+
+# D - Make Target 2
+# L, R, D, U = map(int, input().split())
+
+# ans = 0
+
+# if L <= 0 <= R and D <= 0 <= U:
+#     ans += 1
+
+
+# for i in range(1, 10**6+1):
+#     print(ans)
+#     if U < i:
+#         break
+
+#     if i % 2 == 1:
+#         continue
+
+#     ans += max(i, L)-min(-i, R)+1 if max(i, L)-min(-i, R)+1 > 0 else 0
+
+# for i in range(-1, -10**6+1, -1):
+#     if D > i:
+#         break
+
+#     if i % 2 == 1:
+#         continue
+
+#     ans += max(i, L)-min(-i, R)+1 if max(i, L)-min(-i, R)+1 > 0 else 0
+
+# for i in range(-1, -10**6+1, -1):
+#     if R > i:
+#         break
+
+#     if i % 2 == 1:
+#         continue
+
+#     ans += max(i-1, U)-min(-i+1, R)+1 if max(i-1, U)-min(-i+1, R)+1 > 0 else 0
+
+# for i in range(-1, -10**6+1):
+#     if L < i:
+#         break
+
+#     if i % 2 == 1:
+#         continue
+
+#     ans += max(i-1, U)-min(-i+1, R)+1 if max(i-1, U)-min(-i+1, R)+1 > 0 else 0
+
+# print(ans)
