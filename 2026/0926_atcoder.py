@@ -167,3 +167,131 @@
 #     print(minans)
 
 # 
+
+# C - Range Search Query
+# Q = int(input())
+# S = list(input())
+# T = list(input())
+# N = len(S)
+# M = len(T)
+
+# flag = [0]*(N+1)
+
+# for i in range(N):
+#     ok = True
+#     for j in range(M):
+#         if i+j >= N:
+#             ok = False
+#             break
+#         if S[i+j] != T[j]:
+#             ok = False
+#             break
+
+#     if ok:
+#         flag[i+1] = 1
+
+# # print(flag)
+
+# for i in range(N):
+#     flag[i+1] += flag[i]
+
+# # print(flag)
+
+# for i in range(Q):
+#     l, r = map(int, input().split())
+
+#     if r-M+1 < l:
+#         print('No')
+#         continue
+
+#     if flag[r-M+1]-flag[l-1] > 0:
+#         print('Yes')
+#         continue
+
+#     print('No')
+
+
+# D - Masking Tape
+# N, Q = map(int, input().split())
+
+# all_paste_at = -1
+# now = "a"
+# wall = [False]*N
+# colors = ['a']*N
+# deleat_at = [-1]*N
+# for i in range(Q):
+#     q, val = input().split()
+#     q = int(q)
+
+#     if q == 1:
+#         val = int(val)-1
+
+#         if wall[val] == True:
+#             deleat_at[val] = i
+#             wall[val] = False
+#         else:
+#             wall[val] = True
+#             if all_paste_at > deleat_at[val]:
+#                 colors[val] = now
+#     else:
+#         all_paste_at = i
+#         now = val
+
+# for i in range(N):
+#     if wall[i] == True or deleat_at[i] > all_paste_at:
+#         continue
+
+#     colors[i] = now
+
+
+# print("".join(colors))
+
+# E - Wheel Distance
+# from collections import defaultdict
+# import heapq
+# N, Q = map(int, input().split())
+
+# A = list(map(int, input().split()))
+# B = list(map(int, input().split()))
+
+
+# prefix = [0]
+
+# for _ in range(2):
+#     for i in range(N):
+#         prefix.append(prefix[-1]+A[i])
+
+# graph = defaultdict(list)
+
+# for i in range(N):
+#     graph[i+1].append(((i+1) % N+1, A[i]))
+#     graph[(i+1) % N+1].append((i+1, A[i]))
+#     graph[i+1].append((N+1, B[i]))
+#     graph[N+1].append((i+1, B[i]))
+
+
+# ans = {}
+# heap = [(0, N+1)]
+# now_c = 0
+# while heap:
+#     cost, target = heapq.heappop(heap)
+
+#     if target in ans:
+#         continue
+#     ans[target] = cost
+
+#     for nt, nc in graph[target]:
+#         if nt in ans:
+#             continue
+#         heapq.heappush(heap, (cost+nc, nt))
+
+# # print(ans, prefix)
+
+# for i in range(Q):
+#     s, t = map(int, input().split())
+
+#     minans = float('inf') if s == N+1 or t == N+1 else min(prefix[t-1]-prefix[s-1], prefix[s+N-1]-prefix[t-1])
+#     minans = min(ans[s]+ans[t], minans)
+
+#     print(minans)
+
