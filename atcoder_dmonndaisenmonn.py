@@ -4265,3 +4265,5 @@
 #     ans += max(i-1, U)-min(-i+1, R)+1 if max(i-1, U)-min(-i+1, R)+1 > 0 else 0
 
 # print(ans)
+
+# D - Teleport Maze

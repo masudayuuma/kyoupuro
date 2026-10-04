@@ -296,33 +296,99 @@
 #     print(minans)
 
 # D - Pawn Line
-import heapq
-T = int(input())
+# import heapq
+# T = int(input())
 
-for _ in range(T):
-    ans = 0
-    N = int(input())
-    R = list(map(int, input().split()))
-    minr = min(R)
-    heap = []
-    visited = set()
-    for i, r in enumerate(R):
-        heapq.heappush(heap, (r, i))
+# for _ in range(T):
+#     ans = 0
+#     N = int(input())
+#     R = list(map(int, input().split()))
+#     minr = min(R)
+#     heap = []
+#     visited = set()
+#     for i, r in enumerate(R):
+#         heapq.heappush(heap, (r, i))
 
-    while heap:
-        # print(heap)
-        val, index = heapq.heappop(heap)
-        visited.add(index)
+#     while heap:
+#         # print(heap)
+#         val, index = heapq.heappop(heap)
+#         visited.add(index)
 
-        if index -1 >= 0 and index-1 not in visited:
-            heapq.heappush(heap, (min(val+1, R[index-1]), index-1))
-            c = max(R[index-1]-(val+1), 0)
-            ans += c
-            visited.add(index-1)
-        if index+1 < N and index+1 not in visited:
-            c = max(R[index+1]-(val+1), 0)
-            ans += c
-            heapq.heappush(heap, (min(val+1, R[index+1]), index+1))
-            visited.add(index+1)
+#         if index -1 >= 0 and index-1 not in visited:
+#             heapq.heappush(heap, (min(val+1, R[index-1]), index-1))
+#             c = max(R[index-1]-(val+1), 0)
+#             ans += c
+#             visited.add(index-1)
+#         if index+1 < N and index+1 not in visited:
+#             c = max(R[index+1]-(val+1), 0)
+#             ans += c
+#             heapq.heappush(heap, (min(val+1, R[index+1]), index+1))
+#             visited.add(index+1)
 
-    print(ans)
+#     print(ans)
+
+# C - Flapping Takahashi
+# T = int(input())
+
+# for _ in range(T):
+#     N, H = map(int, input().split())
+#     now = 0
+#     l = H
+#     u = H
+#     ok = True
+#     for i in range(N):
+#         nt, nl, nu = map(int, input().split())
+
+#         difftime = nt-now
+#         l = max(l-difftime, 1)
+#         u = u+difftime
+#         if l > nu or u < nl:
+#             ok = False
+
+#         l = max(nl, l)
+#         u = min(nu, u)
+#         now = nt
+
+#     print('Yes' if ok else 'No')
+
+# C - Mixture
+# import sys
+# sys.setrecursionlimit(10**6)
+# T = int(input())
+
+# for _ in range(T):
+#     N = int(input())
+#     S = list(map(int, input()))
+
+#     def dfs(visited, now):
+#         if now in visited:
+#             return False
+#         visited.add(now)
+#         if now ==  (1 << N)-1:
+#             return True
+
+#         for i in range(N):
+#             if (now >> i) & 1:
+#                 continue
+#             nxt = now | (1 << i)
+
+#             if S[nxt-1] == 1:
+#                 continue
+#             if dfs(visited, nxt):
+#                 return True
+#         return False
+
+
+#     ok = False
+#     for i in range(N):
+#         visited = set()
+#         now = i
+#         if dfs(visited, now):
+#                 ok = True
+#                 break
+
+#     if ok:
+#         print('Yes')
+#     else:
+#         print('No')
+    
