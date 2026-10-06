@@ -4267,3 +4267,72 @@
 # print(ans)
 
 # D - Teleport Maze
+# from collections import defaultdict, deque
+# H, W = map(int, input().split())
+
+# grid = [list(input()) for _ in range(H)]
+
+# graph = defaultdict(list)
+
+
+# for i in range(H):
+#     for j in range(W):
+#         if grid[i][j] != '#' and grid[i][j] != ".":
+#             graph[grid[i][j]].append((i, j))
+
+
+# ans = -1
+# visited = set()
+# q = deque([(0, 0, 0)]) # i, j , cnt
+# visited.add((0, 0))
+# visited_c = set()
+# diffs = ((1, 0), (-1, 0), (0, 1), (0, -1))
+# while q:
+#     # print(q)
+#     # print(visited_c)
+#     i, j, cnt = q.popleft()
+
+#     if i == H-1 and j == W-1:
+#         ans = cnt
+#         break
+
+#     if grid[i][j] != '.' and grid[i][j] not in visited_c:
+#         visited_c.add(grid[i][j])
+#         for ni, nj in graph[grid[i][j]]:
+
+#             if (ni, nj) in visited:
+#                 continue
+#             visited.add((ni, nj))
+#             q.append((ni, nj, cnt+1))
+
+#     for di, dj in diffs:
+#         y = di+i
+#         x = dj+j
+
+#         if 0 <= y < H and 0 <= x < W and (y, x) not in visited and grid[y][x] != '#':
+#             visited.add((y, x))
+#             q.append((y, x, cnt+1))
+
+# print(ans)
+
+# C - Third Largest Number
+import heapq
+
+N = int(input())
+A = list(map(int, input().split()))
+
+heap = []
+
+heapq.heappush(heap, -A[0])
+heapq.heappush(heap, -A[1])
+
+for i in range(2, N):
+    heapq.heappush(heap, -A[i])
+
+    val1 = heapq.heappop(heap)
+    val2 = heapq.heappop(heap)
+    val3 = heapq.heappop(heap)
+    print(-val3)
+    heapq.heappush(heap, val1)
+    heapq.heappush(heap, val2)
+    heapq.heappush(heap, val3)
