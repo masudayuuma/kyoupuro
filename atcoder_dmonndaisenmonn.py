@@ -4316,23 +4316,108 @@
 # print(ans)
 
 # C - Third Largest Number
-import heapq
+# import heapq
 
-N = int(input())
+# N = int(input())
+# A = list(map(int, input().split()))
+
+# heap = []
+
+# heapq.heappush(heap, -A[0])
+# heapq.heappush(heap, -A[1])
+
+# for i in range(2, N):
+#     heapq.heappush(heap, -A[i])
+
+#     val1 = heapq.heappop(heap)
+#     val2 = heapq.heappop(heap)
+#     val3 = heapq.heappop(heap)
+#     print(-val3)
+#     heapq.heappush(heap, val1)
+#     heapq.heappush(heap, val2)
+#     heapq.heappush(heap, val3)
+
+
+# C - Sort Subarray
+# N, K = map(int, input().split())
+# A = list(map(int, input().split()))
+
+# sorta = sorted(A.copy())
+# flag_a = [False]*N
+# ng_cnt = 0
+# for i, a in enumerate(A):
+#     flag_a[i] = True if sorta[i] == A[i] else False
+#     if flag_a[i] == False:
+#         ng_cnt += 1
+
+# # print(sorta, A, flag_a, ng_cnt)
+# for i in range(K):
+#     if sorta[i] != A[i]:
+#         ng_cnt -= 1
+# # print(ng_cnt)
+# if ng_cnt == 0:
+#     print('Yes')
+#     exit()
+
+# for i in range(N-K):
+#     if ng_cnt == 0:
+#         print('Yes')
+#         exit()
+
+#     if i == N-K-1:
+#         break
+
+#     if A[i] != sorta[i]:
+#         ng_cnt += 1
+#     if A[i+K] != sorta[i+K]:
+#         ng_cnt -= 1
+
+# print('No')
+
+# C - Walk the Line
+from bisect import bisect_right, bisect_left
+N, S, L = map(int, input().split())
 A = list(map(int, input().split()))
 
-heap = []
+left_arr = []
+right_arr = []
+now_l = 0
+now_r = 0
+left = S-1
+right = S-1
+while left > 0:
+    left -= 1
+    now_l += A[left]
+    left_arr.append(now_l)
 
-heapq.heappush(heap, -A[0])
-heapq.heappush(heap, -A[1])
+while right < N-1:
+    now_r += A[right]
+    right += 1
+    right_arr.append(now_r)
 
-for i in range(2, N):
-    heapq.heappush(heap, -A[i])
+ans = 0
 
-    val1 = heapq.heappop(heap)
-    val2 = heapq.heappop(heap)
-    val3 = heapq.heappop(heap)
-    print(-val3)
-    heapq.heappush(heap, val1)
-    heapq.heappush(heap, val2)
-    heapq.heappush(heap, val3)
+for l in range(len(left_arr)):
+    cost = left_arr[l]
+    if cost <= L:
+        ans = max(ans, l+1)
+
+    cost *= 2
+    if cost <= L:
+        target = L-cost
+        right = bisect_right(right_arr, target) # 追加で行ける街の数
+        ans = max(ans, l+1+right)
+
+
+for r in range(len(right_arr)):
+    cost = right_arr[r]
+    if cost <= L:
+        ans = max(ans, r+1)
+
+    cost *= 2
+    if cost <= L:
+        target = L-cost
+        left = bisect_right(left_arr, target) # 追加で行ける街の数
+        ans = max(ans, r+1+left)
+
+print(ans+1)
